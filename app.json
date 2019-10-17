@@ -9,7 +9,7 @@
       "android",
       "web"
     ],
-    "version": "1.0.0",
+    "version": "0.1.0",
     "orientation": "portrait",
     "icon": "./assets/images/clever_weather.png",
     "splash": {
@@ -24,11 +24,16 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.listotechnologies.cleverweather"
+    },
+    "android": {
+      "package": "com.listotechnologies.cleverweather"
     },
     "primaryColor": "#ff8800",
     "androidStatusBar": {
       "backgroundColor": "#c55900"
-    }
+    },
+    "description": ""
   }
 }
