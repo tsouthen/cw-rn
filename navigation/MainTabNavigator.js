@@ -37,7 +37,7 @@ const LocationStack = createStackNavigator(
   config
 );
 LocationStack.navigationOptions = {
-  tabBarLabel: 'Location',
+  tabBarLabel: () => {},
   tabBarIcon: ({ focused }) => (
     <TabBarIcon focused={focused} library='Entypo' name='location-pin' />
   ),
@@ -51,7 +51,7 @@ const NearbyStack = createStackNavigator(
   config
 );
 NearbyStack.navigationOptions = {
-  tabBarLabel: 'Nearby',
+  tabBarLabel: () => {},
   tabBarIcon: ({ focused }) => (
     <TabBarIcon focused={focused} library='MaterialIcons' name='near-me' />
   ),
@@ -66,7 +66,7 @@ const FavoritesStack = createStackNavigator(
   config
 );
 FavoritesStack.navigationOptions = {
-  tabBarLabel: 'Favorites',
+  tabBarLabel: () => {},
   tabBarIcon: ({ focused }) => (
     <TabBarIcon focused={focused} name='ios-star' />
   ),
@@ -82,14 +82,18 @@ const BrowseStack = createStackNavigator(
   config
 );
 BrowseStack.navigationOptions = {
-  tabBarLabel: 'Browse',
+  tabBarLabel: () => {},
   tabBarIcon: ({ focused }) => (
     <TabBarIcon focused={focused} library='FontAwesome' name='globe' />
   ),
 };
 BrowseStack.path = '';
 
-const tabNavigator = createMaterialTopTabNavigator({
+let createFunc = createBottomTabNavigator;
+if (Platform.OS === 'android')
+  createFunc = createMaterialTopTabNavigator;
+
+const tabNavigator = createFunc({
   LocationStack,
   //NearbyStack,
   FavoritesStack,
