@@ -3,55 +3,53 @@ import { View, FlatList } from 'react-native';
 import { SimpleListItem } from '../components/SimpleListItem';
 import sitelocations from '../constants/sitelocations';
  
-export default class CityListScreen extends React.Component {
-
-  static navigationOptions = ({ navigation }) => {
-    return {
-      title: navigation.getParam('title', 'Cities'),
-    };
-  };
-
-  constructor(props) {
-    super(props);
-    const { navigation } = this.props;
-    let search = navigation.getParam('search');
-    const province = navigation.getParam('province');
-    if (search) {
-      search = search.toLowercase();
-      this.cities = sitelocations.filter((entry) => entry.name.toLowercase().includes(search));
-    } else if (province) {
-        this.cities = sitelocations.filter((entry) => entry.prov === province.abbr);
-    } else {
-      this.cities = props.cities;
-      if (this.cities === undefined)
-        this.cities = [];
-    }
-    this.cities.sort((a, b) => a.nameEn < b.nameEn ? -1 : (a.nameEn > b.nameEn ? 1 : 0));
-    //TODO: put this.cities in this.state.data
-  }
-
-  handlePress = (item) => {
-    this.props.navigation.navigate('City', { 
-      site: item,
-      location: item.nameEn,
-    });
-  };
-
-  render() {
-    return(
-      <FlatList style={{flex: 1}}
-        data={this.cities}
-        renderItem={({item, index}) => {
-          return (<SimpleListItem itemPress={() => this.handlePress(item)}>{item.nameEn}</SimpleListItem>);
+export default function CityListScreen(props) {
+  return (
+    <FlatList style={{flex: 1}}
+      data={props.cities}
+      renderItem={({item, index}) => {
+        let label = item.nameEn;
+        if (props.showProv) {
+          label += ', ';
+          label += item.prov;
+        }
+        return (
+          <SimpleListItem itemPress={() => {
+            props.navigation.navigate('City', { 
+              site: item,
+              location: item.nameEn,
+            });                        
+          }}>
+            {label}
+          </SimpleListItem>);
         }}
-        keyExtractor={item => item.site}         
-        ItemSeparatorComponent={({highlighted}) => (
-          <View style={{height: 1, backgroundColor: "#eeeeee"}} />
-          )}
-        ListFooterComponent={({highlighted}) => (
-          <View style={{height: 1, backgroundColor: "#eeeeee"}} />
-          )}
-      />
-    );
+      keyExtractor={item => item.site}         
+      ItemSeparatorComponent={({highlighted}) => (
+        <View style={{height: 1, backgroundColor: "#eeeeee"}} />
+        )}
+      ListFooterComponent={({highlighted}) => (
+        <View style={{height: 1, backgroundColor: "#eeeeee"}} />
+        )}
+    />
+  );
+};
+
+CityListScreen.navigationOptions = ({ navigation }) => {
+  return {
+    title: navigation.getParam('title', 'Cities'),
+  };
+};
+
+export function ProvinceCityListScreen(props) {
+  return (
+    <CityListScreen {...props} showProv={false} cities={ 
+      sitelocations.filter((entry) => entry.prov === props.navigation.getParam('province', {abbr:'BC', name:'British Columnbia'}).abbr)
+        .sort((a, b) => a.nameEn < b.nameEn ? -1 : (a.nameEn > b.nameEn ? 1 : 0))} />
+  );
+};
+
+ProvinceCityListScreen.navigationOptions = ({ navigation }) => {
+  return {
+    title: navigation.getParam('title', 'Province'),
   };
 };

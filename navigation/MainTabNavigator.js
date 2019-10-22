@@ -7,7 +7,8 @@ import LocationScreen from '../screens/LocationScreen';
 import NearbyScreen from '../screens/NearbyScreen';
 import FavoritesScreen from '../screens/FavoritesScreen';
 import BrowseScreen from '../screens/BrowseScreen';
-import CityListScreen from '../screens/CityListScreen';
+import { ProvinceCityListScreen } from '../screens/CityListScreen';
+import SearchScreen from '../screens/SearchScreen';
 
 const navOptions = {
   headerStyle: {
@@ -76,7 +77,7 @@ FavoritesStack.path = '';
 const BrowseStack = createStackNavigator(
   {
     Browse: BrowseScreen,
-    CityList: CityListScreen,
+    CityList: ProvinceCityListScreen,
     City: LocationScreen,
   },
   config
@@ -89,6 +90,21 @@ BrowseStack.navigationOptions = {
 };
 BrowseStack.path = '';
 
+const SearchStack = createStackNavigator(
+  {
+    Search: SearchScreen,
+    City: LocationScreen,
+  },
+  config
+);
+SearchStack.navigationOptions = {
+  tabBarLabel: () => {},
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon focused={focused} library='MaterialIcons' name='search' />
+  ),
+};
+SearchStack.path = '';
+
 let createFunc = createBottomTabNavigator;
 if (Platform.OS === 'android')
   createFunc = createMaterialTopTabNavigator;
@@ -98,6 +114,7 @@ const tabNavigator = createFunc({
   //NearbyStack,
   FavoritesStack,
   BrowseStack,
+  SearchStack,
 }, {
   tabBarPosition: 'bottom',
   tabBarOptions: {

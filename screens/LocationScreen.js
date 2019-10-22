@@ -76,7 +76,7 @@ export default class CurrentLocation extends React.Component {
       request.onerror = errorFunc;
       request.onabort = errorFunc;
       request.ontimeout = errorFunc;
-      
+
       request.responseType = 'arraybuffer';
   
       request.open('GET', url);
@@ -280,7 +280,7 @@ export default class CurrentLocation extends React.Component {
             <View style={{height: 1, backgroundColor: "#eeeeee"}} />
             )}
           ListFooterComponent={({highlighted}) => (
-            <View style={{height: 1, backgroundColor: "#dddddd"}} />
+            <View style={{height: 1, backgroundColor: "#eeeeee"}} />
             )}
           refreshing={this.state.isLoading}
           onRefresh={this.handleRefresh}
