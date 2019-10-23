@@ -7,7 +7,6 @@ import Constants from 'expo-constants';
 import { parseString } from 'react-native-xml2js';
 import iconv from 'iconv-lite';
 import { Buffer } from 'buffer';
-import { MaterialIcons } from '@expo/vector-icons';
 
 const styles = StyleSheet.create({
   container: {
@@ -104,9 +103,9 @@ export default class CurrentLocation extends React.Component {
         if (Platform.OS === 'android' && !Constants.isDevice) {
           nearest = sitelocations[this.randomIntInRange(0, sitelocations.length)];
         } else {
-          this.props.navigation.setParams({ location: 'requesting permission...'});
+          // this.props.navigation.setParams({ location: 'requesting permission...'});
           await Location.requestPermissionsAsync();
-          this.props.navigation.setParams({ location: 'getting location...'});
+          // this.props.navigation.setParams({ location: 'getting location...'});
           let location = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Lowest, maximumAge: 900000 }); 
           nearest = findNearest(location.coords, sitelocations);
         }
@@ -121,11 +120,11 @@ export default class CurrentLocation extends React.Component {
         site = nearest.site;
         prov = nearest.prov;
       }
-      this.props.navigation.setParams({ location: 'downloading...'});
+      // this.props.navigation.setParams({ location: 'downloading...'});
       let targetUrl = 'https://dd.weather.gc.ca/citypage_weather/xml/' + prov + '/' + site + '_e.xml';
       console.debug('targetUrl: ' + targetUrl);
       const xml = await this.fetchXML(targetUrl);
-      this.props.navigation.setParams({ location: 'parsing...'});
+      // this.props.navigation.setParams({ location: 'parsing...'});
       const responseJson = await this.jsonFromXml(xml);
       //console.debug(JSON.stringify(responseJson));
       const entries = this.loadJsonData(responseJson);
@@ -169,18 +168,28 @@ export default class CurrentLocation extends React.Component {
       if (responseJson.forecastGroup.forecast && responseJson.forecastGroup.forecast.length) {
         responseJson.forecastGroup.forecast.forEach((entry, index) => {
           //skip the night forecasts, except for tonight
-          if (index === 0 || entry.temperatures.temperature.class === "high") {
+          if (index === 0 || (entry.temperatures.temperature && entry.temperatures.temperature.class === "high")) {
             //remove temperature summary from overall summary
             let textSummary = entry.textSummary;
             if (CurrentLocation.isString(entry.temperatures.textSummary))
               textSummary = entry.textSummary.replace(entry.temperatures.textSummary, '');
             
+            let iconCode = undefined;
+            if (entry.abbreviatedForecast && entry.abbreviatedForecast.iconCode && entry.abbreviatedForecast.iconCode._)
+              iconCode = entry.abbreviatedForecast.iconCode._;
+            else if (entry.iconCode && entry.iconCode._)
+              iconCode = entry.iconCode._;
+
+            let temperature = '';
+            if (entry.temperatures && entry.temperatures.temperature && entry.temperatures.temperature._)
+              temperature = entry.temperatures.temperature._;
+
             entries.push({
-              icon: entry.abbreviatedForecast.iconCode._,
+              icon: iconCode,
               title: entry.period.textForecastName,
               summary: textSummary,
-              temperature: entry.temperatures.temperature._,
-              expanded: false,
+              temperature: temperature,
+              expanded: entries.length == 0,
             });
           }
         });
@@ -206,8 +215,8 @@ export default class CurrentLocation extends React.Component {
       return;
     
     const { navigation } = this.props;
-    if (navigation.getParam('site') === undefined)
-      this.props.navigation.setParams({ location: 'Loading...'});
+    // if (navigation.getParam('site') === undefined)
+    //   this.props.navigation.setParams({ location: 'Loading...'});
     this.setState({ isLoading: true }, () => { this.makeRemoteRequest(); });   
   };
 
@@ -236,56 +245,55 @@ export default class CurrentLocation extends React.Component {
     }
 
     return(
-      <View style={{flex: 1}}>
-        <FlatList
-          data={ this.state.dataSource }
-          renderItem={({item, index}) => {
-            let imageView;
-            if (item.icon !== undefined)
-              imageView = <Image style={{width: 50, height: 50, resizeMode: "contain"}} source={ this.iconCodeToName(item.icon) } />;
-            else
-              imageView = <View style={{width: 50, height: 50}}/>;
+      <FlatList style={{flex: 1}}
+        data={ this.state.dataSource }
+        renderItem={({item, index}) => {
+          let imageView;
+          if (item.icon !== undefined)
+            imageView = <Image style={{width: 50, height: 50, resizeMode: "contain"}} source={ this.iconCodeToName(item.icon) } />;
+          else
+            imageView = <View style={{width: 50, height: 50}}/>;
 
-            let warningView;
-            if (item.warning && item.warningUrl)
-              warningView = (
-                <TouchableHighlight style={{alignSelf:'flex-start'}} underlayColor='#ffffff' onPress={() => this.handleUrl(item, index)}>
-                  <Text style={{textDecorationLine:'underline', fontSize:13, color:'#c55900'}}>{item.warning && item.expanded ? item.warning : ''}</Text>
-                </TouchableHighlight>);
-            else
-              warningView = <View />;
-
-            // <View style={{flexDirection: "row"}} >
-            //   <Text style={{fontSize:13, flex:1}}>{item.summary && item.expanded ? item.summary : ''}</Text>
-            //   <MaterialIcons name={item.expanded ? 'expand-less' : 'expand-more'} size={14} />
-            // </View>
-
-            return (
-              <TouchableHighlight underlayColor='#ffb944' onPress={() => this.handlePress(item, index)}>
-              <View style={{flex:100, flexDirection: "row", paddingTop: 0, paddingBottom: 5, paddingRight: 5}}>
-                {imageView}
-                <View style={{flex:1, flexDirection: "column", paddingLeft: 10, paddingTop: 5}}>
-                  <View style={{flexDirection: "row"}} >
-                    <Text style={{fontSize: 18, fontFamily: 'montserrat', flex:1}}>{item.title}</Text>
-                    <Text style={{fontSize: 18, fontWeight: "bold"}}>{item.temperature + '°'}</Text>
-                  </View>
-                  <Text style={{fontSize:13, flex:1}}>{item.summary && item.expanded ? item.summary : ''}</Text>
-                  {warningView}
-                </View>
-              </View>
+          let warningView = null;
+          if (item.warning && item.warningUrl)
+            warningView = (
+              <TouchableHighlight style={{alignSelf:'flex-start'}} underlayColor='#ffffff' onPress={() => this.handleUrl(item, index)}>
+                <Text style={{textDecorationLine:'underline', fontSize:13, color:'#c55900'}}>{item.warning && item.expanded ? item.warning : ''}</Text>
               </TouchableHighlight>);
-            }}
-          keyExtractor={item => item.title}
-          ItemSeparatorComponent={({highlighted}) => (
-            <View style={{height: 1, backgroundColor: "#eeeeee"}} />
-            )}
-          ListFooterComponent={({highlighted}) => (
-            <View style={{height: 1, backgroundColor: "#eeeeee"}} />
-            )}
-          refreshing={this.state.isLoading}
-          onRefresh={this.handleRefresh}
-        />
-      </View>
+
+          let summmaryView = null;
+          if (item.summary && item.expanded)
+              summmaryView = (<Text style={{fontSize:13, flex:1}}>{item.summary}</Text>);
+
+          // <View style={{flexDirection: "row"}} >
+          //   <Text style={{fontSize:13, flex:1}}>{item.summary && item.expanded ? item.summary : ''}</Text>
+          //   <MaterialIcons name={item.expanded ? 'expand-less' : 'expand-more'} size={14} />
+          // </View>
+
+          //<Divider style={{ flex:100, backgroundColor: 'black' }} />
+
+          return (
+            <TouchableHighlight underlayColor='#ffb944' onPress={() => this.handlePress(item, index)}>
+              <View style={{flex:100, flexDirection: "column"}} >
+                <View style={{flex:100, flexDirection: "row", paddingTop: 0, paddingBottom: 5, paddingRight: 5}}>
+                  {imageView}
+                  <View style={{flex:1, flexDirection: "column", paddingLeft: 10, paddingTop: 5}}>
+                    <View style={{flexDirection: "row"}} >
+                      <Text style={{fontSize: 18, fontFamily: 'montserrat', flex:1}}>{item.title}</Text>
+                      <Text style={{fontSize: 18, fontWeight: "bold"}}>{item.temperature ? item.temperature + '°' : ''}</Text>
+                    </View>
+                    {summmaryView}
+                    {warningView}
+                  </View>
+                </View>
+                <View style={{ height:1, backgroundColor: '#eeeeee' }} />
+              </View>
+            </TouchableHighlight>);
+          }}
+        keyExtractor={item => item.title}
+        refreshing={this.state.isLoading}
+        onRefresh={this.handleRefresh}
+      />
     );
   }
 

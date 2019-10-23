@@ -7,7 +7,7 @@ import LocationScreen from '../screens/LocationScreen';
 import NearbyScreen from '../screens/NearbyScreen';
 import FavoritesScreen from '../screens/FavoritesScreen';
 import BrowseScreen from '../screens/BrowseScreen';
-import { ProvinceCityListScreen } from '../screens/CityListScreen';
+import CityListScreen from '../screens/CityListScreen';
 import SearchScreen from '../screens/SearchScreen';
 
 const navOptions = {
@@ -77,7 +77,7 @@ FavoritesStack.path = '';
 const BrowseStack = createStackNavigator(
   {
     Browse: BrowseScreen,
-    CityList: ProvinceCityListScreen,
+    CityList: CityListScreen,
     City: LocationScreen,
   },
   config
