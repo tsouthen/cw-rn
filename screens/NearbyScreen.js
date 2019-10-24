@@ -1,10 +1,12 @@
 import React from 'react';
-import { View } from 'react-native';
+import CityListScreen from './CityListScreen';
 
-export default function NearbyScreen() {
-  return <View />;
-}
+export default function NearbyScreen(props) {
+  return (
+    <CityListScreen cities={props.navigation.cities} {...props} />
+  );
+};
 
 NearbyScreen.navigationOptions = {
-  title: 'Nearby goes here...',
+  title: 'Nearby',
 };

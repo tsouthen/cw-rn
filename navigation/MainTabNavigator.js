@@ -21,6 +21,7 @@ const navOptions = {
   headerTitleStyle: {
     fontFamily: 'montserrat',
     fontWeight: 'normal',
+    fontSize: 18
   }, 
 };
 
@@ -34,6 +35,8 @@ const config = Platform.select({
 const LocationStack = createStackNavigator(
   {
     Location: LocationScreen,
+    CityList: CityListScreen,
+    City: LocationScreen,
   },
   config
 );

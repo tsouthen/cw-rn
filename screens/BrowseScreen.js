@@ -1,7 +1,6 @@
 import React from 'react';
-import { View, Text, FlatList, TouchableHighlight } from 'react-native';
+import { View, FlatList } from 'react-native';
 import { SimpleListItem } from '../components/SimpleListItem';
-//import { MaterialIcons } from '@expo/vector-icons';
 
 const provinces = [
   { name: 'Alberta', abbr: 'AB' },
@@ -24,12 +23,10 @@ export default class BrowseScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: 'Browse',
-      //headerRight: (<MaterialIcons name='search' color='#fff' size={24} style={{marginRight: 5}} />),
     };
   };
 
   handlePress = (item) => {
-    // alert('Pressed item: ' + item.name);
     this.props.navigation.navigate('CityList', { 
       province: item,
       title: item.name,

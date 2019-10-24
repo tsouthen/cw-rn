@@ -1,12 +1,12 @@
 import React from 'react';
 import { Platform, FlatList, ActivityIndicator, StyleSheet, Text, View, Image, TouchableHighlight, Linking  } from 'react-native';
-import { findNearest, orderByDistance } from 'geolib';
 import sitelocations from '../constants/sitelocations';
 import * as Location from 'expo-location';
 import Constants from 'expo-constants';
 import { parseString } from 'react-native-xml2js';
 import iconv from 'iconv-lite';
 import { Buffer } from 'buffer';
+import { Icon } from 'react-native-elements';
 
 const styles = StyleSheet.create({
   container: {
@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
   title: {
     color: 'white',
     fontWeight: 'normal',
-    fontSize: 20,
+    fontSize: 18,
     fontFamily: 'montserrat',
     backgroundColor: '#FF8800',
     padding: 5
@@ -32,9 +32,17 @@ export default class CurrentLocation extends React.Component {
 
   static navigationOptions = ({ navigation }) => {
     //console.debug(navigation);
+    // <Icon type='material' name='star-border' color='#ffffff' underlayColor='#FF8800' size={24} iconStyle={{marginRight: 5}} onPress={navigation.getParam('toggleFavoriteAction')} />
+    let nearMe = null;
+    if (navigation.getParam('site') === undefined)
+      nearMe = (<Icon type='material' name='near-me' color='#ffffff' underlayColor='#FF8800' size={24} iconStyle={{marginRight: 10}} onPress={navigation.getParam('nearMeAction')} />);
     return {
       title: navigation.getParam('location', 'Location'),
-      //headerRight: (<MaterialIcons name='search' color='#fff' size={24} style={{marginRight: 5}} />),
+      headerRight: (
+        <View style={{flexDirection:'row'}}>
+          {nearMe}
+        </View>
+        ),
     };
   };
 
@@ -44,11 +52,23 @@ export default class CurrentLocation extends React.Component {
       isLoading: true,
       dataSource: [],
       }
-  }
+  };
 
   componentDidMount() {
     this.makeRemoteRequest();
-  }
+    this.props.navigation.setParams({nearMeAction : this.handleNearMe, toggleFavoriteAction: this.toggleFavorite })
+  };
+
+  handleNearMe = () => {
+    this.props.navigation.navigate('CityList', { 
+      title: 'Nearby',
+      cities: this.state.nearestSites,
+    });
+  };
+
+  toggleFavorite = () => {
+    alert('Favorite pressed');
+  };
 
   randomInRange = (start, end) => {
     return start + ((end - start) * Math.random());
@@ -95,20 +115,34 @@ export default class CurrentLocation extends React.Component {
     });
   };
 
+  orderByDistance = function(point, coords) {
+    return coords.sort((a, b) => this.getDistanceSquared(point, a) - this.getDistanceSquared(point, b));
+  };
+
+  getDistanceSquared = function(a, b) {
+    return Math.pow(b.longitude - a.longitude, 2) + Math.pow(b.latitude - a.latitude, 2);
+  };
+
   makeRemoteRequest = async () => {
     try {
+      let sortedLocs = [];
       const { navigation } = this.props;
       let nearest = navigation.getParam('site', undefined);
       if (!nearest) {
+        let location;
         if (Platform.OS === 'android' && !Constants.isDevice) {
           nearest = sitelocations[this.randomIntInRange(0, sitelocations.length)];
+          location = { coords: { latitude: nearest.latitude, longitude: nearest.longitude }};
         } else {
           // this.props.navigation.setParams({ location: 'requesting permission...'});
           await Location.requestPermissionsAsync();
           // this.props.navigation.setParams({ location: 'getting location...'});
-          let location = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Lowest, maximumAge: 900000 }); 
-          nearest = findNearest(location.coords, sitelocations);
+          location = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Lowest, maximumAge: 900000 }); 
         }
+        sortedLocs = this.orderByDistance(location.coords, sitelocations);
+        sortedLocs = sortedLocs.slice(0, 10);
+        //console.debug(sortedLocs);
+        nearest = sortedLocs[0]; //findNearest(location.coords, sitelocations);
       }
       let site = 's0000047'; //Calgary
       let prov = 'AB';
@@ -130,8 +164,8 @@ export default class CurrentLocation extends React.Component {
       const entries = this.loadJsonData(responseJson);
       this.setState({
         isLoading: false,
-        dataSource: entries
-      }, function () {
+        dataSource: entries,
+        nearestSites: sortedLocs,
       });
 
       this.props.navigation.setParams({ location: responseJson.location.name._});
