@@ -180,12 +180,19 @@ export default class CurrentLocation extends React.Component {
 
     try {
       //create a new forecast entry for the current conditions
+      let temperature = '';
+      temperature = responseJson.currentConditions.temperature._;
+      if (temperature) {
+        let tempVal = Number(temperature);
+        if (!isNaN(tempVal))
+          temperature = Math.round(tempVal);
+      }
       if (responseJson.currentConditions && responseJson.currentConditions.temperature && responseJson.currentConditions.temperature._) {
         const entry = {
           icon: responseJson.currentConditions.iconCode._,
-          title: 'Now', //responseJson.location.name._,
+          title: 'Now',
           summary: CurrentLocation.valueOrEmptyString(responseJson.currentConditions.condition),
-          temperature: responseJson.currentConditions.temperature._,
+          temperature: temperature,
           expanded: true,
         };
 
