@@ -4,7 +4,6 @@ import { createStackNavigator, createBottomTabNavigator, createMaterialTopTabNav
 
 import TabBarIcon from '../components/TabBarIcon';
 import LocationScreen from '../screens/LocationScreen';
-import NearbyScreen from '../screens/NearbyScreen';
 import FavoritesScreen from '../screens/FavoritesScreen';
 import BrowseScreen from '../screens/BrowseScreen';
 import CityListScreen from '../screens/CityListScreen';
@@ -47,20 +46,6 @@ LocationStack.navigationOptions = {
   ),
 };
 LocationStack.path = '';
-
-const NearbyStack = createStackNavigator(
-  {
-    Nearby: NearbyScreen,
-  },
-  config
-);
-NearbyStack.navigationOptions = {
-  tabBarLabel: () => {},
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon focused={focused} library='MaterialIcons' name='near-me' />
-  ),
-};
-NearbyStack.path = '';
 
 const FavoritesStack = createStackNavigator(
   {
@@ -114,7 +99,6 @@ if (Platform.OS === 'android')
 
 const tabNavigator = createFunc({
   LocationStack,
-  //NearbyStack,
   FavoritesStack,
   BrowseStack,
   SearchStack,
