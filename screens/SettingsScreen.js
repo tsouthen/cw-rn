@@ -25,16 +25,16 @@ export default class SettingsScreen extends React.Component {
     }
   };
 
-  newSwitch = (propName) => {
-    return <Switch
-      thumbColor='#FF8800' 
-      trackColor={{false:'#b2b2b2', true:'#ffb944'}}
-      value={this.state[propName]}
-      onValueChange={(value) => {
+  switchProps = (propName) => {
+    return {
+      thumbColor: '#FF8800',
+      trackColor: {false:'#b2b2b2', true:'#ffb944'},
+      value: this.state[propName],
+      onValueChange: (value) => {
         this.setState({[propName]: value}, () => global.settings = this.state);
         AsyncStorage.setItem('settings', JSON.stringify(this.state));
-      }}
-      />
+      },
+    };
   };
 
   render() {
@@ -43,20 +43,20 @@ export default class SettingsScreen extends React.Component {
         <ListItem title='Night Forecasts' 
           titleStyle={{fontFamily: 'montserrat'}}
           subtitle='Show overnight city forecasts.' 
-          leftIcon={{name: 'md-moon', type: 'ionicon'}}
-          rightElement={this.newSwitch('night')}
+          leftIcon={{name: 'md-moon', type: 'ionicon', color: 'black'}}
+          switch={this.switchProps('night')}
         />
-        <ListItem title='Hourly Forecast' 
+        <ListItem title='Hourly Forecasts' 
           titleStyle={{fontFamily: 'montserrat'}}
           subtitle='Show 24-hour city forecasts.' 
-          leftIcon={{name: 'access-time', type: 'material'}}
-          rightElement={this.newSwitch('hourly')}
+          leftIcon={{name: 'access-time', type: 'material', color: 'black'}}
+          switch={this.switchProps('hourly')}
         />
         <ListItem title='Rounded Temperature' 
           titleStyle={{fontFamily: 'montserrat'}}
           subtitle='Round current temperature to the nearest degree.' 
-          leftIcon={{name: 'decimal-decrease', type: 'material-community'}}
-          rightElement={this.newSwitch('round')}
+          leftIcon={{name: 'decimal-decrease', type: 'material-community', color: 'black'}}
+          switch={this.switchProps('round')}
         />
       </View>
     );

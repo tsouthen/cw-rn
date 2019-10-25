@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, FlatList } from 'react-native';
 import { SimpleListItem } from '../components/SimpleListItem';
+import { Icon } from 'react-native-elements';
 
 const provinces = [
   { name: 'Alberta', abbr: 'AB' },
@@ -21,9 +22,26 @@ const provinces = [
 export default class BrowseScreen extends React.Component {
 
   static navigationOptions = ({ navigation }) => {
+    let search = (<Icon type='material' name='search' color='#ffffff' underlayColor='#FF8800' size={24} iconStyle={{marginRight: 10}} onPress={navigation.getParam('searchAction')} />);
     return {
       title: 'Browse',
+      headerRight: (
+        <View style={{flexDirection:'row'}}>
+          {search}
+        </View>),
     };
+  };
+
+  componentDidMount() {
+    this.props.navigation.setParams({
+      searchAction : this.handleSearch, 
+    });
+  };
+
+  handleSearch = () => {
+    this.props.navigation.navigate('Search', { 
+      title: 'Search',
+    });
   };
 
   handlePress = (item) => {
