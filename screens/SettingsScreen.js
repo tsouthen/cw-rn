@@ -1,0 +1,64 @@
+import React from 'react';
+import { View, Text, Switch, AsyncStorage } from 'react-native';
+import { ListItem } from 'react-native-elements';
+
+export default class SettingsScreen extends React.Component {
+  static navigationOptions = {
+    title: 'Settings',
+  };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      night: false,
+      round: true,
+      hourly: true,
+    };
+    global.settings = this.state;
+  };
+
+  async componentDidMount() {
+    const settings = await AsyncStorage.getItem('Settings');
+    if (settings) {
+      global.settings = JSON.parse(settings);
+      this.setState({settings: settings});
+    }
+  };
+
+  newSwitch = (propName) => {
+    return <Switch
+      thumbColor='#FF8800' 
+      trackColor={{false:'#b2b2b2', true:'#ffb944'}}
+      value={this.state[propName]}
+      onValueChange={(value) => {
+        this.setState({[propName]: value}, () => global.settings = this.state);
+        AsyncStorage.setItem('settings', JSON.stringify(this.state));
+      }}
+      />
+  };
+
+  render() {
+    return (
+      <View style={{flexDirection:'column'}} >
+        <ListItem title='Night Forecasts' 
+          titleStyle={{fontFamily: 'montserrat'}}
+          subtitle='Show overnight city forecasts.' 
+          leftIcon={{name: 'md-moon', type: 'ionicon'}}
+          rightElement={this.newSwitch('night')}
+        />
+        <ListItem title='Hourly Forecast' 
+          titleStyle={{fontFamily: 'montserrat'}}
+          subtitle='Show 24-hour city forecasts.' 
+          leftIcon={{name: 'access-time', type: 'material'}}
+          rightElement={this.newSwitch('hourly')}
+        />
+        <ListItem title='Rounded Temperature' 
+          titleStyle={{fontFamily: 'montserrat'}}
+          subtitle='Round current temperature to the nearest degree.' 
+          leftIcon={{name: 'decimal-decrease', type: 'material-community'}}
+          rightElement={this.newSwitch('round')}
+        />
+      </View>
+    );
+  }
+};

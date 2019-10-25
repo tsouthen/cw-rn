@@ -175,25 +175,19 @@ export default class CurrentLocation extends React.Component {
   };
 
   loadJsonData = (responseJson) => {
-    //returns an array of objects with the following keys: icon, title, summary, temperature, expanded
+    //returns an array of objects with the following keys: icon, title, summary, temperature, expanded, isNight, warning, warningUrl
     let entries = [];
 
     try {
       //create a new forecast entry for the current conditions
       if (responseJson.currentConditions && responseJson.currentConditions.temperature && responseJson.currentConditions.temperature._) {
-        let temperature = '';
-        temperature = responseJson.currentConditions.temperature._;
-        if (temperature) {
-          let tempVal = Number(temperature);
-          if (!isNaN(tempVal))
-            temperature = Math.round(tempVal);
-        }
         const entry = {
           icon: responseJson.currentConditions.iconCode._,
           title: 'Now',
           summary: CurrentLocation.valueOrEmptyString(responseJson.currentConditions.condition),
-          temperature: temperature,
+          temperature: responseJson.currentConditions.temperature._,
           expanded: true,
+          isNight: false,
         };
 
         if (responseJson.warnings.event && responseJson.warnings.event.description) {
@@ -208,31 +202,29 @@ export default class CurrentLocation extends React.Component {
 
       if (responseJson.forecastGroup.forecast && responseJson.forecastGroup.forecast.length) {
         responseJson.forecastGroup.forecast.forEach((entry, index) => {
-          //skip the night forecasts, except for tonight
-          if (index === 0 || (entry.temperatures.temperature && entry.temperatures.temperature.class === "high")) {
-            //remove temperature summary from overall summary
-            let textSummary = entry.textSummary;
-            if (CurrentLocation.isString(entry.temperatures.textSummary))
-              textSummary = entry.textSummary.replace(entry.temperatures.textSummary, '');
-            
-            let iconCode = undefined;
-            if (entry.abbreviatedForecast && entry.abbreviatedForecast.iconCode && entry.abbreviatedForecast.iconCode._)
-              iconCode = entry.abbreviatedForecast.iconCode._;
-            else if (entry.iconCode && entry.iconCode._)
-              iconCode = entry.iconCode._;
+          //remove temperature summary from overall summary
+          let textSummary = entry.textSummary;
+          if (CurrentLocation.isString(entry.temperatures.textSummary))
+            textSummary = entry.textSummary.replace(entry.temperatures.textSummary, '');
+          
+          let iconCode = undefined;
+          if (entry.abbreviatedForecast && entry.abbreviatedForecast.iconCode && entry.abbreviatedForecast.iconCode._)
+            iconCode = entry.abbreviatedForecast.iconCode._;
+          else if (entry.iconCode && entry.iconCode._)
+            iconCode = entry.iconCode._;
 
-            let temperature = '';
-            if (entry.temperatures && entry.temperatures.temperature && entry.temperatures.temperature._)
-              temperature = entry.temperatures.temperature._;
+          let temperature = '';
+          if (entry.temperatures && entry.temperatures.temperature && entry.temperatures.temperature._)
+            temperature = entry.temperatures.temperature._;
 
-            entries.push({
-              icon: iconCode,
-              title: entry.period.textForecastName,
-              summary: textSummary,
-              temperature: temperature,
-              expanded: entries.length == 0,
-            });
-          }
+          entries.push({
+            icon: iconCode,
+            title: entry.period.textForecastName,
+            summary: textSummary,
+            temperature: temperature,
+            expanded: entries.length == 0,
+            isNight: entry.temperatures.temperature !== undefined && entry.temperatures.temperature.class === "low",
+          });
         });
       }
     } catch (error) {
@@ -289,6 +281,10 @@ export default class CurrentLocation extends React.Component {
       <FlatList style={{flex: 1}}
         data={ this.state.dataSource }
         renderItem={({item, index}) => {
+          let allowNight = global.settings && global.settings.night;
+          if (index > 1 && !allowNight && item.isNight)
+            return null;
+
           let imageView;
           if (item.icon !== undefined)
             imageView = <Image style={{width: 50, height: 50, resizeMode: "contain"}} source={ this.iconCodeToName(item.icon) } />;
@@ -306,13 +302,13 @@ export default class CurrentLocation extends React.Component {
           if (item.summary && item.expanded)
               summmaryView = (<Text style={{fontSize:13, flex:1}}>{item.summary}</Text>);
 
-          // <View style={{flexDirection: "row"}} >
-          //   <Text style={{fontSize:13, flex:1}}>{item.summary && item.expanded ? item.summary : ''}</Text>
-          //   <MaterialIcons name={item.expanded ? 'expand-less' : 'expand-more'} size={14} />
-          // </View>
-
-          //<Divider style={{ flex:100, backgroundColor: 'black' }} />
-
+          let fontColor = item.isNight ? '#777777' : 'black';
+          let fontWeight = item.isNight ? 'normal' : 'bold';
+          if (item.temperature && global.settings && global.settings.round) {
+            let tempVal = Number(item.temperature);
+            if (!isNaN(tempVal))
+              item.temperature = Math.round(tempVal);
+          }
           return (
             <TouchableHighlight underlayColor='#ffb944' onPress={() => this.handlePress(item, index)}>
               <View style={{flex:100, flexDirection: "column"}} >
@@ -320,8 +316,8 @@ export default class CurrentLocation extends React.Component {
                   {imageView}
                   <View style={{flex:1, flexDirection: "column", paddingLeft: 10, paddingTop: 5}}>
                     <View style={{flexDirection: "row"}} >
-                      <Text style={{fontSize: 18, fontFamily: 'montserrat', flex:1}}>{item.title}</Text>
-                      <Text style={{fontSize: 18, fontWeight: "bold"}}>{item.temperature ? item.temperature + '°' : ''}</Text>
+                      <Text style={{fontSize: 18, fontFamily: 'montserrat', flex:1, color: fontColor}}>{item.title}</Text>
+                      <Text style={{fontSize: 18, fontWeight: fontWeight, color: fontColor}}>{item.temperature ? item.temperature + '°' : ''}</Text>
                     </View>
                     {summmaryView}
                     {warningView}
