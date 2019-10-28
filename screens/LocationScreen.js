@@ -289,7 +289,7 @@ export default class CurrentLocation extends React.Component {
   loadHourlyForecasts = (responseJson) => {
     let entries = [];
 
-    if (responseJson.hourlyForecastGroup.hourlyForecast && responseJson.hourlyForecastGroup.hourlyForecast.length) {
+    if (responseJson.hourlyForecastGroup && responseJson.hourlyForecastGroup.hourlyForecast && responseJson.hourlyForecastGroup.hourlyForecast.length) {
       // let utcTimeStamp = responseJson.hourlyForecastGroup.dateTime[0].timeStamp;
       // let localHour = parseInt(responseJson.hourlyForecastGroup.dateTime[1].hour);
       let utcOffset = Number(responseJson.hourlyForecastGroup.dateTime[1].UTCOffset);

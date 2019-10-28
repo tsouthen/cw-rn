@@ -57,7 +57,7 @@ export default class BrowseScreen extends React.Component {
         <FlatList
           data={provinces}
           renderItem={({item, index}) => {
-            return (<SimpleListItem itemPress={() => this.handlePress(item)}>{item.name}</SimpleListItem>);
+            return (<SimpleListItem onPress={() => this.handlePress(item)}>{item.name}</SimpleListItem>);
           }}
           keyExtractor={item => item.name}         
         />
