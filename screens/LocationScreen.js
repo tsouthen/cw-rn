@@ -6,51 +6,40 @@ import Constants from 'expo-constants';
 import { parseString } from 'react-native-xml2js';
 import iconv from 'iconv-lite';
 import { Buffer } from 'buffer';
-import { Icon, ListItem } from 'react-native-elements';
+import { Icon, ButtonGroup } from 'react-native-elements';
+import CityListScreen from './CityListScreen';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 15,
-    backgroundColor: '#fff',
-  },
-  title: {
-    color: 'white',
-    fontWeight: 'normal',
-    fontSize: 18,
-    fontFamily: 'montserrat',
-    backgroundColor: '#FF8800',
-    padding: 5
-  },
-});
+import Colors from '../constants/Colors';
 
-//primary: #FF8800
-//dark: #c55900
-//light: #ffb944
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     paddingTop: 15,
+//     backgroundColor: '#fff',
+//   },
+//   title: {
+//     color: 'white',
+//     fontWeight: 'normal',
+//     fontSize: 18,
+//     fontFamily: 'montserrat',
+//     backgroundColor: Colors.primary,
+//     padding: 5
+//   },
+// });
 
 export default class CurrentLocation extends React.Component {
 
   static navigationOptions = ({ navigation }) => {
     //console.debug(navigation);
-    // <Icon type='material' name='star-border' color='#ffffff' underlayColor='#FF8800' size={24} iconStyle={{marginRight: 5}} onPress={navigation.getParam('toggleFavoriteAction')} />
-    let isHourly = navigation.getParam('isHourly', false);
-    let hasHourly = navigation.getParam('hourlyData') !== undefined;
-    let nearMeIcon = null;
+    // <Icon type='material' name='star-border' color='#ffffff' underlayColor=colors.primary size={24} iconStyle={{marginRight: 5}} onPress={navigation.getParam('toggleFavoriteAction')} />
     let settingsIcon = null;
-    let hourlyIcon = null;
-
-    if (!isHourly && navigation.getParam('site') === undefined) {
-      nearMeIcon = (<Icon type='material' name='near-me' color='#ffffff' underlayColor='#FF8800' size={24} iconStyle={{marginRight: 10}} onPress={navigation.getParam('nearMeAction')} />);
-      settingsIcon = (<Icon type='material' name='settings' color='#ffffff' underlayColor='#FF8800' size={24} iconStyle={{marginRight: 10}} onPress={navigation.getParam('settingsAction')} />);
+    if (navigation.getParam('site') === undefined) {
+      settingsIcon = (<Icon type='material' name='settings' color='#ffffff' underlayColor={Colors.primary} size={24} iconStyle={{marginRight: 10}} onPress={navigation.getParam('settingsAction')} />);
     }
-    if (!isHourly && hasHourly)
-      hourlyIcon = (<Icon type='material' name='access-time' color='#ffffff' underlayColor='#FF8800' size={24} iconStyle={{marginRight: 10}} onPress={navigation.getParam('hourlyAction')} />);
     return {
       title: navigation.getParam('location', 'Location'),
       headerRight: (
         <View style={{flexDirection:'row'}}>
-          {hourlyIcon}
-          {nearMeIcon}
           {settingsIcon}
         </View>),
     };
@@ -60,24 +49,20 @@ export default class CurrentLocation extends React.Component {
     super(props);
     this.state = { 
       isLoading: true,
-      dataSource: [],
+      dataSource: {
+        forecasts: [],
+        nearestSites: [],
+        hourlyData: [],
+      },
+      selectedIndex: 0,
       }
   };
 
   componentDidMount() {
     this.makeRemoteRequest();
     this.props.navigation.setParams({
-      nearMeAction : this.handleNearMe, 
       toggleFavoriteAction: this.toggleFavorite,
       settingsAction: this.handleSettings,
-      hourlyAction: this.handleHourly,
-    });
-  };
-
-  handleNearMe = () => {
-    this.props.navigation.navigate('CityList', { 
-      title: 'Nearby',
-      cities: this.state.nearestSites,
     });
   };
 
@@ -85,20 +70,6 @@ export default class CurrentLocation extends React.Component {
     this.props.navigation.navigate('Settings', { 
       title: 'Settings',
     });
-  };
-
-  handleHourly = () => {
-    let hourlyData = this.props.navigation.getParam('hourlyData');
-    if (hourlyData) {
-      let location = this.props.navigation.getParam('location');
-      if (location)
-        location = location + ' (Hourly)';
-      this.props.navigation.push('City', { 
-        location: location || 'Hourly',
-        hourlyData: hourlyData,
-        isHourly: true,
-      });
-    }
   };
 
   toggleFavorite = () => {
@@ -161,59 +132,56 @@ export default class CurrentLocation extends React.Component {
   makeRemoteRequest = async () => {
     try {
       let sortedLocs = [];
-      let entries = [];
 
       const { navigation } = this.props;
-      if (navigation.getParam('isHourly', false))
-        entries = navigation.getParam('hourlyData', []);
 
-      if (!entries || entries.length == 0) {
-        let nearest = navigation.getParam('site', undefined);
-        if (!nearest) {
-          let location;
-          if (Platform.OS === 'android' && !Constants.isDevice) {
-            nearest = sitelocations[this.randomIntInRange(0, sitelocations.length)];
-            location = { coords: { latitude: nearest.latitude, longitude: nearest.longitude }};
-          } else {
-            // this.props.navigation.setParams({ location: 'requesting permission...'});
-            await Location.requestPermissionsAsync();
-            // this.props.navigation.setParams({ location: 'getting location...'});
-            location = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Lowest, maximumAge: 900000 }); 
-          }
-          sortedLocs = this.orderByDistance(location.coords, sitelocations);
-          sortedLocs = sortedLocs.slice(0, 10);
-          //console.debug(sortedLocs);
-          nearest = sortedLocs[0]; //findNearest(location.coords, sitelocations);
+      let nearest = navigation.getParam('site', undefined);
+      if (!nearest) {
+        let location;
+        if (Platform.OS === 'android' && !Constants.isDevice) {
+          nearest = sitelocations[this.randomIntInRange(0, sitelocations.length)];
+          location = { coords: { latitude: nearest.latitude, longitude: nearest.longitude }};
+        } else {
+          // this.props.navigation.setParams({ location: 'requesting permission...'});
+          await Location.requestPermissionsAsync();
+          // this.props.navigation.setParams({ location: 'getting location...'});
+          location = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Lowest, maximumAge: 900000 }); 
         }
-        let site = 's0000047'; //Calgary
-        let prov = 'AB';
-        // site = 's0000656'; //Comox
-        // prov = 'BC';
-        // nearest = undefined;
-        if (nearest) {
-          // console.debug(nearest);
-          site = nearest.site;
-          prov = nearest.prov;
-        }
-        // this.props.navigation.setParams({ location: 'downloading...'});
-        let targetUrl = 'https://dd.weather.gc.ca/citypage_weather/xml/' + prov + '/' + site + '_e.xml';
-        console.debug('targetUrl: ' + targetUrl);
-        const xml = await this.fetchXML(targetUrl);
-        // this.props.navigation.setParams({ location: 'parsing...'});
-        const responseJson = await this.jsonFromXml(xml);
-        //console.debug(JSON.stringify(responseJson));
-        entries = this.loadJsonData(responseJson);
-        let hourlyData = this.loadHourlyForecasts(responseJson);
-        this.props.navigation.setParams({ 
-          location: responseJson.location.name._,
-          hourlyData: hourlyData,
-        });
+        sortedLocs = this.orderByDistance(location.coords, sitelocations);
+        sortedLocs = sortedLocs.slice(0, 10);
+        //console.debug(sortedLocs);
+        nearest = sortedLocs[0]; //findNearest(location.coords, sitelocations);
       }
+      let site = 's0000047'; //Calgary
+      let prov = 'AB';
+      // site = 's0000656'; //Comox
+      // prov = 'BC';
+      // nearest = undefined;
+      if (nearest) {
+        // console.debug(nearest);
+        site = nearest.site;
+        prov = nearest.prov;
+      }
+      // this.props.navigation.setParams({ location: 'downloading...'});
+      let targetUrl = 'https://dd.weather.gc.ca/citypage_weather/xml/' + prov + '/' + site + '_e.xml';
+      console.debug('targetUrl: ' + targetUrl);
+      const xml = await this.fetchXML(targetUrl);
+      // this.props.navigation.setParams({ location: 'parsing...'});
+      const responseJson = await this.jsonFromXml(xml);
+      //console.debug(JSON.stringify(responseJson));
+      let entries = this.loadJsonData(responseJson);
+      let hourlyData = this.loadHourlyForecasts(responseJson);
+      this.props.navigation.setParams({ 
+        location: responseJson.location.name._,
+      });
 
       this.setState({
         isLoading: false,
-        dataSource: entries,
-        nearestSites: sortedLocs,
+        dataSource: {
+          forecasts: entries,
+          nearestSites: sortedLocs,
+          hourlyData: hourlyData,
+        },
       });
     } catch (error) {
       console.error(error);
@@ -371,10 +339,8 @@ export default class CurrentLocation extends React.Component {
   };
 
   handlePress = (item, index) => {
-    //alert('Row pressed:' + index);
-    var dataSource = this.state.dataSource;
-    dataSource[index].expanded = !dataSource[index].expanded;
-    this.setState({ dataSource: dataSource});
+    item.expanded = !item.expanded;
+    this.setState({ dataSource: this.state.dataSource});
   };
 
   handleUrl = (item, index) => {
@@ -398,7 +364,7 @@ export default class CurrentLocation extends React.Component {
     if (item.warning && item.warningUrl)
       warningView = (
         <TouchableHighlight style={{alignSelf:'flex-start'}} underlayColor='#ffffff' onPress={() => this.handleUrl(item, index)}>
-          <Text style={{textDecorationLine:'underline', fontSize:13, color:'#c55900'}}>{item.warning && item.expanded ? item.warning : ''}</Text>
+          <Text style={{textDecorationLine:'underline', fontSize:13, color: Colors.primaryDark}}>{item.warning && item.expanded ? item.warning : ''}</Text>
         </TouchableHighlight>);
 
     let summmaryView = null;
@@ -414,7 +380,7 @@ export default class CurrentLocation extends React.Component {
         temperature = Math.round(tempVal);
     }
     return (
-      <TouchableHighlight underlayColor='#ffb944' onPress={() => this.handlePress(item, index)}>
+      <TouchableHighlight underlayColor={Colors.primaryLight} onPress={() => this.handlePress(item, index)}>
         <View style={{flex:100, flexDirection: "column"}} >
           <View style={{flex:100, flexDirection: "row", paddingTop: 0, paddingBottom: 5, paddingRight: 5}}>
             {imageView}
@@ -432,25 +398,91 @@ export default class CurrentLocation extends React.Component {
       </TouchableHighlight>);
   };
 
-  render() {
-    if (this.state.isLoading) {
-      // <Text>Loading...</Text>
-      return (
-        <View style={{flex: 1, marginTop: 40 }}>
-          <ActivityIndicator color='#c55900' />
-        </View>
-      )
-    }
-
-    return(
-      <FlatList
+  newFlatList = (data, key) => {
+    const keyProps = {};
+    if (key)
+      keyProps.key = key;
+    return (
+      <FlatList 
+        {...keyProps}
         style={{flex: 1}}
-        data={this.state.dataSource}
+        data={data}
         renderItem={this.renderItem}
         keyExtractor={item => item.title}
         refreshing={this.state.isLoading}
         onRefresh={this.handleRefresh}
       />
+    );
+  };
+ 
+  getButtonIcon = (name, type, index) => {
+    let color=Colors.tabIconDefault;
+    if (this.state.selectedIndex === index)
+      color = Colors.tabIconSelected;
+    return (
+      <Icon name={name} type={type} color={color} />
+      // <Button type="outline" color={color} icon={{name: name, type: type, color: color}} />
+    );
+  };
+
+  forecastIcon = () => {
+    return this.getButtonIcon('calendar-week', 'material-community', 0);
+  };
+
+  hourlyIcon = () => {
+    return this.getButtonIcon('access-time', 'material', 1);
+  };
+
+  nearbyIcon = () => {
+    return this.getButtonIcon('near-me', 'material', 2);
+  };
+
+  render() {
+    if (this.state.isLoading) {
+      // <Text>Loading...</Text>
+      return (
+        <View style={{flex: 1, marginTop: 40 }}>
+          <ActivityIndicator color={Colors.primaryDark} />
+        </View>
+      )
+    }
+
+    let flatList;
+    switch (this.state.selectedIndex) {
+      case 0:
+        flatList = this.newFlatList(this.state.dataSource.forecasts);
+        break;
+
+      case 1:
+        flatList = this.newFlatList(this.state.dataSource.hourlyData);
+        break;
+
+      case 2:
+        flatList = (<CityListScreen 
+          cities={this.state.dataSource.nearestSites} 
+          navigation={this.props.navigation} 
+          refreshing={this.state.isLoading}
+          onRefresh={this.handleRefresh}
+          />);
+        break;
+      }
+
+    let buttons = [ {element: this.forecastIcon}, {element: this.hourlyIcon}];
+    if (this.state.dataSource.nearestSites && this.state.dataSource.nearestSites.length)
+      buttons.push({element: this.nearbyIcon});
+    return (
+      <View style={{flex:1}}>
+        <ButtonGroup
+          onPress={(selectedIndex) => this.setState({selectedIndex})}
+          selectedIndex={this.state.selectedIndex}
+          selectedButtonStyle={{backgroundColor: 'white', borderColor: Colors.tabIconSelected, borderWidth: 0, borderBottomWidth: 2}}
+          containerStyle={{borderWidth: 0}}
+          innerBorderStyle={{width: 0}}
+          buttons={buttons}
+          underlayColor={Colors.primaryLight}
+        />
+        {flatList}
+      </View>
     );
   }
 

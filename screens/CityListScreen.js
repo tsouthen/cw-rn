@@ -5,7 +5,7 @@ import sitelocations from '../constants/sitelocations';
 import DraggableFlatList from 'react-native-draggable-dynamic-flatlist';
  
 export default function CityListScreen(props) {
-  let {cities, showProv, draggable} = props;
+  const {cities, showProv, draggable, ...remainingProps} = props;
   if (props.navigation) {
     let prov = props.navigation.getParam('province');
     if (prov) {
@@ -39,6 +39,7 @@ export default function CityListScreen(props) {
     return (
       <DraggableFlatList 
         {...commonProps}
+        {...remainingProps}
         onMoveEnd={({ data }) => props.data = data}
         renderItem={({item, index, move, moveEnd, isActive }) => {
           return (
@@ -50,6 +51,7 @@ export default function CityListScreen(props) {
   return (
     <FlatList 
       {...commonProps}
+      {...remainingProps}
       renderItem={({item}) => {
         return (
           <SimpleListItem onPress={() => onPress(item)}>

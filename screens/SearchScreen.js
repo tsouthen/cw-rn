@@ -3,6 +3,7 @@ import { Platform, View, Text, TextInput } from 'react-native';
 import CityListScreen from './CityListScreen';
 import { Icon } from 'react-native-elements';
 import sitelocations from '../constants/sitelocations';
+import Colors from '../constants/Colors';
 
 // Returns a function, that, as long as it continues to be invoked, will not
 // be triggered. The function will be called after it stops being called for
@@ -35,7 +36,7 @@ export default class SearchScreen extends React.Component {
             placeholderTextColor='white'
             placeholder='Search cities    ' 
             autoFocus={true} 
-            selectionColor='#c55900'
+            selectionColor={Colors.primaryDark}
             returnKeyType='search'
             onChangeText={navigation.getParam('searchAction')}
             ref={input => {
@@ -43,7 +44,7 @@ export default class SearchScreen extends React.Component {
               this.navigation = navigation;
             }}            
           />
-          <Icon type='material' name='clear' color='#ffffff' underlayColor='#FF8800' size={25} 
+          <Icon type='material' name='clear' color='#ffffff' underlayColor={Colors.primary} size={25} 
             iconStyle={{marginRight: 10}} 
             onPress={() => {
               this.input.clear();
