@@ -3,7 +3,7 @@ import * as Font from 'expo-font';
 import React, { useState } from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import AppNavigator from './navigation/AppNavigator';
-import { Entypo, MaterialIcons, FontAwesome, Ionicons } from '@expo/vector-icons';
+import { Entypo, MaterialIcons, FontAwesome, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 
 export default function App(props) {
   const [isLoadingComplete, setLoadingComplete] = useState(false);
@@ -37,6 +37,7 @@ async function loadResourcesAsync() {
       //Icons used in the tabs
       ...Entypo.font,
       ...MaterialIcons.font,
+      ...MaterialCommunityIcons.font,
       ...Ionicons.font,
       ...FontAwesome.font,
     }),

@@ -270,7 +270,7 @@ export default class CurrentLocation extends React.Component {
         if (mins < 10)
           minSuffix = '0';
         minSuffix += '' + mins;
-        console.debug('minSuffix: ' + minSuffix);
+        // console.debug('minSuffix: ' + minSuffix);
       } else {
         minSuffix = '00';
       }
@@ -281,10 +281,10 @@ export default class CurrentLocation extends React.Component {
         responseJson.riseSet.dateTime.forEach((entry, index) => {
           if (entry.name === 'sunrise' && entry.zone !== 'UTC') {
             sunrise = parseInt(entry.hour);
-            console.debug('sunrise: ' + sunrise);
+            // console.debug('sunrise: ' + sunrise);
           } else if (entry.name === 'sunset' && entry.zone !== 'UTC') {
             sunset = parseInt(entry.hour);
-            console.debug('sunset: ' + sunset);
+            // console.debug('sunset: ' + sunset);
             }
         });
       }
@@ -332,7 +332,7 @@ export default class CurrentLocation extends React.Component {
     if (this.state.isLoading)
       return;
     
-    const { navigation } = this.props;
+    // const { navigation } = this.props;
     // if (navigation.getParam('site') === undefined)
     //   this.props.navigation.setParams({ location: 'Loading...'});
     this.setState({ isLoading: true }, () => { this.makeRemoteRequest(); });   

@@ -45,9 +45,7 @@ const LocationStack = createStackNavigator(
 );
 LocationStack.navigationOptions = {
   tabBarLabel: () => {},
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon focused={focused} library='Entypo' name='location-pin' />
-  ),
+  tabBarIcon: ({ focused }) => (<TabBarIcon focused={focused} type='entypo' name='location-pin' />),
 };
 LocationStack.path = '';
 
@@ -60,9 +58,7 @@ const FavoritesStack = createStackNavigator(
 );
 FavoritesStack.navigationOptions = {
   tabBarLabel: () => {},
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon focused={focused} name='ios-star' />
-  ),
+  tabBarIcon: ({ focused }) => (<TabBarIcon focused={focused} type='font-awesome' name='star' />),
 };
 FavoritesStack.path = '';
 
@@ -77,41 +73,9 @@ const BrowseStack = createStackNavigator(
 );
 BrowseStack.navigationOptions = {
   tabBarLabel: () => {},
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon focused={focused} library='FontAwesome' name='globe' />
-  ),
+  tabBarIcon: ({ focused }) => (<TabBarIcon focused={focused} type='font-awesome' name='globe' />),
 };
 BrowseStack.path = '';
-
-const SearchStack = createStackNavigator(
-  {
-    Search: SearchScreen,
-    City: LocationScreen,
-  },
-  config
-);
-SearchStack.navigationOptions = {
-  tabBarLabel: () => {},
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon focused={focused} library='MaterialIcons' name='search' />
-  ),
-};
-SearchStack.path = '';
-
-const SettingsStack = createStackNavigator(
-  {
-    Settings: SettingsScreen,
-    Search: SearchScreen,
-  },
-  config
-);
-SettingsStack.navigationOptions = {
-  tabBarLabel: () => {},
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon focused={focused} library='MaterialIcons' name='settings' />
-  ),
-};
-SettingsStack.path = '';
 
 let createFunc = createBottomTabNavigator;
 if (Platform.OS === 'android')
@@ -121,8 +85,6 @@ const tabNavigator = createFunc({
   LocationStack,
   FavoritesStack,
   BrowseStack,
-  //SearchStack,
-  //SettingsStack,
 }, {
   tabBarPosition: 'bottom',
   tabBarOptions: {
