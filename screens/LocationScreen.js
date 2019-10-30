@@ -423,7 +423,7 @@ export default class CurrentLocation extends React.Component {
       <Icon name={name} type={type} color={color} />
       // <Button type="outline" color={color} icon={{name: name, type: type, color: color}} />
     );
-  };
+  };  
 
   forecastIcon = () => {
     return this.getButtonIcon('calendar-week', 'material-community', 0);
@@ -441,7 +441,7 @@ export default class CurrentLocation extends React.Component {
     if (this.state.isLoading) {
       // <Text>Loading...</Text>
       return (
-        <View style={{flex: 1, marginTop: 40 }}>
+        <View style={{flex: 1, marginTop: 80 }}>
           <ActivityIndicator color={Colors.primaryDark} />
         </View>
       )
@@ -470,12 +470,14 @@ export default class CurrentLocation extends React.Component {
     let buttons = [ {element: this.forecastIcon}, {element: this.hourlyIcon}];
     if (this.state.dataSource.nearestSites && this.state.dataSource.nearestSites.length)
       buttons.push({element: this.nearbyIcon});
+
     return (
       <View style={{flex:1}}>
         <ButtonGroup
           onPress={(selectedIndex) => this.setState({selectedIndex})}
           selectedIndex={this.state.selectedIndex}
           selectedButtonStyle={{backgroundColor: 'white', borderColor: Colors.tabIconSelected, borderWidth: 0, borderBottomWidth: 2}}
+          containerBorderRadius={0}
           containerStyle={{borderWidth: 0}}
           innerBorderStyle={{width: 0}}
           buttons={buttons}
