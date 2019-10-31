@@ -8,8 +8,8 @@ import iconv from 'iconv-lite';
 import { Buffer } from 'buffer';
 import { Icon, ButtonGroup } from 'react-native-elements';
 import CityListScreen from './CityListScreen';
-
 import Colors from '../constants/Colors';
+import { SettingsContext } from '../components/SettingsContext';
 
 // const styles = StyleSheet.create({
 //   container: {
@@ -28,7 +28,6 @@ import Colors from '../constants/Colors';
 // });
 
 export default class CurrentLocation extends React.Component {
-
   static navigationOptions = ({ navigation }) => {
     //console.debug(navigation);
     // <Icon type='material' name='star-border' color='#ffffff' underlayColor=colors.primary size={24} iconStyle={{marginRight: 5}} onPress={navigation.getParam('toggleFavoriteAction')} />
@@ -350,7 +349,7 @@ export default class CurrentLocation extends React.Component {
   };
 
   renderItem = ({item, index}) => {
-    let allowNight = global.settings && global.settings.night;
+    let allowNight = this.context && this.context.night;
     if (index > 1 && !allowNight && item.isNight && !item.isHourly)
       return null;
 
@@ -374,10 +373,10 @@ export default class CurrentLocation extends React.Component {
     let fontColor = item.isNight ? '#777777' : 'black';
     let fontWeight = item.isNight ? 'normal' : 'bold';
     let temperature = item.temperature;
-    if (temperature && global.settings && global.settings.round) {
+    if (index === 0 && temperature.length && this.context && this.context.round) {
       let tempVal = Number(temperature);
       if (!isNaN(tempVal))
-        temperature = Math.round(tempVal);
+        temperature = '' + Math.round(tempVal);
     }
     return (
       <TouchableHighlight underlayColor={Colors.primaryLight} onPress={() => this.handlePress(item, index)}>
@@ -567,3 +566,4 @@ export default class CurrentLocation extends React.Component {
     return null;
   }
 };
+CurrentLocation.contextType = SettingsContext;
