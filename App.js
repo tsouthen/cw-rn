@@ -7,7 +7,7 @@ import { Entypo, MaterialIcons, FontAwesome, Ionicons, MaterialCommunityIcons } 
 import Colors from './constants/Colors';
 import { SettingsContext } from './components/SettingsContext'
 
-class KeyValueStore {
+class JsonStorage {
   static async setItem(key, value) {
       try {
         return await AsyncStorage.setItem(key, JSON.stringify(value));
@@ -46,10 +46,8 @@ class AppComponent extends React.Component {
   }
 
   updateSettings = (settings) => {
-    let newSettings = {
-      night: settings.night,
-      round: settings.round,
-    }
+    //don't want to try to stringify the update function
+    const { update, ...newSettings} = settings;
     this.setState(newSettings, () => this.saveSettings(newSettings));
   }
 
@@ -57,23 +55,14 @@ class AppComponent extends React.Component {
     await this.loadSettings();
   }
 
-  async loadSettings() {
-    let savedSettings = await KeyValueStore.getItem('Settings');
-    if (savedSettings) {
-      let newSettings = {};
-      if ('night' in savedSettings)
-        newSettings.night = savedSettings.night;
-      if ('round' in savedSettings)
-        newSettings.round = savedSettings.round;
-
-      if (Object.keys(newSettings).length > 0) {
-        this.setState(newSettings);
-      }
-    }
+  loadSettings = async () => {
+    let savedSettings = await JsonStorage.getItem('Settings');
+    if (savedSettings !== null && typeof savedSettings === 'object')
+      this.setState(savedSettings);
   }
 
   async saveSettings(settings) {
-    await KeyValueStore.setItem('Settings', settings);
+    await JsonStorage.setItem('Settings', settings);
   }
 
   render() {
