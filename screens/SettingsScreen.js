@@ -26,23 +26,25 @@ export default class SettingsScreen extends React.Component {
     }
   };
 
+  updateState = (propName, value) => {
+    this.setState({[propName]: value}, () => {
+      this.context.updateSettings(this.state);
+    });
+  };
+
   getSwitchProps = (propName) => {
     return {
       thumbColor: Colors.primaryDark,
       trackColor: {false: '#b2b2b2', true: Colors.primary},
       value: this.state && this.state[propName],
       onValueChange: (value) => {
-        this.setState({[propName]: value}, () => {
-          this.context.update(this.state);
-        });
+        this.updateState(propName, value);
       },
     };
   };
 
   handlePress(propName) {
-    this.setState({[propName]: !this.state[propName]}, () => {
-      this.context.update(this.state);
-    });
+    this.updateState(propName, !this.state[propName]);
   };
 
   render() {

@@ -41,13 +41,14 @@ class AppComponent extends React.Component {
     this.state = {
       round: true,
       night: false,
-      update: this.updateSettings,
+      updateSettings: this.updateSettings,
+      forecasts: [],
+      updateForecasts: () => {},
     }
   }
 
   updateSettings = (settings) => {
-    //don't want to try to stringify the update function
-    const { update, ...newSettings} = settings;
+    const newSettings = {round: settings.round, night: settings.night};
     this.setState(newSettings, () => this.saveSettings(newSettings));
   }
 
