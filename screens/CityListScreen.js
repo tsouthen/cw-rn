@@ -41,7 +41,6 @@ export default function CityListScreen(props) {
       <DraggableFlatList 
         {...commonProps}
         {...remainingProps}
-        onMoveEnd={({ data }) => props.data = data}
         renderItem={({item, index, move, moveEnd, isActive }) => {
           return (
             <SimpleListItem isActive={isActive} onPress={() => onPress(item)} onLongPress={move} onPressOut={moveEnd} >

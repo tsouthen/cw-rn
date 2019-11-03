@@ -6,6 +6,8 @@ import AppNavigator from './navigation/AppNavigator';
 import { Entypo, MaterialIcons, FontAwesome, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import Colors from './constants/Colors';
 import { SettingsContext } from './components/SettingsContext'
+import { FavoritesContext } from './components/FavoritesContext'
+import { defaultFavorites } from './screens/FavoritesScreen';
 
 class JsonStorage {
   static async setItem(key, value) {
@@ -42,19 +44,21 @@ class AppComponent extends React.Component {
       round: true,
       night: false,
       updateSettings: this.updateSettings,
-      forecasts: [],
-      updateForecasts: () => {},
+      favorites: defaultFavorites,
+      updateFavorites: this.updateFavorites,
     }
-  }
-
-  updateSettings = (settings) => {
-    const newSettings = {round: settings.round, night: settings.night};
-    this.setState(newSettings, () => this.saveSettings(newSettings));
   }
 
   async componentDidMount() {
     await this.loadSettings();
+    await this.loadFavorites();
   }
+
+  updateSettings = (settings) => {
+    this.setState(settings, () => {
+      this.saveSettings({round: this.state.round, night: this.state.night});
+    });
+  }  
 
   loadSettings = async () => {
     let savedSettings = await JsonStorage.getItem('Settings');
@@ -66,14 +70,33 @@ class AppComponent extends React.Component {
     await JsonStorage.setItem('Settings', settings);
   }
 
+  updateFavorites = (favorites) => {
+    this.setState({favorites: favorites}, () => {
+      this.saveFavorites(favorites);
+    });
+  }
+
+  loadFavorites = async () => {
+    let savedFavorites = await JsonStorage.getItem('Favorites');
+    if (savedFavorites !== null && Array.isArray(savedFavorites)) {
+      this.setState({favorites: savedFavorites});
+    }
+  }
+
+  async saveFavorites(favorites) {
+    await JsonStorage.setItem('Favorites', favorites);
+  }
+
   render() {
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: Colors.primaryDark }}>
         <SettingsContext.Provider value={this.state}>
-          <View style={styles.container}>
-            {Platform.OS === 'ios' && <StatusBar barStyle="light-content" />}
-            <AppNavigator />
-          </View>
+          <FavoritesContext.Provider value={this.state}>
+            <View style={styles.container}>
+              {Platform.OS === 'ios' && <StatusBar barStyle="light-content" />}
+              <AppNavigator />
+            </View>
+          </FavoritesContext.Provider>
         </SettingsContext.Provider>
       </SafeAreaView>
     );

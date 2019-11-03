@@ -1,7 +1,8 @@
 import React from 'react';
 import CityListScreen from './CityListScreen';
+import { FavoritesContext } from '../components/FavoritesContext';
 
-const favorites = [
+export const defaultFavorites = [
   {
 		site: "s0000047",
 		nameEn: "Calgary",
@@ -108,12 +109,21 @@ const favorites = [
 	},
 ];
 
-export default function FavoritesScreen(props) {
-  return (
-    <CityListScreen draggable={true} cities={favorites} showProv='true' {...props} />
-  );
-};
+export default class FavoritesScreen extends React.Component {
+  static navigationOptions = {
+    title: 'Favourites',
+  };
 
-FavoritesScreen.navigationOptions = {
-  title: 'Favourites',
-};
+  render() {
+    return (
+      <CityListScreen 
+        cities={this.context.favorites} 
+        showProv='true' 
+        draggable={true} 
+        onMoveEnd={({ data }) => this.context.updateFavorites(data)}
+        {...this.props} />
+    );
+  }
+}
+
+FavoritesScreen.contextType = FavoritesContext;

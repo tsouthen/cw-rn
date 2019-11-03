@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
 import { Platform, FlatList, ActivityIndicator, StyleSheet, Text, View, Image, TouchableHighlight, Linking  } from 'react-native';
 import sitelocations from '../constants/sitelocations';
 import * as Location from 'expo-location';
@@ -10,6 +10,7 @@ import { Icon, ButtonGroup } from 'react-native-elements';
 import CityListScreen from './CityListScreen';
 import Colors from '../constants/Colors';
 import { SettingsContext } from '../components/SettingsContext';
+import { FavoritesContext } from '../components/FavoritesContext';
 
 // const styles = StyleSheet.create({
 //   container: {
@@ -29,16 +30,20 @@ import { SettingsContext } from '../components/SettingsContext';
 
 export default class CurrentLocation extends React.Component {
   static navigationOptions = ({ navigation }) => {
-    //console.debug(navigation);
-    // <Icon type='material' name='star-border' color='#ffffff' underlayColor=colors.primary size={24} iconStyle={{marginRight: 5}} onPress={navigation.getParam('toggleFavoriteAction')} />
+    let favIcon = null;
+    let site = navigation.getParam('currentSite', undefined);
+    if (site !== undefined)
+      favIcon = (<FavoriteIcon site={site} />);
     let settingsIcon = null;
     if (navigation.getParam('site') === undefined) {
-      settingsIcon = (<Icon type='material' name='settings' color='#ffffff' underlayColor={Colors.primary} size={24} iconStyle={{marginRight: 10}} onPress={navigation.getParam('settingsAction')} />);
+      settingsIcon = (<Icon type='material' name='settings' color='#ffffff' underlayColor={Colors.primary} 
+        size={24} iconStyle={{marginRight: 10}} onPress={() => navigation.navigate('Settings', { title: 'Settings'})} />);
     }
     return {
       title: navigation.getParam('location', 'Location'),
       headerRight: (
         <View style={{flexDirection:'row'}}>
+          {favIcon}
           {settingsIcon}
         </View>),
     };
@@ -57,22 +62,8 @@ export default class CurrentLocation extends React.Component {
       }
   };
 
-  componentDidMount() {
-    this.makeRemoteRequest();
-    this.props.navigation.setParams({
-      toggleFavoriteAction: this.toggleFavorite,
-      settingsAction: this.handleSettings,
-    });
-  };
-
-  handleSettings = () => {
-    this.props.navigation.navigate('Settings', { 
-      title: 'Settings',
-    });
-  };
-
-  toggleFavorite = () => {
-    alert('Favorite pressed');
+  async componentDidMount() {
+    await this.makeRemoteRequest();
   };
 
   randomInRange = (start, end) => {
@@ -151,6 +142,7 @@ export default class CurrentLocation extends React.Component {
         //console.debug(sortedLocs);
         nearest = sortedLocs[0]; //findNearest(location.coords, sitelocations);
       }
+
       let site = 's0000047'; //Calgary
       let prov = 'AB';
       // site = 's0000656'; //Comox
@@ -161,6 +153,7 @@ export default class CurrentLocation extends React.Component {
         site = nearest.site;
         prov = nearest.prov;
       }
+      
       // this.props.navigation.setParams({ location: 'downloading...'});
       let targetUrl = 'https://dd.weather.gc.ca/citypage_weather/xml/' + prov + '/' + site + '_e.xml';
       console.debug('targetUrl: ' + targetUrl);
@@ -170,8 +163,11 @@ export default class CurrentLocation extends React.Component {
       //console.debug(JSON.stringify(responseJson));
       let entries = this.loadJsonData(responseJson);
       let hourlyData = this.loadHourlyForecasts(responseJson);
+      // let isFav = this.isFavorite(site);
+      
       this.props.navigation.setParams({ 
         location: responseJson.location.name._,
+        currentSite: nearest,
       });
 
       this.setState({
@@ -331,70 +327,12 @@ export default class CurrentLocation extends React.Component {
     if (this.state.isLoading)
       return;
     
-    // const { navigation } = this.props;
-    // if (navigation.getParam('site') === undefined)
-    //   this.props.navigation.setParams({ location: 'Loading...'});
-    this.setState({ isLoading: true }, () => { this.makeRemoteRequest(); });   
-  };
-
-  handlePress = (item, index) => {
-    item.expanded = !item.expanded;
-    this.setState({ dataSource: this.state.dataSource});
-  };
-
-  handleUrl = (item, index) => {
-    // alert('clicked url');
-    if (item.warningUrl)
-      Linking.openURL(item.warningUrl);
-  };
-
-  renderItem = ({item, index}) => {
-    let allowNight = this.context && this.context.night;
-    if (index > 1 && !allowNight && item.isNight && !item.isHourly)
-      return null;
-
-    let imageView;
-    if (item.icon !== undefined)
-      imageView = <Image style={{width: 50, height: 50, resizeMode: "contain"}} source={ this.iconCodeToName(item.icon) } />;
-    else
-      imageView = <View style={{width: 50, height: 50}}/>;
-
-    let warningView = null;
-    if (item.warning && item.warningUrl)
-      warningView = (
-        <TouchableHighlight style={{alignSelf:'flex-start'}} underlayColor='#ffffff' onPress={() => this.handleUrl(item, index)}>
-          <Text style={{textDecorationLine:'underline', fontSize:13, color: Colors.primaryDark}}>{item.warning && item.expanded ? item.warning : ''}</Text>
-        </TouchableHighlight>);
-
-    let summmaryView = null;
-    if (item.summary && item.expanded)
-        summmaryView = (<Text style={{fontSize:13, flex:1}}>{item.summary}</Text>);
-
-    let fontColor = item.isNight ? '#777777' : 'black';
-    let fontWeight = item.isNight ? 'normal' : 'bold';
-    let temperature = item.temperature;
-    if (index === 0 && temperature.length && this.context && this.context.round) {
-      let tempVal = Number(temperature);
-      if (!isNaN(tempVal))
-        temperature = '' + Math.round(tempVal);
+    const { navigation } = this.props;
+    if (navigation.getParam('site') === undefined) {
+      this.props.navigation.setParams({ location: 'Location'});
+      this.props.navigation.setParams({ currentSite: undefined});
     }
-    return (
-      <TouchableHighlight underlayColor={Colors.primaryLight} onPress={() => this.handlePress(item, index)}>
-        <View style={{flex:100, flexDirection: "column"}} >
-          <View style={{flex:100, flexDirection: "row", paddingTop: 0, paddingBottom: 5, paddingRight: 5}}>
-            {imageView}
-            <View style={{flex:1, flexDirection: "column", paddingLeft: 10, paddingTop: 5}}>
-              <View style={{flexDirection: "row"}} >
-                <Text style={{fontSize: 18, fontFamily: 'montserrat', flex:1, color: fontColor}}>{item.title}</Text>
-                <Text style={{fontSize: 18, fontWeight: fontWeight, color: fontColor}}>{temperature ? temperature + '°' : ''}</Text>
-              </View>
-              {summmaryView}
-              {warningView}
-            </View>
-          </View>
-          <View style={{ height:1, backgroundColor: '#eeeeee' }} />
-        </View>
-      </TouchableHighlight>);
+    this.setState({ isLoading: true }, () => { this.makeRemoteRequest(); });   
   };
 
   newFlatList = (data, key) => {
@@ -406,7 +344,7 @@ export default class CurrentLocation extends React.Component {
         {...keyProps}
         style={{flex: 1}}
         data={data}
-        renderItem={this.renderItem}
+        renderItem={({item, index}) => <ForecastItem {...item} index={index} />}
         keyExtractor={item => item.title}
         refreshing={this.state.isLoading}
         onRefresh={this.handleRefresh}
@@ -486,84 +424,159 @@ export default class CurrentLocation extends React.Component {
       </View>
     );
   }
+};
+CurrentLocation.contextType = FavoritesContext;
 
-  iconCodeToName = (iconCode) => {
-    if (!CurrentLocation.isString(iconCode)) {
-      console.debug('Non-string icon code: ' + iconCode);
-      // return require('../assets/images/clever_weather.png');
-      return null;
-    }
-
-    switch (Number(iconCode)) {
-      case 0: //sun
-          return require('../assets/images/sun.png');
-      case 1: //little clouds
-          return require('../assets/images/sun_cloud.png');
-      case 4: //increasing cloud
-          return require('../assets/images/sun_cloud_increasing.png');
-      case 5: //decreasing cloud
-      case 20: //decreasing cloud
-          return require('../assets/images/sun_cloud_decreasing.png');
-      case 2: //big cloud with sun
-      case 3: //sun behind big cloud
-      case 22: //big cloud with sun
-          return require('../assets/images/cloud_sun.png');
-      case 6: //rain with sun behind cloud
-          return require('../assets/images/cloud_drizzle_sun_alt.png');
-      case 7: //rain and snow with sun behind cloud
-      case 8: //snow with sun behind cloud
-          return require('../assets/images/cloud_snow_sun_alt.png');
-      case 9: //cloud rain lightning
-          return require('../assets/images/cloud_lightning_sun.png');
-      case 10: //cloud
-          return require('../assets/images/cloud.png');
-      case 11:
-      case 28:
-          return require('../assets/images/cloud_drizzle_alt.png');
-      case 12:
-          return require('../assets/images/cloud_drizzle.png');
-      case 13:
-          return require('../assets/images/cloud_rain.png');
-      case 15:
-      case 16:
-      case 17:
-      case 18:
-          return require('../assets/images/cloud_snow_alt.png');
-      case 19:
-          return require('../assets/images/cloud_lightning.png');
-      case 23:
-      case 24:
-      case 44:
-          return require('../assets/images/cloud_fog.png');
-      case 25:
-      case 45:
-          return require('../assets/images/cloud_wind.png');
-      case 14: //freezing rain
-      case 26: //ice
-      case 27: //hail
-          return require('../assets/images/cloud_hail.png');
-      case 30:
-          return require('../assets/images/moon.png');
-      case 31:
-      case 32:
-      case 33:
-          return require('../assets/images/cloud_moon.png');
-      case 21:
-      case 34:
-          return require('../assets/images/cloud_moon_increasing.png');
-      case 35:
-          return require('../assets/images/cloud_moon_decreasing.png');
-      case 36:
-          return require('../assets/images/cloud_drizzle_moon_alt.png');
-      case 37:
-      case 38:
-          return require('../assets/images/cloud_snow_moon_alt.png');
-      case 39:
-          return require('../assets/images/cloud_lightning_moon.png');
-    }
-    console.debug('Unknown icon code: ' + iconCode);
+function iconCodeToName(iconCode) {
+  if (!CurrentLocation.isString(iconCode)) {
+    console.debug('Non-string icon code: ' + iconCode);
     // return require('../assets/images/clever_weather.png');
     return null;
   }
+
+  switch (Number(iconCode)) {
+    case 0: //sun
+        return require('../assets/images/sun.png');
+    case 1: //little clouds
+        return require('../assets/images/sun_cloud.png');
+    case 4: //increasing cloud
+        return require('../assets/images/sun_cloud_increasing.png');
+    case 5: //decreasing cloud
+    case 20: //decreasing cloud
+        return require('../assets/images/sun_cloud_decreasing.png');
+    case 2: //big cloud with sun
+    case 3: //sun behind big cloud
+    case 22: //big cloud with sun
+        return require('../assets/images/cloud_sun.png');
+    case 6: //rain with sun behind cloud
+        return require('../assets/images/cloud_drizzle_sun_alt.png');
+    case 7: //rain and snow with sun behind cloud
+    case 8: //snow with sun behind cloud
+        return require('../assets/images/cloud_snow_sun_alt.png');
+    case 9: //cloud rain lightning
+        return require('../assets/images/cloud_lightning_sun.png');
+    case 10: //cloud
+        return require('../assets/images/cloud.png');
+    case 11:
+    case 28:
+        return require('../assets/images/cloud_drizzle_alt.png');
+    case 12:
+        return require('../assets/images/cloud_drizzle.png');
+    case 13:
+        return require('../assets/images/cloud_rain.png');
+    case 15:
+    case 16:
+    case 17:
+    case 18:
+        return require('../assets/images/cloud_snow_alt.png');
+    case 19:
+        return require('../assets/images/cloud_lightning.png');
+    case 23:
+    case 24:
+    case 44:
+        return require('../assets/images/cloud_fog.png');
+    case 25:
+    case 45:
+        return require('../assets/images/cloud_wind.png');
+    case 14: //freezing rain
+    case 26: //ice
+    case 27: //hail
+        return require('../assets/images/cloud_hail.png');
+    case 30:
+        return require('../assets/images/moon.png');
+    case 31:
+    case 32:
+    case 33:
+        return require('../assets/images/cloud_moon.png');
+    case 21:
+    case 34:
+        return require('../assets/images/cloud_moon_increasing.png');
+    case 35:
+        return require('../assets/images/cloud_moon_decreasing.png');
+    case 36:
+        return require('../assets/images/cloud_drizzle_moon_alt.png');
+    case 37:
+    case 38:
+        return require('../assets/images/cloud_snow_moon_alt.png');
+    case 39:
+        return require('../assets/images/cloud_lightning_moon.png');
+  }
+  console.debug('Unknown icon code: ' + iconCode);
+  // return require('../assets/images/clever_weather.png');
+  return null;
+}
+
+function ForecastItem(props) {
+  const {title, temperature, summary, icon, isNight, isHourly, warning, warningUrl, index} = props;
+  const [expanded, setExpanded] = useState(props.expanded);
+  const settings = useContext(SettingsContext);
+
+  let allowNight = settings && settings.night;
+  if (index > 1 && !allowNight && isNight && !isHourly)
+    return null;
+
+  let imageView;
+  if (icon !== undefined)
+    imageView = <Image style={{width: 50, height: 50, resizeMode: "contain"}} source={ iconCodeToName(icon) } />;
+  else
+    imageView = <View style={{width: 50, height: 50}}/>;
+
+  let warningView = null;
+  if (warning && warningUrl)
+    warningView = (
+      <TouchableHighlight style={{alignSelf:'flex-start'}} underlayColor='#ffffff' onPress={() => Linking.openURL(warningUrl)}>
+        <Text style={{textDecorationLine:'underline', fontSize:13, color: Colors.primaryDark}}>{warning && expanded ? warning : ''}</Text>
+      </TouchableHighlight>);
+
+  let summmaryView = null;
+  if (summary && expanded)
+      summmaryView = (<Text style={{fontSize:13, flex:1}}>{summary}</Text>);
+
+  let fontColor = isNight ? '#777777' : 'black';
+  let fontWeight = isNight ? 'normal' : 'bold';
+  let displayTemp = temperature;
+  if (index === 0 && displayTemp.length && settings && settings.round) {
+    let tempVal = Number(displayTemp);
+    if (!isNaN(tempVal))
+      displayTemp = '' + Math.round(tempVal);
+  }
+  return (
+    <TouchableHighlight underlayColor={Colors.primaryLight} onPress={() => setExpanded(!expanded)}>
+      <View style={{flex:100, flexDirection: "column"}} >
+        <View style={{flex:100, flexDirection: "row", paddingTop: 0, paddingBottom: 5, paddingRight: 5}}>
+          {imageView}
+          <View style={{flex:1, flexDirection: "column", paddingLeft: 10, paddingTop: 5}}>
+            <View style={{flexDirection: "row"}} >
+              <Text style={{fontSize: 18, fontFamily: 'montserrat', flex:1, color: fontColor}}>{title}</Text>
+              <Text style={{fontSize: 18, fontWeight: fontWeight, color: fontColor}}>{displayTemp ? displayTemp + '°' : ''}</Text>
+            </View>
+            {summmaryView}
+            {warningView}
+          </View>
+        </View>
+        <View style={{ height:1, backgroundColor: '#eeeeee' }} />
+      </View>
+    </TouchableHighlight>);
 };
-CurrentLocation.contextType = SettingsContext;
+
+function FavoriteIcon(props) {
+  const { site } = props;
+  const favorites = useContext(FavoritesContext);
+  let findFavorite = () => favorites && favorites.favorites && favorites.favorites.find((entry) => entry.site === site.site);
+  let isFavorite = () => findFavorite() !== undefined;
+  let toggleFav = () => {
+    if (!favorites || !favorites.favorites || favorites.favorites.length === 0) {
+      return;
+    }
+    let newFavorites;
+    if (isFavorite()) {
+      newFavorites = favorites.favorites.filter((entry) => entry.site !== site.site);
+    } else {
+      newFavorites = [site].concat(favorites.favorites);
+    }
+    favorites.updateFavorites(newFavorites);
+  };
+  return (<Icon type='font-awesome' name={isFavorite() ? 'star' : 'star-o' }
+    color='#ffffff' underlayColor={Colors.primary} size={24} iconStyle={{marginRight: 15}} 
+    onPress={toggleFav} />);
+}
