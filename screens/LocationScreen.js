@@ -11,6 +11,7 @@ import CityListScreen from './CityListScreen';
 import Colors from '../constants/Colors';
 import { SettingsContext } from '../components/SettingsContext';
 import { FavoritesContext } from '../components/FavoritesContext';
+import { HeaderButton, NavigationHeaderButton } from '../components/HeaderButton';
 
 // const styles = StyleSheet.create({
 //   container: {
@@ -36,8 +37,7 @@ export default class CurrentLocation extends React.Component {
       favIcon = (<FavoriteIcon site={site} />);
     let settingsIcon = null;
     if (navigation.getParam('site') === undefined) {
-      settingsIcon = (<Icon type='material' name='settings' color='#ffffff' underlayColor={Colors.primary} 
-        size={24} containerStyle={{marginRight: 10}} onPress={() => navigation.navigate('Settings', { title: 'Settings'})} />);  
+      settingsIcon = (<NavigationHeaderButton type='material' name='settings' navigation={navigation} routeName='Settings' />);
     }
     return {
       title: navigation.getParam('location', 'Location'),
@@ -600,9 +600,5 @@ function FavoriteIcon(props) {
       ToastAndroid.show(site.nameEn + message, ToastAndroid.SHORT);
     }
   };
-  return (
-    <Icon type='font-awesome' name={isFavorite() ? 'star' : 'star-o' }
-      color='#ffffff' underlayColor={Colors.primary} size={24} containerStyle={{marginRight: 15}} 
-      onPress={toggleFav} />
-    );
+  return (<HeaderButton type='font-awesome' name={isFavorite() ? 'star' : 'star-o' } onPress={toggleFav} />);
 }
