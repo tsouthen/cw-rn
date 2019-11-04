@@ -37,7 +37,7 @@ export default class CurrentLocation extends React.Component {
     let settingsIcon = null;
     if (navigation.getParam('site') === undefined) {
       settingsIcon = (<Icon type='material' name='settings' color='#ffffff' underlayColor={Colors.primary} 
-        size={24} iconStyle={{marginRight: 10}} onPress={() => navigation.navigate('Settings', { title: 'Settings'})} />);
+        size={24} containerStyle={{marginRight: 10}} onPress={() => navigation.navigate('Settings', { title: 'Settings'})} />);  
     }
     return {
       title: navigation.getParam('location', 'Location'),
@@ -351,7 +351,13 @@ export default class CurrentLocation extends React.Component {
         {...keyProps}
         style={{flex: 1}}
         data={data}
-        renderItem={({item, index}) => <ForecastItem {...item} index={index} />}
+        renderItem={({item, index}) => <ForecastItem {...item} 
+          index={index} 
+          onPress={() => {
+            //we need the expanded state outside the ForecastItem as the FlatList is a virtualized list and items can be re-used
+            item.expanded = !item.expanded;
+            this.setState({dataSource: this.state.dataSource});
+          }}/>}
         keyExtractor={item => item.title}
         refreshing={this.state.isLoading}
         onRefresh={this.handleRefresh}
@@ -514,8 +520,7 @@ function iconCodeToName(iconCode) {
 }
 
 function ForecastItem(props) {
-  const {title, temperature, summary, icon, isNight, isHourly, warning, warningUrl, index, heading} = props;
-  const [expanded, setExpanded] = useState(props.expanded);
+  const {title, temperature, summary, icon, isNight, isHourly, warning, warningUrl, index, heading, expanded, onPress} = props;
   const settings = useContext(SettingsContext);
 
   let allowNight = settings && settings.night;
@@ -552,7 +557,7 @@ function ForecastItem(props) {
     headingView = (<Text style={{padding: 10, paddingTop: 5, paddingBottom:5, backgroundColor:'#eeeeee', fontFamily:'montserrat'}}>{heading}</Text>);
 
   return (
-    <TouchableHighlight underlayColor={Colors.primaryLight} onPress={() => setExpanded(!expanded)}>
+    <TouchableHighlight underlayColor={Colors.primaryLight} onPress={onPress}>
       <View style={{flex:100, flexDirection: "column"}} >
         {headingView}
         <View style={{flex:100, flexDirection: "row", paddingTop: 0, paddingBottom: 5, paddingRight: 5}}>
@@ -597,7 +602,7 @@ function FavoriteIcon(props) {
   };
   return (
     <Icon type='font-awesome' name={isFavorite() ? 'star' : 'star-o' }
-      color='#ffffff' underlayColor={Colors.primary} size={24} iconStyle={{marginRight: 15}} 
+      color='#ffffff' underlayColor={Colors.primary} size={24} containerStyle={{marginRight: 15}} 
       onPress={toggleFav} />
     );
 }
