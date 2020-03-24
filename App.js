@@ -8,6 +8,9 @@ import Colors from './constants/Colors';
 import { SettingsContext } from './components/SettingsContext'
 import { FavoritesContext } from './components/FavoritesContext'
 import { defaultFavorites } from './screens/FavoritesScreen';
+import { ShareContext } from './components/ShareContext';
+import { captureRef } from 'react-native-view-shot';
+import * as Sharing from 'expo-sharing';
 
 class JsonStorage {
   static async setItem(key, value) {
@@ -87,17 +90,35 @@ class AppComponent extends React.Component {
     await JsonStorage.setItem('Favorites', favorites);
   }
 
+  onShare = async () => {
+    const viewRef = this.refs.mainView;
+    if (!viewRef) {
+      alert("Sorry, no view to share!");
+      return;
+    }
+    
+    try { 
+      await new Promise(resolve => setTimeout(resolve, 250)); //so any UI animations can settle
+      let uri = await captureRef(viewRef, { format: "jpg", quality: 0.9 });
+      await Sharing.shareAsync(uri, {mimeType: "image/jpg", dialogTitle: "Share forecast"});
+    } catch (error) {
+      console.error("Error getting screenshot: " + error);
+    }
+  }
+
   render() {
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: Colors.primaryDark }}>
+      <SafeAreaView ref="mainView" style={{ flex: 1, backgroundColor: Colors.primaryDark }}>
+        <ShareContext.Provider value={{onShare: this.onShare}}>
         <SettingsContext.Provider value={this.state}>
-          <FavoritesContext.Provider value={this.state}>
-            <View style={styles.container}>
-              {Platform.OS === 'ios' && <StatusBar barStyle="light-content" />}
-              <AppNavigator />
-            </View>
-          </FavoritesContext.Provider>
+        <FavoritesContext.Provider value={this.state}>
+          <View style={styles.container}>
+            {Platform.OS === 'ios' && <StatusBar barStyle="light-content" />}
+            <AppNavigator />
+          </View>
+        </FavoritesContext.Provider>
         </SettingsContext.Provider>
+        </ShareContext.Provider>
       </SafeAreaView>
     );
   }
