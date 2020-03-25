@@ -90,6 +90,8 @@ const tabNavigator = createFunc({
   tabBarOptions: {
     style: {
       backgroundColor: '#FFFFFF',
+      // borderColor: 'red',
+      // borderTopWidth: 1,
       elevation: 1,
     },
     indicatorStyle: {
