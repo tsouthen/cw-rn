@@ -16,15 +16,15 @@ const navOptions = {
   headerStyle: {
     backgroundColor: Colors.primary,
   },
-  headerForceInset: { 
-    top: 'never' 
+  headerForceInset: {
+    top: 'never'
   },
   headerTintColor: '#fff',
   headerTitleStyle: {
     fontFamily: 'montserrat',
     fontWeight: 'normal',
     fontSize: 18
-  }, 
+  },
 };
 
 const config = Platform.select({
@@ -44,7 +44,7 @@ const LocationStack = createStackNavigator(
   config
 );
 LocationStack.navigationOptions = {
-  tabBarLabel: () => {},
+  tabBarLabel: () => { },
   tabBarIcon: ({ focused }) => (<TabBarIcon focused={focused} type='entypo' name='location-pin' />),
 };
 LocationStack.path = '';
@@ -57,7 +57,7 @@ const FavoritesStack = createStackNavigator(
   config
 );
 FavoritesStack.navigationOptions = {
-  tabBarLabel: () => {},
+  tabBarLabel: () => { },
   tabBarIcon: ({ focused }) => (<TabBarIcon focused={focused} type='font-awesome' name='star' />),
 };
 FavoritesStack.path = '';
@@ -72,7 +72,7 @@ const BrowseStack = createStackNavigator(
   config
 );
 BrowseStack.navigationOptions = {
-  tabBarLabel: () => {},
+  tabBarLabel: () => { },
   tabBarIcon: ({ focused }) => (<TabBarIcon focused={focused} type='font-awesome' name='globe' />),
 };
 BrowseStack.path = '';
@@ -103,7 +103,7 @@ const tabNavigator = createFunc({
       height: 50,
     },
     iconStyle: {
-      height:60,
+      height: 60,
       width: 60,
     },
   }
