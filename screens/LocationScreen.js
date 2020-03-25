@@ -217,6 +217,8 @@ export default class CurrentLocation extends React.Component {
           warning = warning.split(' ').map((t) => t.charAt(0).toUpperCase() + t.slice(1).toLowerCase()).join(' ').trim();
           entry.warning = CurrentLocation.valueOrEmptyString(warning);
           entry.warningUrl = CurrentLocation.valueOrEmptyString(responseJson.warnings.url);
+          if (entry.warningUrl)
+            entry.warningUrl += "#wb-cont"; // to scroll to the main heading in the page
         }
         // console.debug(entry);
         entries.push(entry);
