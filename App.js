@@ -1,6 +1,6 @@
 import * as Font from 'expo-font';
 import React from 'react';
-import { Platform, StatusBar, StyleSheet, View } from 'react-native';
+import { Platform, StatusBar, StyleSheet, View, Button } from 'react-native';
 import { SplashScreen } from 'expo';
 import { Entypo, MaterialIcons, FontAwesome, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
@@ -15,12 +15,109 @@ import * as Sharing from 'expo-sharing';
 import { JsonStorage } from './components/JsonStorage';
 import BottomTabNavigator from './navigation/BottomTabNavigator';
 import useLinking from './navigation/useLinking';
-// import SearchScreen from './screens/SearchScreen';
+import SearchScreen from './screens/SearchScreen';
+import BrowseScreen from './screens/BrowseScreen';
 import CityListScreen from './screens/CityListScreen';
 // import LocationScreen from './screens/LocationScreen';
 // import SettingsScreen from './screens/SettingsScreen';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import TabBarIcon from './components/TabBarIcon';
+import { NavigationHeaderButton } from './components/HeaderButton';
 
-const Stack = createStackNavigator();
+function LocationScreen({ navigation, route }) {
+  navigation.setOptions({
+    headerTitle: route?.params?.location ?? "Location",
+    headerRight: () => (<NavigationHeaderButton type='material' name='settings' navigation={navigation} routeName='Settings' />)
+  });
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Button
+        title="Go to Settings"
+        onPress={() => navigation.navigate('Settings')}
+      />
+    </View>
+  );
+}
+
+function LocationStackScreen() {
+  const LocationStack = createStackNavigator();
+  return (
+    <LocationStack.Navigator screenOptions={defaultScreenOptions}>
+      <LocationStack.Screen name="Location" component={LocationScreen} />
+      <LocationStack.Screen name="Settings 2" component={SettingsScreen} />
+      {/* other screens */}
+    </LocationStack.Navigator>
+  );
+}
+
+function FavoritesScreen({ navigation }) {
+  navigation.setOptions({
+    headerTitle: "Favourites",
+  });
+  return <View />;
+}
+
+function FavoritesStackScreen(props) {
+  const FavoritesStack = createStackNavigator();
+  return (
+    <FavoritesStack.Navigator screenOptions={defaultScreenOptions}>
+      <FavoritesStack.Screen name="Favorites" component={FavoritesScreen} />
+      {/* other screens */}
+    </FavoritesStack.Navigator>
+  );
+}
+
+function EmptyBrowseScreen({ navigation }) {
+  navigation.setOptions({
+    headerTitle: "Browse",
+  });
+  return <View />;
+}
+
+function BrowseStackScreen(props) {
+  const BrowseStack = createStackNavigator();
+  return (
+    <BrowseStack.Navigator screenOptions={defaultScreenOptions}>
+      <BrowseStack.Screen name="Browse" component={BrowseScreen} />
+      <BrowseStack.Screen name="CityList" component={CityListScreen} />
+      <BrowseStack.Screen name="City" component={LocationScreen} />
+      <BrowseStack.Screen name="Search" component={SearchScreen} />
+      {/* other screens */}
+    </BrowseStack.Navigator>
+  );
+}
+
+function SettingsScreen({ navigation }) {
+  navigation.setOptions({
+    headerTitle: "Settings",
+  });
+  return <View />;
+}
+
+function HomeTabs() {
+  const Tab = createBottomTabNavigator();
+  return (
+    <Tab.Navigator screenOptions={defaultScreenOptions}>
+      <Tab.Screen name="Location" component={LocationStackScreen}
+        options={{
+          title: 'Location',
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} type='entypo' name='location-pin' />
+        }}
+      />
+      <Tab.Screen name="Favourites" component={FavoritesStackScreen}
+        options={{
+          title: "Favourites", tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} type='font-awesome' name='star' />
+        }}
+      />
+      <Tab.Screen name="Browse" component={BrowseStackScreen}
+        options={{
+          title: 'Browse',
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} type='font-awesome' name='globe' />
+        }}
+      />
+    </Tab.Navigator>
+  );
+}
 
 export default function App(props) {
   const [isLoadingComplete, setLoadingComplete] = React.useState(false);
@@ -30,6 +127,7 @@ export default function App(props) {
   const [settings, setSettings] = React.useState({ round: true, night: false });
   const [favorites, setFavorites] = React.useState(defaultFavorites);
   const mainViewRef = React.useRef();
+  const Stack = createStackNavigator();
 
   saveSettings = async (updatedSettings) => {
     await JsonStorage.setItem('Settings', updatedSettings);
@@ -114,6 +212,8 @@ export default function App(props) {
   // <Stack.Screen name="City" component={LocationScreen} />
   // <Stack.Screen name="Settings" component={SettingsScreen} />
 
+  //  <Stack.Screen name="Root" component={HomeTabs} options={{ header: () => { return null } }} />
+
   if (!isLoadingComplete && !props.skipLoadingScreen) {
     return null;
   } else {
@@ -124,9 +224,10 @@ export default function App(props) {
             <View ref={mainViewRef} style={styles.container}>
               {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
               <NavigationContainer ref={containerRef} initialState={initialNavigationState}>
-                <Stack.Navigator>
-                  <Stack.Screen name="Root" component={BottomTabNavigator} />
+                <Stack.Navigator screenOptions={defaultScreenOptions}>
+                  <Stack.Screen name="Root" component={HomeTabs} options={{ header: () => { return null } }} />
                   <Stack.Screen name="CityList" component={CityListScreen} />
+                  <Stack.Screen name="Settings" component={SettingsScreen} />
                 </Stack.Navigator>
               </NavigationContainer>
             </View>
@@ -136,6 +237,16 @@ export default function App(props) {
     );
   }
 }
+
+const defaultScreenOptions = {
+  headerStyle: {
+    backgroundColor: '#ff8800',
+  },
+  headerTintColor: '#fff',
+  headerTitleStyle: {
+    fontFamily: 'montserrat',
+  },
+};
 
 const styles = StyleSheet.create({
   container: {

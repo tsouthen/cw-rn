@@ -20,9 +20,9 @@ const provinces = [
 ];
 
 export default function BrowseScreen({ navigation }) {
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     navigation.setOptions({
-      headerRight: (<NavigationHeaderButton type='material' name='search' navigation={navigation} routeName='Search' />),
+      headerRight: () => <NavigationHeaderButton type='material' name='search' navigation={navigation} routeName='Search' />
     });
   }, [navigation]);
 
