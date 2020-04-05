@@ -18,39 +18,30 @@ const provinces = [
   { name: 'Saskatchewan', abbr: 'SK' },
   { name: 'Yukon', abbr: 'YT' },
 ];
-  
-export default class BrowseScreen extends React.Component {
-  static navigationOptions = ({ navigation }) => {
-    return {
-      title: 'Browse',
-      headerRight: (<NavigationHeaderButton type='material' name='search' navigation={navigation} routeName='Search' />),
-    };
-  };
 
-  componentDidMount() {
-    this.props.navigation.setParams({
-      searchAction : this.handleSearch, 
+export default function BrowseScreen({ navigation }) {
+  React.useEffect(() => {
+    navigation.setOptions({
+      headerRight: (<NavigationHeaderButton type='material' name='search' navigation={navigation} routeName='Search' />),
     });
-  };
+  }, [navigation]);
 
   handlePress = (item) => {
-    this.props.navigation.navigate('CityList', { 
+    navigation.navigate('CityList', {
       province: item,
       title: item.name,
     });
   };
 
-  render() {
-    return(
-      <View style={{flex: 1}}>
-        <FlatList
-          data={provinces}
-          renderItem={({item, index}) => {
-            return (<SimpleListItem onPress={() => this.handlePress(item)}>{item.name}</SimpleListItem>);
-          }}
-          keyExtractor={item => item.name}         
-        />
-      </View>
-    );
-  };
-};
+  return (
+    <View style={{ flex: 1 }}>
+      <FlatList
+        data={provinces}
+        renderItem={({ item }) => {
+          return (<SimpleListItem onPress={() => handlePress(item)}>{item.name}</SimpleListItem>);
+        }}
+        keyExtractor={item => item.name}
+      />
+    </View>
+  );
+}
