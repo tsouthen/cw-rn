@@ -3,7 +3,6 @@
     "name": "Clever Weather",
     "slug": "cw-rn",
     "privacy": "public",
-    "sdkVersion": "35.0.0",
     "platforms": [
       "ios",
       "android",
