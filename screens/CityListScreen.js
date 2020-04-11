@@ -8,6 +8,13 @@ export default function CityListScreen(props) {
   let { cities, showProv, ...rest } = props;
   const { draggable, navigation, route, ...remainingProps } = rest;
   const prov = route?.params?.province;
+
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerTitle: prov ? prov.name : "Cities",
+    });
+  }, [navigation]);
+
   if (prov) {
     showProv = false;
     cities = sitelocations.filter((entry) => entry.prov === prov.abbr);
@@ -15,6 +22,7 @@ export default function CityListScreen(props) {
   } else if (!cities) {
     cities = route?.params?.cities;
   }
+
   let commonProps = {
     style: { flex: 1 },
     data: cities,
@@ -34,7 +42,7 @@ export default function CityListScreen(props) {
       location: item.nameEn,
     });
   }
-  if (draggable)
+  if (draggable && data)
     return (
       <DraggableFlatList
         {...commonProps}
