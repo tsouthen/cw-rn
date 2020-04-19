@@ -3,16 +3,17 @@ import Constants from 'expo-constants';
 import * as Location from 'expo-location';
 import iconv from 'iconv-lite';
 import React from 'react';
-import { ActivityIndicator, FlatList, Image, Linking, Platform, Text, ToastAndroid, TouchableHighlight, View, AppState } from 'react-native';
+import { ActivityIndicator, FlatList, Image, Linking, Platform, Text, TouchableHighlight, View, AppState } from 'react-native';
 import { ButtonGroup, Icon } from 'react-native-elements';
 import { parseString } from 'react-native-xml2js';
+import { Snackbar, Portal } from 'react-native-paper';
 import { FavoritesContext } from '../components/FavoritesContext';
-import { HeaderButton, NavigationHeaderButton } from '../components/HeaderButton';
 import { SettingsContext } from '../components/SettingsContext';
 import { ShareContext } from '../components/ShareContext';
 import Colors from '../constants/Colors';
 import sitelocations from '../constants/sitelocations';
 import CityListScreen from './CityListScreen';
+import HeaderBar, { HeaderBarAction, HeaderBarNavigationAction } from '../components/HeaderBar';
 const moment = require('moment');
 
 // const styles = StyleSheet.create({
@@ -39,28 +40,9 @@ export default function LocationScreen(props) {
   const [dataSource, setDataSource] = React.useState({ forecasts: [], nearestSites: [], hourlyData: [] })
   const [selectedIndex, setSelectedIndex] = React.useState(0);
 
-  React.useEffect(() => {
-    let favIcon = null;
-    let shareIcon = null;
-    const site = route?.params?.currentSite || route?.params?.site;
-    if (site) {
-      favIcon = (<FavoriteIcon site={site} />);
-      shareIcon = (<HeaderButton type='material' name='share' onPress={shareContext.onShare} />);
-    }
-    let settingsIcon = null;
-    if (!route?.params?.site) {
-      settingsIcon = (<NavigationHeaderButton type='material' name='settings' navigation={navigation} routeName='Settings' />);
-    }
-    navigation.setOptions({
-      headerTitle: route?.params?.location ?? 'Location',
-      headerRight: () =>
-        <View style={{ flexDirection: 'row' }}>
-          {favIcon}
-          {shareIcon}
-          {settingsIcon}
-        </View>,
-    });
-  }, [navigation, route]);
+  // React.useEffect(() => {
+  //   navigation.setOptions({ header: () => { return null } });
+  // }, [navigation, route]);
 
   const possiblyRefreshData = () => {
     const forecasts = dataSource.forecasts;
@@ -253,8 +235,16 @@ export default function LocationScreen(props) {
   // containerStyle={{borderColor: 'black', borderWidth: 0, borderBottomWidth: 1}}
   // containerStyle={{borderWidth: 0}}
 
+  const isCurrLocation = !route?.params?.site;
+  const hasLocation = !isCurrLocation || route?.params?.currentSite;
+  const site = route?.params?.site || route?.params?.currentSite;
   return (
     <View style={{ flex: 1 }}>
+      <HeaderBar navigation={navigation} title={route?.params?.location ?? 'Location'} showBackButton={!isCurrLocation}>
+        {site && <FavoriteIcon site={site} />}
+        {hasLocation && <HeaderBarAction icon="share-variant" onPress={shareContext.onShare} />}
+        {isCurrLocation && <HeaderBarNavigationAction icon="settings" screen="Settings" navigation={navigation} />}
+      </HeaderBar>
       <ButtonGroup
         onPress={(newIndex) => setSelectedIndex(newIndex)}
         selectedIndex={selectedIndex}
@@ -652,29 +642,46 @@ function ForecastItem(props) {
 
 function FavoriteIcon(props) {
   const { site } = props;
-  const favorites = React.useContext(FavoritesContext);
-  let findFavorite = () => favorites && favorites.favorites && favorites.favorites.find((entry) => entry.site === site.site);
+  const { favorites, updateFavorites } = React.useContext(FavoritesContext);
+  const [snackVisible, setSnackVisible] = React.useState(false);
+  const [snackMessage, setSnackMessage] = React.useState("");
+
+  let findFavorite = () => favorites && favorites.find((entry) => entry.site === site.site);
   let isFavorite = () => findFavorite() !== undefined;
-  let toggleFav = () => {
-    if (!favorites || !favorites.favorites || favorites.favorites.length === 0) {
+  let toggleFav = (showSnack) => {
+    if (!favorites || favorites.length === 0) {
       return;
     }
     let isFav = isFavorite();
     let newFavorites;
     if (isFav) {
-      newFavorites = favorites.favorites.filter((entry) => entry.site !== site.site);
+      newFavorites = favorites.filter((entry) => entry.site !== site.site);
     } else {
-      newFavorites = [site].concat(favorites.favorites);
+      newFavorites = [site].concat(favorites);
     }
-    favorites.updateFavorites(newFavorites);
-    if (Platform.OS === 'android') {
+    updateFavorites(newFavorites);
+
+    if (showSnack) {
       let message = ' added to Favorites';
       if (isFav)
         message = ' removed from Favorites';
-      ToastAndroid.show(site.nameEn + message, ToastAndroid.SHORT);
+      setSnackMessage(site.nameEn + message);
+      setSnackVisible(true);
     }
   };
-  return (<HeaderButton type='font-awesome' name={isFavorite() ? 'star' : 'star-o'} onPress={toggleFav} />);
+  return (
+    <View>
+      <HeaderBarAction icon={isFavorite() ? "star" : "star-outline"} onPress={() => { toggleFav(true) }} />
+      <Portal>
+        <Snackbar
+          visible={snackVisible}
+          duration={Snackbar.DURATION_SHORT}
+          action={{ label: "Undo", onPress: () => toggleFav(false) }}
+          onDismiss={() => setSnackVisible(false)}
+        >{snackMessage}</Snackbar>
+      </Portal>
+    </View>
+  );
 }
 
 function getAsOfLabel(dateTime) {

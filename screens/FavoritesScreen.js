@@ -114,6 +114,7 @@ export default function FavoritesScreen(props) {
 
   return (
     <CityListScreen
+      title="Favourites"
       cities={favorites}
       showProv='true'
       draggable={true}

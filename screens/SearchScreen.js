@@ -4,43 +4,45 @@ import CityListScreen from './CityListScreen';
 import { Icon } from 'react-native-elements';
 import sitelocations from '../constants/sitelocations';
 import Colors from '../constants/Colors';
+import HeaderBar from '../components/HeaderBar';
+import { Searchbar, Appbar } from 'react-native-paper';
 
 export default function SearchScreen(props) {
   const navigation = props.navigation;
   const [search, setSearch] = React.useState("");
   const [cities, setCities] = React.useState([]);
 
-  React.useEffect(() => {
-    navigation.setOptions({
-      headerTitle: props =>
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <TextInput
-            style={{ flex: 1, color: 'white', fontFamily: 'montserrat', fontSize: 16 }}
-            placeholderStyle={{ color: 'white', fontFamily: 'montserrat', fontSize: 16 }}
-            placeholderTextColor='white'
-            placeholder='Search cities    '
-            autoFocus={true}
-            selectionColor={Colors.primaryDark}
-            returnKeyType='search'
-            onChangeText={updateSearch}
-            ref={input => { if (this) this.input = input; }}
-          />
-          <Icon type='material' name='clear' color='#ffffff' underlayColor={Colors.primary} size={25}
-            iconStyle={{ marginRight: 10 }}
-            onPress={() => {
-              if (!this || !this.input)
-                return;
+  // React.useEffect(() => {
+  //   navigation.setOptions({
+  //     headerTitle: props =>
+  //       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+  //         <TextInput
+  //           style={{ flex: 1, color: 'white', fontFamily: 'montserrat', fontSize: 16 }}
+  //           placeholderStyle={{ color: 'white', fontFamily: 'montserrat', fontSize: 16 }}
+  //           placeholderTextColor='white'
+  //           placeholder='Search cities    '
+  //           autoFocus={true}
+  //           selectionColor={Colors.primaryDark}
+  //           returnKeyType='search'
+  //           onChangeText={updateSearch}
+  //           ref={input => { if (this) this.input = input; }}
+  //         />
+  //         <Icon type='material' name='clear' color='#ffffff' underlayColor={Colors.primary} size={25}
+  //           iconStyle={{ marginRight: 10 }}
+  //           onPress={() => {
+  //             if (!this || !this.input)
+  //               return;
 
-              this.input.clear();
-              if (!this.input.isFocused())
-                this.input.focus();
+  //             this.input.clear();
+  //             if (!this.input.isFocused())
+  //               this.input.focus();
 
-              updateSearch("");
-            }}
-          />
-        </View>,
-    });
-  }, [navigation]);
+  //             updateSearch("");
+  //           }}
+  //         />
+  //       </View>,
+  //   });
+  // }, [navigation]);
 
   function updateSearch(search) {
     let cities = [];
@@ -67,9 +69,17 @@ export default function SearchScreen(props) {
   else
     component = (<CityListScreen showProv='true' cities={cities} {...props} />);
 
+  //   <Appbar.Header>
+  //   <Searchbar iconColor="white" onChangeText={updateSearch} placeholder="Search" textColor="white" style={{ backgroundColor: Colors.primary }} />
+  // </Appbar.Header>
+
   return (
-    <View style={{ flex: 1, flexDirection: "column" }}>
-      {component}
+    <View style={{ flex: 1 }}>
+      <HeaderBar title="Search" showBackButton={true} navigation={navigation} />
+      <Searchbar onChangeText={updateSearch} placeholder="Enter city name" clearIcon="close-circle" />
+      <View style={{ flex: 1, flexDirection: "column" }}>
+        {component}
+      </View>
     </View>
   );
 };

@@ -1,19 +1,14 @@
 import React from 'react';
-import { FlatList } from 'react-native';
+import { FlatList, View } from 'react-native';
 import { SimpleListItem } from '../components/SimpleListItem';
 import sitelocations from '../constants/sitelocations';
 import DraggableFlatList from 'react-native-draggable-dynamic-flatlist';
+import HeaderBar from '../components/HeaderBar';
 
 export default function CityListScreen(props) {
-  let { cities, showProv, ...rest } = props;
+  let { cities, showProv, title, ...rest } = props;
   const { draggable, navigation, route, ...remainingProps } = rest;
   const prov = route?.params?.province;
-
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      headerTitle: prov ? prov.name : "Cities",
-    });
-  }, [navigation]);
 
   if (prov) {
     showProv = false;
@@ -42,27 +37,36 @@ export default function CityListScreen(props) {
       location: item.nameEn,
     });
   }
-  if (draggable && data)
+  const getListComponent = () => {
+    if (draggable && cities)
+      return (
+        <DraggableFlatList
+          {...commonProps}
+          {...remainingProps}
+          renderItem={({ item, index, move, moveEnd, isActive }) => {
+            return (
+              <SimpleListItem isActive={isActive} onPress={() => onPress(item)} onLongPress={move} onPressOut={moveEnd} >
+                {getLabel(item)}
+              </SimpleListItem>);
+          }}
+        />);
     return (
-      <DraggableFlatList
+      <FlatList
         {...commonProps}
         {...remainingProps}
-        renderItem={({ item, index, move, moveEnd, isActive }) => {
+        renderItem={({ item }) => {
           return (
-            <SimpleListItem isActive={isActive} onPress={() => onPress(item)} onLongPress={move} onPressOut={moveEnd} >
+            <SimpleListItem onPress={() => onPress(item)}>
               {getLabel(item)}
             </SimpleListItem>);
         }}
       />);
+  }
+  title = title ?? prov?.name;
   return (
-    <FlatList
-      {...commonProps}
-      {...remainingProps}
-      renderItem={({ item }) => {
-        return (
-          <SimpleListItem onPress={() => onPress(item)}>
-            {getLabel(item)}
-          </SimpleListItem>);
-      }}
-    />);
+    <View style={{ flex: 1 }}>
+      {title && <HeaderBar navigation={navigation} title={title} showBackButton={!!prov} />}
+      {getListComponent()}
+    </View>
+  );
 };
