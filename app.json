@@ -32,6 +32,7 @@
     },
     "primaryColor": "#ff8800",
     "androidStatusBar": {
+      "barStyle": "light-content",
       "backgroundColor": "#c55900"
     },
     "description": ""

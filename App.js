@@ -1,11 +1,11 @@
 import * as Font from 'expo-font';
 import React from 'react';
-import { Platform, StatusBar, StyleSheet, View, Button } from 'react-native';
+import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { SplashScreen } from 'expo';
 import { Entypo, MaterialIcons, FontAwesome, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Provider as PaperProvider, DefaultTheme } from 'react-native-paper';
+import { Provider as PaperProvider, DefaultTheme, DarkTheme } from 'react-native-paper';
 import Colors from './constants/Colors';
 import { SettingsContext } from './components/SettingsContext'
 import { FavoritesContext } from './components/FavoritesContext'
@@ -71,30 +71,32 @@ function HomeTabs() {
   return (
     <Tab.Navigator screenOptions={defaultScreenOptions}
       tabBarOptions={{
-        activeTintColor: Colors.primary,
+        activeTintColor: Colors.primaryDark,
+        labelPosition: 'below-icon,',
+        // showLabel: Platform.OS === 'ios',
       }}
     >
       <Tab.Screen name="Location" component={LocationStackScreen}
         options={{
           title: 'Location',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} type='entypo' name='location-pin' />
+          tabBarIcon: ({ focused, color, size }) => <TabBarIcon focused={focused} type='entypo' name='location-pin' color={color} size={size} />
         }}
       />
       <Tab.Screen name="Favourites" component={FavoritesStackScreen}
         options={{
-          title: "Favourites", tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} type='font-awesome' name='star' />
+          title: "Favourites", tabBarIcon: ({ focused, color, size }) => <TabBarIcon focused={focused} type='font-awesome' name='star' color={color} size={size} />
         }}
       />
       {/* <Tab.Screen name="Search" component={SearchStackScreen}
         options={{
           title: 'Search',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} type='material-community' name='magnify' />
+          tabBarIcon: ({ focused, color, size }) => <TabBarIcon focused={focused} type='material-community' name='magnify' color={color} size={size}/>
         }}
       /> */}
       <Tab.Screen name="Browse" component={BrowseStackScreen}
         options={{
           title: 'Browse',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} type='font-awesome' name='globe' />
+          tabBarIcon: ({ focused, color, size }) => <TabBarIcon focused={focused} type='font-awesome' name='globe' color={color} size={size} />
         }}
       />
     </Tab.Navigator>
@@ -149,10 +151,18 @@ export default function App(props) {
       return;
     }
 
+    if (!Sharing.isAvailableAsync()) {
+      alert("Sorry, sharing not available on this platform.");
+      return;
+    }
+
     try {
       await new Promise(resolve => setTimeout(resolve, 250)); //so any UI animations can settle
       let uri = await captureRef(mainViewRef, { format: "jpg", quality: 0.9 });
-      await Sharing.shareAsync(uri, { mimeType: "image/jpg", dialogTitle: "Share forecast" });
+      const prefix = "file://";
+      if (!uri.startsWith(prefix))
+        uri = prefix + uri;
+      await Sharing.shareAsync(uri, { mimeType: "image/jpeg", dialogTitle: "Share forecast", UTI: "image/jpeg" });
     } catch (error) {
       console.error("Error getting screenshot: " + error);
     }
@@ -191,12 +201,6 @@ export default function App(props) {
     loadResourcesAndDataAsync();
   }, []);
 
-  // <Stack.Screen name="Search" component={SearchScreen} />
-  // <Stack.Screen name="City" component={LocationScreen} />
-  // <Stack.Screen name="Settings" component={SettingsScreen} />
-
-  //  <Stack.Screen name="Root" component={HomeTabs} options={{ header: () => { return null } }} />
-
   if (!isLoadingComplete && !props.skipLoadingScreen) {
     return null;
   } else {
@@ -207,7 +211,7 @@ export default function App(props) {
             <FavoritesContext.Provider value={{ favorites, updateFavorites }}>
               <View ref={mainViewRef} style={styles.container}>
                 {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-                <NavigationContainer ref={containerRef} initialState={initialNavigationState}>
+                <NavigationContainer ref={containerRef} initialState={initialNavigationState} >
                   <Stack.Navigator headerMode='none'>
                     <Stack.Screen name="Root" component={HomeTabs} />
                     <Stack.Screen name="CityList" component={CityListScreen} />
@@ -245,9 +249,22 @@ const styles = StyleSheet.create({
 
 const theme = {
   ...DefaultTheme,
+  dark: false,
   colors: {
     ...DefaultTheme.colors,
     primary: '#FF8800',
     accent: '#f1c40f',
+    surface: '#FF8800',
+  },
+};
+
+const darkTheme = {
+  ...DarkTheme,
+  dark: true,
+  colors: {
+    ...DarkTheme.colors,
+    primary: '#FF8800',
+    accent: '#f1c40f',
+    surface: '#FF8800',
   },
 };

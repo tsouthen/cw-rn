@@ -5,16 +5,17 @@ import iconv from 'iconv-lite';
 import React from 'react';
 import { ActivityIndicator, FlatList, Image, Linking, Platform, Text, TouchableHighlight, View, AppState } from 'react-native';
 import { ButtonGroup, Icon } from 'react-native-elements';
+import { Snackbar, Portal, ToggleButton } from 'react-native-paper';
 import { parseString } from 'react-native-xml2js';
-import { Snackbar, Portal } from 'react-native-paper';
+
 import { FavoritesContext } from '../components/FavoritesContext';
 import { SettingsContext } from '../components/SettingsContext';
 import { ShareContext } from '../components/ShareContext';
 import Colors from '../constants/Colors';
 import sitelocations from '../constants/sitelocations';
 import CityListScreen from './CityListScreen';
-import HeaderBar, { HeaderBarAction, HeaderBarNavigationAction } from '../components/HeaderBar';
 const moment = require('moment');
+import HeaderBar, { HeaderBarAction, HeaderBarNavigationAction } from '../components/HeaderBar';
 
 // const styles = StyleSheet.create({
 //   container: {
@@ -32,82 +33,144 @@ const moment = require('moment');
 //   },
 // });
 
-export default function LocationScreen(props) {
-  const { navigation, route } = props;
-  const shareContext = React.useContext(ShareContext);
-  const [lastFetch, setLastFetch] = React.useState();
-  const [isLoading, setIsLoading] = React.useState(true);
-  const [dataSource, setDataSource] = React.useState({ forecasts: [], nearestSites: [], hourlyData: [] })
-  const [selectedIndex, setSelectedIndex] = React.useState(0);
+export default class CurrentLocation extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      lastFetch: undefined,
+      isLoading: true,
+      dataSource: {
+        forecasts: [],
+        nearestSites: [],
+        hourlyData: [],
+      },
+      selectedIndex: 0,
+    }
+  };
 
-  // React.useEffect(() => {
-  //   navigation.setOptions({ header: () => { return null } });
-  // }, [navigation, route]);
-
-  const possiblyRefreshData = () => {
-    const forecasts = dataSource.forecasts;
+  possiblyRefreshData() {
+    const forecasts = this.state.dataSource.forecasts;
+    const lastFetch = this.state.lastFetch;
     // determine if a new xml file will be available: 
     //   now - lastFetch > 5 mins &&
     //   now - lastForecastDateTime > 65 mins 
-    if (!isLoading && lastFetch && forecasts && forecasts.length > 0 && forecasts[0].dateTime) {
+    if (!this.state.isLoading && lastFetch && forecasts && forecasts.length > 0 && forecasts[0].dateTime) {
       const now = moment();
       let lastFetchMins = now.diff(lastFetch, 'minutes');
       let lastForecastMins = now.diff(forecasts[0].dateTime, 'minutes');
 
       if (lastFetchMins >= 5 && lastForecastMins >= 65) {
         console.log("refreshing old data");
-        makeRemoteRequest();
+        this.makeRemoteRequest();
       } else {
         console.log(`Not refreshing data, lastFetch:${lastFetchMins}, lastForecast:${lastForecastMins}`);
       }
     } else {
       console.log("No data to refresh");
-      console.log(`  lastFetch:${lastFetch}`);
-      console.log(`  num forecasts:${forecasts.length}`);
-      if (forecasts.length > 0)
-        console.log(`  last dateTime:${forecasts[0].dateTime}`);
+      console.log(`  lastFetch:${data.lastFetch}`);
+      console.log(`  num forecasts:${data.forecasts.length}`);
+      if (data.forecasts.length > 0)
+        console.log(`  last dateTime:${data.forecasts[0].dateTime}`);
     }
   }
 
-  const handleAppStateChange = nextAppState => {
+  handleAppStateChange = nextAppState => {
     if (nextAppState === "active") {
-      possiblyRefreshData();
+      this.possiblyRefreshData();
     }
+  };
+
+  async componentDidMount() {
+    if (this.state.isLoading) {
+      console.log("requesting remote data");
+      await this.makeRemoteRequest();
+    }
+
+    AppState.addEventListener('change', this.handleAppStateChange);
+
+    this.unsubscribeFocusSubscription = this.props.navigation.addListener('focus', (payLoad) => {
+      this.possiblyRefreshData();
+    });
+  };
+
+  componentWillUnmount() {
+    if (this.unsubscribeFocusSubscription)
+      this.unsubscribeFocusSubscription();
+
+    AppState.removeEventListener('change', this.handleAppStateChange);
   }
 
-  React.useEffect(() => {
-    if (isLoading) {
-      console.log("requesting remote data");
-      makeRemoteRequest();
-    }
-    AppState.addEventListener('change', handleAppStateChange);
+  randomInRange = (start, end) => {
+    return start + ((end - start) * Math.random());
+  };
 
-    const unsubscribe = navigation.addListener('focus', (payLoad) => {
-      possiblyRefreshData();
+  randomIntInRange = (min, max) => {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  };
+
+  fetchXML = (url) => {
+    return new Promise((resolve, reject) => {
+      const request = new XMLHttpRequest();
+
+      request.onload = () => {
+        if (request.status === 200) {
+          resolve(iconv.decode(Buffer.from(request.response), 'iso-8859-1'));
+        } else {
+          reject(new Error(request.statusText));
+        }
+      };
+      let errorFunc = () => reject(new Error(request.statusText));
+      request.onerror = errorFunc;
+      request.onabort = errorFunc;
+      request.ontimeout = errorFunc;
+
+      request.responseType = 'arraybuffer';
+
+      request.open('GET', url);
+      request.setRequestHeader('Content-type', 'text/xml; charset=ISO-8859-1');
+      request.send();
     });
+  };
 
-    return () => {
-      unsubscribe();
-      AppState.removeEventListener('change', handleAppStateChange);
-    };
-  }, []);
+  jsonFromXml = (xml) => {
+    return new Promise((resolve, reject) => {
+      parseString(xml, { explicitArray: false, mergeAttrs: true, explicitRoot: false }, (err, result) => {
+        if (err)
+          reject(err);
+        else
+          resolve(result);
+      });
+    });
+  };
 
-  const makeRemoteRequest = async () => {
+  orderByDistance = function (point, coords) {
+    return coords.sort((a, b) => this.getDistanceSquared(point, a) - this.getDistanceSquared(point, b));
+  };
+
+  getDistanceSquared = function (a, b) {
+    return Math.pow(b.longitude - a.longitude, 2) + Math.pow(b.latitude - a.latitude, 2);
+  };
+
+  makeRemoteRequest = async () => {
     try {
       let sortedLocs = [];
+
+      const { navigation, route } = this.props;
       let nearest = route?.params?.site;
       if (!nearest) {
         let location;
-        // on emulator just generate a random location
         if (Platform.OS === 'android' && !Constants.isDevice) {
-          nearest = sitelocations[randomIntInRange(0, sitelocations.length)];
+          nearest = sitelocations[this.randomIntInRange(0, sitelocations.length)];
           location = { coords: { latitude: nearest.latitude, longitude: nearest.longitude } };
         } else {
           await Location.requestPermissionsAsync();
           location = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Lowest, maximumAge: 15 * 60 * 1000, timeout: 30 * 1000 });
         }
-        sortedLocs = orderByDistance(location.coords, sitelocations);
+        sortedLocs = this.orderByDistance(location.coords, sitelocations);
         sortedLocs = sortedLocs.slice(0, 10);
+        // console.debug(sortedLocs);
         nearest = sortedLocs[0]; //findNearest(location.coords, sitelocations);
       }
 
@@ -117,47 +180,212 @@ export default function LocationScreen(props) {
       // prov = 'BC';
       // nearest = undefined;
       if (nearest) {
+        // console.debug(nearest);
         site = nearest.site;
         prov = nearest.prov;
       }
 
       let targetUrl = 'https://dd.weather.gc.ca/citypage_weather/xml/' + prov + '/' + site + '_e.xml';
-      const xml = await fetchXML(targetUrl);
-      const responseJson = await jsonFromXml(xml);
-      let entries = loadJsonData(responseJson);
-      let hourlyData = loadHourlyForecasts(responseJson);
+      // console.debug('targetUrl: ' + targetUrl);
+      const xml = await this.fetchXML(targetUrl);
+      const responseJson = await this.jsonFromXml(xml);
+      // console.debug(JSON.stringify(responseJson));
+      let entries = this.loadJsonData(responseJson);
+      let hourlyData = this.loadHourlyForecasts(responseJson);
+      // let isFav = this.isFavorite(site);
 
       navigation.setParams({
         location: responseJson.location.name._,
         currentSite: nearest,
       });
 
-      setLastFetch(moment());
-      setIsLoading(false);
-      setDataSource({
-        forecasts: entries,
-        nearestSites: sortedLocs,
-        hourlyData: hourlyData,
+      this.setState({
+        lastFetch: moment(),
+        isLoading: false,
+        dataSource: {
+          forecasts: entries,
+          nearestSites: sortedLocs,
+          hourlyData: hourlyData,
+        },
       });
-      setSelectedIndex(0);
     } catch (error) {
       console.error(error);
     }
   };
 
-  const handleRefresh = () => {
-    if (isLoading)
+  loadJsonData = (responseJson) => {
+    //returns an array of objects with the following keys: icon, title, summary, temperature, expanded, isNight, warning, warningUrl
+    let entries = [];
+
+    try {
+      //create a new forecast entry for the current conditions
+      if (responseJson.currentConditions && responseJson.currentConditions.temperature && responseJson.currentConditions.temperature._) {
+        let dateTime = undefined;
+        if (responseJson.currentConditions.dateTime && responseJson.currentConditions.dateTime.length > 0) {
+          dateTime = this.parseTimeStamp(responseJson.currentConditions.dateTime[0].timeStamp);
+        }
+        const entry = {
+          icon: responseJson.currentConditions.iconCode._,
+          title: getAsOfLabel(dateTime),
+          summary: CurrentLocation.valueOrEmptyString(responseJson.currentConditions.condition),
+          temperature: responseJson.currentConditions.temperature._,
+          expanded: true,
+          isNight: false,
+          dateTime: dateTime,
+        };
+
+        if (responseJson.warnings.event && responseJson.warnings.event.description) {
+          let warning = responseJson.warnings.event.description;
+          warning = warning.split(' ').map((t) => t.charAt(0).toUpperCase() + t.slice(1).toLowerCase()).join(' ').trim();
+          entry.warning = CurrentLocation.valueOrEmptyString(warning);
+          entry.warningUrl = CurrentLocation.valueOrEmptyString(responseJson.warnings.url);
+          if (entry.warningUrl)
+            entry.warningUrl += "#wb-cont"; // to scroll to the main heading in the page
+        }
+        // console.debug(entry);
+        entries.push(entry);
+      }
+
+      let dateTime = undefined;
+      if (responseJson.forecastGroup && responseJson.forecastGroup.dateTime && responseJson.forecastGroup.dateTime.length > 0) {
+        dateTime = this.parseTimeStamp(responseJson.forecastGroup.dateTime[0].timeStamp);
+      }
+
+      if (responseJson.forecastGroup.forecast && responseJson.forecastGroup.forecast.length) {
+        responseJson.forecastGroup.forecast.forEach((entry, index) => {
+          //remove temperature summary from overall summary
+          let textSummary = entry.textSummary;
+          if (CurrentLocation.isString(entry.temperatures.textSummary))
+            textSummary = entry.textSummary.replace(entry.temperatures.textSummary, '');
+
+          let iconCode = undefined;
+          if (entry.abbreviatedForecast && entry.abbreviatedForecast.iconCode && entry.abbreviatedForecast.iconCode._)
+            iconCode = entry.abbreviatedForecast.iconCode._;
+          else if (entry.iconCode && entry.iconCode._)
+            iconCode = entry.iconCode._;
+
+          let temperature = '';
+          if (entry.temperatures && entry.temperatures.temperature && entry.temperatures.temperature._)
+            temperature = entry.temperatures.temperature._;
+
+          entries.push({
+            icon: iconCode,
+            title: entry.period.textForecastName,
+            summary: textSummary,
+            temperature: temperature,
+            expanded: entries.length == 0,
+            isNight: entry.temperatures.temperature !== undefined && entry.temperatures.temperature.class === "low",
+            dateTime: dateTime,
+          });
+          dateTime = undefined;
+        });
+      }
+    } catch (error) {
+      console.error(error);
+    }
+
+    return entries;
+  };
+
+  parseTimeStamp = (timeStamp) => {
+    //              YYYY                          MM                            DD                            HH                            MM
+    let formatted = timeStamp.slice(0, 4) + '-' + timeStamp.slice(4, 6) + '-' + timeStamp.slice(6, 8) + 'T' + timeStamp.slice(8, 10) + ':' + timeStamp.slice(10, 12) + ':00.000Z';
+    return new Date(formatted);
+  };
+
+  loadHourlyForecasts = (responseJson) => {
+    let entries = [];
+
+    if (responseJson.hourlyForecastGroup && responseJson.hourlyForecastGroup.hourlyForecast && responseJson.hourlyForecastGroup.hourlyForecast.length) {
+      // let utcTimeStamp = responseJson.hourlyForecastGroup.dateTime[0].timeStamp;
+      // let localHour = parseInt(responseJson.hourlyForecastGroup.dateTime[1].hour);
+      let utcOffset = Number(responseJson.hourlyForecastGroup.dateTime[1].UTCOffset);
+      let minSuffix;
+      if (!Number.isInteger(utcOffset)) {
+        // console.debug('utcOffset non integer: ' + utcOffset);
+        let mins = Math.round((utcOffset - Math.floor(utcOffset)) * 60);
+        utcOffset = Math.floor(utcOffset);
+        minSuffix = '';
+        if (mins < 10)
+          minSuffix = '0';
+        minSuffix += '' + mins;
+        // console.debug('minSuffix: ' + minSuffix);
+      } else {
+        minSuffix = '00';
+      }
+      let sunrise = 6;
+      let sunset = 18;
+
+      if (responseJson.riseSet && responseJson.riseSet.dateTime && responseJson.riseSet.dateTime.length) {
+        responseJson.riseSet.dateTime.forEach((entry, index) => {
+          if (entry.name === 'sunrise' && entry.zone !== 'UTC') {
+            sunrise = parseInt(entry.hour);
+            // console.debug('sunrise: ' + sunrise);
+          } else if (entry.name === 'sunset' && entry.zone !== 'UTC') {
+            sunset = parseInt(entry.hour);
+            // console.debug('sunset: ' + sunset);
+          }
+        });
+      }
+      responseJson.hourlyForecastGroup.hourlyForecast.forEach((entry, index) => {
+        let currHour = parseInt(entry.dateTimeUTC.substr(8, 2));
+        currHour += utcOffset;
+        if (currHour < 0)
+          currHour += 24;
+        if (currHour >= 24)
+          currHour -= 24;
+        let displayHour = currHour;
+        let suffix = ':' + minSuffix + ' am';
+        if (displayHour >= 12)
+          suffix = ':' + minSuffix + ' pm';
+        if (displayHour > 12)
+          displayHour -= 12;
+        if (displayHour == 0)
+          displayHour = 12;
+
+        let heading = null;
+        if (index === 0)
+          heading = 'Today';
+        else if (currHour === 0)
+          heading = 'Tomorrow';
+
+        entries.push({
+          icon: entry.iconCode && entry.iconCode._,
+          title: '' + displayHour + suffix,
+          summary: entry.condition,
+          temperature: entry.temperature && entry.temperature._,
+          expanded: entries.length === 0 || entry.condition !== entries[entries.length - 1].summary,
+          isNight: currHour > sunset || currHour < sunrise,
+          isHourly: true,
+          heading: heading,
+        });
+      });
+    }
+    return entries;
+  };
+
+  static isString = (item) => {
+    return item !== null && item !== undefined && 'string' === typeof (item);
+  };
+
+  static valueOrEmptyString = (item) => {
+    if (!CurrentLocation.isString(item))
+      return '';
+    return item;
+  };
+
+  handleRefresh = () => {
+    if (this.state.isLoading)
       return;
 
+    const { navigation, route } = this.props;
     if (!route?.params?.site) {
       navigation.setParams({ location: 'Location', currentSite: undefined });
     }
-    setIsLoading(true);
-    // OK to do here or do I need a useEffect?
-    makeRemoteRequest();
+    this.setState({ isLoading: true }, () => { this.makeRemoteRequest(); });
   };
 
-  const newFlatList = (data, key) => {
+  newFlatList = (data, key) => {
     const keyProps = {};
     if (key)
       keyProps.key = key;
@@ -167,315 +395,131 @@ export default function LocationScreen(props) {
         style={{ flex: 1 }}
         data={data}
         renderItem={({ item, index }) => <ForecastItem {...item}
-          navigation={navigation}
+          navigation={this.props.navigation}
           index={index}
-        />}
+          onPress={() => {
+            //we need the expanded state outside the ForecastItem as the FlatList is a virtualized list and items can be re-used
+            item.expanded = !item.expanded;
+            this.setState({ dataSource: this.state.dataSource });
+          }} />}
         keyExtractor={item => item.title}
-        refreshing={isLoading}
-        onRefresh={handleRefresh}
+        refreshing={this.state.isLoading}
+        onRefresh={this.handleRefresh}
       />
     );
   };
 
-  const getButtonIcon = (name, type, index) => {
-    let color = Colors.tabIconDefault;
-    if (selectedIndex === index)
-      color = Colors.tabIconSelected;
-    return (
-      <Icon name={name} type={type} color={color} />
-      // <Button type="outline" color={color} icon={{name: name, type: type, color: color}} />
-    );
-  };
+  render() {
+    const { navigation, route } = this.props;
+    const isCurrLocation = !route?.params?.site;
+    const hasLocation = !isCurrLocation || route?.params?.currentSite;
+    const site = route?.params?.site || route?.params?.currentSite;
 
-  const forecastIcon = () => {
-    return getButtonIcon('calendar-week', 'material-community', 0);
-  };
-
-  const hourlyIcon = () => {
-    return getButtonIcon('access-time', 'material', 1);
-  };
-
-  const nearbyIcon = () => {
-    return getButtonIcon('near-me', 'material', 2);
-  };
-
-  if (isLoading) {
-    // <Text>Loading...</Text>
-    return (
-      <View style={{ flex: 1, marginTop: 80 }}>
-        <ActivityIndicator color={Colors.primaryDark} />
-      </View>
-    )
-  }
-
-  let flatList;
-  switch (selectedIndex) {
-    case 0:
-      flatList = newFlatList(dataSource.forecasts);
-      break;
-
-    case 1:
-      flatList = newFlatList(dataSource.hourlyData);
-      break;
-
-    case 2:
-      flatList = (<CityListScreen
-        cities={dataSource.nearestSites}
-        navigation={navigation}
-        refreshing={isLoading}
-        onRefresh={handleRefresh}
-      />);
-      break;
-  }
-
-  let buttons = [{ element: forecastIcon }, { element: hourlyIcon }];
-  if (dataSource.nearestSites && dataSource.nearestSites.length)
-    buttons.push({ element: nearbyIcon });
-
-  // containerStyle={{borderColor: 'black', borderWidth: 0, borderBottomWidth: 1}}
-  // containerStyle={{borderWidth: 0}}
-
-  const isCurrLocation = !route?.params?.site;
-  const hasLocation = !isCurrLocation || route?.params?.currentSite;
-  const site = route?.params?.site || route?.params?.currentSite;
-  return (
-    <View style={{ flex: 1 }}>
+    const headerBar = (
       <HeaderBar navigation={navigation} title={route?.params?.location ?? 'Location'} showBackButton={!isCurrLocation}>
         {site && <FavoriteIcon site={site} />}
-        {hasLocation && <HeaderBarAction icon="share-variant" onPress={shareContext.onShare} />}
+        {hasLocation && <HeaderBarAction icon="share-variant" onPress={this.context.onShare} />}
         {isCurrLocation && <HeaderBarNavigationAction icon="settings" screen="Settings" navigation={navigation} />}
-      </HeaderBar>
-      <ButtonGroup
-        onPress={(newIndex) => setSelectedIndex(newIndex)}
-        selectedIndex={selectedIndex}
-        selectedButtonStyle={{ backgroundColor: 'white', borderColor: Colors.tabIconSelected, borderWidth: 0, borderBottomWidth: 2 }}
-        containerBorderRadius={0}
-        containerStyle={{ borderWidth: 0 }}
-        innerBorderStyle={{ width: 0 }}
-        buttons={buttons}
-        underlayColor={Colors.primaryLight}
-      />
-      {flatList}
-    </View>
-  );
-};
+      </HeaderBar>);
 
-function loadJsonData(responseJson) {
-  //returns an array of objects with the following keys: icon, title, summary, temperature, expanded, isNight, warning, warningUrl
-  let entries = [];
-
-  try {
-    //create a new forecast entry for the current conditions
-    if (responseJson.currentConditions && responseJson.currentConditions.temperature && responseJson.currentConditions.temperature._) {
-      let dateTime = undefined;
-      if (responseJson.currentConditions.dateTime && responseJson.currentConditions.dateTime.length > 0) {
-        dateTime = parseTimeStamp(responseJson.currentConditions.dateTime[0].timeStamp);
-      }
-      const entry = {
-        icon: responseJson.currentConditions.iconCode._,
-        title: getAsOfLabel(dateTime),
-        summary: valueOrEmptyString(responseJson.currentConditions.condition),
-        temperature: responseJson.currentConditions.temperature._,
-        expanded: true,
-        isNight: false,
-        dateTime: dateTime,
-      };
-
-      if (responseJson.warnings.event && responseJson.warnings.event.description) {
-        let warning = responseJson.warnings.event.description;
-        warning = warning.split(' ').map((t) => t.charAt(0).toUpperCase() + t.slice(1).toLowerCase()).join(' ').trim();
-        entry.warning = valueOrEmptyString(warning);
-        entry.warningUrl = valueOrEmptyString(responseJson.warnings.url);
-        if (entry.warningUrl)
-          entry.warningUrl += "#wb-cont"; // to scroll to the main heading in the page
-      }
-      // console.debug(entry);
-      entries.push(entry);
+    if (this.state.isLoading) {
+      // <Text>Loading...</Text>
+      return (
+        <View style={{ flex: 1 }}>
+          {headerBar}
+          <View style={{ flex: 1, marginTop: 80 }}>
+            <ActivityIndicator color={Colors.primaryDark} />
+          </View>
+        </View>
+      )
     }
 
-    let dateTime = undefined;
-    if (responseJson.forecastGroup && responseJson.forecastGroup.dateTime && responseJson.forecastGroup.dateTime.length > 0) {
-      dateTime = parseTimeStamp(responseJson.forecastGroup.dateTime[0].timeStamp);
-    }
-
-    if (responseJson.forecastGroup.forecast && responseJson.forecastGroup.forecast.length) {
-      responseJson.forecastGroup.forecast.forEach((entry, index) => {
-        //remove temperature summary from overall summary
-        let textSummary = entry.textSummary;
-        if (isString(entry.temperatures.textSummary))
-          textSummary = entry.textSummary.replace(entry.temperatures.textSummary, '');
-
-        let iconCode = undefined;
-        if (entry.abbreviatedForecast && entry.abbreviatedForecast.iconCode && entry.abbreviatedForecast.iconCode._)
-          iconCode = entry.abbreviatedForecast.iconCode._;
-        else if (entry.iconCode && entry.iconCode._)
-          iconCode = entry.iconCode._;
-
-        let temperature = '';
-        if (entry.temperatures && entry.temperatures.temperature && entry.temperatures.temperature._)
-          temperature = entry.temperatures.temperature._;
-
-        entries.push({
-          icon: iconCode,
-          title: entry.period.textForecastName,
-          summary: textSummary,
-          temperature: temperature,
-          expanded: entries.length == 0,
-          isNight: entry.temperatures.temperature !== undefined && entry.temperatures.temperature.class === "low",
-          dateTime: dateTime,
-        });
-        dateTime = undefined;
-      });
-    }
-  } catch (error) {
-    console.error(error);
-  }
-
-  return entries;
-};
-
-function parseTimeStamp(timeStamp) {
-  //              YYYY                          MM                            DD                            HH                            MM
-  let formatted = timeStamp.slice(0, 4) + '-' + timeStamp.slice(4, 6) + '-' + timeStamp.slice(6, 8) + 'T' + timeStamp.slice(8, 10) + ':' + timeStamp.slice(10, 12) + ':00.000Z';
-  return new Date(formatted);
-};
-
-function loadHourlyForecasts(responseJson) {
-  let entries = [];
-
-  if (responseJson.hourlyForecastGroup && responseJson.hourlyForecastGroup.hourlyForecast && responseJson.hourlyForecastGroup.hourlyForecast.length) {
-    // let utcTimeStamp = responseJson.hourlyForecastGroup.dateTime[0].timeStamp;
-    // let localHour = parseInt(responseJson.hourlyForecastGroup.dateTime[1].hour);
-    let utcOffset = Number(responseJson.hourlyForecastGroup.dateTime[1].UTCOffset);
-    let minSuffix;
-    if (!Number.isInteger(utcOffset)) {
-      // console.debug('utcOffset non integer: ' + utcOffset);
-      let mins = Math.round((utcOffset - Math.floor(utcOffset)) * 60);
-      utcOffset = Math.floor(utcOffset);
-      minSuffix = '';
-      if (mins < 10)
-        minSuffix = '0';
-      minSuffix += '' + mins;
-      // console.debug('minSuffix: ' + minSuffix);
-    } else {
-      minSuffix = '00';
-    }
-    let sunrise = 6;
-    let sunset = 18;
-
-    if (responseJson.riseSet && responseJson.riseSet.dateTime && responseJson.riseSet.dateTime.length) {
-      responseJson.riseSet.dateTime.forEach((entry, index) => {
-        if (entry.name === 'sunrise' && entry.zone !== 'UTC') {
-          sunrise = parseInt(entry.hour);
-          // console.debug('sunrise: ' + sunrise);
-        } else if (entry.name === 'sunset' && entry.zone !== 'UTC') {
-          sunset = parseInt(entry.hour);
-          // console.debug('sunset: ' + sunset);
-        }
-      });
-    }
-    responseJson.hourlyForecastGroup.hourlyForecast.forEach((entry, index) => {
-      let currHour = parseInt(entry.dateTimeUTC.substr(8, 2));
-      currHour += utcOffset;
-      if (currHour < 0)
-        currHour += 24;
-      if (currHour >= 24)
-        currHour -= 24;
-      let displayHour = currHour;
-      let suffix = ':' + minSuffix + ' am';
-      if (displayHour >= 12)
-        suffix = ':' + minSuffix + ' pm';
-      if (displayHour > 12)
-        displayHour -= 12;
-      if (displayHour == 0)
-        displayHour = 12;
-
-      let heading = null;
-      if (index === 0)
-        heading = 'Today';
-      else if (currHour === 0)
-        heading = 'Tomorrow';
-
-      entries.push({
-        icon: entry.iconCode && entry.iconCode._,
-        title: '' + displayHour + suffix,
-        summary: entry.condition,
-        temperature: entry.temperature && entry.temperature._,
-        expanded: entries.length === 0 || entry.condition !== entries[entries.length - 1].summary,
-        isNight: currHour > sunset || currHour < sunrise,
-        isHourly: true,
-        heading: heading,
-      });
-    });
-  }
-  return entries;
-};
-
-function isString(item) {
-  return item !== null && item !== undefined && 'string' === typeof (item);
-};
-
-function valueOrEmptyString(item) {
-  if (!isString(item))
-    return '';
-  return item;
-};
-
-function randomInRange(start, end) {
-  return start + ((end - start) * Math.random());
-};
-
-function randomIntInRange(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-};
-
-function fetchXML(url) {
-  return new Promise((resolve, reject) => {
-    const request = new XMLHttpRequest();
-
-    request.onload = () => {
-      if (request.status === 200) {
-        resolve(iconv.decode(Buffer.from(request.response), 'iso-8859-1'));
-      } else {
-        reject(new Error(request.statusText));
-      }
+    const getButtonIcon = (name, type, index) => {
+      let color = Colors.tabIconDefault;
+      if (this.state.selectedIndex === index)
+        color = Colors.tabIconSelected;
+      return (
+        <Icon name={name} type={type} color={color} />
+        // <Button type="outline" color={color} icon={{name: name, type: type, color: color}} />
+      );
     };
-    let errorFunc = () => reject(new Error(request.statusText));
-    request.onerror = errorFunc;
-    request.onabort = errorFunc;
-    request.ontimeout = errorFunc;
 
-    request.responseType = 'arraybuffer';
+    const forecastIcon = () => {
+      return getButtonIcon('calendar-week', 'material-community', 0);
+    };
 
-    request.open('GET', url);
-    request.setRequestHeader('Content-type', 'text/xml; charset=ISO-8859-1');
-    request.send();
-  });
+    const hourlyIcon = () => {
+      return getButtonIcon('access-time', 'material', 1);
+    };
+
+    const nearbyIcon = () => {
+      return getButtonIcon('near-me', 'material', 2);
+    };
+
+    let flatList;
+    switch (this.state.selectedIndex) {
+      case 0:
+      case "forecast":
+        flatList = this.newFlatList(this.state.dataSource.forecasts);
+        break;
+
+      case 1:
+      case "hourly":
+        flatList = this.newFlatList(this.state.dataSource.hourlyData);
+        break;
+
+      case 2:
+      case "nearby":
+        flatList = (<CityListScreen
+          cities={this.state.dataSource.nearestSites}
+          navigation={this.props.navigation}
+          refreshing={this.state.isLoading}
+          onRefresh={this.handleRefresh}
+        />);
+        break;
+    }
+
+    // containerStyle={{borderColor: 'black', borderWidth: 0, borderBottomWidth: 1}}
+    // containerStyle={{borderWidth: 0}}
+
+    let buttons = [{ element: forecastIcon }, { element: hourlyIcon }];
+    if (this.state.dataSource.nearestSites && this.state.dataSource.nearestSites.length)
+      buttons.push({ element: nearbyIcon });
+
+    return (
+      <View style={{ flex: 1, backgroundColor: 'white' }}>
+        {headerBar}
+        <ButtonGroup
+          style={{ flex: 1 }}
+          onPress={(selectedIndex) => this.setState({ selectedIndex })}
+          selectedIndex={this.state.selectedIndex}
+          selectedButtonStyle={{ backgroundColor: 'white', borderColor: Colors.tabIconSelected, borderWidth: 0, borderBottomWidth: 0 }}
+          containerBorderRadius={0}
+          containerStyle={{ borderWidth: 0 }}
+          innerBorderStyle={{ width: 0 }}
+          buttons={buttons}
+          underlayColor={Colors.primaryLight}
+        />
+        {/* <ToggleButton.Row
+          onValueChange={(selectedIndex) => {
+            if (selectedIndex)
+              this.setState({ selectedIndex });
+          }}
+          value={this.state.selectedIndex}>
+          <ToggleButton icon="calendar-week" value="forecast" style={{ flex: 1 }} />
+          <ToggleButton icon="clock-outline" value="hourly" style={{ flex: 1 }} />
+          <ToggleButton icon="near-me" value="nearby" style={{ flex: 1 }} />
+        </ToggleButton.Row> */}
+        {flatList}
+      </View >
+    );
+  }
 };
-
-function jsonFromXml(xml) {
-  return new Promise((resolve, reject) => {
-    parseString(xml, { explicitArray: false, mergeAttrs: true, explicitRoot: false }, (err, result) => {
-      if (err)
-        reject(err);
-      else
-        resolve(result);
-    });
-  });
-};
-
-function getDistanceSquared(a, b) {
-  return Math.pow(b.longitude - a.longitude, 2) + Math.pow(b.latitude - a.latitude, 2);
-};
-
-function orderByDistance(point, coords) {
-  return coords.sort((a, b) => getDistanceSquared(point, a) - getDistanceSquared(point, b));
-};
+CurrentLocation.contextType = ShareContext;
+// export default withNavigation(CurrentLocation);
 
 function iconCodeToName(iconCode) {
-  if (!isString(iconCode)) {
+  if (!CurrentLocation.isString(iconCode)) {
     // console.debug('Non-string icon code: ' + iconCode);
     // return require('../assets/images/clever_weather.png');
     return null;
