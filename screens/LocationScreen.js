@@ -4,10 +4,10 @@ import * as Location from 'expo-location';
 import iconv from 'iconv-lite';
 import React from 'react';
 import { ActivityIndicator, FlatList, Image, Linking, Platform, Text, TouchableHighlight, View, AppState } from 'react-native';
-import { ButtonGroup, Icon } from 'react-native-elements';
+// import { ButtonGroup, Icon } from 'react-native-elements';
 import { Snackbar, Portal, ToggleButton } from 'react-native-paper';
 import { parseString } from 'react-native-xml2js';
-
+import ViewPager from '@react-native-community/viewpager'
 import { FavoritesContext } from '../components/FavoritesContext';
 import { SettingsContext } from '../components/SettingsContext';
 import { ShareContext } from '../components/ShareContext';
@@ -434,62 +434,79 @@ export default class CurrentLocation extends React.Component {
       )
     }
 
-    const getButtonIcon = (name, type, index) => {
-      let color = Colors.tabIconDefault;
-      if (this.state.selectedIndex === index)
-        color = Colors.tabIconSelected;
-      return (
-        <Icon name={name} type={type} color={color} />
-        // <Button type="outline" color={color} icon={{name: name, type: type, color: color}} />
-      );
-    };
+    // const getButtonIcon = (name, type, index) => {
+    //   let color = Colors.tabIconDefault;
+    //   if (this.state.selectedIndex === index)
+    //     color = Colors.tabIconSelected;
+    //   return (
+    //     <Icon name={name} type={type} color={color} />
+    //     // <Button type="outline" color={color} icon={{name: name, type: type, color: color}} />
+    //   );
+    // };
 
-    const forecastIcon = () => {
-      return getButtonIcon('calendar-week', 'material-community', 0);
-    };
+    // const forecastIcon = () => {
+    //   return getButtonIcon('calendar-week', 'material-community', 0);
+    // };
 
-    const hourlyIcon = () => {
-      return getButtonIcon('access-time', 'material', 1);
-    };
+    // const hourlyIcon = () => {
+    //   return getButtonIcon('access-time', 'material', 1);
+    // };
 
-    const nearbyIcon = () => {
-      return getButtonIcon('near-me', 'material', 2);
-    };
+    // const nearbyIcon = () => {
+    //   return getButtonIcon('near-me', 'material', 2);
+    // };
 
-    let flatList;
-    switch (this.state.selectedIndex) {
-      case 0:
-      case "forecast":
-        flatList = this.newFlatList(this.state.dataSource.forecasts);
-        break;
+    // let flatList;
+    // switch (this.state.selectedIndex) {
+    //   case 0:
+    //   case "forecast":
+    //     flatList = this.newFlatList(this.state.dataSource.forecasts);
+    //     break;
 
-      case 1:
-      case "hourly":
-        flatList = this.newFlatList(this.state.dataSource.hourlyData);
-        break;
+    //   case 1:
+    //   case "hourly":
+    //     flatList = this.newFlatList(this.state.dataSource.hourlyData);
+    //     break;
 
-      case 2:
-      case "nearby":
-        flatList = (<CityListScreen
-          cities={this.state.dataSource.nearestSites}
-          navigation={this.props.navigation}
-          refreshing={this.state.isLoading}
-          onRefresh={this.handleRefresh}
-        />);
-        break;
-    }
+    //   case 2:
+    //   case "nearby":
+    //     flatList = (<CityListScreen
+    //       cities={this.state.dataSource.nearestSites}
+    //       navigation={this.props.navigation}
+    //       refreshing={this.state.isLoading}
+    //       onRefresh={this.handleRefresh}
+    //     />);
+    //     break;
+    // }
 
     // containerStyle={{borderColor: 'black', borderWidth: 0, borderBottomWidth: 1}}
     // containerStyle={{borderWidth: 0}}
 
-    let buttons = [{ element: forecastIcon }, { element: hourlyIcon }];
-    if (this.state.dataSource.nearestSites && this.state.dataSource.nearestSites.length)
-      buttons.push({ element: nearbyIcon });
+    // let buttons = [{ element: forecastIcon }, { element: hourlyIcon }];
+    // if (this.state.dataSource.nearestSites && this.state.dataSource.nearestSites.length)
+    //   buttons.push({ element: nearbyIcon });
 
     return (
       <View style={{ flex: 1, backgroundColor: 'white' }}>
         {headerBar}
-        <ButtonGroup
+        <ViewPager style={{ flex: 1 }} initialPage={0} showPageIndicator={true} >
+          <View key="1">
+            {this.newFlatList(this.state.dataSource.forecasts)}
+          </View>
+          <View key="2">
+            {this.newFlatList(this.state.dataSource.hourlyData)}
+          </View>
+          {this.state.dataSource.nearestSites && this.state.dataSource.nearestSites.length &&
+            <View key="3">
+              <CityListScreen
+                cities={this.state.dataSource.nearestSites}
+                navigation={this.props.navigation}
+                refreshing={this.state.isLoading}
+                onRefresh={this.handleRefresh}
+              />
+            </View>}
+        </ViewPager>
+        {/* <ButtonGroup
           style={{ flex: 1 }}
           onPress={(selectedIndex) => this.setState({ selectedIndex })}
           selectedIndex={this.state.selectedIndex}
@@ -499,18 +516,8 @@ export default class CurrentLocation extends React.Component {
           innerBorderStyle={{ width: 0 }}
           buttons={buttons}
           underlayColor={Colors.primaryLight}
-        />
-        {/* <ToggleButton.Row
-          onValueChange={(selectedIndex) => {
-            if (selectedIndex)
-              this.setState({ selectedIndex });
-          }}
-          value={this.state.selectedIndex}>
-          <ToggleButton icon="calendar-week" value="forecast" style={{ flex: 1 }} />
-          <ToggleButton icon="clock-outline" value="hourly" style={{ flex: 1 }} />
-          <ToggleButton icon="near-me" value="nearby" style={{ flex: 1 }} />
-        </ToggleButton.Row> */}
-        {flatList}
+        /> */}
+        {/* {flatList} */}
       </View >
     );
   }
@@ -755,7 +762,7 @@ function AutoUpdateText(props) {
   const [label, setLabel] = React.useState(getAsOfLabel(dateTime));
   const [visible, setVisible] = React.useState(true);
 
-  updateLabel = () => {
+  const updateLabel = () => {
     setLabel(getAsOfLabel(dateTime));
   };
 
