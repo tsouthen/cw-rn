@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, Platform } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import Colors from '../constants/Colors';
 import { SettingsContext } from '../components/SettingsContext';
@@ -43,7 +43,7 @@ function SettingItem(props) {
       titleStyle={{ fontFamily: 'montserrat' }}
       underlayColor={Colors.primaryLight}
       switch={{
-        thumbColor: Colors.primaryDark,
+        thumbColor: Platform.OS === 'ios' ? 'white' : Colors.primaryDark,
         trackColor: { false: '#b2b2b2', true: Colors.primary },
         value: turnedOn,
         onValueChange: (value) => { onValueChanged(value) },
