@@ -33,6 +33,7 @@ export default function BrowseScreen({ navigation }) {
         <HeaderBarNavigationAction navigation={navigation} icon="magnify" screen="Search" />
       </HeaderBar>
       <FlatList
+        style={{ backgroundColor: 'white' }}
         data={provinces}
         renderItem={({ item }) => {
           return (<SimpleListItem onPress={() => handlePress(item)}>{item.name}</SimpleListItem>);

@@ -19,7 +19,7 @@ export default function CityListScreen(props) {
   }
 
   let commonProps = {
-    style: { flex: 1 },
+    style: { flex: 1, backgroundColor: 'white' },
     data: cities,
     keyExtractor: item => item.site,
   }
