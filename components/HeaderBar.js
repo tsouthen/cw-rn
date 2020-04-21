@@ -5,7 +5,7 @@ export default function HeaderBar({ title, navigation, showBackButton, buttons, 
   return (
     <Appbar.Header>
       {navigation && showBackButton && <Appbar.BackAction color="white" onPress={() => navigation.goBack()} />}
-      <Appbar.Content title={title} titleStyle={{ fontFamily: 'montserrat' }} color='white' />
+      {title && <Appbar.Content title={title} titleStyle={{ fontFamily: 'montserrat' }} color='white' />}
       {rest.children}
     </Appbar.Header>
   );
