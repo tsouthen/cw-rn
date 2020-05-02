@@ -7,7 +7,6 @@ import { ActivityIndicator, FlatList, Image, Linking, Platform, Text, TouchableH
 import { Snackbar, Portal } from 'react-native-paper';
 import { parseString } from 'react-native-xml2js';
 import { Pages } from 'react-native-pages';
-
 import { FavoritesContext } from '../components/FavoritesContext';
 import { SettingsContext } from '../components/SettingsContext';
 import { ShareContext } from '../components/ShareContext';
@@ -398,7 +397,7 @@ export default class CurrentLocation extends React.Component {
             temperature: entry._,
             isNight: isNight,
             isOther: true,
-            icon: { type: "feather", name: isNight ? "arrow-down-circle" : "arrow-up-circle", size: 40, iconStyle: { padding: 5 } },
+            icon: { type: "feather", name: isNight ? "arrow-down-circle" : "arrow-up-circle" },
           });
           heading = null;
         });
@@ -412,7 +411,7 @@ export default class CurrentLocation extends React.Component {
           title: "Precipitation",
           value: precipVal,
           isOther: true,
-          icon: { type: "feather", name: "umbrella", size: 40, iconStyle: { padding: 5 } },
+          icon: { type: "feather", name: "umbrella" },
         });
         heading = null;
       }
@@ -448,6 +447,11 @@ export default class CurrentLocation extends React.Component {
     if (almanac && almanac.temperature && almanac.temperature.length) {
       almanac.temperature.forEach((entry, index) => {
         if (entry._) {
+          let iconColor = "black";
+          if (entry.class.endsWith("Max"))
+            iconColor = Colors.primaryDark;
+          else if (entry.class.endsWith("Min"))
+            iconColor = "#777777";
           addEntry({
             category: "Almanac",
             key: entry.class,
@@ -457,6 +461,7 @@ export default class CurrentLocation extends React.Component {
             isOther: true,
             summary: entry.year,
             expanded: !!entry.year,
+            icon: { type: "feather", name: "thermometer", color: iconColor },
           });
         }
       });
@@ -464,6 +469,11 @@ export default class CurrentLocation extends React.Component {
     if (almanac && almanac.precipitation && almanac.precipitation.length) {
       almanac.precipitation.forEach((entry, index) => {
         if (entry._ && entry._ !== "0.0") {
+          let iconName = "umbrella";
+          if (entry.class.toLowerCase().includes("rain"))
+            iconName = "cloud-rain";
+          else if (entry.class.toLowerCase().includes("snow"))
+            iconName = "cloud-snow";
           addEntry({
             category: "Almanac",
             key: entry.class,
@@ -472,6 +482,7 @@ export default class CurrentLocation extends React.Component {
             isOther: true,
             summary: entry.year,
             expanded: !!entry.year,
+            icon: { type: "feather", name: iconName },
           });
         }
       });
@@ -508,7 +519,7 @@ export default class CurrentLocation extends React.Component {
             title: title,
             value: `${hour}:${entry.minute} ${suffix}`,
             isOther: true,
-            icon: { type: "feather", name: title === "Rise" ? "sunrise" : "sunset", size: 40, color: Colors.primary, iconStyle: { padding: 5 } },
+            icon: { type: "feather", name: title === "Rise" ? "sunrise" : "sunset", color: Colors.primary },
           });
           heading = null;
         }
@@ -577,8 +588,7 @@ export default class CurrentLocation extends React.Component {
     const headerBar = (
       <HeaderBar navigation={navigation} title={route?.params?.location ?? 'Location'} showBackButton={!isCurrLocation} /* subtitle={subtitle} */ >
         {site && <FavoriteIcon site={site} />}
-        {hasLocation && <HeaderBarAction icon={Platform.OS === "ios" ? "export-variant" : "share-variant"} onPress={this.context.onShare} />}
-        {isCurrLocation && <HeaderBarNavigationAction icon="settings" screen="Settings" navigation={navigation} />}
+        {hasLocation && <HeaderBarAction type="feather" name={Platform.OS === "ios" ? "share" : "share-2"} onPress={this.context.onShare} />}
       </HeaderBar>);
 
     if (this.state.isLoading) {
@@ -774,9 +784,10 @@ function ForecastItem(props) {
   if (typeof icon === "string") {
     imageView = <Image style={{ width: 50, height: 50, resizeMode: "contain" }} source={iconCodeToName(icon)} />;
   } else if (!!icon && typeof icon === "object") {
-    imageView = <Icon {...icon} />;
+    imageView = <Icon {...icon} size={32} iconStyle={{ width: 50, height: 50, paddingTop: 10, paddingLeft: 10 }} />;
   } else if (!isOther) {
-    imageView = <View style={{ width: 50, height: 50 }} />;
+    // imageView = <View style={{ width: 50, height: 50 }} />;
+    imageView = <Icon type="feather" name="cloud-off" size={32} iconStyle={{ width: 50, height: 50, paddingTop: 10, paddingLeft: 10 }} />;
   }
   let warningView = null;
   if (warning && warningUrl)
@@ -826,7 +837,7 @@ function ForecastItem(props) {
     <TouchableHighlight underlayColor={Colors.primaryLight} onPress={toggleExpanded}>
       <View style={{ flex: 100, flexDirection: "column", backgroundColor: "white" }} >
         {headingView}
-        <View style={{ flex: 100, flexDirection: "row", paddingTop: 0, paddingBottom: 5, paddingRight: 5 }}>
+        <View style={{ flex: 100, flexDirection: "row", paddingTop: 0, paddingBottom: 5, paddingRight: 5, alignItems: summary || warning ? "flex-start" : "center" }}>
           {imageView}
           <View style={{ flex: 1, flexDirection: "column", paddingLeft: 10, paddingTop: 5 }}>
             <View style={{ flexDirection: "row" }} >
