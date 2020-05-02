@@ -4,7 +4,7 @@ import { Icon } from 'react-native-elements';
 
 export default function HeaderBar({ title, subtitle, navigation, showBackButton, buttons, ...rest }) {
   return (
-    <Appbar.Header>
+    <Appbar.Header dark={true}>
       {navigation && showBackButton && <Appbar.BackAction color="white" onPress={() => navigation.goBack()} />}
       {title && <Appbar.Content title={title} titleStyle={{ fontFamily: 'montserrat' }} subtitle={subtitle} color='white' />}
       {rest.children}
