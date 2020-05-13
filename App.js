@@ -1,28 +1,28 @@
-import * as Font from 'expo-font';
-import React from 'react';
-import { Platform, StatusBar, StyleSheet, View } from 'react-native';
-import { SplashScreen } from 'expo';
-import { Entypo, MaterialIcons, FontAwesome, Ionicons, MaterialCommunityIcons, Feather } from '@expo/vector-icons';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { Provider as PaperProvider, DefaultTheme, DarkTheme } from 'react-native-paper';
-import Colors from './constants/Colors';
-import { SettingsContext } from './components/SettingsContext'
-import { FavoritesContext } from './components/FavoritesContext'
-import FavoritesScreen, { defaultFavorites } from './screens/FavoritesScreen';
-import { ShareContext } from './components/ShareContext';
-import { captureRef } from 'react-native-view-shot';
-import * as Sharing from 'expo-sharing';
-import { JsonStorage } from './components/JsonStorage';
-import useLinking from './navigation/useLinking';
-import SearchScreen from './screens/SearchScreen';
-import BrowseScreen from './screens/BrowseScreen';
-import CityListScreen from './screens/CityListScreen';
-import LocationScreen from './screens/LocationScreen';
-import SettingsScreen from './screens/SettingsScreen';
+import { Feather, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { SplashScreen } from 'expo';
+import * as Font from 'expo-font';
+import * as Sharing from 'expo-sharing';
+import React from 'react';
+import { Platform, StyleSheet, View } from 'react-native';
+import { DarkTheme, DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
+import { captureRef } from 'react-native-view-shot';
+import { FavoritesContext } from './components/FavoritesContext';
+import { JsonStorage } from './components/JsonStorage';
+import { SettingsContext } from './components/SettingsContext';
+import { ShareContext } from './components/ShareContext';
 import TabBarIcon from './components/TabBarIcon';
+import Colors from './constants/Colors';
+import useLinking from './navigation/useLinking';
+import BrowseScreen from './screens/BrowseScreen';
+import CityListScreen from './screens/CityListScreen';
+import FavoritesScreen, { defaultFavorites } from './screens/FavoritesScreen';
+import LocationScreen from './screens/LocationScreen';
+import SearchScreen from './screens/SearchScreen';
+import SettingsScreen from './screens/SettingsScreen';
 
 function LocationStackScreen() {
   const LocationStack = createStackNavigator();
@@ -41,16 +41,6 @@ function FavoritesStackScreen(props) {
       <FavoritesStack.Screen name="Favorites" component={FavoritesScreen} />
       <FavoritesStack.Screen name="City" component={LocationScreen} />
     </FavoritesStack.Navigator>
-  );
-}
-
-function SearchStackScreen(props) {
-  const SearchStack = createStackNavigator();
-  return (
-    <SearchStack.Navigator screenOptions={defaultScreenOptions} headerMode='none'>
-      <SearchStack.Screen name="Search" component={SearchScreen} />
-      <SearchStack.Screen name="City" component={LocationScreen} />
-    </SearchStack.Navigator>
   );
 }
 
@@ -76,6 +66,7 @@ function SettingsStackScreen(props) {
 }
 
 function HomeTabs() {
+  const { settings } = React.useContext(SettingsContext);
   let Tab;
   let tabOptions;
   if (Platform.OS === "ios") {
@@ -84,6 +75,8 @@ function HomeTabs() {
       tabBarOptions: {
         activeTintColor: Colors.primaryDark,
         labelPosition: 'below-icon,',
+        inactiveBackgroundColor: settings.dark ? Colors.darkBackground : Colors.lightBackground,
+        activeBackgroundColor: settings.dark ? Colors.darkBackground : Colors.lightBackground,
       }
     }
   } else {
@@ -94,7 +87,7 @@ function HomeTabs() {
     //   barStyle: { backgroundColor: Colors.primary },
     tabOptions = {
       activeColor: Colors.primaryDark,
-      barStyle: { backgroundColor: 'white' },
+      barStyle: { backgroundColor: settings.dark ? Colors.darkBackground : Colors.lightBackground },
       // shifting: false,
     }
   }
@@ -113,12 +106,6 @@ function HomeTabs() {
           title: "Favourites", tabBarIcon: ({ focused, color, size }) => <TabBarIcon focused={focused} type='feather' name='star' color={color} size={size} />
         }}
       />
-      {/* <Tab.Screen name="Search" component={SearchStackScreen}
-        options={{
-          title: 'Search',
-          tabBarIcon: ({ focused, color, size }) => <TabBarIcon focused={focused} type='material-community' name='magnify' color={color} size={size}/>
-        }}
-      /> */}
       <Tab.Screen name="Browse" component={BrowseStackScreen}
         options={{
           title: 'Browse',
@@ -140,7 +127,7 @@ export default function App(props) {
   const [initialNavigationState, setInitialNavigationState] = React.useState();
   const containerRef = React.useRef();
   const { getInitialState } = useLinking(containerRef);
-  const [settings, setSettings] = React.useState({ round: true, night: false });
+  const [settings, setSettings] = React.useState({ round: true, night: false, dark: false });
   const [favorites, setFavorites] = React.useState(defaultFavorites);
   const mainViewRef = React.useRef();
   const Stack = createStackNavigator();
@@ -241,13 +228,13 @@ export default function App(props) {
         <ShareContext.Provider value={{ onShare }}>
           <SettingsContext.Provider value={{ settings, updateSetting }}>
             <FavoritesContext.Provider value={{ favorites, updateFavorites }}>
-              {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+              {/* {Platform.OS === 'ios' && <StatusBar barStyle="default" />} */}
               <NavigationContainer ref={containerRef} initialState={initialNavigationState} >
-                <View ref={mainViewRef} style={styles.container}>
+                <View ref={mainViewRef} style={{ flex: 1, backgroundColor: settings.dark ? Colors.darkBackground : Colors.lightBackground }}>
                   <Stack.Navigator headerMode='none'>
                     <Stack.Screen name="Root" component={HomeTabs} />
-                    <Stack.Screen name="CityList" component={CityListScreen} />
-                    <Stack.Screen name="Settings" component={SettingsScreen} />
+                    {/* <Stack.Screen name="CityList" component={CityListScreen} />
+                    <Stack.Screen name="Settings" component={SettingsScreen} /> */}
                   </Stack.Navigator>
                 </View>
               </NavigationContainer>
@@ -268,13 +255,6 @@ const defaultScreenOptions = {
     fontFamily: 'montserrat',
   },
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.primary,
-  },
-});
 
 // text: 'white',
 // placeholder: 'white',

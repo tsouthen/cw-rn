@@ -3,8 +3,11 @@ import { FlatList, View } from 'react-native';
 import { SimpleListItem } from '../components/SimpleListItem';
 import sitelocations from '../constants/sitelocations';
 import HeaderBar from '../components/HeaderBar';
+import { SettingsContext } from '../components/SettingsContext';
+import Colors from '../constants/Colors';
 
 export default function CityListScreen(props) {
+  const { settings } = React.useContext(SettingsContext);
   let { cities, showProv, title, ...rest } = props;
   const { navigation, route, onDelete, ...remainingProps } = rest;
   const prov = route?.params?.province;
@@ -18,7 +21,7 @@ export default function CityListScreen(props) {
   }
 
   const commonProps = {
-    style: { flex: 1, backgroundColor: 'white' },
+    style: { flex: 1, backgroundColor: settings.dark ? Colors.darkBackground : Colors.lightBackground },
     data: cities,
     keyExtractor: item => item.site,
     bounces: false,

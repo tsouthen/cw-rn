@@ -3,18 +3,17 @@ import Constants from 'expo-constants';
 import * as Location from 'expo-location';
 import iconv from 'iconv-lite';
 import React from 'react';
-import { ActivityIndicator, FlatList, Image, Linking, Platform, Text, TouchableHighlight, View, AppState } from 'react-native';
+import { ActivityIndicator, FlatList, Image, Linking, Platform, StyleSheet, Text, TouchableHighlight, View, AppState } from 'react-native';
 import { Snackbar, Portal } from 'react-native-paper';
 import { parseString } from 'react-native-xml2js';
 import { Pages } from 'react-native-pages';
 import { FavoritesContext } from '../components/FavoritesContext';
 import { SettingsContext } from '../components/SettingsContext';
-import { ShareContext } from '../components/ShareContext';
 import Colors from '../constants/Colors';
 import sitelocations from '../constants/sitelocations';
 import CityListScreen from './CityListScreen';
 const moment = require('moment');
-import HeaderBar, { HeaderBarAction, HeaderBarNavigationAction } from '../components/HeaderBar';
+import HeaderBar, { HeaderBarAction, HeaderBarShareAction } from '../components/HeaderBar';
 import { Icon } from 'react-native-elements';
 
 // const styles = StyleSheet.create({
@@ -555,7 +554,7 @@ export default class CurrentLocation extends React.Component {
   newFlatList = (data) => {
     return (
       <FlatList
-        style={{ flex: 1 }}
+        style={{ flex: 1, backgroundColor: '#eeeeee' }}
         data={data}
         renderItem={({ item, index }) => <ForecastItem {...item}
           navigation={this.props.navigation}
@@ -591,7 +590,7 @@ export default class CurrentLocation extends React.Component {
     const headerBar = (
       <HeaderBar navigation={navigation} title={route?.params?.location ?? 'Location'} showBackButton={!isCurrLocation} /* subtitle={subtitle} */ >
         {site && <FavoriteIcon site={site} />}
-        {hasLocation && <HeaderBarAction type="feather" name={Platform.OS === "ios" ? "share" : "share-2"} onPress={this.context.onShare} />}
+        {hasLocation && <HeaderBarShareAction />}
       </HeaderBar>);
 
     if (this.state.isLoading) {
@@ -609,11 +608,11 @@ export default class CurrentLocation extends React.Component {
     let pages = [
       (<View key="1" style={{ flex: 1 }}>
         {this.newFlatList(this.state.dataSource.forecasts)}
-        <View style={{ height: 24 }} />
+        <IndicatorBackgroundView />
       </View>),
       (<View key="2" style={{ flex: 1 }}>
         {this.newFlatList(this.state.dataSource.hourlyData)}
-        <View style={{ height: 24 }} />
+        <IndicatorBackgroundView />
       </View>)
     ];
 
@@ -628,7 +627,7 @@ export default class CurrentLocation extends React.Component {
             refreshing={this.state.isLoading}
             onRefresh={this.handleRefresh}
           />
-          <View style={{ height: 24 }} />
+          <IndicatorBackgroundView />
         </View>);
     }
 
@@ -644,7 +643,7 @@ export default class CurrentLocation extends React.Component {
       pages.push(
         <View key="4" style={{ flex: 1 }}>
           {this.newFlatList(otherEntries)}
-          <View style={{ height: 24 }} />
+          <IndicatorBackgroundView />
         </View>);
     }
 
@@ -680,84 +679,168 @@ export default class CurrentLocation extends React.Component {
     );
   }
 };
-CurrentLocation.contextType = ShareContext;
+CurrentLocation.contextType = SettingsContext;
 
-function iconCodeToName(iconCode) {
+function IndicatorBackgroundView() {
+  const { settings } = React.useContext(SettingsContext);
+  return <View style={{ height: 24, backgroundColor: settings.dark ? Colors.darkBackground : Colors.lightBackground }} />;
+}
+
+function iconCodeToImage(iconCode) {
   if (!CurrentLocation.isString(iconCode)) {
     // console.debug('Non-string icon code: ' + iconCode);
-    // return require('../assets/images/clever_weather.png');
+    // return require('../assets/images/light/clever_weather.png');
     return null;
   }
 
   switch (Number(iconCode)) {
     case 0: //sun
-      return require('../assets/images/sun.png');
+      return require('../assets/images/light/sun.png');
     case 1: //little clouds
-      return require('../assets/images/sun_cloud.png');
+      return require('../assets/images/light/sun_cloud.png');
     case 4: //increasing cloud
-      return require('../assets/images/sun_cloud_increasing.png');
+      return require('../assets/images/light/sun_cloud_increasing.png');
     case 5: //decreasing cloud
     case 20: //decreasing cloud
-      return require('../assets/images/sun_cloud_decreasing.png');
+      return require('../assets/images/light/sun_cloud_decreasing.png');
     case 2: //big cloud with sun
     case 3: //sun behind big cloud
     case 22: //big cloud with sun
-      return require('../assets/images/cloud_sun.png');
+      return require('../assets/images/light/cloud_sun.png');
     case 6: //rain with sun behind cloud
-      return require('../assets/images/cloud_drizzle_sun_alt.png');
+      return require('../assets/images/light/cloud_drizzle_sun_alt.png');
     case 7: //rain and snow with sun behind cloud
     case 8: //snow with sun behind cloud
-      return require('../assets/images/cloud_snow_sun_alt.png');
+      return require('../assets/images/light/cloud_snow_sun_alt.png');
     case 9: //cloud rain lightning
-      return require('../assets/images/cloud_lightning_sun.png');
+      return require('../assets/images/light/cloud_lightning_sun.png');
     case 10: //cloud
-      return require('../assets/images/cloud.png');
+      return require('../assets/images/light/cloud.png');
     case 11:
     case 28:
-      return require('../assets/images/cloud_drizzle_alt.png');
+      return require('../assets/images/light/cloud_drizzle_alt.png');
     case 12:
-      return require('../assets/images/cloud_drizzle.png');
+      return require('../assets/images/light/cloud_drizzle.png');
     case 13:
-      return require('../assets/images/cloud_rain.png');
+      return require('../assets/images/light/cloud_rain.png');
     case 15:
     case 16:
     case 17:
     case 18:
-      return require('../assets/images/cloud_snow_alt.png');
+      return require('../assets/images/light/cloud_snow_alt.png');
     case 19:
-      return require('../assets/images/cloud_lightning.png');
+      return require('../assets/images/light/cloud_lightning.png');
     case 23:
     case 24:
     case 44:
-      return require('../assets/images/cloud_fog.png');
+      return require('../assets/images/light/cloud_fog.png');
     case 25:
     case 45:
-      return require('../assets/images/cloud_wind.png');
+      return require('../assets/images/light/cloud_wind.png');
     case 14: //freezing rain
     case 26: //ice
     case 27: //hail
-      return require('../assets/images/cloud_hail.png');
+      return require('../assets/images/light/cloud_hail.png');
     case 30:
-      return require('../assets/images/moon.png');
+      return require('../assets/images/light/moon.png');
     case 31:
     case 32:
     case 33:
-      return require('../assets/images/cloud_moon.png');
+      return require('../assets/images/light/cloud_moon.png');
     case 21:
     case 34:
-      return require('../assets/images/cloud_moon_increasing.png');
+      return require('../assets/images/light/cloud_moon_increasing.png');
     case 35:
-      return require('../assets/images/cloud_moon_decreasing.png');
+      return require('../assets/images/light/cloud_moon_decreasing.png');
     case 36:
-      return require('../assets/images/cloud_drizzle_moon_alt.png');
+      return require('../assets/images/light/cloud_drizzle_moon_alt.png');
     case 37:
     case 38:
-      return require('../assets/images/cloud_snow_moon_alt.png');
+      return require('../assets/images/light/cloud_snow_moon_alt.png');
     case 39:
-      return require('../assets/images/cloud_lightning_moon.png');
+      return require('../assets/images/light/cloud_lightning_moon.png');
   }
   // console.debug('Unknown icon code: ' + iconCode);
-  // return require('../assets/images/clever_weather.png');
+  // return require('../assets/images/light/clever_weather.png');
+  return null;
+}
+
+function iconCodeToDarkImage(iconCode) {
+  if (!CurrentLocation.isString(iconCode)) {
+    // console.debug('Non-string icon code: ' + iconCode);
+    // return require('../assets/images/dark/clever_weather.png');
+    return null;
+  }
+
+  switch (Number(iconCode)) {
+    case 0: //sun
+      return require('../assets/images/dark/sun.png');
+    case 1: //little clouds
+      return require('../assets/images/dark/sun_cloud.png');
+    case 4: //increasing cloud
+      return require('../assets/images/dark/sun_cloud_increasing.png');
+    case 5: //decreasing cloud
+    case 20: //decreasing cloud
+      return require('../assets/images/dark/sun_cloud_decreasing.png');
+    case 2: //big cloud with sun
+    case 3: //sun behind big cloud
+    case 22: //big cloud with sun
+      return require('../assets/images/dark/cloud_sun.png');
+    case 6: //rain with sun behind cloud
+      return require('../assets/images/dark/cloud_drizzle_sun_alt.png');
+    case 7: //rain and snow with sun behind cloud
+    case 8: //snow with sun behind cloud
+      return require('../assets/images/dark/cloud_snow_sun_alt.png');
+    case 9: //cloud rain lightning
+      return require('../assets/images/dark/cloud_lightning_sun.png');
+    case 10: //cloud
+      return require('../assets/images/dark/cloud.png');
+    case 11:
+    case 28:
+      return require('../assets/images/dark/cloud_drizzle_alt.png');
+    case 12:
+      return require('../assets/images/dark/cloud_drizzle.png');
+    case 13:
+      return require('../assets/images/dark/cloud_rain.png');
+    case 15:
+    case 16:
+    case 17:
+    case 18:
+      return require('../assets/images/dark/cloud_snow_alt.png');
+    case 19:
+      return require('../assets/images/dark/cloud_lightning.png');
+    case 23:
+    case 24:
+    case 44:
+      return require('../assets/images/dark/cloud_fog.png');
+    case 25:
+    case 45:
+      return require('../assets/images/dark/cloud_wind.png');
+    case 14: //freezing rain
+    case 26: //ice
+    case 27: //hail
+      return require('../assets/images/dark/cloud_hail.png');
+    case 30:
+      return require('../assets/images/dark/moon.png');
+    case 31:
+    case 32:
+    case 33:
+      return require('../assets/images/dark/cloud_moon.png');
+    case 21:
+    case 34:
+      return require('../assets/images/dark/cloud_moon_increasing.png');
+    case 35:
+      return require('../assets/images/dark/cloud_moon_decreasing.png');
+    case 36:
+      return require('../assets/images/dark/cloud_drizzle_moon_alt.png');
+    case 37:
+    case 38:
+      return require('../assets/images/dark/cloud_snow_moon_alt.png');
+    case 39:
+      return require('../assets/images/dark/cloud_lightning_moon.png');
+  }
+  // console.debug('Unknown icon code: ' + iconCode);
+  // return require('../assets/images/dark/clever_weather.png');
   return null;
 }
 
@@ -785,7 +868,7 @@ function ForecastItem(props) {
 
   let imageView;
   if (typeof icon === "string") {
-    imageView = <Image style={{ width: 50, height: 50, resizeMode: "contain" }} source={iconCodeToName(icon)} />;
+    imageView = <Image style={{ width: 50, height: 50, resizeMode: "contain" }} source={settings.dark ? iconCodeToDarkImage(icon) : iconCodeToImage(icon)} />;
   } else if (!!icon && typeof icon === "object") {
     imageView = <Icon {...icon} size={32} iconStyle={{ width: 50, height: 50, paddingTop: 10, paddingLeft: 10 }} />;
   } else if (!isOther) {
@@ -801,9 +884,9 @@ function ForecastItem(props) {
 
   let summmaryView = null;
   if (summary && isExpanded)
-    summmaryView = (<Text style={{ fontSize: 13, flex: 1 }}>{summary}</Text>);
+    summmaryView = (<Text style={{ fontSize: 13, flex: 1, color: settings.dark ? 'white' : 'black' }}>{summary}</Text>);
 
-  let fontColor = isNight ? '#777777' : 'black';
+  let fontColor = isNight ? '#777777' : (settings.dark ? 'white' : 'black');
   let fontWeight = isNight ? 'normal' : 'bold';
   let displayTemp = temperature;
   if (displayTemp && displayTemp.length && rounded) {
@@ -837,8 +920,9 @@ function ForecastItem(props) {
     setExpanded(!isExpanded);
   }
   return (
-    <TouchableHighlight underlayColor={Colors.primaryLight} onPress={toggleExpanded}>
-      <View style={{ flex: 100, flexDirection: "column", backgroundColor: "white" }} >
+    <TouchableHighlight underlayColor={Colors.primaryLight} onPress={toggleExpanded} style={{ marginTop: index === 0 ? 0 : 1 }}>
+      <View style={{ flex: 100, flexDirection: "column", backgroundColor: settings.dark ? "black" : "white", marginTop: index === 0 ? 0 : 1 }} >
+        {/* {index === 0 && <Divider />} */}
         {headingView}
         <View style={{ flex: 100, flexDirection: "row", paddingTop: 0, paddingBottom: 5, paddingRight: 5, alignItems: summary || warning ? "flex-start" : "center" }}>
           {imageView}
@@ -851,10 +935,22 @@ function ForecastItem(props) {
             {warningView}
           </View>
         </View>
-        <View style={{ height: 1, backgroundColor: '#eeeeee' }} />
+        {/* <Divider /> */}
+        {/* <View style={{ height: 1, backgroundColor: settings.dark ? '#777777' : '#eeeeee' }} /> */}
       </View>
     </TouchableHighlight>);
 };
+
+function Divider() {
+  const { settings } = React.useContext(SettingsContext);
+  return <View
+    style={{
+      height: StyleSheet.hairlineWidth,
+      backgroundColor: settings.dark ? "white" : "rgba(0, 0, 0, 0.12)"
+    }}
+  />;
+  // "rgba(255, 255, 255, 0.12)"
+}
 
 function FavoriteIcon(props) {
   const { site } = props;
@@ -1023,5 +1119,11 @@ function useNavigationFocus(callback, navigation) {
 }
 
 function HeadingText({ text }) {
-  return <Text style={{ padding: 10, paddingTop: 5, paddingBottom: 5, backgroundColor: '#eeeeee', fontFamily: 'montserrat' }}>{text}</Text>
+  const { settings } = React.useContext(SettingsContext);
+  return <Text style={{
+    padding: 10, paddingTop: 5, paddingBottom: 5,
+    backgroundColor: settings.dark ? '#444444' : '#eeeeee',
+    color: settings.dark ? 'white' : 'black',
+    fontFamily: 'montserrat',
+  }}>{text}</Text>
 }
