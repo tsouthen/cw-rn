@@ -428,7 +428,18 @@ export default class CurrentLocation extends React.Component {
       if (newEntry.title.startsWith("Normal ")) {
         newEntry.heading = normalsHeading;
         newEntry.title = newEntry.title.substr(7);
-        normals.push(newEntry);
+        let isMean = false;
+        if (newEntry.title == "Mean") {
+          newEntry.title = "Average";
+          newEntry.fontWeight = 'normal';
+          isMean = true;
+        }
+        // put mean before min if we already have a normals entry
+        if (isMean && normals.length == 2) {
+          normals.splice(1, 0, newEntry);
+        } else {
+          normals.push(newEntry);
+        }
         normalsHeading = null;
       } else if (newEntry.title.startsWith("Extreme ")) {
         newEntry.heading = extremesHeading;
@@ -916,7 +927,7 @@ function ForecastItem(props) {
     summmaryView = (<Text style={{ fontSize: 13, flex: 1, color: settings.dark ? 'white' : 'black' }}>{summary}</Text>);
 
   let fontColor = isNight ? '#777777' : (settings.dark ? 'white' : 'black');
-  let fontWeight = isNight ? 'normal' : 'bold';
+  let fontWeight = props.fontWeight || isNight ? 'normal' : 'bold';
   // let fontWeight = 'normal';
   let displayTemp = temperature;
   if (displayTemp && displayTemp.length && rounded) {
