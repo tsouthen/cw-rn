@@ -449,11 +449,11 @@ export default class CurrentLocation extends React.Component {
     if (almanac && almanac.temperature && almanac.temperature.length) {
       almanac.temperature.forEach((entry, index) => {
         if (entry._) {
-          let iconColor = "black";
+          let icon = "thermometer_mean";
           if (entry.class.endsWith("Max"))
-            iconColor = Colors.primaryDark;
+            icon = icon = "thermometer_max";
           else if (entry.class.endsWith("Min"))
-            iconColor = "#777777";
+            icon = "thermometer_min";
           addEntry({
             category: "Almanac",
             key: entry.class,
@@ -463,7 +463,7 @@ export default class CurrentLocation extends React.Component {
             isOther: true,
             summary: entry.year,
             expanded: !!entry.year,
-            icon: { type: "feather", name: "thermometer", color: iconColor },
+            icon: icon,
           });
         }
       });
@@ -515,13 +515,15 @@ export default class CurrentLocation extends React.Component {
             suffix = "pm";
           }
           const title = this.getSunRiseSetTitle(entry.name);
+          const isSunrise = title === "Rise";
           entries.push({
             heading: heading,
             category: "RiseSet",
             title: title,
             value: `${hour}:${entry.minute} ${suffix}`,
             isOther: true,
-            icon: { type: "feather", name: title === "Rise" ? "sunrise" : "sunset", color: Colors.primary },
+            isNight: false,
+            icon: isSunrise ? "sunrise" : "sunset",
           });
           heading = null;
         }
@@ -554,7 +556,7 @@ export default class CurrentLocation extends React.Component {
   newFlatList = (data) => {
     return (
       <FlatList
-        style={{ flex: 1, backgroundColor: '#eeeeee' }}
+        style={{ flex: 1, backgroundColor: this.context.settings.dark ? Colors.darkBackground : Colors.lightBackground }}
         data={data}
         renderItem={({ item, index }) => <ForecastItem {...item}
           navigation={this.props.navigation}
@@ -663,7 +665,7 @@ export default class CurrentLocation extends React.Component {
       this.setState({ subtitle });
     }
     return (
-      <View style={{ flex: 1, backgroundColor: 'white' }}>
+      <View style={{ flex: 1 }}>
         {headerBar}
         < Pages
           indicatorColor={Colors.primaryDark}
@@ -692,8 +694,21 @@ function iconCodeToImage(iconCode) {
     // return require('../assets/images/light/clever_weather.png');
     return null;
   }
+  const codeNum = Number(iconCode.trim());
+  if (!isNaN(codeNum))
+    iconCode = codeNum;
 
-  switch (Number(iconCode)) {
+  switch (iconCode) {
+    case "sunrise":
+      return require('../assets/images/light/sunrise.png');
+    case "sunset":
+      return require('../assets/images/light/sunset.png');
+    case "thermometer_min":
+      return require('../assets/images/light/thermometer_min.png');
+    case "thermometer_max":
+      return require('../assets/images/light/thermometer_max.png');
+    case "thermometer_mean":
+      return require('../assets/images/light/thermometer_mean.png');
     case 0: //sun
       return require('../assets/images/light/sun.png');
     case 1: //little clouds
@@ -772,7 +787,21 @@ function iconCodeToDarkImage(iconCode) {
     return null;
   }
 
-  switch (Number(iconCode)) {
+  const codeNum = Number(iconCode.trim());
+  if (!isNaN(codeNum))
+    iconCode = codeNum;
+
+  switch (iconCode) {
+    case "sunrise":
+      return require('../assets/images/dark/sunrise.png');
+    case "sunset":
+      return require('../assets/images/dark/sunset.png');
+    case "thermometer_min":
+      return require('../assets/images/dark/thermometer_min.png');
+    case "thermometer_max":
+      return require('../assets/images/dark/thermometer_max.png');
+    case "thermometer_mean":
+      return require('../assets/images/dark/thermometer_mean.png');
     case 0: //sun
       return require('../assets/images/dark/sun.png');
     case 1: //little clouds
@@ -870,7 +899,7 @@ function ForecastItem(props) {
   if (typeof icon === "string") {
     imageView = <Image style={{ width: 50, height: 50, resizeMode: "contain" }} source={settings.dark ? iconCodeToDarkImage(icon) : iconCodeToImage(icon)} />;
   } else if (!!icon && typeof icon === "object") {
-    imageView = <Icon {...icon} size={32} iconStyle={{ width: 50, height: 50, paddingTop: 10, paddingLeft: 10 }} />;
+    imageView = <Icon {...icon} size={32} iconStyle={{ width: 50, height: 50, paddingTop: 10, paddingLeft: 10 }} color={settings.dark ? "white" : "black"} />;
   } else if (!isOther) {
     // imageView = <View style={{ width: 50, height: 50 }} />;
     imageView = <Icon type="feather" name="cloud-off" size={28} iconStyle={{ width: 50, height: 50, paddingTop: 10, paddingLeft: 10 }} />;
@@ -888,12 +917,16 @@ function ForecastItem(props) {
 
   let fontColor = isNight ? '#777777' : (settings.dark ? 'white' : 'black');
   let fontWeight = isNight ? 'normal' : 'bold';
+  // let fontWeight = 'normal';
   let displayTemp = temperature;
   if (displayTemp && displayTemp.length && rounded) {
     let tempVal = Number(displayTemp);
     if (!isNaN(tempVal))
       displayTemp = '' + Math.round(tempVal);
   }
+  if (!displayTemp)
+    fontWeight = 'normal';
+
   let headingView = null;
   let headingText = heading;
   if (!heading && !isOther) {
@@ -920,8 +953,10 @@ function ForecastItem(props) {
     setExpanded(!isExpanded);
   }
   return (
-    <TouchableHighlight underlayColor={Colors.primaryLight} onPress={toggleExpanded} style={{ marginTop: index === 0 ? 0 : 1 }}>
-      <View style={{ flex: 100, flexDirection: "column", backgroundColor: settings.dark ? "black" : "white", marginTop: index === 0 ? 0 : 1 }} >
+    // , marginTop: index === 0 ? 0 : 1
+    //style={{ marginTop: index === 0 ? 0 : 1 }}
+    <TouchableHighlight underlayColor={Colors.primaryLight} onPress={toggleExpanded} >
+      <View style={{ flex: 100, flexDirection: "column", backgroundColor: settings.dark ? Colors.darkBackground : Colors.lightBackground }} >
         {/* {index === 0 && <Divider />} */}
         {headingView}
         <View style={{ flex: 100, flexDirection: "row", paddingTop: 0, paddingBottom: 5, paddingRight: 5, alignItems: summary || warning ? "flex-start" : "center" }}>

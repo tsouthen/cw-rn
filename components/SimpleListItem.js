@@ -17,7 +17,7 @@ export function SimpleListItem(props) {
     <TouchableHighlight style={touchableStyle} underlayColor={Colors.primaryLight} {...{ onPress, onPressIn, onLongPress, onPressOut }} >
       <View style={viewStyle}>
         {editing && onDelete && <Icon name='x-circle' type='feather' size={22} color={Colors.primaryDark} onPress={onDelete} />}
-        <Text {...otherProps} style={{ marginLeft: 10, flex: 1, fontSize: 18, fontFamily: 'montserrat', color: settings.dark ? 'white' : 'black' }} />
+        <Text {...otherProps} style={{ flex: 1, fontSize: 18, fontFamily: 'montserrat', color: settings.dark ? 'white' : 'black', marginLeft: editing ? 5 : 0 }} />
         <Icon name={editing ? 'drag-handle' : 'navigate-next'} type='material' size={24} color='#888888' />
       </View>
     </TouchableHighlight>
