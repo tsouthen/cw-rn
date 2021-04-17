@@ -21,6 +21,6 @@ export default {
   primaryDark: primaryDark,
   primaryLight: primaryLight,
   // darkBackground: '#444444',
-  darkBackground: 'black',
+  darkBackground: '#121212',
   lightBackground: 'white',
 };

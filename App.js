@@ -1,15 +1,17 @@
+// import { StatusBar } from 'expo-status-bar';
 import { Feather, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { SplashScreen } from 'expo';
+import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
 import * as Sharing from 'expo-sharing';
 import React from 'react';
 import { Platform, StyleSheet, View } from 'react-native';
 import { DarkTheme, DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import { captureRef } from 'react-native-view-shot';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { FavoritesContext } from './components/FavoritesContext';
 import { JsonStorage } from './components/JsonStorage';
 import { SettingsContext } from './components/SettingsContext';
@@ -193,7 +195,7 @@ export default function App(props) {
   React.useEffect(() => {
     async function loadResourcesAndDataAsync() {
       try {
-        SplashScreen.preventAutoHide();
+        SplashScreen.preventAutoHideAsync();
 
         // Load our initial navigation state
         setInitialNavigationState(await getInitialState());
@@ -213,7 +215,7 @@ export default function App(props) {
         console.warn(e);
       } finally {
         setLoadingComplete(true);
-        SplashScreen.hide();
+        SplashScreen.hideAsync();
       }
     }
 
@@ -228,16 +230,19 @@ export default function App(props) {
         <ShareContext.Provider value={{ onShare }}>
           <SettingsContext.Provider value={{ settings, updateSetting }}>
             <FavoritesContext.Provider value={{ favorites, updateFavorites }}>
-              {/* {Platform.OS === 'ios' && <StatusBar barStyle="default" />} */}
-              <NavigationContainer ref={containerRef} initialState={initialNavigationState} >
-                <View ref={mainViewRef} style={{ flex: 1, backgroundColor: settings.dark ? Colors.darkBackground : Colors.lightBackground }}>
-                  <Stack.Navigator headerMode='none'>
-                    <Stack.Screen name="Root" component={HomeTabs} />
-                    {/* <Stack.Screen name="CityList" component={CityListScreen} />
+              <SafeAreaProvider>
+                {/* {Platform.OS === 'ios' && <StatusBar barStyle="default" />} */}
+                <NavigationContainer ref={containerRef} initialState={initialNavigationState} >
+                  <View ref={mainViewRef} style={{ flex: 1, backgroundColor: settings.dark ? Colors.darkBackground : Colors.lightBackground }}>
+                    <Stack.Navigator headerMode='none'>
+                      <Stack.Screen name="Root" component={HomeTabs} />
+                      {/* <Stack.Screen name="CityList" component={CityListScreen} />
                     <Stack.Screen name="Settings" component={SettingsScreen} /> */}
-                  </Stack.Navigator>
-                </View>
-              </NavigationContainer>
+                    </Stack.Navigator>
+                  </View>
+                </NavigationContainer>
+                {/* <StatusBar /> */}
+              </SafeAreaProvider>
             </FavoritesContext.Provider>
           </SettingsContext.Provider>
         </ShareContext.Provider>
