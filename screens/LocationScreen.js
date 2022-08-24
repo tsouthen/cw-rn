@@ -1,18 +1,19 @@
-import React, { useState, useContext } from 'react';
-import { Platform, FlatList, ActivityIndicator, StyleSheet, Text, View, Image, TouchableHighlight, Linking, ToastAndroid  } from 'react-native';
-import sitelocations from '../constants/sitelocations';
-import * as Location from 'expo-location';
-import Constants from 'expo-constants';
-import { parseString } from 'react-native-xml2js';
-import iconv from 'iconv-lite';
 import { Buffer } from 'buffer';
-import { Icon, ButtonGroup } from 'react-native-elements';
-import CityListScreen from './CityListScreen';
-import Colors from '../constants/Colors';
-import { SettingsContext } from '../components/SettingsContext';
+import Constants from 'expo-constants';
+import * as Location from 'expo-location';
+import iconv from 'iconv-lite';
+import React, { useContext } from 'react';
+import { ActivityIndicator, FlatList, Image, Linking, Platform, Text, ToastAndroid, TouchableHighlight, View } from 'react-native';
+import { ButtonGroup, Icon } from 'react-native-elements';
+import { parseString } from 'react-native-xml2js';
 import { FavoritesContext } from '../components/FavoritesContext';
 import { HeaderButton, NavigationHeaderButton } from '../components/HeaderButton';
+import { SettingsContext } from '../components/SettingsContext';
 import { ShareContext } from '../components/ShareContext';
+import Colors from '../constants/Colors';
+import sitelocations from '../constants/sitelocations';
+import CityListScreen from './CityListScreen';
+const dateFormat = require('dateformat');
 
 // const styles = StyleSheet.create({
 //   container: {
@@ -207,6 +208,10 @@ export default class CurrentLocation extends React.Component {
           isNight: false,
         };
 
+        if (responseJson.currentConditions.dateTime && responseJson.currentConditions.dateTime.length > 0) {
+          entry.dateTime = this.parseTimeStamp(responseJson.currentConditions.dateTime[0].timeStamp);
+        }
+
         if (responseJson.warnings.event && responseJson.warnings.event.description) {
           let warning = responseJson.warnings.event.description;
           warning = warning.split(' ').map((t) => t.charAt(0).toUpperCase() + t.slice(1).toLowerCase()).join(' ').trim();
@@ -215,6 +220,11 @@ export default class CurrentLocation extends React.Component {
         }
         // console.debug(entry);
         entries.push(entry);
+      }
+
+      let dateTime = undefined;
+      if (responseJson.forecastGroup && responseJson.forecastGroup.dateTime && responseJson.forecastGroup.dateTime.length > 0) {
+        dateTime = this.parseTimeStamp(responseJson.forecastGroup.dateTime[0].timeStamp);
       }
 
       if (responseJson.forecastGroup.forecast && responseJson.forecastGroup.forecast.length) {
@@ -233,7 +243,7 @@ export default class CurrentLocation extends React.Component {
           let temperature = '';
           if (entry.temperatures && entry.temperatures.temperature && entry.temperatures.temperature._)
             temperature = entry.temperatures.temperature._;
-
+  
           entries.push({
             icon: iconCode,
             title: entry.period.textForecastName,
@@ -241,7 +251,9 @@ export default class CurrentLocation extends React.Component {
             temperature: temperature,
             expanded: entries.length == 0,
             isNight: entry.temperatures.temperature !== undefined && entry.temperatures.temperature.class === "low",
+            dateTime: dateTime,
           });
+          dateTime = undefined;
         });
       }
     } catch (error) {
@@ -253,7 +265,7 @@ export default class CurrentLocation extends React.Component {
 
   parseTimeStamp = (timeStamp) => {
     //              YYYY                          MM                            DD                            HH                            MM
-    let formatted = timeStamp.slice(0, 4) + '-' + timeStamp.slice(4, 2) + '-' + timeStamp.slice(6, 2) + 'T' + timeStamp.slice(8, 2) + ':' + timeStamp.slice(10, 2) + ':00.000Z';
+    let formatted = timeStamp.slice(0, 4) + '-' + timeStamp.slice(4, 6) + '-' + timeStamp.slice(6, 8) + 'T' + timeStamp.slice(8, 10) + ':' + timeStamp.slice(10, 12) + ':00.000Z';
     return new Date(formatted);
   };
 
@@ -429,6 +441,9 @@ export default class CurrentLocation extends React.Component {
     if (this.state.dataSource.nearestSites && this.state.dataSource.nearestSites.length)
       buttons.push({element: this.nearbyIcon});
 
+    // containerStyle={{borderColor: 'black', borderWidth: 0, borderBottomWidth: 1}}
+    // containerStyle={{borderWidth: 0}}
+
     return (
       <View style={{flex:1}}>
         <ButtonGroup
@@ -528,7 +543,7 @@ function iconCodeToName(iconCode) {
 }
 
 function ForecastItem(props) {
-  const {title, temperature, summary, icon, isNight, isHourly, warning, warningUrl, index, heading, expanded, onPress} = props;
+  const {title, temperature, summary, icon, isNight, isHourly, warning, warningUrl, index, heading, expanded, onPress, dateTime} = props;
   const settings = useContext(SettingsContext);
 
   let allowNight = settings && settings.night;
@@ -547,6 +562,14 @@ function ForecastItem(props) {
       <TouchableHighlight style={{alignSelf:'flex-start'}} underlayColor='#ffffff' onPress={() => Linking.openURL(warningUrl)}>
         <Text style={{textDecorationLine:'underline', fontSize:13, color: Colors.primaryDark}}>{warning && expanded ? warning : ''}</Text>
       </TouchableHighlight>);
+
+  let dateTimeView = null;
+  if (dateTime && expanded) {
+    // console.debug("dateTime: " + dateTime.toString());
+    const dtString = dateFormat(dateTime, 'mmm d, h:MM tt');
+    // const dtString = dateTime.toLocaleString('en-US', { month: '2-digit', day: '2-digit', hour: 'numeric', minute: '2-digit' });
+    dateTimeView = (<Text style={{fontSize:11, flex:1, color:'#777777'}}>As of {dtString}</Text>);
+  }
 
   let summmaryView = null;
   if (summary && expanded)
@@ -577,6 +600,7 @@ function ForecastItem(props) {
             </View>
             {summmaryView}
             {warningView}
+            {dateTimeView}
           </View>
         </View>
         <View style={{ height:1, backgroundColor: '#eeeeee' }} />
