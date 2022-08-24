@@ -2,9 +2,10 @@ import React from 'react';
 import { View, FlatList } from 'react-native';
 import { SimpleListItem } from '../components/SimpleListItem';
 import sitelocations from '../constants/sitelocations';
+import DraggableFlatList from 'react-native-draggable-dynamic-flatlist';
  
 export default function CityListScreen(props) {
-  let {cities, showProv} = props;
+  let {cities, showProv, draggable} = props;
   if (props.navigation) {
     let prov = props.navigation.getParam('province');
     if (prov) {
@@ -15,28 +16,47 @@ export default function CityListScreen(props) {
       cities = props.navigation.getParam('cities');
     }
   }
+  let commonProps = {
+    style: { flex: 1},
+    data: cities,
+    keyExtractor: item => item.site,
+  }
+  let getLabel = (item) => {
+    let label = item.nameEn;
+    if (showProv) {
+      label += ', ';
+      label += item.prov;
+    }
+    return label;
+  }
+  let onPress = (item) => {
+    props.navigation.navigate('City', { 
+      site: item,
+      location: item.nameEn,
+    });
+  }
+  if (draggable)
+    return (
+      <DraggableFlatList 
+        {...commonProps}
+        onMoveEnd={({ data }) => props.data = data}
+        renderItem={({item, index, move, moveEnd, isActive }) => {
+          return (
+            <SimpleListItem isActive={isActive} onPress={() => onPress(item)} onLongPress={move} onPressOut={moveEnd} >
+              {getLabel(item)}
+            </SimpleListItem>);
+          }}
+      />);
   return (
-    <FlatList style={{flex: 1}}
-      data={cities}
-      renderItem={({item, index}) => {
-        let label = item.nameEn;
-        if (showProv) {
-          label += ', ';
-          label += item.prov;
-        }
+    <FlatList 
+      {...commonProps}
+      renderItem={({item}) => {
         return (
-          <SimpleListItem itemPress={() => {
-            props.navigation.navigate('City', { 
-              site: item,
-              location: item.nameEn,
-            });                        
-          }}>
-            {label}
+          <SimpleListItem onPress={() => onPress(item)}>
+            {getLabel(item)}
           </SimpleListItem>);
         }}
-      keyExtractor={item => item.site}         
-    />
-  );
+    />);
 };
 
 CityListScreen.navigationOptions = ({ navigation }) => {
