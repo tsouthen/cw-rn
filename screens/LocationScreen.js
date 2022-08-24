@@ -418,7 +418,7 @@ export default class CurrentLocation extends React.Component {
     const headerBar = (
       <HeaderBar navigation={navigation} title={route?.params?.location ?? 'Location'} showBackButton={!isCurrLocation}>
         {site && <FavoriteIcon site={site} />}
-        {hasLocation && <HeaderBarAction icon="share-variant" onPress={this.context.onShare} />}
+        {hasLocation && <HeaderBarAction icon={Platform.OS === "ios" ? "export-variant" : "share-variant"} onPress={this.context.onShare} />}
         {isCurrLocation && <HeaderBarNavigationAction icon="settings" screen="Settings" navigation={navigation} />}
       </HeaderBar>);
 

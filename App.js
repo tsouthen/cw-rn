@@ -69,22 +69,27 @@ function BrowseStackScreen(props) {
 }
 
 function HomeTabs() {
-  // const Tab = createBottomTabNavigator();
-  // tabBarOptions={{
-  //   activeTintColor: Colors.primaryDark,
-  //   labelPosition: 'below-icon,',
-  // }}
-
-  // activeColor={Colors.primaryDark}
-  // inactiveColor='#777777'
-  // barStyle={{ backgroundColor: 'white' }}
-
-  const Tab = createMaterialBottomTabNavigator();
+  let Tab;
+  let tabOptions;
+  if (Platform.OS === "ios") {
+    Tab = createBottomTabNavigator();
+    tabOptions = {
+      tabBarOptions: {
+        activeTintColor: Colors.primaryDark,
+        labelPosition: 'below-icon,',
+      }
+    }
+  } else {
+    Tab = createMaterialBottomTabNavigator();
+    tabOptions = {
+      activeColor: 'white',
+      inactiveColor: '#505050',
+      barStyle: { backgroundColor: Colors.primary },
+    }
+  }
   return (
     <Tab.Navigator screenOptions={defaultScreenOptions}
-      activeColor='white'
-      inactiveColor={Colors.primaryDark}
-      barStyle={{ backgroundColor: Colors.primary }}
+      {...tabOptions}
     >
       <Tab.Screen name="Location" component={LocationStackScreen}
         options={{
@@ -219,16 +224,16 @@ export default function App(props) {
         <ShareContext.Provider value={{ onShare }}>
           <SettingsContext.Provider value={{ settings, updateSetting }}>
             <FavoritesContext.Provider value={{ favorites, updateFavorites }}>
-              <View ref={mainViewRef} style={styles.container}>
-                {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-                <NavigationContainer ref={containerRef} initialState={initialNavigationState} >
+              {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+              <NavigationContainer ref={containerRef} initialState={initialNavigationState} >
+                <View ref={mainViewRef} style={styles.container}>
                   <Stack.Navigator headerMode='none'>
                     <Stack.Screen name="Root" component={HomeTabs} />
                     <Stack.Screen name="CityList" component={CityListScreen} />
                     <Stack.Screen name="Settings" component={SettingsScreen} />
                   </Stack.Navigator>
-                </NavigationContainer>
-              </View>
+                </View>
+              </NavigationContainer>
             </FavoritesContext.Provider>
           </SettingsContext.Provider>
         </ShareContext.Provider>
