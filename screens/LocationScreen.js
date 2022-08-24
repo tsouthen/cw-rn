@@ -6,7 +6,7 @@ import React from 'react';
 import { ActivityIndicator, FlatList, Image, Linking, Platform, StyleSheet, Text, TouchableHighlight, View, AppState } from 'react-native';
 import { Snackbar, Portal } from 'react-native-paper';
 import { parseString } from 'react-native-xml2js';
-import { Pages } from 'react-native-pages';
+import Swiper from 'react-native-swiper';
 import { FavoritesContext } from '../components/FavoritesContext';
 import { SettingsContext } from '../components/SettingsContext';
 import Colors from '../constants/Colors';
@@ -660,35 +660,13 @@ export default class CurrentLocation extends React.Component {
         </View>);
     }
 
-    const setSubTitleFromPageIndex = (index) => {
-      let subtitle = null;
-      switch (index) {
-        case 0:
-          subtitle = "Nearby Locations";
-          break;
-        case 1:
-          subtitle = "Daily Forecast";
-          break;
-        case 2:
-          subtitle = "Hourly Forecast";
-          break;
-      }
-      this.setState({ subtitle });
-    }
     return (
       <View style={{ flex: 1 }}>
         {headerBar}
-        < Pages
-          indicatorColor={Colors.primaryDark}
-          indicatorPosition='bottom'
-          startPage={startPage}
-          onHalfway={(nextIndex, activeIndex) => {
-            setSubTitleFromPageIndex(nextIndex);
-          }}
-        >
+        <Swiper loop={false} index={startPage} activeDotColor={Colors.primaryDark} paginationStyle={{ bottom: 5 }}>
           {pages}
-        </Pages >
-      </View >
+        </Swiper>
+      </View>
     );
   }
 };
