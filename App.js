@@ -8,7 +8,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
 import * as Sharing from 'expo-sharing';
 import React from 'react';
-import { Platform, StyleSheet, View } from 'react-native';
+import { Platform, StyleSheet, useColorScheme, View } from 'react-native';
 import { DarkTheme, DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import { captureRef } from 'react-native-view-shot';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -114,12 +114,12 @@ function HomeTabs() {
           tabBarIcon: ({ focused, color, size }) => <TabBarIcon focused={focused} type='feather' name='globe' color={color} size={size} />
         }}
       />
-      <Tab.Screen name="Search" component={SettingsStackScreen}
+      {/* <Tab.Screen name="Settings" component={SettingsStackScreen}
         options={{
           title: 'Settings',
           tabBarIcon: ({ focused, color, size }) => <TabBarIcon focused={focused} type='feather' name='sliders' color={color} size={size} />
         }}
-      />
+      /> */}
     </Tab.Navigator>
   );
 }
@@ -133,6 +133,7 @@ export default function App(props) {
   const [favorites, setFavorites] = React.useState(defaultFavorites);
   const mainViewRef = React.useRef();
   const Stack = createStackNavigator();
+  const colorScheme = useColorScheme();
 
   saveSettings = async (updatedSettings) => {
     await JsonStorage.setItem('Settings', updatedSettings);
@@ -150,6 +151,13 @@ export default function App(props) {
     if (savedSettings !== null && typeof savedSettings === 'object')
       setSettings(savedSettings);
   }
+
+  React.useEffect(() => {
+    if (!isLoadingComplete)
+      return;
+    updateSetting('dark', colorScheme === 'dark');
+    console.log(`Color scheme: ${colorScheme}`);
+  }, [colorScheme, isLoadingComplete]);
 
   saveFavorites = async (updatedFavorites) => {
     await JsonStorage.setItem('Favorites', updatedFavorites);

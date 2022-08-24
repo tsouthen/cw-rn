@@ -24,16 +24,19 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.listotechnologies.cleverweather"
+      "bundleIdentifier": "com.toddsouthen.cleverweather",
+      "userInterfaceStyle": "automatic"
     },
     "android": {
-      "package": "com.listotechnologies.cleverweather"
+      "package": "com.listotechnologies.cleverweather",
+      "userInterfaceStyle": "automatic"
     },
     "primaryColor": "#ff8800",
     "androidStatusBar": {
       "barStyle": "light-content",
       "backgroundColor": "#c55900"
     },
-    "description": ""
+    "description": "",
+    "userInterfaceStyle": "automatic"
   }
 }

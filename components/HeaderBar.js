@@ -24,7 +24,7 @@ export function HeaderBarAction({ color, type, name, ...props }) {
     }
   }
   return (
-    <Appbar.Action color={color || (settings.dark ? "black" : "white")} {...iconProps} {...props} />
+    <Appbar.Action animated={false} color={color || (settings.dark ? "black" : "white")} {...iconProps} {...props} />
   );
 }
 

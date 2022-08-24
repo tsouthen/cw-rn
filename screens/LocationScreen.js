@@ -603,6 +603,7 @@ export default class CurrentLocation extends React.Component {
     const headerBar = (
       <HeaderBar navigation={navigation} title={route?.params?.location ?? 'Location'} showBackButton={!isCurrLocation} /* subtitle={subtitle} */ >
         {site && <FavoriteIcon site={site} />}
+        {site && <NightForecastsIcon />}
         {hasLocation && <HeaderBarShareAction />}
       </HeaderBar>);
 
@@ -1018,6 +1019,14 @@ function FavoriteIcon(props) {
       </Portal>
     </View>
   );
+}
+
+function NightForecastsIcon(props) {
+  const { settings, updateSetting } = React.useContext(SettingsContext);
+  return <HeaderBarAction type="ionicon" name={settings.night ? "moon" : "moon-outline"}
+    onPress={() => {
+      updateSetting("night", !settings.night);
+    }} />;
 }
 
 function getAsOfLabel(dateTime) {
