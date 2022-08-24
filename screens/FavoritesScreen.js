@@ -110,15 +110,14 @@ export const defaultFavorites = [
 ];
 
 export default function FavoritesScreen(props) {
-  const { navigation, ...restOfProps } = props;
-  const favsContext = React.useContext(FavoritesContext);
+  const { favorites, updateFavorites } = React.useContext(FavoritesContext);
 
   return (
     <CityListScreen
-      cities={favsContext.favorites}
+      cities={favorites}
       showProv='true'
-      draggable={false}
-      onMoveEnd={({ data }) => favsContext.updateFavorites(data)}
-      {...restOfProps} />
+      draggable={true}
+      onMoveEnd={({ data }) => updateFavorites(data)}
+      {...props} />
   );
 }

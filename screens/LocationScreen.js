@@ -2,7 +2,7 @@ import { Buffer } from 'buffer';
 import Constants from 'expo-constants';
 import * as Location from 'expo-location';
 import iconv from 'iconv-lite';
-import React, { useContext, useEffect, useState, useRef } from 'react';
+import React from 'react';
 import { ActivityIndicator, FlatList, Image, Linking, Platform, Text, ToastAndroid, TouchableHighlight, View, AppState } from 'react-native';
 import { ButtonGroup, Icon } from 'react-native-elements';
 import { parseString } from 'react-native-xml2js';
@@ -42,7 +42,7 @@ export default function LocationScreen(props) {
   React.useEffect(() => {
     let favIcon = null;
     let shareIcon = null;
-    let site = route?.params?.currentSite;
+    const site = route?.params?.currentSite || route?.params?.site;
     if (site) {
       favIcon = (<FavoriteIcon site={site} />);
       shareIcon = (<HeaderButton type='material' name='share' onPress={shareContext.onShare} />);
@@ -52,7 +52,7 @@ export default function LocationScreen(props) {
       settingsIcon = (<NavigationHeaderButton type='material' name='settings' navigation={navigation} routeName='Settings' />);
     }
     navigation.setOptions({
-      title: route?.params?.location ?? 'Location',
+      headerTitle: route?.params?.location ?? 'Location',
       headerRight: () =>
         <View style={{ flexDirection: 'row' }}>
           {favIcon}
@@ -60,9 +60,9 @@ export default function LocationScreen(props) {
           {settingsIcon}
         </View>,
     });
-  }, [navigation]);
+  }, [navigation, route]);
 
-  possiblyRefreshData = () => {
+  const possiblyRefreshData = () => {
     const forecasts = dataSource.forecasts;
     // determine if a new xml file will be available: 
     //   now - lastFetch > 5 mins &&
@@ -80,14 +80,14 @@ export default function LocationScreen(props) {
       }
     } else {
       console.log("No data to refresh");
-      console.log(`  lastFetch:${data.lastFetch}`);
-      console.log(`  num forecasts:${data.forecasts.length}`);
-      if (data.forecasts.length > 0)
-        console.log(`  last dateTime:${data.forecasts[0].dateTime}`);
+      console.log(`  lastFetch:${lastFetch}`);
+      console.log(`  num forecasts:${forecasts.length}`);
+      if (forecasts.length > 0)
+        console.log(`  last dateTime:${forecasts[0].dateTime}`);
     }
   }
 
-  handleAppStateChange = nextAppState => {
+  const handleAppStateChange = nextAppState => {
     if (nextAppState === "active") {
       possiblyRefreshData();
     }
@@ -100,19 +100,17 @@ export default function LocationScreen(props) {
     }
     AppState.addEventListener('change', handleAppStateChange);
 
-    willFocusSubscription = navigation.addListener('willFocus', (payLoad) => {
+    const unsubscribe = navigation.addListener('focus', (payLoad) => {
       possiblyRefreshData();
     });
 
     return () => {
-      if (willFocusSubscription)
-        willFocusSubscription.remove();
-
+      unsubscribe();
       AppState.removeEventListener('change', handleAppStateChange);
     };
   }, []);
 
-  makeRemoteRequest = async () => {
+  const makeRemoteRequest = async () => {
     try {
       let sortedLocs = [];
       let nearest = route?.params?.site;
@@ -165,7 +163,7 @@ export default function LocationScreen(props) {
     }
   };
 
-  handleRefresh = () => {
+  const handleRefresh = () => {
     if (isLoading)
       return;
 
@@ -177,7 +175,7 @@ export default function LocationScreen(props) {
     makeRemoteRequest();
   };
 
-  newFlatList = (data, key) => {
+  const newFlatList = (data, key) => {
     const keyProps = {};
     if (key)
       keyProps.key = key;
@@ -189,11 +187,7 @@ export default function LocationScreen(props) {
         renderItem={({ item, index }) => <ForecastItem {...item}
           navigation={navigation}
           index={index}
-          onPress={() => {
-            //we need the expanded state outside the ForecastItem as the FlatList is a virtualized list and items can be re-used
-            item.expanded = !item.expanded;
-            setDataSource(dataSource);
-          }} />}
+        />}
         keyExtractor={item => item.title}
         refreshing={isLoading}
         onRefresh={handleRefresh}
@@ -201,7 +195,7 @@ export default function LocationScreen(props) {
     );
   };
 
-  getButtonIcon = (name, type, index) => {
+  const getButtonIcon = (name, type, index) => {
     let color = Colors.tabIconDefault;
     if (selectedIndex === index)
       color = Colors.tabIconSelected;
@@ -211,15 +205,15 @@ export default function LocationScreen(props) {
     );
   };
 
-  forecastIcon = () => {
+  const forecastIcon = () => {
     return getButtonIcon('calendar-week', 'material-community', 0);
   };
 
-  hourlyIcon = () => {
+  const hourlyIcon = () => {
     return getButtonIcon('access-time', 'material', 1);
   };
 
-  nearbyIcon = () => {
+  const nearbyIcon = () => {
     return getButtonIcon('near-me', 'material', 2);
   };
 
@@ -276,7 +270,7 @@ export default function LocationScreen(props) {
   );
 };
 
-loadJsonData = (responseJson) => {
+function loadJsonData(responseJson) {
   //returns an array of objects with the following keys: icon, title, summary, temperature, expanded, isNight, warning, warningUrl
   let entries = [];
 
@@ -350,7 +344,7 @@ loadJsonData = (responseJson) => {
   return entries;
 };
 
-parseTimeStamp = (timeStamp) => {
+function parseTimeStamp(timeStamp) {
   //              YYYY                          MM                            DD                            HH                            MM
   let formatted = timeStamp.slice(0, 4) + '-' + timeStamp.slice(4, 6) + '-' + timeStamp.slice(6, 8) + 'T' + timeStamp.slice(8, 10) + ':' + timeStamp.slice(10, 12) + ':00.000Z';
   return new Date(formatted);
@@ -577,10 +571,12 @@ function getDateTimeString(dateTime) {
 }
 
 function ForecastItem(props) {
-  const { title, temperature, summary, icon, isNight, isHourly, warning, warningUrl, index, heading, expanded, onPress, dateTime } = props;
-  const settings = useContext(SettingsContext);
+  const { title, temperature, summary, icon, isNight, isHourly, warning, warningUrl, index, heading, expanded, dateTime } = props;
+  const { settings } = React.useContext(SettingsContext);
+  const [allowNight] = React.useState(settings.night);
+  const [rounded] = React.useState(settings.round);
+  const [isExpanded, setExpanded] = React.useState(expanded);
 
-  let allowNight = settings && settings.night;
   if (index > 1 && !allowNight && isNight && !isHourly)
     return null;
 
@@ -594,17 +590,17 @@ function ForecastItem(props) {
   if (warning && warningUrl)
     warningView = (
       <TouchableHighlight style={{ alignSelf: 'flex-start' }} underlayColor='#ffffff' onPress={() => Linking.openURL(warningUrl)}>
-        <Text style={{ textDecorationLine: 'underline', fontSize: 13, color: Colors.primaryDark }}>{warning && expanded ? warning : ''}</Text>
+        <Text style={{ textDecorationLine: 'underline', fontSize: 13, color: Colors.primaryDark }}>{warning && isExpanded ? warning : ''}</Text>
       </TouchableHighlight>);
 
   let summmaryView = null;
-  if (summary && expanded)
+  if (summary && isExpanded)
     summmaryView = (<Text style={{ fontSize: 13, flex: 1 }}>{summary}</Text>);
 
   let fontColor = isNight ? '#777777' : 'black';
   let fontWeight = isNight ? 'normal' : 'bold';
   let displayTemp = temperature;
-  if (index === 0 && displayTemp.length && settings && settings.round) {
+  if (index === 0 && displayTemp.length && rounded) {
     let tempVal = Number(displayTemp);
     if (!isNaN(tempVal))
       displayTemp = '' + Math.round(tempVal);
@@ -631,9 +627,12 @@ function ForecastItem(props) {
   else
     titleText = <Text style={titleTextStyle}>{title}</Text>
 
+  const toggleExpanded = () => {
+    setExpanded(!isExpanded);
+  }
   return (
-    <TouchableHighlight underlayColor={Colors.primaryLight} onPress={onPress}>
-      <View style={{ flex: 100, flexDirection: "column" }} >
+    <TouchableHighlight underlayColor={Colors.primaryLight} onPress={toggleExpanded}>
+      <View style={{ flex: 100, flexDirection: "column", backgroundColor: "white" }} >
         {headingView}
         <View style={{ flex: 100, flexDirection: "row", paddingTop: 0, paddingBottom: 5, paddingRight: 5 }}>
           {imageView}
@@ -653,7 +652,7 @@ function ForecastItem(props) {
 
 function FavoriteIcon(props) {
   const { site } = props;
-  const favorites = useContext(FavoritesContext);
+  const favorites = React.useContext(FavoritesContext);
   let findFavorite = () => favorites && favorites.favorites && favorites.favorites.find((entry) => entry.site === site.site);
   let isFavorite = () => findFavorite() !== undefined;
   let toggleFav = () => {
@@ -702,15 +701,15 @@ function getAsOfLabel(dateTime) {
 
 function AutoUpdateText(props) {
   const { dateTime, interval, style } = props;
-  const [label, setLabel] = useState(getAsOfLabel(dateTime));
-  const [visible, setVisible] = useState(true);
+  const [label, setLabel] = React.useState(getAsOfLabel(dateTime));
+  const [visible, setVisible] = React.useState(true);
 
   updateLabel = () => {
     setLabel(getAsOfLabel(dateTime));
   };
 
   // update the label once initially
-  useEffect(() => {
+  React.useEffect(() => {
     updateLabel();
   }, []);
 
@@ -737,15 +736,15 @@ function AutoUpdateText(props) {
 }
 
 function useInterval(callback, delay) {
-  const savedCallback = useRef();
+  const savedCallback = React.useRef();
 
   // Remember the latest callback.
-  useEffect(() => {
+  React.useEffect(() => {
     savedCallback.current = callback;
   }, [callback]);
 
   // Set up the interval.
-  useEffect(() => {
+  React.useEffect(() => {
     function tick() {
       savedCallback.current();
     }
@@ -757,15 +756,15 @@ function useInterval(callback, delay) {
 }
 
 function useAppStateChange(callback) {
-  const savedCallback = useRef();
+  const savedCallback = React.useRef();
 
   // Remember the latest callback.
-  useEffect(() => {
+  React.useEffect(() => {
     savedCallback.current = callback;
   }, [callback]);
 
   // Setup the AppState handler
-  useEffect(() => {
+  React.useEffect(() => {
     function eventHandler(nextState) {
       savedCallback.current(nextState === 'active');
     }
@@ -775,27 +774,27 @@ function useAppStateChange(callback) {
 }
 
 function useNavigationFocus(callback, navigation) {
-  const savedCallback = useRef();
+  const savedCallback = React.useRef();
 
   // Remember the latest callback.
-  useEffect(() => {
+  React.useEffect(() => {
     savedCallback.current = callback;
   }, [callback]);
 
   // Setup the handlers
-  useEffect(() => {
+  React.useEffect(() => {
     if (!navigation)
       return () => { };
 
-    focusListener = navigation.addListener('focus', (payLoad) => {
+    const focusUnsubscribe = navigation.addListener('focus', (payLoad) => {
       savedCallback.current(true, payLoad);
     });
-    blurListener = navigation.addListener('blur', (payLoad) => {
+    const blurUnsubscribe = navigation.addListener('blur', (payLoad) => {
       savedCallback.current(false, payLoad);
     });
     return () => {
-      focusListener.remove();
-      blurListener.remove();
+      focusUnsubscribe();
+      blurUnsubscribe();
     };
   }, [navigation]);
 }

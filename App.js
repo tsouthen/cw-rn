@@ -8,53 +8,29 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Colors from './constants/Colors';
 import { SettingsContext } from './components/SettingsContext'
 import { FavoritesContext } from './components/FavoritesContext'
-import { defaultFavorites } from './screens/FavoritesScreen';
+import FavoritesScreen, { defaultFavorites } from './screens/FavoritesScreen';
 import { ShareContext } from './components/ShareContext';
 import { captureRef } from 'react-native-view-shot';
 import * as Sharing from 'expo-sharing';
 import { JsonStorage } from './components/JsonStorage';
-import BottomTabNavigator from './navigation/BottomTabNavigator';
 import useLinking from './navigation/useLinking';
 import SearchScreen from './screens/SearchScreen';
 import BrowseScreen from './screens/BrowseScreen';
 import CityListScreen from './screens/CityListScreen';
-// import LocationScreen from './screens/LocationScreen';
-// import SettingsScreen from './screens/SettingsScreen';
+import LocationScreen from './screens/LocationScreen';
+import SettingsScreen from './screens/SettingsScreen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import TabBarIcon from './components/TabBarIcon';
-import { NavigationHeaderButton } from './components/HeaderButton';
-
-function LocationScreen({ navigation, route }) {
-  navigation.setOptions({
-    headerTitle: route?.params?.location ?? "Location",
-    headerRight: () => (<NavigationHeaderButton type='material' name='settings' navigation={navigation} routeName='Settings' />)
-  });
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Button
-        title="Go to Settings"
-        onPress={() => navigation.navigate('Settings')}
-      />
-    </View>
-  );
-}
 
 function LocationStackScreen() {
   const LocationStack = createStackNavigator();
   return (
     <LocationStack.Navigator screenOptions={defaultScreenOptions}>
       <LocationStack.Screen name="Location" component={LocationScreen} />
-      <LocationStack.Screen name="Settings 2" component={SettingsScreen} />
-      {/* other screens */}
+      <LocationStack.Screen name="Settings" component={SettingsScreen} />
+      <LocationStack.Screen name="City" component={LocationScreen} />
     </LocationStack.Navigator>
   );
-}
-
-function FavoritesScreen({ navigation }) {
-  navigation.setOptions({
-    headerTitle: "Favourites",
-  });
-  return <View />;
 }
 
 function FavoritesStackScreen(props) {
@@ -62,16 +38,9 @@ function FavoritesStackScreen(props) {
   return (
     <FavoritesStack.Navigator screenOptions={defaultScreenOptions}>
       <FavoritesStack.Screen name="Favorites" component={FavoritesScreen} />
-      {/* other screens */}
+      <FavoritesStack.Screen name="City" component={LocationScreen} />
     </FavoritesStack.Navigator>
   );
-}
-
-function EmptyBrowseScreen({ navigation }) {
-  navigation.setOptions({
-    headerTitle: "Browse",
-  });
-  return <View />;
 }
 
 function BrowseStackScreen(props) {
@@ -82,16 +51,8 @@ function BrowseStackScreen(props) {
       <BrowseStack.Screen name="CityList" component={CityListScreen} />
       <BrowseStack.Screen name="City" component={LocationScreen} />
       <BrowseStack.Screen name="Search" component={SearchScreen} />
-      {/* other screens */}
     </BrowseStack.Navigator>
   );
-}
-
-function SettingsScreen({ navigation }) {
-  navigation.setOptions({
-    headerTitle: "Settings",
-  });
-  return <View />;
 }
 
 function HomeTabs() {
@@ -133,9 +94,10 @@ export default function App(props) {
     await JsonStorage.setItem('Settings', updatedSettings);
   }
 
-  updateSettings = (updatedSettings) => {
-    setSettings(updatedSettings);
-    saveSettings(updatedSettings);
+  updateSetting = (prop, value) => {
+    settings[prop] = value;
+    setSettings(settings);
+    saveSettings(settings);
   }
 
   loadSettings = async () => {
@@ -219,7 +181,7 @@ export default function App(props) {
   } else {
     return (
       <ShareContext.Provider value={{ onShare }}>
-        <SettingsContext.Provider value={{ ...settings, updateSettings }}>
+        <SettingsContext.Provider value={{ settings, updateSetting }}>
           <FavoritesContext.Provider value={{ favorites, updateFavorites }}>
             <View ref={mainViewRef} style={styles.container}>
               {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
