@@ -434,8 +434,11 @@ export default class CurrentLocation extends React.Component {
       } else if (newEntry.title.startsWith("Extreme ")) {
         newEntry.heading = extremesHeading;
         newEntry.title = newEntry.title.substr(8);
-        extremes.push(newEntry);
-        extremesHeading = null;
+        // skip duplicate entries where all that differs is the title (extremeRainfall and extremePrecipitation)
+        if (!newEntry.value || !extremes.find((entry) => entry.summary === newEntry.summary && entry.value === newEntry.value)) {
+          extremes.push(newEntry);
+          extremesHeading = null;
+        }
       } else {
         newEntry.heading = normalsHeading;
         normals.push(newEntry);
@@ -787,7 +790,7 @@ function ForecastItem(props) {
     imageView = <Icon {...icon} size={32} iconStyle={{ width: 50, height: 50, paddingTop: 10, paddingLeft: 10 }} />;
   } else if (!isOther) {
     // imageView = <View style={{ width: 50, height: 50 }} />;
-    imageView = <Icon type="feather" name="cloud-off" size={32} iconStyle={{ width: 50, height: 50, paddingTop: 10, paddingLeft: 10 }} />;
+    imageView = <Icon type="feather" name="cloud-off" size={28} iconStyle={{ width: 50, height: 50, paddingTop: 10, paddingLeft: 10 }} />;
   }
   let warningView = null;
   if (warning && warningUrl)

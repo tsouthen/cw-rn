@@ -41,7 +41,6 @@ function SettingItem(props) {
 
   return (
     <ListItem
-      onPress={() => onValueChanged(!turnedOn)}
       titleStyle={{ fontFamily: 'montserrat' }}
       underlayColor={Colors.primaryLight}
       switch={{

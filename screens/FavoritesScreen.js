@@ -134,11 +134,14 @@ export default function FavoritesScreen({ navigation }) {
   }
 
   const onDelete = (item, index) => {
-    console.log(`Deleting ${item.nameEn}`);
-    console.log("favorite count: " + data.length);
     let newData = data.slice();
     newData.splice(index, 1);
-    console.log("favorite count: " + newData.length);
+    updateFavorites(newData);
+    setData(newData);
+  }
+
+  const onSort = () => {
+    let newData = data.sort((a, b) => a.nameEn.localeCompare(b.nameEn));
     updateFavorites(newData);
     setData(newData);
   }
@@ -186,7 +189,7 @@ export default function FavoritesScreen({ navigation }) {
   return (
     <View style={{ flex: 1 }}>
       <HeaderBar navigation={navigation} title="Favourites" showBackButton={false}>
-        {/* <HeaderBarAction icon="sort" /> */}
+        {editing && <HeaderBarAction icon="sort" onPress={onSort} />}
         <HeaderBarAction type="feather" name="edit-2" color={editing ? Colors.primaryDark : 'white'} onPress={onEditPress} />
       </HeaderBar>
       {getListComponent()}
