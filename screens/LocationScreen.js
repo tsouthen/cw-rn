@@ -167,7 +167,7 @@ export default class CurrentLocation extends React.Component {
           nearest = sitelocations[this.randomIntInRange(0, sitelocations.length)];
           location = { coords: { latitude: nearest.latitude, longitude: nearest.longitude } };
         } else {
-          await Location.requestPermissionsAsync();
+          await Location.requestForegroundPermissionsAsync();
           location = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Lowest, maximumAge: 15 * 60 * 1000, timeout: 30 * 1000 });
         }
         sortedLocs = this.orderByDistance(location.coords, sitelocations);
