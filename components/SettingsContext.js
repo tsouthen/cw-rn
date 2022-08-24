@@ -4,6 +4,7 @@ const settings = {
     settings: {
         night: false,
         round: true,
+        dark: false,
     },
     updateSetting: (prop, value) => { },
 };

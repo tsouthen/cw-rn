@@ -2,6 +2,8 @@ import React from 'react';
 import { View, FlatList } from 'react-native';
 import { SimpleListItem } from '../components/SimpleListItem';
 import HeaderBar, { HeaderBarNavigationAction } from '../components/HeaderBar';
+import { SettingsContext } from '../components/SettingsContext';
+import Colors from '../constants/Colors';
 
 const provinces = [
   { name: 'Alberta', abbr: 'AB' },
@@ -20,6 +22,8 @@ const provinces = [
 ];
 
 export default function BrowseScreen({ navigation }) {
+  const { settings } = React.useContext(SettingsContext);
+
   handlePress = (item) => {
     navigation.navigate('CityList', {
       province: item,
@@ -33,7 +37,7 @@ export default function BrowseScreen({ navigation }) {
         <HeaderBarNavigationAction navigation={navigation} type="feather" name="search" screen="Search" />
       </HeaderBar>
       <FlatList
-        style={{ backgroundColor: 'white' }}
+        style={{ backgroundColor: settings.dark ? Colors.darkBackground : Colors.lightBackground }}
         data={provinces}
         renderItem={({ item }) => {
           return (<SimpleListItem onPress={() => handlePress(item)}>{item.name}</SimpleListItem>);

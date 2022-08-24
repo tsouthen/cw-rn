@@ -5,6 +5,7 @@ import { FavoritesContext } from '../components/FavoritesContext';
 import { SimpleListItem } from '../components/SimpleListItem';
 import HeaderBar, { HeaderBarAction } from '../components/HeaderBar';
 import Colors from '../constants/Colors';
+import { SettingsContext } from '../components/SettingsContext';
 
 export const defaultFavorites = [
   {
@@ -117,6 +118,7 @@ export default function FavoritesScreen({ navigation }) {
   const { favorites, updateFavorites } = React.useContext(FavoritesContext);
   const [data, setData] = React.useState(favorites);
   const [editing, setEditing] = React.useState(false);
+  const { settings } = React.useContext(SettingsContext);
 
   React.useEffect(() => {
     setData(favorites);
@@ -149,7 +151,7 @@ export default function FavoritesScreen({ navigation }) {
   const getListComponent = () => {
     return (
       <DraggableFlatList
-        style={{ flex: 1, backgroundColor: 'white' }}
+        style={{ flex: 1, backgroundColor: settings.dark ? Colors.darkBackground : Colors.lightBackground }}
         data={data}
         keyExtractor={item => item.site}
         bounces={false}
@@ -190,7 +192,7 @@ export default function FavoritesScreen({ navigation }) {
     <View style={{ flex: 1 }}>
       <HeaderBar navigation={navigation} title="Favourites" showBackButton={false}>
         {editing && <HeaderBarAction icon="sort" onPress={onSort} />}
-        <HeaderBarAction type="feather" name="edit-2" color={editing ? Colors.primaryDark : 'white'} onPress={onEditPress} />
+        <HeaderBarAction type="feather" name="edit-2" color={editing ? Colors.primaryDark : (settings.dark ? "black" : "white")} onPress={onEditPress} />
       </HeaderBar>
       {getListComponent()}
     </View>

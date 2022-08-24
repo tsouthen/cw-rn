@@ -6,23 +6,30 @@ import { SettingsContext } from '../components/SettingsContext';
 import HeaderBar from '../components/HeaderBar';
 
 export default function SettingsScreen({ navigation }) {
+  const { settings } = React.useContext(SettingsContext);
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor: settings.dark ? Colors.darkBackground : Colors.lightBackground }}>
       <HeaderBar title="Settings" navigation={navigation} />
       <View style={{ flexDirection: 'column' }} >
         <SettingItem
           title='Night Forecasts'
           subtitle='Show overnight city forecasts.'
-          leftIcon={{ name: 'moon', type: 'feather', color: 'black' }}
+          name='moon' type='feather'
           propName='night'
         />
         <SettingItem
           title='Rounded Temperature'
           subtitle='Round current temperature to the nearest degree.'
-          // leftIcon={{ name: 'decimal-decrease', type: 'material-community', color: 'black' }}
-          // leftIcon={{ name: 'hash', type: 'feather', color: 'black' }}
-          leftIcon={{ name: 'rotate-ccw', type: 'feather', color: 'black' }}
+          // name='decimal-decrease' type='material-community'
+          // name='hash' type='feather'
+          name='rotate-ccw' type='feather'
           propName='round'
+        />
+        <SettingItem
+          title='Dark Mode'
+          subtitle='Dark background with white text and icons.'
+          name='yin-yang' type='material-community'
+          propName='dark'
         />
       </View>
     </View>
@@ -30,7 +37,7 @@ export default function SettingsScreen({ navigation }) {
 };
 
 function SettingItem(props) {
-  const { propName } = props;
+  const { propName, name, type } = props;
   const { settings, updateSetting } = React.useContext(SettingsContext);
   const [turnedOn, setTurnedOn] = React.useState(settings[propName]);
 
@@ -41,11 +48,15 @@ function SettingItem(props) {
 
   return (
     <ListItem
-      titleStyle={{ fontFamily: 'montserrat' }}
+      containerStyle={{ backgroundColor: settings.dark ? Colors.darkBackground : Colors.lightBackground }}
+      titleStyle={{ fontFamily: 'montserrat', color: settings.dark ? 'white' : 'black' }}
+      subtitleStyle={{ fontFamily: 'montserrat', color: settings.dark ? 'white' : 'black' }}
       underlayColor={Colors.primaryLight}
+      leftIcon={{ name, type, color: settings.dark ? 'white' : 'black', size: 36 }}
       switch={{
         thumbColor: Platform.OS === 'ios' ? 'white' : Colors.primaryDark,
         trackColor: { false: '#b2b2b2', true: Colors.primary },
+        ios_backgroundColor: '#eeeeee',
         value: turnedOn,
         onValueChange: (value) => { onValueChanged(value) },
       }}
