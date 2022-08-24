@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { Platform, FlatList, ActivityIndicator, StyleSheet, Text, View, Image, TouchableHighlight, Linking  } from 'react-native';
+import { Platform, FlatList, ActivityIndicator, StyleSheet, Text, View, Image, TouchableHighlight, Linking, ToastAndroid  } from 'react-native';
 import sitelocations from '../constants/sitelocations';
 import * as Location from 'expo-location';
 import Constants from 'expo-constants';
@@ -299,6 +299,12 @@ export default class CurrentLocation extends React.Component {
         if (displayHour == 0)
           displayHour = 12;
 
+        let heading = null;
+        if (index === 0)
+          heading = 'Today';
+        else if (currHour === 0)
+          heading = 'Tomorrow';
+
         entries.push({
           icon: entry.iconCode && entry.iconCode._,
           title: '' + displayHour + suffix,
@@ -307,6 +313,7 @@ export default class CurrentLocation extends React.Component {
           expanded: entries.length === 0 || entry.condition !== entries[entries.length-1].summary,
           isNight: currHour > sunset || currHour < sunrise,
           isHourly: true,
+          heading: heading,
         });
       });
     }
@@ -507,7 +514,7 @@ function iconCodeToName(iconCode) {
 }
 
 function ForecastItem(props) {
-  const {title, temperature, summary, icon, isNight, isHourly, warning, warningUrl, index} = props;
+  const {title, temperature, summary, icon, isNight, isHourly, warning, warningUrl, index, heading} = props;
   const [expanded, setExpanded] = useState(props.expanded);
   const settings = useContext(SettingsContext);
 
@@ -540,9 +547,14 @@ function ForecastItem(props) {
     if (!isNaN(tempVal))
       displayTemp = '' + Math.round(tempVal);
   }
+  let headingView = null;
+  if (heading)
+    headingView = (<Text style={{padding: 10, paddingTop: 5, paddingBottom:5, backgroundColor:'#eeeeee', fontFamily:'montserrat'}}>{heading}</Text>);
+
   return (
     <TouchableHighlight underlayColor={Colors.primaryLight} onPress={() => setExpanded(!expanded)}>
       <View style={{flex:100, flexDirection: "column"}} >
+        {headingView}
         <View style={{flex:100, flexDirection: "row", paddingTop: 0, paddingBottom: 5, paddingRight: 5}}>
           {imageView}
           <View style={{flex:1, flexDirection: "column", paddingLeft: 10, paddingTop: 5}}>
@@ -568,15 +580,24 @@ function FavoriteIcon(props) {
     if (!favorites || !favorites.favorites || favorites.favorites.length === 0) {
       return;
     }
+    let isFav = isFavorite();
     let newFavorites;
-    if (isFavorite()) {
+    if (isFav) {
       newFavorites = favorites.favorites.filter((entry) => entry.site !== site.site);
     } else {
       newFavorites = [site].concat(favorites.favorites);
     }
     favorites.updateFavorites(newFavorites);
+    if (Platform.OS === 'android') {
+      let message = ' added to favorites';
+      if (isFav)
+        message = ' removed from favorites';
+      ToastAndroid.show(site.nameEn + message, ToastAndroid.SHORT);
+    }
   };
-  return (<Icon type='font-awesome' name={isFavorite() ? 'star' : 'star-o' }
-    color='#ffffff' underlayColor={Colors.primary} size={24} iconStyle={{marginRight: 15}} 
-    onPress={toggleFav} />);
+  return (
+    <Icon type='font-awesome' name={isFavorite() ? 'star' : 'star-o' }
+      color='#ffffff' underlayColor={Colors.primary} size={24} iconStyle={{marginRight: 15}} 
+      onPress={toggleFav} />
+    );
 }
