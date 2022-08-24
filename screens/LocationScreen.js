@@ -256,7 +256,7 @@ class CurrentLocation extends React.Component {
         }
         const entry = {
           icon: responseJson.currentConditions.iconCode._,
-          title: 'Now',
+          title: getAsOfLabel(dateTime),
           summary: CurrentLocation.valueOrEmptyString(responseJson.currentConditions.condition),
           temperature: responseJson.currentConditions.temperature._,
           expanded: true,
@@ -707,44 +707,59 @@ function FavoriteIcon(props) {
   return (<HeaderButton type='font-awesome' name={isFavorite() ? 'star' : 'star-o'} onPress={toggleFav} />);
 }
 
-function AutoUpdateText(props) {
-  const getLabel = (dateTime) => {
-    // const minutes = Math.ceil(moment().diff(dateTime, 'minutes') / 15) * 15;
-    let minutes = moment().diff(dateTime, 'minutes');
-    if (minutes > 60) {
-      minutes = Math.round(minutes / 15) * 15;
-      const hours = Math.round(minutes / 60 * 100) / 100;
-      if (hours === 1)
-        titleText = `An hour ago`;
-      else
-        titleText = `${hours} hours ago`;
-    } else if (minutes === 60)
-      titleText = "An hour ago";
-    else if (minutes === 30)
-      titleText = "Half an hour ago";
-    else
-      titleText = `${minutes} minutes ago`;
-    return titleText;
-  }
+function getAsOfLabel(dateTime) {
+  if (!dateTime)
+    return 'Now';
 
+  // const minutes = Math.ceil(moment().diff(dateTime, 'minutes') / 15) * 15;
+  let minutes = moment().diff(dateTime, 'minutes');
+  if (minutes > 60) {
+    minutes = Math.round(minutes / 15) * 15;
+    const hours = Math.round(minutes / 60 * 100) / 100;
+    if (hours === 1)
+      titleText = `An hour ago`;
+    else
+      titleText = `${hours} hours ago`;
+  } else if (minutes === 60)
+    titleText = "An hour ago";
+  else if (minutes === 30)
+    titleText = "Half an hour ago";
+  else
+    titleText = `${minutes} minutes ago`;
+  return titleText;
+}
+
+function AutoUpdateText(props) {
   const { dateTime, interval, style } = props;
-  const [label, setLabel] = useState(getLabel(dateTime));
+  const [label, setLabel] = useState(getAsOfLabel(dateTime));
   const [visible, setVisible] = useState(true);
 
+  updateLabel = () => {
+    setLabel(getAsOfLabel(dateTime));
+  };
+
+  // update the label once initially
+  useEffect(() => {
+    updateLabel();
+  }, []);
+
+  // update the label every interval as long as it's visible
   useInterval(() => {
-    setLabel(getLabel(dateTime));
+    updateLabel();
   }, visible ? interval : null);
 
+  // set visibiility from App state changes
   useAppStateChange((isActive) => {
     setVisible(isActive);
     if (isActive)
-      setLabel(getLabel(dateTime));
+      updateLabel();
   });
 
+  // set visibiility from navigation events
   useNavigationFocus((focused) => {
     setVisible(focused);
     if (focused)
-      setLabel(getLabel(dateTime));
+      updateLabel();
   }, props.navigation);
 
   return <Text style={style}>{label}</Text>;
