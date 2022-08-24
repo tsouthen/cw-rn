@@ -164,7 +164,7 @@ export default function App(props) {
   loadFavorites = async () => {
     let savedFavorites = await JsonStorage.getItem('Favorites');
     if (savedFavorites !== null && Array.isArray(savedFavorites)) {
-      setFavorites(saveFavorites);
+      setFavorites(savedFavorites);
     }
   }
 
@@ -210,6 +210,7 @@ export default function App(props) {
         });
 
         await loadSettings();
+        await loadFavorites();
       } catch (e) {
         // We might want to provide this error information to an error reporting service
         console.warn(e);
