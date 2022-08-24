@@ -143,11 +143,11 @@ export default class CurrentLocation extends React.Component {
           // this.props.navigation.setParams({ location: 'requesting permission...'});
           await Location.requestPermissionsAsync();
           // this.props.navigation.setParams({ location: 'getting location...'});
-          location = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Lowest, maximumAge: 900000 });
+          location = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Lowest, maximumAge: 15 * 60 * 1000, timeout: 30 * 1000 });
         }
         sortedLocs = this.orderByDistance(location.coords, sitelocations);
         sortedLocs = sortedLocs.slice(0, 10);
-        //console.debug(sortedLocs);
+        // console.debug(sortedLocs);
         nearest = sortedLocs[0]; //findNearest(location.coords, sitelocations);
       }
 
@@ -164,11 +164,11 @@ export default class CurrentLocation extends React.Component {
 
       // this.props.navigation.setParams({ location: 'downloading...'});
       let targetUrl = 'https://dd.weather.gc.ca/citypage_weather/xml/' + prov + '/' + site + '_e.xml';
-      console.debug('targetUrl: ' + targetUrl);
+      // console.debug('targetUrl: ' + targetUrl);
       const xml = await this.fetchXML(targetUrl);
       // this.props.navigation.setParams({ location: 'parsing...'});
       const responseJson = await this.jsonFromXml(xml);
-      //console.debug(JSON.stringify(responseJson));
+      // console.debug(JSON.stringify(responseJson));
       let entries = this.loadJsonData(responseJson);
       let hourlyData = this.loadHourlyForecasts(responseJson);
       // let isFav = this.isFavorite(site);
@@ -278,7 +278,7 @@ export default class CurrentLocation extends React.Component {
       let utcOffset = Number(responseJson.hourlyForecastGroup.dateTime[1].UTCOffset);
       let minSuffix;
       if (!Number.isInteger(utcOffset)) {
-        console.debug('utcOffset non integer: ' + utcOffset);
+        // console.debug('utcOffset non integer: ' + utcOffset);
         let mins = Math.round((utcOffset - Math.floor(utcOffset)) * 60);
         utcOffset = Math.floor(utcOffset);
         minSuffix = '';
@@ -465,7 +465,7 @@ CurrentLocation.contextType = ShareContext;
 
 function iconCodeToName(iconCode) {
   if (!CurrentLocation.isString(iconCode)) {
-    console.debug('Non-string icon code: ' + iconCode);
+    // console.debug('Non-string icon code: ' + iconCode);
     // return require('../assets/images/clever_weather.png');
     return null;
   }
@@ -537,7 +537,7 @@ function iconCodeToName(iconCode) {
     case 39:
       return require('../assets/images/cloud_lightning_moon.png');
   }
-  console.debug('Unknown icon code: ' + iconCode);
+  // console.debug('Unknown icon code: ' + iconCode);
   // return require('../assets/images/clever_weather.png');
   return null;
 }
