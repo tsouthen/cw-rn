@@ -6,7 +6,7 @@ import Constants from 'expo-constants';
 import { parseString } from 'react-native-xml2js';
 import iconv from 'iconv-lite';
 import { Buffer } from 'buffer';
-import { Icon } from 'react-native-elements';
+import { Icon, ListItem } from 'react-native-elements';
 
 const styles = StyleSheet.create({
   container: {
@@ -34,15 +34,18 @@ export default class CurrentLocation extends React.Component {
     //console.debug(navigation);
     // <Icon type='material' name='star-border' color='#ffffff' underlayColor='#FF8800' size={24} iconStyle={{marginRight: 5}} onPress={navigation.getParam('toggleFavoriteAction')} />
     let nearMe = null;
-    if (navigation.getParam('site') === undefined)
+    let settings = null;
+    if (navigation.getParam('site') === undefined) {
       nearMe = (<Icon type='material' name='near-me' color='#ffffff' underlayColor='#FF8800' size={24} iconStyle={{marginRight: 10}} onPress={navigation.getParam('nearMeAction')} />);
+      settings = (<Icon type='material' name='settings' color='#ffffff' underlayColor='#FF8800' size={24} iconStyle={{marginRight: 10}} onPress={navigation.getParam('settingsAction')} />);
+    }
     return {
       title: navigation.getParam('location', 'Location'),
       headerRight: (
         <View style={{flexDirection:'row'}}>
           {nearMe}
-        </View>
-        ),
+          {settings}
+        </View>),
     };
   };
 
@@ -56,13 +59,23 @@ export default class CurrentLocation extends React.Component {
 
   componentDidMount() {
     this.makeRemoteRequest();
-    this.props.navigation.setParams({nearMeAction : this.handleNearMe, toggleFavoriteAction: this.toggleFavorite })
+    this.props.navigation.setParams({
+      nearMeAction : this.handleNearMe, 
+      toggleFavoriteAction: this.toggleFavorite,
+      settingsAction: this.handleSettings,
+    });
   };
 
   handleNearMe = () => {
     this.props.navigation.navigate('CityList', { 
       title: 'Nearby',
       cities: this.state.nearestSites,
+    });
+  };
+
+  handleSettings = () => {
+    this.props.navigation.navigate('Settings', { 
+      title: 'Settings',
     });
   };
 
@@ -310,6 +323,34 @@ export default class CurrentLocation extends React.Component {
             if (!isNaN(tempVal))
               temperature = Math.round(tempVal);
           }
+          // let listProps = {
+          //   title: item.title,
+          //   titleStyle: {fontFamily: 'montserrat', color: fontColor, fontSize: 18},
+          //   onPress: () => this.handlePress(item, index),
+          //   bottomDivider: true,
+          // };
+          // if (temperature) {
+          //   listProps = {
+          //     ...listProps,
+          //     rightTitle: temperature + '°',
+          //     rightTitleStyle: {fontSize: 18, fontWeight: fontWeight, color: fontColor},
+          //   };
+          // }
+          // if (item.summary && item.expanded) {
+          //   listProps = {
+          //     ...listProps,
+          //     subtitle: item.summary,
+          //   };
+          // }
+          // if (item.icon !== undefined) {
+          //   listProps = {
+          //     ...listProps,
+          //     leftIcon: imageView,
+          //   };
+          // }
+          //TODO: handle warningView
+          // return (<ListItem {...listProps} />);
+
           return (
             <TouchableHighlight underlayColor='#ffb944' onPress={() => this.handlePress(item, index)}>
               <View style={{flex:100, flexDirection: "column"}} >

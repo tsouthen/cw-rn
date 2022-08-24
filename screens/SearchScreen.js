@@ -1,7 +1,7 @@
 import React from 'react';
-import { Platform, View, Text } from 'react-native';
+import { Platform, View, Text, TextInput } from 'react-native';
 import CityListScreen from './CityListScreen';
-import { SearchBar } from 'react-native-elements';
+import { Icon } from 'react-native-elements';
 import sitelocations from '../constants/sitelocations';
 
 // Returns a function, that, as long as it continues to be invoked, will not
@@ -27,7 +27,37 @@ export default class SearchScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: 'Search',
-      header: null,
+      headerTitle: (
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <TextInput 
+            style={{flex:1, color: 'white', fontFamily: 'montserrat', fontSize: 16}}
+            placeholderStyle={{color: 'white', fontFamily: 'montserrat', fontSize: 16}}
+            placeholderTextColor='white'
+            placeholder='Search cities    ' 
+            autoFocus={true} 
+            selectionColor='#c55900'
+            returnKeyType='search'
+            onChangeText={navigation.getParam('searchAction')}
+            ref={input => {
+              this.input = input;
+              this.navigation = navigation;
+            }}            
+          />
+          <Icon type='material' name='clear' color='#ffffff' underlayColor='#FF8800' size={25} 
+            iconStyle={{marginRight: 10}} 
+            onPress={() => {
+              this.input.clear();
+              if (!this.input.isFocused())
+                this.input.focus();
+              
+                //update the search results
+              let searchAction = this.navigation.getParam('searchAction');
+              if (searchAction)
+                searchAction('');
+            }} 
+          />
+        </View>
+      ),
     };
   };
 
@@ -37,21 +67,13 @@ export default class SearchScreen extends React.Component {
       search: '',
       cities: [],
       };
-    // this.searchRef = React.createRef();
   };
 
-  //This doesn't seem to work except when sliding between tabs, you can see the keyboard pop up for a moment and then disappear again
-  // componentDidMount() {
-  //   const { navigation } = this.props;
-  //   this.focusListener = navigation.addListener('didFocus', () => {
-  //     if (this.state.search.length == 0)
-  //       this.searchRef.current.focus();
-  //   });
-  // }
-
-  // componentWillUnmount() {
-  //   this.focusListener.remove();
-  // }
+  componentDidMount() {
+    this.props.navigation.setParams({
+      searchAction : this.updateSearch,
+    });
+  };
 
   removeAccents = (input) => {
     return input.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
@@ -59,9 +81,9 @@ export default class SearchScreen extends React.Component {
 
   updateSearch = (search) => {
     let cities = [];
-    if (search.length > 1) {
+    if (search.length > 0) {
       let searchVal = this.removeAccents(search);
-      cities = sitelocations.filter((entry) => this.removeAccents(entry.nameEn).includes(searchVal));
+      cities = sitelocations.filter((entry) => this.removeAccents(entry.nameEn).startsWith(searchVal));
       cities.sort((a, b) => a.nameEn < b.nameEn ? -1 : (a.nameEn > b.nameEn ? 1 : 0));
     }
     this.setState({
@@ -76,10 +98,10 @@ export default class SearchScreen extends React.Component {
     let component = null;
     if ((this.state.cities.length === 0) && (search.length > 1))
       message = 'No cities found.';
-    else if ((this.state.cities.length === 0) && (search.length === 1))
-      message = 'Enter at least one more character.';
+    // else if ((this.state.cities.length === 0) && (search.length === 1))
+    //   message = 'Enter at least one more character.';
     else if ((this.state.cities.length === 0) && (search.length === 0))
-      message = 'Results appear here, click on "Search" above to start typing.';
+      message = 'Results appear here as you type.';
 
     if (message && message.length)
       component = (<Text style={{ padding: 10, fontFamily:'montserrat', fontSize: 18}}>{message}</Text>);
@@ -88,18 +110,6 @@ export default class SearchScreen extends React.Component {
 
     return (
       <View style={{flex: 1, flexDirection: "column"}}>
-        <SearchBar 
-          // ref={this.searchRef}
-          placeholder='Search' placeholderTextColor='white'
-          onChangeText={this.updateSearch} value={search} platform={Platform.OS} 
-          containerStyle={{backgroundColor: '#FF8800', elevation: 3 }} 
-          returnKeyType='search'
-          selectionColor='#c55900'
-          inputStyle={{ color: 'white', fontFamily: 'montserrat', fontSize: 18, fontWeight: 'normal' }} 
-          cancelIcon={{ color: 'white', underlayColor: '#FF8800'}} 
-          clearIcon={{ color: 'white', underlayColor: '#FF8800'}} 
-          searchIcon={{ color: 'white', underlayColor: '#FF8800'}} 
-          />
         {component}        
       </View>
     );

@@ -37,6 +37,7 @@ const LocationStack = createStackNavigator(
     Location: LocationScreen,
     CityList: CityListScreen,
     City: LocationScreen,
+    Settings: SettingsScreen,
   },
   config
 );
@@ -68,6 +69,7 @@ const BrowseStack = createStackNavigator(
     Browse: BrowseScreen,
     CityList: CityListScreen,
     City: LocationScreen,
+    Search: SearchScreen,
   },
   config
 );
@@ -117,8 +119,8 @@ const tabNavigator = createFunc({
   LocationStack,
   FavoritesStack,
   BrowseStack,
-  SearchStack,
-  SettingsStack,
+  //SearchStack,
+  //SettingsStack,
 }, {
   tabBarPosition: 'bottom',
   tabBarOptions: {
