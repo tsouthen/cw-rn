@@ -36,6 +36,18 @@ export default function SettingsScreen({ navigation }) {
   );
 };
 
+function useSetting(propName) {
+  const { settings, updateSetting } = React.useContext(SettingsContext);
+  const [value, setTurnedOn] = React.useState(settings[propName]);
+
+  const setValue = (value) => {
+    setTurnedOn(value);
+    updateSetting(propName, value);
+  }
+
+  return [value, setValue];
+}
+
 function SettingItem(props) {
   const { propName, name, type } = props;
   const { settings, updateSetting } = React.useContext(SettingsContext);
