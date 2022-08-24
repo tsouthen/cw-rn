@@ -33,18 +33,25 @@ export default class CurrentLocation extends React.Component {
   static navigationOptions = ({ navigation }) => {
     //console.debug(navigation);
     // <Icon type='material' name='star-border' color='#ffffff' underlayColor='#FF8800' size={24} iconStyle={{marginRight: 5}} onPress={navigation.getParam('toggleFavoriteAction')} />
-    let nearMe = null;
-    let settings = null;
-    if (navigation.getParam('site') === undefined) {
-      nearMe = (<Icon type='material' name='near-me' color='#ffffff' underlayColor='#FF8800' size={24} iconStyle={{marginRight: 10}} onPress={navigation.getParam('nearMeAction')} />);
-      settings = (<Icon type='material' name='settings' color='#ffffff' underlayColor='#FF8800' size={24} iconStyle={{marginRight: 10}} onPress={navigation.getParam('settingsAction')} />);
+    let isHourly = navigation.getParam('isHourly', false);
+    let hasHourly = navigation.getParam('hourlyData') !== undefined;
+    let nearMeIcon = null;
+    let settingsIcon = null;
+    let hourlyIcon = null;
+
+    if (!isHourly && navigation.getParam('site') === undefined) {
+      nearMeIcon = (<Icon type='material' name='near-me' color='#ffffff' underlayColor='#FF8800' size={24} iconStyle={{marginRight: 10}} onPress={navigation.getParam('nearMeAction')} />);
+      settingsIcon = (<Icon type='material' name='settings' color='#ffffff' underlayColor='#FF8800' size={24} iconStyle={{marginRight: 10}} onPress={navigation.getParam('settingsAction')} />);
     }
+    if (!isHourly && hasHourly)
+      hourlyIcon = (<Icon type='material' name='access-time' color='#ffffff' underlayColor='#FF8800' size={24} iconStyle={{marginRight: 10}} onPress={navigation.getParam('hourlyAction')} />);
     return {
       title: navigation.getParam('location', 'Location'),
       headerRight: (
         <View style={{flexDirection:'row'}}>
-          {nearMe}
-          {settings}
+          {hourlyIcon}
+          {nearMeIcon}
+          {settingsIcon}
         </View>),
     };
   };
@@ -63,6 +70,7 @@ export default class CurrentLocation extends React.Component {
       nearMeAction : this.handleNearMe, 
       toggleFavoriteAction: this.toggleFavorite,
       settingsAction: this.handleSettings,
+      hourlyAction: this.handleHourly,
     });
   };
 
@@ -77,6 +85,20 @@ export default class CurrentLocation extends React.Component {
     this.props.navigation.navigate('Settings', { 
       title: 'Settings',
     });
+  };
+
+  handleHourly = () => {
+    let hourlyData = this.props.navigation.getParam('hourlyData');
+    if (hourlyData) {
+      let location = this.props.navigation.getParam('location');
+      if (location)
+        location = location + ' (Hourly)';
+      this.props.navigation.push('City', { 
+        location: location || 'Hourly',
+        hourlyData: hourlyData,
+        isHourly: true,
+      });
+    }
   };
 
   toggleFavorite = () => {
@@ -139,49 +161,60 @@ export default class CurrentLocation extends React.Component {
   makeRemoteRequest = async () => {
     try {
       let sortedLocs = [];
+      let entries = [];
+
       const { navigation } = this.props;
-      let nearest = navigation.getParam('site', undefined);
-      if (!nearest) {
-        let location;
-        if (Platform.OS === 'android' && !Constants.isDevice) {
-          nearest = sitelocations[this.randomIntInRange(0, sitelocations.length)];
-          location = { coords: { latitude: nearest.latitude, longitude: nearest.longitude }};
-        } else {
-          // this.props.navigation.setParams({ location: 'requesting permission...'});
-          await Location.requestPermissionsAsync();
-          // this.props.navigation.setParams({ location: 'getting location...'});
-          location = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Lowest, maximumAge: 900000 }); 
+      if (navigation.getParam('isHourly', false))
+        entries = navigation.getParam('hourlyData', []);
+
+      if (!entries || entries.length == 0) {
+        let nearest = navigation.getParam('site', undefined);
+        if (!nearest) {
+          let location;
+          if (Platform.OS === 'android' && !Constants.isDevice) {
+            nearest = sitelocations[this.randomIntInRange(0, sitelocations.length)];
+            location = { coords: { latitude: nearest.latitude, longitude: nearest.longitude }};
+          } else {
+            // this.props.navigation.setParams({ location: 'requesting permission...'});
+            await Location.requestPermissionsAsync();
+            // this.props.navigation.setParams({ location: 'getting location...'});
+            location = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Lowest, maximumAge: 900000 }); 
+          }
+          sortedLocs = this.orderByDistance(location.coords, sitelocations);
+          sortedLocs = sortedLocs.slice(0, 10);
+          //console.debug(sortedLocs);
+          nearest = sortedLocs[0]; //findNearest(location.coords, sitelocations);
         }
-        sortedLocs = this.orderByDistance(location.coords, sitelocations);
-        sortedLocs = sortedLocs.slice(0, 10);
-        //console.debug(sortedLocs);
-        nearest = sortedLocs[0]; //findNearest(location.coords, sitelocations);
+        let site = 's0000047'; //Calgary
+        let prov = 'AB';
+        // site = 's0000656'; //Comox
+        // prov = 'BC';
+        // nearest = undefined;
+        if (nearest) {
+          // console.debug(nearest);
+          site = nearest.site;
+          prov = nearest.prov;
+        }
+        // this.props.navigation.setParams({ location: 'downloading...'});
+        let targetUrl = 'https://dd.weather.gc.ca/citypage_weather/xml/' + prov + '/' + site + '_e.xml';
+        console.debug('targetUrl: ' + targetUrl);
+        const xml = await this.fetchXML(targetUrl);
+        // this.props.navigation.setParams({ location: 'parsing...'});
+        const responseJson = await this.jsonFromXml(xml);
+        //console.debug(JSON.stringify(responseJson));
+        entries = this.loadJsonData(responseJson);
+        let hourlyData = this.loadHourlyForecasts(responseJson);
+        this.props.navigation.setParams({ 
+          location: responseJson.location.name._,
+          hourlyData: hourlyData,
+        });
       }
-      let site = 's0000047'; //Calgary
-      let prov = 'AB';
-      // site = 's0000656'; //Comox
-      // prov = 'BC';
-      // nearest = undefined;
-      if (nearest) {
-        // console.debug(nearest);
-        site = nearest.site;
-        prov = nearest.prov;
-      }
-      // this.props.navigation.setParams({ location: 'downloading...'});
-      let targetUrl = 'https://dd.weather.gc.ca/citypage_weather/xml/' + prov + '/' + site + '_e.xml';
-      console.debug('targetUrl: ' + targetUrl);
-      const xml = await this.fetchXML(targetUrl);
-      // this.props.navigation.setParams({ location: 'parsing...'});
-      const responseJson = await this.jsonFromXml(xml);
-      //console.debug(JSON.stringify(responseJson));
-      const entries = this.loadJsonData(responseJson);
+
       this.setState({
         isLoading: false,
         dataSource: entries,
         nearestSites: sortedLocs,
       });
-
-      this.props.navigation.setParams({ location: responseJson.location.name._});
     } catch (error) {
       console.error(error);
     }
@@ -243,6 +276,77 @@ export default class CurrentLocation extends React.Component {
     } catch (error) {
       console.error(error);
     }
+
+    return entries;
+  };
+
+  parseTimeStamp = (timeStamp) => {
+    //              YYYY                          MM                            DD                            HH                            MM
+    let formatted = timeStamp.slice(0, 4) + '-' + timeStamp.slice(4, 2) + '-' + timeStamp.slice(6, 2) + 'T' + timeStamp.slice(8, 2) + ':' + timeStamp.slice(10, 2) + ':00.000Z';
+    return new Date(formatted);
+  };
+
+  loadHourlyForecasts = (responseJson) => {
+    let entries = [];
+
+    if (responseJson.hourlyForecastGroup.hourlyForecast && responseJson.hourlyForecastGroup.hourlyForecast.length) {
+      // let utcTimeStamp = responseJson.hourlyForecastGroup.dateTime[0].timeStamp;
+      // let localHour = parseInt(responseJson.hourlyForecastGroup.dateTime[1].hour);
+      let utcOffset = Number(responseJson.hourlyForecastGroup.dateTime[1].UTCOffset);
+      let minSuffix;
+      if (!Number.isInteger(utcOffset)) {
+        console.debug('utcOffset non integer: ' + utcOffset);
+        let mins = Math.round((utcOffset - Math.floor(utcOffset)) * 60);
+        utcOffset = Math.floor(utcOffset);
+        minSuffix = '';
+        if (mins < 10)
+          minSuffix = '0';
+        minSuffix += '' + mins;
+        console.debug('minSuffix: ' + minSuffix);
+      } else {
+        minSuffix = '00';
+      }
+      let sunrise = 6;
+      let sunset = 18;
+
+      if (responseJson.riseSet && responseJson.riseSet.dateTime && responseJson.riseSet.dateTime.length) {
+        responseJson.riseSet.dateTime.forEach((entry, index) => {
+          if (entry.name === 'sunrise' && entry.zone !== 'UTC') {
+            sunrise = parseInt(entry.hour);
+            console.debug('sunrise: ' + sunrise);
+          } else if (entry.name === 'sunset' && entry.zone !== 'UTC') {
+            sunset = parseInt(entry.hour);
+            console.debug('sunset: ' + sunset);
+            }
+        });
+      }
+      responseJson.hourlyForecastGroup.hourlyForecast.forEach((entry, index) => {
+        let currHour = parseInt(entry.dateTimeUTC.substr(8, 2));
+        currHour += utcOffset;
+        if (currHour < 0)
+          currHour += 24;
+        if (currHour >= 24)
+          currHour -= 24;
+        let displayHour = currHour;
+        let suffix = ':' + minSuffix + ' am';
+        if (displayHour >= 12)
+          suffix = ':' + minSuffix + ' pm';
+        if (displayHour > 12)
+          displayHour -= 12;
+        if (displayHour == 0)
+          displayHour = 12;
+
+        entries.push({
+          icon: entry.iconCode && entry.iconCode._,
+          title: '' + displayHour + suffix,
+          summary: entry.condition,
+          temperature: entry.temperature && entry.temperature._,
+          expanded: entries.length === 0 || entry.condition !== entries[entries.length-1].summary,
+          isNight: currHour > sunset || currHour < sunrise,
+          isHourly: true,
+        });
+      });
+    }
     return entries;
   };
 
@@ -295,7 +399,7 @@ export default class CurrentLocation extends React.Component {
         data={ this.state.dataSource }
         renderItem={({item, index}) => {
           let allowNight = global.settings && global.settings.night;
-          if (index > 1 && !allowNight && item.isNight)
+          if (index > 1 && !allowNight && item.isNight && !item.isHourly)
             return null;
 
           let imageView;
@@ -377,8 +481,11 @@ export default class CurrentLocation extends React.Component {
   }
 
   iconCodeToName = (iconCode) => {
-    if (!CurrentLocation.isString(iconCode))
-      return require('../assets/images/clever_weather.png');
+    if (!CurrentLocation.isString(iconCode)) {
+      console.debug('Non-string icon code: ' + iconCode);
+      // return require('../assets/images/clever_weather.png');
+      return null;
+    }
 
     switch (Number(iconCode)) {
       case 0: //sun
@@ -422,6 +529,7 @@ export default class CurrentLocation extends React.Component {
       case 44:
           return require('../assets/images/cloud_fog.png');
       case 25:
+      case 45:
           return require('../assets/images/cloud_wind.png');
       case 14: //freezing rain
       case 26: //ice
@@ -446,6 +554,8 @@ export default class CurrentLocation extends React.Component {
       case 39:
           return require('../assets/images/cloud_lightning_moon.png');
     }
-    return require('../assets/images/clever_weather.png');
+    console.debug('Unknown icon code: ' + iconCode);
+    // return require('../assets/images/clever_weather.png');
+    return null;
   }
 };
