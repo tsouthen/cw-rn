@@ -26,7 +26,7 @@ export default class SettingsScreen extends React.Component {
     }
   };
 
-  switchProps(propName) {
+  getSwitchProps = (propName) => {
     return {
       thumbColor: Colors.primaryDark,
       trackColor: {false: '#b2b2b2', true: Colors.primary},
@@ -53,14 +53,16 @@ export default class SettingsScreen extends React.Component {
           titleStyle={{fontFamily: 'montserrat'}}
           subtitle='Show overnight city forecasts.' 
           leftIcon={{name: 'md-moon', type: 'ionicon', color: 'black'}}
-          switch={this.switchProps('night')}
+          switch={this.getSwitchProps('night')}
+          underlayColor={Colors.primaryLight}
         />
         <ListItem title='Rounded Temperature' 
           onPress={() => {this.handlePress('round')}}
           titleStyle={{fontFamily: 'montserrat'}}
           subtitle='Round current temperature to the nearest degree.' 
           leftIcon={{name: 'decimal-decrease', type: 'material-community', color: 'black'}}
-          switch={this.switchProps('round')}
+          switch={this.getSwitchProps('round')}
+          underlayColor={Colors.primaryLight}
         />
       </View>
     );
