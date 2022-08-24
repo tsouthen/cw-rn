@@ -3,28 +3,26 @@ import { View } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import Colors from '../constants/Colors';
 import { SettingsContext } from '../components/SettingsContext';
+import HeaderBar from '../components/HeaderBar';
 
 export default function SettingsScreen({ navigation }) {
-  React.useEffect(() => {
-    navigation.setOptions({
-      title: 'Settings',
-    });
-  }, [navigation]);
-
   return (
-    <View style={{ flexDirection: 'column' }} >
-      <SettingItem
-        title='Night Forecasts'
-        subtitle='Show overnight city forecasts.'
-        leftIcon={{ name: 'md-moon', type: 'ionicon', color: 'black' }}
-        propName='night'
-      />
-      <SettingItem
-        title='Rounded Temperature'
-        subtitle='Round current temperature to the nearest degree.'
-        leftIcon={{ name: 'decimal-decrease', type: 'material-community', color: 'black' }}
-        propName='round'
-      />
+    <View style={{ flex: 1 }}>
+      <HeaderBar title="Settings" showBackButton={true} navigation={navigation} />
+      <View style={{ flexDirection: 'column' }} >
+        <SettingItem
+          title='Night Forecasts'
+          subtitle='Show overnight city forecasts.'
+          leftIcon={{ name: 'md-moon', type: 'ionicon', color: 'black' }}
+          propName='night'
+        />
+        <SettingItem
+          title='Rounded Temperature'
+          subtitle='Round current temperature to the nearest degree.'
+          leftIcon={{ name: 'decimal-decrease', type: 'material-community', color: 'black' }}
+          propName='round'
+        />
+      </View>
     </View>
   );
 };

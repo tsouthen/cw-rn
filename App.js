@@ -5,6 +5,7 @@ import { SplashScreen } from 'expo';
 import { Entypo, MaterialIcons, FontAwesome, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { Provider as PaperProvider, DefaultTheme } from 'react-native-paper';
 import Colors from './constants/Colors';
 import { SettingsContext } from './components/SettingsContext'
 import { FavoritesContext } from './components/FavoritesContext'
@@ -25,7 +26,7 @@ import TabBarIcon from './components/TabBarIcon';
 function LocationStackScreen() {
   const LocationStack = createStackNavigator();
   return (
-    <LocationStack.Navigator screenOptions={defaultScreenOptions}>
+    <LocationStack.Navigator screenOptions={defaultScreenOptions} headerMode='none'>
       <LocationStack.Screen name="Location" component={LocationScreen} />
       <LocationStack.Screen name="Settings" component={SettingsScreen} />
       <LocationStack.Screen name="City" component={LocationScreen} />
@@ -36,17 +37,27 @@ function LocationStackScreen() {
 function FavoritesStackScreen(props) {
   const FavoritesStack = createStackNavigator();
   return (
-    <FavoritesStack.Navigator screenOptions={defaultScreenOptions}>
+    <FavoritesStack.Navigator screenOptions={defaultScreenOptions} headerMode='none'>
       <FavoritesStack.Screen name="Favorites" component={FavoritesScreen} />
       <FavoritesStack.Screen name="City" component={LocationScreen} />
     </FavoritesStack.Navigator>
   );
 }
 
+function SearchStackScreen(props) {
+  const SearchStack = createStackNavigator();
+  return (
+    <SearchStack.Navigator screenOptions={defaultScreenOptions} headerMode='none'>
+      <SearchStack.Screen name="Search" component={SearchScreen} />
+      <SearchStack.Screen name="City" component={LocationScreen} />
+    </SearchStack.Navigator>
+  );
+}
+
 function BrowseStackScreen(props) {
   const BrowseStack = createStackNavigator();
   return (
-    <BrowseStack.Navigator screenOptions={defaultScreenOptions}>
+    <BrowseStack.Navigator screenOptions={defaultScreenOptions} headerMode='none'>
       <BrowseStack.Screen name="Browse" component={BrowseScreen} />
       <BrowseStack.Screen name="CityList" component={CityListScreen} />
       <BrowseStack.Screen name="City" component={LocationScreen} />
@@ -58,7 +69,11 @@ function BrowseStackScreen(props) {
 function HomeTabs() {
   const Tab = createBottomTabNavigator();
   return (
-    <Tab.Navigator screenOptions={defaultScreenOptions}>
+    <Tab.Navigator screenOptions={defaultScreenOptions}
+      tabBarOptions={{
+        activeTintColor: Colors.primary,
+      }}
+    >
       <Tab.Screen name="Location" component={LocationStackScreen}
         options={{
           title: 'Location',
@@ -70,6 +85,12 @@ function HomeTabs() {
           title: "Favourites", tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} type='font-awesome' name='star' />
         }}
       />
+      {/* <Tab.Screen name="Search" component={SearchStackScreen}
+        options={{
+          title: 'Search',
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} type='material-community' name='magnify' />
+        }}
+      /> */}
       <Tab.Screen name="Browse" component={BrowseStackScreen}
         options={{
           title: 'Browse',
@@ -180,22 +201,24 @@ export default function App(props) {
     return null;
   } else {
     return (
-      <ShareContext.Provider value={{ onShare }}>
-        <SettingsContext.Provider value={{ settings, updateSetting }}>
-          <FavoritesContext.Provider value={{ favorites, updateFavorites }}>
-            <View ref={mainViewRef} style={styles.container}>
-              {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-              <NavigationContainer ref={containerRef} initialState={initialNavigationState}>
-                <Stack.Navigator screenOptions={defaultScreenOptions}>
-                  <Stack.Screen name="Root" component={HomeTabs} options={{ header: () => { return null } }} />
-                  <Stack.Screen name="CityList" component={CityListScreen} />
-                  <Stack.Screen name="Settings" component={SettingsScreen} />
-                </Stack.Navigator>
-              </NavigationContainer>
-            </View>
-          </FavoritesContext.Provider>
-        </SettingsContext.Provider>
-      </ShareContext.Provider>
+      <PaperProvider theme={theme}>
+        <ShareContext.Provider value={{ onShare }}>
+          <SettingsContext.Provider value={{ settings, updateSetting }}>
+            <FavoritesContext.Provider value={{ favorites, updateFavorites }}>
+              <View ref={mainViewRef} style={styles.container}>
+                {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+                <NavigationContainer ref={containerRef} initialState={initialNavigationState}>
+                  <Stack.Navigator headerMode='none'>
+                    <Stack.Screen name="Root" component={HomeTabs} />
+                    <Stack.Screen name="CityList" component={CityListScreen} />
+                    <Stack.Screen name="Settings" component={SettingsScreen} />
+                  </Stack.Navigator>
+                </NavigationContainer>
+              </View>
+            </FavoritesContext.Provider>
+          </SettingsContext.Provider>
+        </ShareContext.Provider>
+      </PaperProvider >
     );
   }
 }
@@ -216,3 +239,15 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primary,
   },
 });
+
+// text: 'white',
+// placeholder: 'white',
+
+const theme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: '#FF8800',
+    accent: '#f1c40f',
+  },
+};

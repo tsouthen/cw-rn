@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, FlatList } from 'react-native';
 import { SimpleListItem } from '../components/SimpleListItem';
-import { NavigationHeaderButton } from '../components/HeaderButton';
+import HeaderBar, { HeaderBarNavigationAction } from '../components/HeaderBar';
 
 const provinces = [
   { name: 'Alberta', abbr: 'AB' },
@@ -20,12 +20,6 @@ const provinces = [
 ];
 
 export default function BrowseScreen({ navigation }) {
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      headerRight: () => <NavigationHeaderButton type='material' name='search' navigation={navigation} routeName='Search' />
-    });
-  }, [navigation]);
-
   handlePress = (item) => {
     navigation.navigate('CityList', {
       province: item,
@@ -35,6 +29,9 @@ export default function BrowseScreen({ navigation }) {
 
   return (
     <View style={{ flex: 1 }}>
+      <HeaderBar title="Browse">
+        <HeaderBarNavigationAction navigation={navigation} icon="magnify" screen="Search" />
+      </HeaderBar>
       <FlatList
         data={provinces}
         renderItem={({ item }) => {
