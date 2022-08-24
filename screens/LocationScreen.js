@@ -1,7 +1,6 @@
 import React from 'react';
 import { Platform, FlatList, ActivityIndicator, StyleSheet, Text, View, Image, TouchableHighlight, Linking  } from 'react-native';
 import { findNearest, orderByDistance } from 'geolib';
-import sitelist from '../constants/sitelist';
 import sitelocations from '../constants/sitelocations';
 import * as Location from 'expo-location';
 import Constants from 'expo-constants';
@@ -33,9 +32,10 @@ const styles = StyleSheet.create({
 export default class CurrentLocation extends React.Component {
 
   static navigationOptions = ({ navigation }) => {
+    //console.debug(navigation);
     return {
-      title: navigation.getParam('location', 'Current Location'),
-      headerRight: (<MaterialIcons name='search' color='#fff' size={24} style={{marginRight: 5}} />),
+      title: navigation.getParam('location', 'Location'),
+      //headerRight: (<MaterialIcons name='search' color='#fff' size={24} style={{marginRight: 5}} />),
     };
   };
 
@@ -94,29 +94,33 @@ export default class CurrentLocation extends React.Component {
   };
 
   makeRemoteRequest = async () => {
-    try
-    {
-      await Location.requestPermissionsAsync();
-      let nearest;
-      if (Platform.OS === 'android' && !Constants.isDevice) {
-        nearest = sitelocations[this.randomIntInRange(0, sitelocations.length)];
-      } else {
-        let location = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Lowest, maximumAge: 900000 }); 
-        nearest = findNearest(location.coords, sitelocations);
+    try {
+      const { navigation } = this.props;
+      let nearest = navigation.getParam('site', undefined);
+      if (!nearest) {
+        await Location.requestPermissionsAsync();
+        if (Platform.OS === 'android' && !Constants.isDevice) {
+          nearest = sitelocations[this.randomIntInRange(0, sitelocations.length)];
+        } else {
+          let location = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Lowest, maximumAge: 900000 }); 
+          nearest = findNearest(location.coords, sitelocations);
+        }
       }
       let site = 's0000047'; //Calgary
       let prov = 'AB';
-      site = 's0000656';
-      prov = 'BC';
-      nearest = undefined;
+      // site = 's0000656'; //Comox
+      // prov = 'BC';
+      // nearest = undefined;
       if (nearest) {
         // console.debug(nearest);
         site = nearest.site;
-        prov = sitelist[site].prov;
+        prov = nearest.prov;
       }
+      // this.props.navigation.setParams({ location: 'Fetching...'});
       let targetUrl = 'https://dd.weather.gc.ca/citypage_weather/xml/' + prov + '/' + site + '_e.xml';
       console.debug('targetUrl: ' + targetUrl);
       const xml = await this.fetchXML(targetUrl);
+      // this.props.navigation.setParams({ location: 'Parsing...'});
       const responseJson = await this.jsonFromXml(xml);
       //console.debug(JSON.stringify(responseJson));
       const entries = this.loadJsonData(responseJson);
@@ -126,10 +130,8 @@ export default class CurrentLocation extends React.Component {
       }, function () {
       });
 
-      this.props.navigation.setParams({ location: responseJson.location.name._ + ', ' + responseJson.location.province.code.toUpperCase()})
-    }
-    catch (error)
-    {
+      this.props.navigation.setParams({ location: responseJson.location.name._});
+    } catch (error) {
       console.error(error);
     }
   };
@@ -138,43 +140,49 @@ export default class CurrentLocation extends React.Component {
     //returns an array of objects with the following keys: icon, title, summary, temperature, expanded
     let entries = [];
 
-    //create a new forecast entry for the current conditions
-    if (responseJson.currentConditions && responseJson.currentConditions.temperature && responseJson.currentConditions.temperature._) {
-      const entry = {
-        icon: responseJson.currentConditions.iconCode._,
-        title: 'Now', //responseJson.location.name._,
-        summary: CurrentLocation.valueOrEmptyString(responseJson.currentConditions.condition),
-        temperature: responseJson.currentConditions.temperature._,
-        expanded: true,
-      };
+    try {
+      //create a new forecast entry for the current conditions
+      if (responseJson.currentConditions && responseJson.currentConditions.temperature && responseJson.currentConditions.temperature._) {
+        const entry = {
+          icon: responseJson.currentConditions.iconCode._,
+          title: 'Now', //responseJson.location.name._,
+          summary: CurrentLocation.valueOrEmptyString(responseJson.currentConditions.condition),
+          temperature: responseJson.currentConditions.temperature._,
+          expanded: true,
+        };
 
-      if (responseJson.warnings.event && responseJson.warnings.event.description) {
-        let warning = responseJson.warnings.event.description;
-        warning = warning.split(' ').map((t) => t.charAt(0).toUpperCase() + t.slice(1).toLowerCase()).join(' ').trim();
-        entry.warning = CurrentLocation.valueOrEmptyString(warning);
-        entry.warningUrl = CurrentLocation.valueOrEmptyString(responseJson.warnings.url);
+        if (responseJson.warnings.event && responseJson.warnings.event.description) {
+          let warning = responseJson.warnings.event.description;
+          warning = warning.split(' ').map((t) => t.charAt(0).toUpperCase() + t.slice(1).toLowerCase()).join(' ').trim();
+          entry.warning = CurrentLocation.valueOrEmptyString(warning);
+          entry.warningUrl = CurrentLocation.valueOrEmptyString(responseJson.warnings.url);
+        }
+        // console.debug(entry);
+        entries.push(entry);
       }
-      // console.debug(entry);
-      entries.push(entry);
-    }
 
-    responseJson.forecastGroup.forecast.forEach((entry, index) => {
-      //skip the night forecasts, except for tonight
-      if (index === 0 || entry.temperatures.temperature.class === "high") {
-        //remove temperature summary from overall summary
-        let textSummary = entry.textSummary;
-        if (CurrentLocation.isString(entry.temperatures.textSummary))
-          textSummary = entry.textSummary.replace(entry.temperatures.textSummary, '');
-        
-        entries.push({
-          icon: entry.abbreviatedForecast.iconCode._,
-          title: entry.period.textForecastName,
-          summary: textSummary,
-          temperature: entry.temperatures.temperature._,
-          expanded: false,
+      if (responseJson.forecastGroup.forecast && responseJson.forecastGroup.forecast.length) {
+        responseJson.forecastGroup.forecast.forEach((entry, index) => {
+          //skip the night forecasts, except for tonight
+          if (index === 0 || entry.temperatures.temperature.class === "high") {
+            //remove temperature summary from overall summary
+            let textSummary = entry.textSummary;
+            if (CurrentLocation.isString(entry.temperatures.textSummary))
+              textSummary = entry.textSummary.replace(entry.temperatures.textSummary, '');
+            
+            entries.push({
+              icon: entry.abbreviatedForecast.iconCode._,
+              title: entry.period.textForecastName,
+              summary: textSummary,
+              temperature: entry.temperatures.temperature._,
+              expanded: false,
+            });
+          }
         });
       }
-    });
+    } catch (error) {
+      console.error(error);
+    }
     return entries;
   };
 
@@ -192,6 +200,9 @@ export default class CurrentLocation extends React.Component {
     if (this.state.isLoading)
       return;
     
+    const { navigation } = this.props;
+    if (navigation.getParam('site') === undefined)
+      this.props.navigation.setParams({ location: 'Loading...'});
     this.setState({ isLoading: true }, () => { this.makeRemoteRequest(); });   
   };
 
@@ -244,7 +255,7 @@ export default class CurrentLocation extends React.Component {
             //   <MaterialIcons name={item.expanded ? 'expand-less' : 'expand-more'} size={14} />
             // </View>
 
-            return (             
+            return (
               <TouchableHighlight underlayColor='#ffb944' onPress={() => this.handlePress(item, index)}>
               <View style={{flex:100, flexDirection: "row", paddingTop: 0, paddingBottom: 5, paddingRight: 5}}>
                 {imageView}

@@ -3,12 +3,11 @@ import { Platform, SafeAreaView } from 'react-native';
 import { createStackNavigator, createBottomTabNavigator, createMaterialTopTabNavigator } from 'react-navigation';
 
 import TabBarIcon from '../components/TabBarIcon';
-// import HomeScreen from '../screens/HomeScreen';
 import LocationScreen from '../screens/LocationScreen';
-// import SettingsScreen from '../screens/SettingsScreen';
 import NearbyScreen from '../screens/NearbyScreen';
 import FavoritesScreen from '../screens/FavoritesScreen';
 import BrowseScreen from '../screens/BrowseScreen';
+import CityListScreen from '../screens/CityListScreen';
 
 const navOptions = {
   headerStyle: {
@@ -31,29 +30,6 @@ const config = Platform.select({
   },
 });
 
-// const HomeStack = createStackNavigator(
-//   {
-//     Home: HomeScreen,
-//   },
-//   config
-// );
-
-// HomeStack.navigationOptions = {
-//   tabBarLabel: 'Home',
-//   tabBarIcon: ({ focused }) => (
-//     <TabBarIcon
-//       focused={focused}
-//       name={
-//         Platform.OS === 'ios'
-//           ? `ios-information-circle${focused ? '' : '-outline'}`
-//           : 'md-information-circle'
-//       }
-//     />
-//   ),
-// };
-
-// HomeStack.path = '';
-
 const LocationStack = createStackNavigator(
   {
     Location: LocationScreen,
@@ -67,20 +43,6 @@ LocationStack.navigationOptions = {
   ),
 };
 LocationStack.path = '';
-
-// const SettingsStack = createStackNavigator(
-//   {
-//     Settings: SettingsScreen,
-//   },
-//   config
-// );
-// SettingsStack.navigationOptions = {
-//   tabBarLabel: 'Settings',
-//   tabBarIcon: ({ focused }) => (
-//     <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-options' : 'md-options'} />
-//   ),
-// };
-// SettingsStack.path = '';
 
 const NearbyStack = createStackNavigator(
   {
@@ -99,6 +61,7 @@ NearbyStack.path = '';
 const FavoritesStack = createStackNavigator(
   {
     Favorites: FavoritesScreen,
+    City: LocationScreen,
   },
   config
 );
@@ -113,6 +76,8 @@ FavoritesStack.path = '';
 const BrowseStack = createStackNavigator(
   {
     Browse: BrowseScreen,
+    CityList: CityListScreen,
+    City: LocationScreen,
   },
   config
 );
@@ -126,7 +91,7 @@ BrowseStack.path = '';
 
 const tabNavigator = createMaterialTopTabNavigator({
   LocationStack,
-  NearbyStack,
+  //NearbyStack,
   FavoritesStack,
   BrowseStack,
 }, {
