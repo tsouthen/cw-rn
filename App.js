@@ -1,7 +1,10 @@
 import * as Font from 'expo-font';
 import React from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
+import { SplashScreen } from 'expo';
 import { Entypo, MaterialIcons, FontAwesome, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 import Colors from './constants/Colors';
 import { SettingsContext } from './components/SettingsContext'
 import { FavoritesContext } from './components/FavoritesContext'
@@ -12,6 +15,10 @@ import * as Sharing from 'expo-sharing';
 import { JsonStorage } from './components/JsonStorage';
 import BottomTabNavigator from './navigation/BottomTabNavigator';
 import useLinking from './navigation/useLinking';
+// import SearchScreen from './screens/SearchScreen';
+import CityListScreen from './screens/CityListScreen';
+// import LocationScreen from './screens/LocationScreen';
+// import SettingsScreen from './screens/SettingsScreen';
 
 const Stack = createStackNavigator();
 
@@ -103,18 +110,23 @@ export default function App(props) {
     loadResourcesAndDataAsync();
   }, []);
 
+  // <Stack.Screen name="Search" component={SearchScreen} />
+  // <Stack.Screen name="City" component={LocationScreen} />
+  // <Stack.Screen name="Settings" component={SettingsScreen} />
+
   if (!isLoadingComplete && !props.skipLoadingScreen) {
     return null;
   } else {
     return (
       <ShareContext.Provider value={{ onShare }}>
         <SettingsContext.Provider value={{ ...settings, updateSettings }}>
-          <FavoritesContext.Provider value={{ ...favorites, updateFavorites }}>
+          <FavoritesContext.Provider value={{ favorites, updateFavorites }}>
             <View ref={mainViewRef} style={styles.container}>
               {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
               <NavigationContainer ref={containerRef} initialState={initialNavigationState}>
                 <Stack.Navigator>
                   <Stack.Screen name="Root" component={BottomTabNavigator} />
+                  <Stack.Screen name="CityList" component={CityListScreen} />
                 </Stack.Navigator>
               </NavigationContainer>
             </View>
