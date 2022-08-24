@@ -4,10 +4,10 @@ import * as Location from 'expo-location';
 import iconv from 'iconv-lite';
 import React from 'react';
 import { ActivityIndicator, FlatList, Image, Linking, Platform, Text, TouchableHighlight, View, AppState } from 'react-native';
-// import { ButtonGroup, Icon } from 'react-native-elements';
-import { Snackbar, Portal, ToggleButton } from 'react-native-paper';
+import { Snackbar, Portal } from 'react-native-paper';
 import { parseString } from 'react-native-xml2js';
-import ViewPager from '@react-native-community/viewpager'
+import { Pages } from 'react-native-pages';
+
 import { FavoritesContext } from '../components/FavoritesContext';
 import { SettingsContext } from '../components/SettingsContext';
 import { ShareContext } from '../components/ShareContext';
@@ -423,7 +423,6 @@ export default class CurrentLocation extends React.Component {
       </HeaderBar>);
 
     if (this.state.isLoading) {
-      // <Text>Loading...</Text>
       return (
         <View style={{ flex: 1 }}>
           {headerBar}
@@ -434,96 +433,39 @@ export default class CurrentLocation extends React.Component {
       )
     }
 
-    // const getButtonIcon = (name, type, index) => {
-    //   let color = Colors.tabIconDefault;
-    //   if (this.state.selectedIndex === index)
-    //     color = Colors.tabIconSelected;
-    //   return (
-    //     <Icon name={name} type={type} color={color} />
-    //     // <Button type="outline" color={color} icon={{name: name, type: type, color: color}} />
-    //   );
-    // };
+    let pages = [
+      (<View key="1" style={{ flex: 1 }}>
+        {this.newFlatList(this.state.dataSource.forecasts)}
+      </View>),
+      (<View key="2" style={{ flex: 1 }}>
+        {this.newFlatList(this.state.dataSource.hourlyData)}
+      </View>)
+    ];
 
-    // const forecastIcon = () => {
-    //   return getButtonIcon('calendar-week', 'material-community', 0);
-    // };
-
-    // const hourlyIcon = () => {
-    //   return getButtonIcon('access-time', 'material', 1);
-    // };
-
-    // const nearbyIcon = () => {
-    //   return getButtonIcon('near-me', 'material', 2);
-    // };
-
-    // let flatList;
-    // switch (this.state.selectedIndex) {
-    //   case 0:
-    //   case "forecast":
-    //     flatList = this.newFlatList(this.state.dataSource.forecasts);
-    //     break;
-
-    //   case 1:
-    //   case "hourly":
-    //     flatList = this.newFlatList(this.state.dataSource.hourlyData);
-    //     break;
-
-    //   case 2:
-    //   case "nearby":
-    //     flatList = (<CityListScreen
-    //       cities={this.state.dataSource.nearestSites}
-    //       navigation={this.props.navigation}
-    //       refreshing={this.state.isLoading}
-    //       onRefresh={this.handleRefresh}
-    //     />);
-    //     break;
-    // }
-
-    // containerStyle={{borderColor: 'black', borderWidth: 0, borderBottomWidth: 1}}
-    // containerStyle={{borderWidth: 0}}
-
-    // let buttons = [{ element: forecastIcon }, { element: hourlyIcon }];
-    // if (this.state.dataSource.nearestSites && this.state.dataSource.nearestSites.length)
-    //   buttons.push({ element: nearbyIcon });
+    if (this.state.dataSource.nearestSites && this.state.dataSource.nearestSites.length) {
+      pages.push(
+        <View key="3" style={{ flex: 1 }}>
+          <HeadingText text="Nearby" />
+          <CityListScreen
+            cities={this.state.dataSource.nearestSites}
+            navigation={this.props.navigation}
+            refreshing={this.state.isLoading}
+            onRefresh={this.handleRefresh}
+          />
+        </View>);
+    }
 
     return (
       <View style={{ flex: 1, backgroundColor: 'white' }}>
         {headerBar}
-        <ViewPager style={{ flex: 1 }} initialPage={0} showPageIndicator={true} >
-          <View key="1">
-            {this.newFlatList(this.state.dataSource.forecasts)}
-          </View>
-          <View key="2">
-            {this.newFlatList(this.state.dataSource.hourlyData)}
-          </View>
-          {this.state.dataSource.nearestSites && this.state.dataSource.nearestSites.length &&
-            <View key="3">
-              <CityListScreen
-                cities={this.state.dataSource.nearestSites}
-                navigation={this.props.navigation}
-                refreshing={this.state.isLoading}
-                onRefresh={this.handleRefresh}
-              />
-            </View>}
-        </ViewPager>
-        {/* <ButtonGroup
-          style={{ flex: 1 }}
-          onPress={(selectedIndex) => this.setState({ selectedIndex })}
-          selectedIndex={this.state.selectedIndex}
-          selectedButtonStyle={{ backgroundColor: 'white', borderColor: Colors.tabIconSelected, borderWidth: 0, borderBottomWidth: 0 }}
-          containerBorderRadius={0}
-          containerStyle={{ borderWidth: 0 }}
-          innerBorderStyle={{ width: 0 }}
-          buttons={buttons}
-          underlayColor={Colors.primaryLight}
-        /> */}
-        {/* {flatList} */}
+        <Pages indicatorColor={Colors.primaryDark} indicatorPosition='top'>
+          {pages}
+        </Pages>
       </View >
     );
   }
 };
 CurrentLocation.contextType = ShareContext;
-// export default withNavigation(CurrentLocation);
 
 function iconCodeToName(iconCode) {
   if (!CurrentLocation.isString(iconCode)) {
@@ -659,7 +601,7 @@ function ForecastItem(props) {
     // }
   }
   if (headingText)
-    headingView = (<Text style={{ padding: 10, paddingTop: 5, paddingBottom: 5, backgroundColor: '#eeeeee', fontFamily: 'montserrat' }}>{headingText}</Text>);
+    headingView = (<HeadingText text={headingText} />);
 
   let titleText = null;
   const titleTextStyle = { fontSize: 18, fontFamily: 'montserrat', flex: 1, color: fontColor };
@@ -855,4 +797,8 @@ function useNavigationFocus(callback, navigation) {
       blurUnsubscribe();
     };
   }, [navigation]);
+}
+
+function HeadingText({ text }) {
+  return <Text style={{ padding: 10, paddingTop: 5, paddingBottom: 5, backgroundColor: '#eeeeee', fontFamily: 'montserrat' }}>{text}</Text>
 }

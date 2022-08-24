@@ -21,6 +21,8 @@ import CityListScreen from './screens/CityListScreen';
 import LocationScreen from './screens/LocationScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+
 import TabBarIcon from './components/TabBarIcon';
 
 function LocationStackScreen() {
@@ -67,14 +69,22 @@ function BrowseStackScreen(props) {
 }
 
 function HomeTabs() {
-  const Tab = createBottomTabNavigator();
+  // const Tab = createBottomTabNavigator();
+  // tabBarOptions={{
+  //   activeTintColor: Colors.primaryDark,
+  //   labelPosition: 'below-icon,',
+  // }}
+
+  // activeColor={Colors.primaryDark}
+  // inactiveColor='#777777'
+  // barStyle={{ backgroundColor: 'white' }}
+
+  const Tab = createMaterialBottomTabNavigator();
   return (
     <Tab.Navigator screenOptions={defaultScreenOptions}
-      tabBarOptions={{
-        activeTintColor: Colors.primaryDark,
-        labelPosition: 'below-icon,',
-        // showLabel: Platform.OS === 'ios',
-      }}
+      activeColor='white'
+      inactiveColor={Colors.primaryDark}
+      barStyle={{ backgroundColor: Colors.primary }}
     >
       <Tab.Screen name="Location" component={LocationStackScreen}
         options={{
