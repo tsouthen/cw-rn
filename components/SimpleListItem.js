@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableHighlight } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons';
+import { Icon } from 'react-native-elements';
 import Colors from '../constants/Colors';
 
 export function SimpleListItem(props) {
@@ -13,7 +13,7 @@ export function SimpleListItem(props) {
     <TouchableHighlight style={touchableStyle} underlayColor={Colors.primaryLight} {...{ onPress, onLongPress, onPressOut}} >
       <View style={viewStyle}>
         <Text {...otherProps} style={{ flex:1, fontSize: 18, fontFamily: 'montserrat' }} />
-        <MaterialIcons name='navigate-next' size={24} style={{color:'#888888'}} />
+        <Icon name='navigate-next' type='material' size={24} color='#888888' />
       </View>
     </TouchableHighlight>
   );
