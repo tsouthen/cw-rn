@@ -4,6 +4,7 @@ import CityListScreen from './CityListScreen';
 import { Icon } from 'react-native-elements';
 import sitelocations from '../constants/sitelocations';
 import Colors from '../constants/Colors';
+import SearchLayout from 'react-navigation-addon-search-layout';
 
 // Returns a function, that, as long as it continues to be invoked, will not
 // be triggered. The function will be called after it stops being called for
@@ -25,6 +26,36 @@ function debounce(func, wait, immediate) {
 };
 
 export default class SearchScreen extends React.Component {
+  static navigationOptions = {
+    header: null,
+  };
+
+  state = {
+    searchText: null,
+  };
+
+  _handleQueryChange = searchText => {
+    this.setState({ searchText });
+  };
+
+  _executeSearch = () => {
+    alert('do search!');
+  };
+
+  render() {
+    let { searchText } = this.state;
+
+    return (
+      <SearchLayout
+        onChangeQuery={this._handleQueryChange}
+        onSubmit={this._executeSearch}>
+        {searchText ? (<Text>{'Searching for: ' + searchText}</Text>) : (<Text>Search results appear here</Text>)}
+      </SearchLayout>
+    );
+  }
+}
+
+class OLD_SearchScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: 'Search',
