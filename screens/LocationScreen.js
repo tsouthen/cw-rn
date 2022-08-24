@@ -13,7 +13,7 @@ import { ShareContext } from '../components/ShareContext';
 import Colors from '../constants/Colors';
 import sitelocations from '../constants/sitelocations';
 import CityListScreen from './CityListScreen';
-const dateFormat = require('dateformat');
+const moment = require('moment');
 
 // const styles = StyleSheet.create({
 //   container: {
@@ -49,7 +49,7 @@ export default class CurrentLocation extends React.Component {
     return {
       title: navigation.getParam('location', 'Location'),
       headerRight: (
-        <View style={{flexDirection:'row'}}>
+        <View style={{ flexDirection: 'row' }}>
           {favIcon}
           {shareIcon}
           {settingsIcon}
@@ -59,7 +59,7 @@ export default class CurrentLocation extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { 
+    this.state = {
       isLoading: true,
       dataSource: {
         forecasts: [],
@@ -67,7 +67,7 @@ export default class CurrentLocation extends React.Component {
         hourlyData: [],
       },
       selectedIndex: 0,
-      }
+    }
   };
 
   async componentDidMount() {
@@ -101,7 +101,7 @@ export default class CurrentLocation extends React.Component {
       request.ontimeout = errorFunc;
 
       request.responseType = 'arraybuffer';
-  
+
       request.open('GET', url);
       request.setRequestHeader('Content-type', 'text/xml; charset=ISO-8859-1');
       request.send();
@@ -119,11 +119,11 @@ export default class CurrentLocation extends React.Component {
     });
   };
 
-  orderByDistance = function(point, coords) {
+  orderByDistance = function (point, coords) {
     return coords.sort((a, b) => this.getDistanceSquared(point, a) - this.getDistanceSquared(point, b));
   };
 
-  getDistanceSquared = function(a, b) {
+  getDistanceSquared = function (a, b) {
     return Math.pow(b.longitude - a.longitude, 2) + Math.pow(b.latitude - a.latitude, 2);
   };
 
@@ -138,12 +138,12 @@ export default class CurrentLocation extends React.Component {
         let location;
         if (Platform.OS === 'android' && !Constants.isDevice) {
           nearest = sitelocations[this.randomIntInRange(0, sitelocations.length)];
-          location = { coords: { latitude: nearest.latitude, longitude: nearest.longitude }};
+          location = { coords: { latitude: nearest.latitude, longitude: nearest.longitude } };
         } else {
           // this.props.navigation.setParams({ location: 'requesting permission...'});
           await Location.requestPermissionsAsync();
           // this.props.navigation.setParams({ location: 'getting location...'});
-          location = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Lowest, maximumAge: 900000 }); 
+          location = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Lowest, maximumAge: 900000 });
         }
         sortedLocs = this.orderByDistance(location.coords, sitelocations);
         sortedLocs = sortedLocs.slice(0, 10);
@@ -161,7 +161,7 @@ export default class CurrentLocation extends React.Component {
         site = nearest.site;
         prov = nearest.prov;
       }
-      
+
       // this.props.navigation.setParams({ location: 'downloading...'});
       let targetUrl = 'https://dd.weather.gc.ca/citypage_weather/xml/' + prov + '/' + site + '_e.xml';
       console.debug('targetUrl: ' + targetUrl);
@@ -172,8 +172,8 @@ export default class CurrentLocation extends React.Component {
       let entries = this.loadJsonData(responseJson);
       let hourlyData = this.loadHourlyForecasts(responseJson);
       // let isFav = this.isFavorite(site);
-              
-      this.props.navigation.setParams({ 
+
+      this.props.navigation.setParams({
         location: responseJson.location.name._,
         currentSite: nearest,
         onShare: this.context.onShare,
@@ -233,7 +233,7 @@ export default class CurrentLocation extends React.Component {
           let textSummary = entry.textSummary;
           if (CurrentLocation.isString(entry.temperatures.textSummary))
             textSummary = entry.textSummary.replace(entry.temperatures.textSummary, '');
-          
+
           let iconCode = undefined;
           if (entry.abbreviatedForecast && entry.abbreviatedForecast.iconCode && entry.abbreviatedForecast.iconCode._)
             iconCode = entry.abbreviatedForecast.iconCode._;
@@ -243,7 +243,7 @@ export default class CurrentLocation extends React.Component {
           let temperature = '';
           if (entry.temperatures && entry.temperatures.temperature && entry.temperatures.temperature._)
             temperature = entry.temperatures.temperature._;
-  
+
           entries.push({
             icon: iconCode,
             title: entry.period.textForecastName,
@@ -300,7 +300,7 @@ export default class CurrentLocation extends React.Component {
           } else if (entry.name === 'sunset' && entry.zone !== 'UTC') {
             sunset = parseInt(entry.hour);
             // console.debug('sunset: ' + sunset);
-            }
+          }
         });
       }
       responseJson.hourlyForecastGroup.hourlyForecast.forEach((entry, index) => {
@@ -330,7 +330,7 @@ export default class CurrentLocation extends React.Component {
           title: '' + displayHour + suffix,
           summary: entry.condition,
           temperature: entry.temperature && entry.temperature._,
-          expanded: entries.length === 0 || entry.condition !== entries[entries.length-1].summary,
+          expanded: entries.length === 0 || entry.condition !== entries[entries.length - 1].summary,
           isNight: currHour > sunset || currHour < sunrise,
           isHourly: true,
           heading: heading,
@@ -341,7 +341,7 @@ export default class CurrentLocation extends React.Component {
   };
 
   static isString = (item) => {
-    return item !== null && item !== undefined && 'string' === typeof(item);
+    return item !== null && item !== undefined && 'string' === typeof (item);
   };
 
   static valueOrEmptyString = (item) => {
@@ -353,13 +353,13 @@ export default class CurrentLocation extends React.Component {
   handleRefresh = () => {
     if (this.state.isLoading)
       return;
-    
+
     const { navigation } = this.props;
     if (navigation.getParam('site') === undefined) {
-      this.props.navigation.setParams({ location: 'Location'});
-      this.props.navigation.setParams({ currentSite: undefined});
+      this.props.navigation.setParams({ location: 'Location' });
+      this.props.navigation.setParams({ currentSite: undefined });
     }
-    this.setState({ isLoading: true }, () => { this.makeRemoteRequest(); });   
+    this.setState({ isLoading: true }, () => { this.makeRemoteRequest(); });
   };
 
   newFlatList = (data, key) => {
@@ -367,33 +367,33 @@ export default class CurrentLocation extends React.Component {
     if (key)
       keyProps.key = key;
     return (
-      <FlatList 
+      <FlatList
         {...keyProps}
-        style={{flex: 1}}
+        style={{ flex: 1 }}
         data={data}
-        renderItem={({item, index}) => <ForecastItem {...item} 
-          index={index} 
+        renderItem={({ item, index }) => <ForecastItem {...item}
+          index={index}
           onPress={() => {
             //we need the expanded state outside the ForecastItem as the FlatList is a virtualized list and items can be re-used
             item.expanded = !item.expanded;
-            this.setState({dataSource: this.state.dataSource});
-          }}/>}
+            this.setState({ dataSource: this.state.dataSource });
+          }} />}
         keyExtractor={item => item.title}
         refreshing={this.state.isLoading}
         onRefresh={this.handleRefresh}
       />
     );
   };
- 
+
   getButtonIcon = (name, type, index) => {
-    let color=Colors.tabIconDefault;
+    let color = Colors.tabIconDefault;
     if (this.state.selectedIndex === index)
       color = Colors.tabIconSelected;
     return (
       <Icon name={name} type={type} color={color} />
       // <Button type="outline" color={color} icon={{name: name, type: type, color: color}} />
     );
-  };  
+  };
 
   forecastIcon = () => {
     return this.getButtonIcon('calendar-week', 'material-community', 0);
@@ -411,7 +411,7 @@ export default class CurrentLocation extends React.Component {
     if (this.state.isLoading) {
       // <Text>Loading...</Text>
       return (
-        <View style={{flex: 1, marginTop: 80 }}>
+        <View style={{ flex: 1, marginTop: 80 }}>
           <ActivityIndicator color={Colors.primaryDark} />
         </View>
       )
@@ -428,31 +428,31 @@ export default class CurrentLocation extends React.Component {
         break;
 
       case 2:
-        flatList = (<CityListScreen 
-          cities={this.state.dataSource.nearestSites} 
-          navigation={this.props.navigation} 
+        flatList = (<CityListScreen
+          cities={this.state.dataSource.nearestSites}
+          navigation={this.props.navigation}
           refreshing={this.state.isLoading}
           onRefresh={this.handleRefresh}
-          />);
+        />);
         break;
-      }
+    }
 
-    let buttons = [ {element: this.forecastIcon}, {element: this.hourlyIcon}];
+    let buttons = [{ element: this.forecastIcon }, { element: this.hourlyIcon }];
     if (this.state.dataSource.nearestSites && this.state.dataSource.nearestSites.length)
-      buttons.push({element: this.nearbyIcon});
+      buttons.push({ element: this.nearbyIcon });
 
     // containerStyle={{borderColor: 'black', borderWidth: 0, borderBottomWidth: 1}}
     // containerStyle={{borderWidth: 0}}
 
     return (
-      <View style={{flex:1}}>
+      <View style={{ flex: 1 }}>
         <ButtonGroup
-          onPress={(selectedIndex) => this.setState({selectedIndex})}
+          onPress={(selectedIndex) => this.setState({ selectedIndex })}
           selectedIndex={this.state.selectedIndex}
-          selectedButtonStyle={{backgroundColor: 'white', borderColor: Colors.tabIconSelected, borderWidth: 0, borderBottomWidth: 2}}
+          selectedButtonStyle={{ backgroundColor: 'white', borderColor: Colors.tabIconSelected, borderWidth: 0, borderBottomWidth: 2 }}
           containerBorderRadius={0}
-          containerStyle={{borderWidth: 0}}
-          innerBorderStyle={{width: 0}}
+          containerStyle={{ borderWidth: 0 }}
+          innerBorderStyle={{ width: 0 }}
           buttons={buttons}
           underlayColor={Colors.primaryLight}
         />
@@ -472,70 +472,70 @@ function iconCodeToName(iconCode) {
 
   switch (Number(iconCode)) {
     case 0: //sun
-        return require('../assets/images/sun.png');
+      return require('../assets/images/sun.png');
     case 1: //little clouds
-        return require('../assets/images/sun_cloud.png');
+      return require('../assets/images/sun_cloud.png');
     case 4: //increasing cloud
-        return require('../assets/images/sun_cloud_increasing.png');
+      return require('../assets/images/sun_cloud_increasing.png');
     case 5: //decreasing cloud
     case 20: //decreasing cloud
-        return require('../assets/images/sun_cloud_decreasing.png');
+      return require('../assets/images/sun_cloud_decreasing.png');
     case 2: //big cloud with sun
     case 3: //sun behind big cloud
     case 22: //big cloud with sun
-        return require('../assets/images/cloud_sun.png');
+      return require('../assets/images/cloud_sun.png');
     case 6: //rain with sun behind cloud
-        return require('../assets/images/cloud_drizzle_sun_alt.png');
+      return require('../assets/images/cloud_drizzle_sun_alt.png');
     case 7: //rain and snow with sun behind cloud
     case 8: //snow with sun behind cloud
-        return require('../assets/images/cloud_snow_sun_alt.png');
+      return require('../assets/images/cloud_snow_sun_alt.png');
     case 9: //cloud rain lightning
-        return require('../assets/images/cloud_lightning_sun.png');
+      return require('../assets/images/cloud_lightning_sun.png');
     case 10: //cloud
-        return require('../assets/images/cloud.png');
+      return require('../assets/images/cloud.png');
     case 11:
     case 28:
-        return require('../assets/images/cloud_drizzle_alt.png');
+      return require('../assets/images/cloud_drizzle_alt.png');
     case 12:
-        return require('../assets/images/cloud_drizzle.png');
+      return require('../assets/images/cloud_drizzle.png');
     case 13:
-        return require('../assets/images/cloud_rain.png');
+      return require('../assets/images/cloud_rain.png');
     case 15:
     case 16:
     case 17:
     case 18:
-        return require('../assets/images/cloud_snow_alt.png');
+      return require('../assets/images/cloud_snow_alt.png');
     case 19:
-        return require('../assets/images/cloud_lightning.png');
+      return require('../assets/images/cloud_lightning.png');
     case 23:
     case 24:
     case 44:
-        return require('../assets/images/cloud_fog.png');
+      return require('../assets/images/cloud_fog.png');
     case 25:
     case 45:
-        return require('../assets/images/cloud_wind.png');
+      return require('../assets/images/cloud_wind.png');
     case 14: //freezing rain
     case 26: //ice
     case 27: //hail
-        return require('../assets/images/cloud_hail.png');
+      return require('../assets/images/cloud_hail.png');
     case 30:
-        return require('../assets/images/moon.png');
+      return require('../assets/images/moon.png');
     case 31:
     case 32:
     case 33:
-        return require('../assets/images/cloud_moon.png');
+      return require('../assets/images/cloud_moon.png');
     case 21:
     case 34:
-        return require('../assets/images/cloud_moon_increasing.png');
+      return require('../assets/images/cloud_moon_increasing.png');
     case 35:
-        return require('../assets/images/cloud_moon_decreasing.png');
+      return require('../assets/images/cloud_moon_decreasing.png');
     case 36:
-        return require('../assets/images/cloud_drizzle_moon_alt.png');
+      return require('../assets/images/cloud_drizzle_moon_alt.png');
     case 37:
     case 38:
-        return require('../assets/images/cloud_snow_moon_alt.png');
+      return require('../assets/images/cloud_snow_moon_alt.png');
     case 39:
-        return require('../assets/images/cloud_lightning_moon.png');
+      return require('../assets/images/cloud_lightning_moon.png');
   }
   console.debug('Unknown icon code: ' + iconCode);
   // return require('../assets/images/clever_weather.png');
@@ -543,7 +543,12 @@ function iconCodeToName(iconCode) {
 }
 
 function ForecastItem(props) {
-  const {title, temperature, summary, icon, isNight, isHourly, warning, warningUrl, index, heading, expanded, onPress, dateTime} = props;
+  const { title, temperature, summary, icon, isNight, isHourly, warning, warningUrl, index, heading, expanded, onPress, dateTime } = props;
+  var titleText = title;
+  if (index === 0 && !isHourly && dateTime) {
+    titleText = moment(dateTime).fromNow();
+    titleText = titleText.charAt(0).toUpperCase() + titleText.substring(1);
+  }
   const settings = useContext(SettingsContext);
 
   let allowNight = settings && settings.night;
@@ -552,28 +557,20 @@ function ForecastItem(props) {
 
   let imageView;
   if (icon !== undefined)
-    imageView = <Image style={{width: 50, height: 50, resizeMode: "contain"}} source={ iconCodeToName(icon) } />;
+    imageView = <Image style={{ width: 50, height: 50, resizeMode: "contain" }} source={iconCodeToName(icon)} />;
   else
-    imageView = <View style={{width: 50, height: 50}}/>;
+    imageView = <View style={{ width: 50, height: 50 }} />;
 
   let warningView = null;
   if (warning && warningUrl)
     warningView = (
-      <TouchableHighlight style={{alignSelf:'flex-start'}} underlayColor='#ffffff' onPress={() => Linking.openURL(warningUrl)}>
-        <Text style={{textDecorationLine:'underline', fontSize:13, color: Colors.primaryDark}}>{warning && expanded ? warning : ''}</Text>
+      <TouchableHighlight style={{ alignSelf: 'flex-start' }} underlayColor='#ffffff' onPress={() => Linking.openURL(warningUrl)}>
+        <Text style={{ textDecorationLine: 'underline', fontSize: 13, color: Colors.primaryDark }}>{warning && expanded ? warning : ''}</Text>
       </TouchableHighlight>);
-
-  let dateTimeView = null;
-  if (dateTime && expanded) {
-    // console.debug("dateTime: " + dateTime.toString());
-    const dtString = dateFormat(dateTime, 'mmm d, h:MM tt');
-    // const dtString = dateTime.toLocaleString('en-US', { month: '2-digit', day: '2-digit', hour: 'numeric', minute: '2-digit' });
-    dateTimeView = (<Text style={{fontSize:11, flex:1, color:'#777777'}}>As of {dtString}</Text>);
-  }
 
   let summmaryView = null;
   if (summary && expanded)
-      summmaryView = (<Text style={{fontSize:13, flex:1}}>{summary}</Text>);
+    summmaryView = (<Text style={{ fontSize: 13, flex: 1 }}>{summary}</Text>);
 
   let fontColor = isNight ? '#777777' : 'black';
   let fontWeight = isNight ? 'normal' : 'bold';
@@ -584,26 +581,41 @@ function ForecastItem(props) {
       displayTemp = '' + Math.round(tempVal);
   }
   let headingView = null;
-  if (heading)
-    headingView = (<Text style={{padding: 10, paddingTop: 5, paddingBottom:5, backgroundColor:'#eeeeee', fontFamily:'montserrat'}}>{heading}</Text>);
+  let headingText = heading;
+  if (!heading && !isHourly) {
+    if (index === 0) {
+      headingText = "Conditions";
+    } else if (index === 1) {
+      headingText = "Forecast";
+    }
+    if (headingText && dateTime) {
+      headingText += " (";
+      let format = 'h:mm a';
+      if (moment().dayOfYear() !== moment(dateTime).dayOfYear())
+        format = 'MMM d, ' + format;
+      headingText += moment(dateTime).format(format);
+      headingText += ")";
+    }
+  }
+  if (headingText)
+    headingView = (<Text style={{ padding: 10, paddingTop: 5, paddingBottom: 5, backgroundColor: '#eeeeee', fontFamily: 'montserrat' }}>{headingText}</Text>);
 
   return (
     <TouchableHighlight underlayColor={Colors.primaryLight} onPress={onPress}>
-      <View style={{flex:100, flexDirection: "column"}} >
+      <View style={{ flex: 100, flexDirection: "column" }} >
         {headingView}
-        <View style={{flex:100, flexDirection: "row", paddingTop: 0, paddingBottom: 5, paddingRight: 5}}>
+        <View style={{ flex: 100, flexDirection: "row", paddingTop: 0, paddingBottom: 5, paddingRight: 5 }}>
           {imageView}
-          <View style={{flex:1, flexDirection: "column", paddingLeft: 10, paddingTop: 5}}>
-            <View style={{flexDirection: "row"}} >
-              <Text style={{fontSize: 18, fontFamily: 'montserrat', flex:1, color: fontColor}}>{title}</Text>
-              <Text style={{fontSize: 18, fontWeight: fontWeight, color: fontColor}}>{displayTemp ? displayTemp + '°' : ''}</Text>
+          <View style={{ flex: 1, flexDirection: "column", paddingLeft: 10, paddingTop: 5 }}>
+            <View style={{ flexDirection: "row" }} >
+              <Text style={{ fontSize: 18, fontFamily: 'montserrat', flex: 1, color: fontColor }}>{titleText}</Text>
+              <Text style={{ fontSize: 18, fontWeight: fontWeight, color: fontColor }}>{displayTemp ? displayTemp + '°' : ''}</Text>
             </View>
             {summmaryView}
             {warningView}
-            {dateTimeView}
           </View>
         </View>
-        <View style={{ height:1, backgroundColor: '#eeeeee' }} />
+        <View style={{ height: 1, backgroundColor: '#eeeeee' }} />
       </View>
     </TouchableHighlight>);
 };
@@ -632,5 +644,5 @@ function FavoriteIcon(props) {
       ToastAndroid.show(site.nameEn + message, ToastAndroid.SHORT);
     }
   };
-  return (<HeaderButton type='font-awesome' name={isFavorite() ? 'star' : 'star-o' } onPress={toggleFav} />);
+  return (<HeaderButton type='font-awesome' name={isFavorite() ? 'star' : 'star-o'} onPress={toggleFav} />);
 }
