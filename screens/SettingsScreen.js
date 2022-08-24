@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, Switch, AsyncStorage } from 'react-native';
 import { ListItem } from 'react-native-elements';
+import Colors from '../constants/Colors';
 
 export default class SettingsScreen extends React.Component {
   static navigationOptions = {
@@ -27,8 +28,8 @@ export default class SettingsScreen extends React.Component {
 
   switchProps = (propName) => {
     return {
-      thumbColor: '#FF8800',
-      trackColor: {false:'#b2b2b2', true:'#ffb944'},
+      thumbColor: Colors.primaryDark,
+      trackColor: {false: '#b2b2b2', true: Colors.primary},
       value: this.state[propName],
       onValueChange: (value) => {
         this.setState({[propName]: value}, () => global.settings = this.state);

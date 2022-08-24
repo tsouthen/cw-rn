@@ -1,6 +1,5 @@
 import React from 'react';
 import { Ionicons, Entypo, MaterialIcons, FontAwesome } from '@expo/vector-icons';
-
 import Colors from '../constants/Colors';
 
 //style: { marginBottom: -3 },

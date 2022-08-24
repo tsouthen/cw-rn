@@ -10,9 +10,11 @@ import CityListScreen from '../screens/CityListScreen';
 import SearchScreen from '../screens/SearchScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 
+import Colors from '../constants/Colors';
+
 const navOptions = {
   headerStyle: {
-    backgroundColor: '#FF8800',
+    backgroundColor: Colors.primary,
   },
   headerForceInset: { 
     top: 'never' 
@@ -126,9 +128,10 @@ const tabNavigator = createFunc({
   tabBarOptions: {
     style: {
       backgroundColor: '#FFFFFF',
+      elevation: 1,
     },
     indicatorStyle: {
-      backgroundColor: '#FF8800',
+      backgroundColor: Colors.tabIconSelected,
     },
     showIcon: 'true',
     showLabel: 'false',
