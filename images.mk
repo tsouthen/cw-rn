@@ -2,16 +2,16 @@ OUTDIR=assets/images
 INDIR=assets/svgs
 
 $(OUTDIR)/%@4x.png : $(INDIR)/%.svg
-	svgexport $< $@ 240:
+	svgexport $< $@ 400:
 
 $(OUTDIR)/%@3x.png : $(INDIR)/%.svg
-	svgexport $< $@ 180:
+	svgexport $< $@ 300:
 
 $(OUTDIR)/%@2x.png : $(INDIR)/%.svg
-	svgexport $< $@ 120:
+	svgexport $< $@ 200:
 
 $(OUTDIR)/%.png : $(INDIR)/%.svg
-	svgexport $< $@ 60:
+	svgexport $< $@ 100:
 
 INFILES=$(wildcard $(INDIR)/*/*.svg)
 OUT1X = $(patsubst $(INDIR)/%.svg,$(OUTDIR)/%.png,$(INFILES))

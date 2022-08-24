@@ -7,9 +7,9 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="52"
-   height="52"
-   viewBox="0 0 24 24"
+   width="70"
+   height="70"
+   viewBox="0 0 70 70"
    fill="none"
    stroke="currentColor"
    stroke-width="2"
@@ -28,13 +28,17 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
   <defs
      id="defs1112" />
   <sodipodi:namedview
+     viewbox-y="-2"
+     viewbox-x="-2"
+     viewbox-height="28"
+     viewbox-width="28"
      inkscape:document-rotation="0"
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -44,64 +48,65 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="1845"
+     inkscape:window-width="1920"
      inkscape:window-height="1155"
      id="namedview1110"
      showgrid="false"
-     inkscape:zoom="14.134615"
-     inkscape:cx="26"
-     inkscape:cy="26"
-     inkscape:window-x="75"
+     inkscape:zoom="9.6768355"
+     inkscape:cx="23.558413"
+     inkscape:cy="32.480528"
+     inkscape:window-x="0"
      inkscape:window-y="68"
      inkscape:window-maximized="1"
      inkscape:current-layer="svg1108" />
   <path
-     d="M17 18a5 5 0 0 0-10 0"
+     d="m 45.037804,47.045364 a 10.037804,10.037804 0 0 0 -20.075608,0"
      id="path1092"
-     style="stroke:#ff8800;stroke-opacity:1" />
+     style="stroke:#ff8800;stroke-width:4.01512;stroke-opacity:1" />
   <line
-     x1="12"
-     y1="2"
-     x2="12"
-     y2="9"
+     x1="35"
+     y1="14.924392"
+     x2="35"
+     y2="28.977318"
      id="line1094"
-     style="stroke:#ff8800;stroke-opacity:1" />
+     style="stroke:#ff8800;stroke-width:4.01512;stroke-opacity:1" />
   <line
-     x1="4.22"
-     y1="10.22"
-     x2="5.64"
-     y2="11.64"
+     x1="19.381178"
+     y1="31.426542"
+     x2="22.231913"
+     y2="34.277279"
      id="line1096"
-     style="stroke:#ff8800;stroke-opacity:1" />
+     style="stroke:#ff8800;stroke-width:4.01512;stroke-opacity:1" />
   <line
-     x1="1"
-     y1="18"
-     x2="3"
-     y2="18"
+     x1="12.916832"
+     y1="47.045364"
+     x2="16.931953"
+     y2="47.045364"
      id="line1098"
-     style="stroke:#ff8800;stroke-opacity:1" />
+     style="stroke:#ff8800;stroke-width:4.01512;stroke-opacity:1" />
   <line
-     x1="21"
-     y1="18"
-     x2="23"
-     y2="18"
+     x1="53.068047"
+     y1="47.045364"
+     x2="57.083168"
+     y2="47.045364"
      id="line1100"
-     style="stroke:#ff8800;stroke-opacity:1" />
+     style="stroke:#ff8800;stroke-width:4.01512;stroke-opacity:1" />
   <line
-     x1="18.36"
-     y1="11.64"
-     x2="19.78"
-     y2="10.22"
+     x1="47.768089"
+     y1="34.277279"
+     x2="50.618824"
+     y2="31.426542"
      id="line1102"
-     style="stroke:#ff8800;stroke-opacity:1" />
+     style="stroke:#ff8800;stroke-width:4.01512;stroke-opacity:1" />
   <line
-     style="fill-opacity:1;stroke:#ffffff;stroke-opacity:1"
-     x1="23"
-     y1="22"
-     x2="1"
-     y2="22"
+     style="stroke-width:4.01512;stroke:#ffffff;stroke-opacity:0.99595141"
+     x1="57.083168"
+     y1="55.075607"
+     x2="12.916832"
+     y2="55.075607"
      id="line1104" />
   <polyline
+     transform="matrix(2.0075608,0,0,2.0075608,10.909271,10.90927)"
      points="8 6 12 2 16 6"
      id="polyline1106"
      style="stroke:#ff8800;stroke-opacity:1" />
