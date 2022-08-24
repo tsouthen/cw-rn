@@ -67,13 +67,16 @@ export default class CurrentLocation extends React.Component {
 
       request.onload = () => {
         if (request.status === 200) {
-          // console.debug('successfully fetched xml');
           resolve(iconv.decode(Buffer.from(request.response), 'iso-8859-1'));
         } else {
           reject(new Error(request.statusText));
         }
       };
-      request.onerror = () => reject(new Error(request.statusText));
+      let errorFunc = () => reject(new Error(request.statusText));
+      request.onerror = errorFunc;
+      request.onabort = errorFunc;
+      request.ontimeout = errorFunc;
+      
       request.responseType = 'arraybuffer';
   
       request.open('GET', url);
@@ -98,10 +101,12 @@ export default class CurrentLocation extends React.Component {
       const { navigation } = this.props;
       let nearest = navigation.getParam('site', undefined);
       if (!nearest) {
-        await Location.requestPermissionsAsync();
         if (Platform.OS === 'android' && !Constants.isDevice) {
           nearest = sitelocations[this.randomIntInRange(0, sitelocations.length)];
         } else {
+          this.props.navigation.setParams({ location: 'requesting permission...'});
+          await Location.requestPermissionsAsync();
+          this.props.navigation.setParams({ location: 'getting location...'});
           let location = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Lowest, maximumAge: 900000 }); 
           nearest = findNearest(location.coords, sitelocations);
         }
@@ -116,11 +121,11 @@ export default class CurrentLocation extends React.Component {
         site = nearest.site;
         prov = nearest.prov;
       }
-      // this.props.navigation.setParams({ location: 'Fetching...'});
+      this.props.navigation.setParams({ location: 'downloading...'});
       let targetUrl = 'https://dd.weather.gc.ca/citypage_weather/xml/' + prov + '/' + site + '_e.xml';
       console.debug('targetUrl: ' + targetUrl);
       const xml = await this.fetchXML(targetUrl);
-      // this.props.navigation.setParams({ location: 'Parsing...'});
+      this.props.navigation.setParams({ location: 'parsing...'});
       const responseJson = await this.jsonFromXml(xml);
       //console.debug(JSON.stringify(responseJson));
       const entries = this.loadJsonData(responseJson);
