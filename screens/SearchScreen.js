@@ -37,7 +37,21 @@ export default class SearchScreen extends React.Component {
       search: '',
       cities: [],
       };
+    // this.searchRef = React.createRef();
   };
+
+  //This doesn't seem to work except when sliding between tabs, you can see the keyboard pop up for a moment and then disappear again
+  // componentDidMount() {
+  //   const { navigation } = this.props;
+  //   this.focusListener = navigation.addListener('didFocus', () => {
+  //     if (this.state.search.length == 0)
+  //       this.searchRef.current.focus();
+  //   });
+  // }
+
+  // componentWillUnmount() {
+  //   this.focusListener.remove();
+  // }
 
   removeAccents = (input) => {
     return input.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
@@ -65,21 +79,23 @@ export default class SearchScreen extends React.Component {
     else if ((this.state.cities.length === 0) && (search.length === 1))
       message = 'Enter at least one more character.';
     else if ((this.state.cities.length === 0) && (search.length === 0))
-      message = 'Click on "Search" above to start searching.';
+      message = 'Results appear here, click on "Search" above to start typing.';
 
     if (message && message.length)
-      component = (<Text style={{ padding: 10, fontFamily:'montserrat'}}>{message}</Text>);
+      component = (<Text style={{ padding: 10, fontFamily:'montserrat', fontSize: 18}}>{message}</Text>);
     else
       component = (<CityListScreen showProv='true' cities={this.state.cities} {...this.props} />);
 
     return (
       <View style={{flex: 1, flexDirection: "column"}}>
-        <SearchBar placeholder='Search' placeholderTextColor='white'
+        <SearchBar 
+          // ref={this.searchRef}
+          placeholder='Search' placeholderTextColor='white'
           onChangeText={this.updateSearch} value={search} platform={Platform.OS} 
           containerStyle={{backgroundColor: '#FF8800', elevation: 3 }} 
-          returnKeyLabel='search'
+          returnKeyType='search'
           selectionColor='#c55900'
-          inputStyle={{ color: 'white', fontFamily: 'montserrat', fontSize:20 }} 
+          inputStyle={{ color: 'white', fontFamily: 'montserrat', fontSize: 18, fontWeight: 'normal' }} 
           cancelIcon={{ color: 'white', underlayColor: '#FF8800'}} 
           clearIcon={{ color: 'white', underlayColor: '#FF8800'}} 
           searchIcon={{ color: 'white', underlayColor: '#FF8800'}} 

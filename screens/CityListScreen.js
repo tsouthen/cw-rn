@@ -11,6 +11,8 @@ export default function CityListScreen(props) {
       showProv = false;
       cities = sitelocations.filter((entry) => entry.prov === prov.abbr);
       cities.sort((a, b) => a.nameEn < b.nameEn ? -1 : (a.nameEn > b.nameEn ? 1 : 0));
+    } else if (!cities) {
+      cities = props.navigation.getParam('cities');
     }
   }
   return (
