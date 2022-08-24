@@ -22,9 +22,12 @@ export default class CityListScreen extends React.Component {
     } else if (province) {
         this.cities = sitelocations.filter((entry) => entry.prov === province.abbr);
     } else {
-      this.cities = [];
+      this.cities = props.cities;
+      if (this.cities === undefined)
+        this.cities = [];
     }
     this.cities.sort((a, b) => a.nameEn < b.nameEn ? -1 : (a.nameEn > b.nameEn ? 1 : 0));
+    //TODO: put this.cities in this.state.data
   }
 
   handlePress = (item) => {
@@ -36,21 +39,19 @@ export default class CityListScreen extends React.Component {
 
   render() {
     return(
-      <View style={{flex: 1}}>
-        <FlatList
-          data={this.cities}
-          renderItem={({item, index}) => {
-            return (<SimpleListItem itemPress={() => this.handlePress(item)}>{item.nameEn}</SimpleListItem>);
-          }}
-          keyExtractor={item => item.site}         
-          ItemSeparatorComponent={({highlighted}) => (
-            <View style={{height: 1, backgroundColor: "#eeeeee"}} />
-            )}
-          ListFooterComponent={({highlighted}) => (
-            <View style={{height: 1, backgroundColor: "#eeeeee"}} />
-            )}
-        />
-      </View>
+      <FlatList style={{flex: 1}}
+        data={this.cities}
+        renderItem={({item, index}) => {
+          return (<SimpleListItem itemPress={() => this.handlePress(item)}>{item.nameEn}</SimpleListItem>);
+        }}
+        keyExtractor={item => item.site}         
+        ItemSeparatorComponent={({highlighted}) => (
+          <View style={{height: 1, backgroundColor: "#eeeeee"}} />
+          )}
+        ListFooterComponent={({highlighted}) => (
+          <View style={{height: 1, backgroundColor: "#eeeeee"}} />
+          )}
+      />
     );
   };
 };

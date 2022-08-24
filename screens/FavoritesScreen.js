@@ -1,3 +1,4 @@
+import React from 'react';
 import CityListScreen from './CityListScreen';
 
 const favorites = [
@@ -18,14 +19,6 @@ const favorites = [
 		longitude: -63.13
 	},
 	{
-		site: "s0000250",
-		nameEn: "Fredericton",
-		nameFr: "Fredericton",
-		prov: "NB",
-		latitude: 45.95,
-		longitude: -66.67
-	},
-	{
 		site: "s0000318",
 		nameEn: "Halifax",
 		nameFr: "Halifax",
@@ -34,6 +27,22 @@ const favorites = [
 		longitude: -63.72
 	},
 	{
+		site: "s0000394",
+		nameEn: "Iqaluit",
+		nameFr: "Iqaluit",
+		prov: "NU",
+		latitude: 63.75,
+		longitude: -68.52
+	},
+	{
+		site: "s0000654",
+		nameEn: "Moncton",
+		nameFr: "Moncton",
+		prov: "NB",
+		latitude: 46.12,
+		longitude: -64.8
+	},
+  {
 		site: "s0000635",
 		nameEn: "Montréal",
 		nameFr: "Montréal",
@@ -42,12 +51,12 @@ const favorites = [
 		longitude: -73.65
 	},
 	{
-		site: "s0000788",
-		nameEn: "Regina",
-		nameFr: "Regina",
+		site: "s0000797",
+		nameEn: "Saskatoon",
+		nameFr: "Saskatoon",
 		prov: "SK",
-		latitude: 50.45,
-		longitude: -104.61
+		latitude: 52.14,
+		longitude: -106.69
 	},
 	{
 		site: "s0000280",
@@ -82,6 +91,14 @@ const favorites = [
 		longitude: -135.08
 	},
 	{
+		site: "s0000193",
+		nameEn: "Winnipeg",
+		nameFr: "Winnipeg",
+		prov: "MB",
+		latitude: 49.88,
+		longitude: -97.15
+	},
+  {
 		site: "s0000366",
 		nameEn: "Yellowknife",
 		nameFr: "Yellowknife",
@@ -91,15 +108,12 @@ const favorites = [
 	},
 ];
 
-export default class FavoritesScreen extends CityListScreen {
-  static navigationOptions = ({ navigation }) => {
-    return {
-      title: navigation.getParam('title', 'Favourites'),
-    };
-  };
+export default function FavoritesScreen(props) {
+  return (
+    <CityListScreen cities={favorites} {...props} />
+  );
+};
 
-  constructor(props) {
-    super(props);
-    this.cities = favorites;
-  };
+FavoritesScreen.navigationOptions = {
+  title: 'Favourites',
 };
