@@ -2,7 +2,7 @@ import * as Font from 'expo-font';
 import React from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { SplashScreen } from 'expo';
-import { Entypo, MaterialIcons, FontAwesome, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { Entypo, MaterialIcons, FontAwesome, Ionicons, MaterialCommunityIcons, Feather } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Provider as PaperProvider, DefaultTheme, DarkTheme } from 'react-native-paper';
@@ -24,6 +24,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 
 import TabBarIcon from './components/TabBarIcon';
+import { FrameAttribute } from 'expo/build/AR';
 
 function LocationStackScreen() {
   const LocationStack = createStackNavigator();
@@ -81,10 +82,13 @@ function HomeTabs() {
     }
   } else {
     Tab = createMaterialBottomTabNavigator();
+    // tabOptions = {
+    //   activeColor: 'white',
+    //   inactiveColor: '#505050',
+    //   barStyle: { backgroundColor: Colors.primary },
     tabOptions = {
-      activeColor: 'white',
-      inactiveColor: '#505050',
-      barStyle: { backgroundColor: Colors.primary },
+      activeColor: Colors.primaryDark,
+      barStyle: { backgroundColor: 'white' },
     }
   }
   return (
@@ -133,9 +137,10 @@ export default function App(props) {
   }
 
   updateSetting = (prop, value) => {
-    settings[prop] = value;
-    setSettings(settings);
-    saveSettings(settings);
+    let newSettings = { ...settings };
+    newSettings[prop] = value;
+    setSettings(newSettings);
+    saveSettings(newSettings);
   }
 
   loadSettings = async () => {
@@ -149,8 +154,9 @@ export default function App(props) {
   }
 
   updateFavorites = (updatedFavorites) => {
-    setFavorites(updatedFavorites);
-    saveFavorites(updatedFavorites)
+    const newFavs = updatedFavorites.slice();
+    setFavorites(newFavs);
+    saveFavorites(newFavs)
   }
 
   loadFavorites = async () => {
@@ -177,7 +183,7 @@ export default function App(props) {
       const prefix = "file://";
       if (!uri.startsWith(prefix))
         uri = prefix + uri;
-      await Sharing.shareAsync(uri, { mimeType: "image/jpeg", dialogTitle: "Share forecast", UTI: "image/jpeg" });
+      await Sharing.shareAsync(uri, { mimeType: "image/jpeg", dialogTitle: "Share forecast", UTI: "public.image" });
     } catch (error) {
       console.error("Error getting screenshot: " + error);
     }
@@ -201,6 +207,7 @@ export default function App(props) {
           ...MaterialCommunityIcons.font,
           ...Ionicons.font,
           ...FontAwesome.font,
+          ...Feather.font,
         });
 
         await loadSettings();

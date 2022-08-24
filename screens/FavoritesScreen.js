@@ -1,6 +1,10 @@
 import React from 'react';
-import CityListScreen from './CityListScreen';
+import { View } from 'react-native';
+import DraggableFlatList from 'react-native-draggable-dynamic-flatlist';
 import { FavoritesContext } from '../components/FavoritesContext';
+import { SimpleListItem } from '../components/SimpleListItem';
+import HeaderBar, { HeaderBarAction } from '../components/HeaderBar';
+import Colors from '../constants/Colors';
 
 export const defaultFavorites = [
   {
@@ -109,16 +113,83 @@ export const defaultFavorites = [
   },
 ];
 
-export default function FavoritesScreen(props) {
+export default function FavoritesScreen({ navigation }) {
   const { favorites, updateFavorites } = React.useContext(FavoritesContext);
+  const [data, setData] = React.useState(favorites);
+  const [editing, setEditing] = React.useState(false);
+
+  React.useEffect(() => {
+    setData(favorites);
+  }, [favorites]);
+
+  const onPress = (item) => {
+    navigation.navigate('City', {
+      site: item,
+      location: item.nameEn,
+    });
+  }
+
+  const onEditPress = () => {
+    setEditing(!editing);
+  }
+
+  const onDelete = (item, index) => {
+    console.log(`Deleting ${item.nameEn}`);
+    console.log("favorite count: " + data.length);
+    let newData = data.slice();
+    newData.splice(index, 1);
+    console.log("favorite count: " + newData.length);
+    updateFavorites(newData);
+    setData(newData);
+  }
+
+  const getListComponent = () => {
+    return (
+      <DraggableFlatList
+        style={{ flex: 1, backgroundColor: 'white' }}
+        data={data}
+        keyExtractor={item => item.site}
+        bounces={false}
+        onMoveEnd={({ data }) => updateFavorites(data)}
+        onDelete={onDelete}
+        renderItem={({ item, index, move, moveEnd, isActive }) => {
+          return (
+            <SimpleListItem
+              isActive={isActive}
+              // onPressIn={() => {
+              //   if (editing) {
+              //     move();
+              //   }
+              // }}
+              onPress={() => {
+                if (!editing) {
+                  onPress(item)
+                }
+              }}
+              onLongPress={() => {
+                if (editing) {
+                  move();
+                }
+              }}
+              onPressOut={() => {
+                moveEnd();
+              }}
+              editing={editing}
+              onDelete={onDelete && (() => { onDelete(item, index) })}
+            >
+              {`${item.nameEn}, ${item.prov}`}
+            </SimpleListItem>);
+        }}
+      />);
+  }
 
   return (
-    <CityListScreen
-      title="Favourites"
-      cities={favorites}
-      showProv='true'
-      draggable={true}
-      onMoveEnd={({ data }) => updateFavorites(data)}
-      {...props} />
+    <View style={{ flex: 1 }}>
+      <HeaderBar navigation={navigation} title="Favourites" showBackButton={false}>
+        {/* <HeaderBarAction icon="sort" /> */}
+        <HeaderBarAction icon="pencil" color={editing ? Colors.primaryDark : 'white'} onPress={onEditPress} />
+      </HeaderBar>
+      {getListComponent()}
+    </View>
   );
 }

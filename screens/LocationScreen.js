@@ -16,6 +16,7 @@ import sitelocations from '../constants/sitelocations';
 import CityListScreen from './CityListScreen';
 const moment = require('moment');
 import HeaderBar, { HeaderBarAction, HeaderBarNavigationAction } from '../components/HeaderBar';
+import { Icon } from 'react-native-elements';
 
 // const styles = StyleSheet.create({
 //   container: {
@@ -43,8 +44,11 @@ export default class CurrentLocation extends React.Component {
         forecasts: [],
         nearestSites: [],
         hourlyData: [],
+        yesterday: [],
+        almanac: [],
+        sunRiseSet: [],
       },
-      selectedIndex: 0,
+      subtitle: null,
     }
   };
 
@@ -67,10 +71,10 @@ export default class CurrentLocation extends React.Component {
       }
     } else {
       console.log("No data to refresh");
-      console.log(`  lastFetch:${data.lastFetch}`);
-      console.log(`  num forecasts:${data.forecasts.length}`);
-      if (data.forecasts.length > 0)
-        console.log(`  last dateTime:${data.forecasts[0].dateTime}`);
+      console.log(`  lastFetch:${lastFetch}`);
+      console.log(`  num forecasts:${forecasts.length}`);
+      if (forecasts.length > 0)
+        console.log(`  last dateTime:${forecasts[0].dateTime}`);
     }
   }
 
@@ -192,7 +196,9 @@ export default class CurrentLocation extends React.Component {
       // console.debug(JSON.stringify(responseJson));
       let entries = this.loadJsonData(responseJson);
       let hourlyData = this.loadHourlyForecasts(responseJson);
-      // let isFav = this.isFavorite(site);
+      let yesterday = this.loadYesterday(responseJson);
+      let almanac = this.loadAlmanac(responseJson);
+      let sunRiseSet = this.loadSunRiseSet(responseJson);
 
       navigation.setParams({
         location: responseJson.location.name._,
@@ -205,13 +211,26 @@ export default class CurrentLocation extends React.Component {
         dataSource: {
           forecasts: entries,
           nearestSites: sortedLocs,
-          hourlyData: hourlyData,
+          hourlyData,
+          yesterday,
+          almanac,
+          sunRiseSet,
         },
+        subtitle: "Daily Forecast",
       });
     } catch (error) {
       console.error(error);
     }
   };
+
+  upperCaseFirstLetters = (text) => {
+    return text.split(' ').map((t) => t.charAt(0).toUpperCase() + t.slice(1).toLowerCase()).join(' ').trim();
+  }
+
+  separateWords = (text) => {
+    let newText = text.replace(/([A-Z])/g, ' $1').trim()
+    return newText.charAt(0).toUpperCase() + newText.slice(1);
+  }
 
   loadJsonData = (responseJson) => {
     //returns an array of objects with the following keys: icon, title, summary, temperature, expanded, isNight, warning, warningUrl
@@ -236,7 +255,7 @@ export default class CurrentLocation extends React.Component {
 
         if (responseJson.warnings.event && responseJson.warnings.event.description) {
           let warning = responseJson.warnings.event.description;
-          warning = warning.split(' ').map((t) => t.charAt(0).toUpperCase() + t.slice(1).toLowerCase()).join(' ').trim();
+          warning = this.upperCaseFirstLetters(warning);
           entry.warning = CurrentLocation.valueOrEmptyString(warning);
           entry.warningUrl = CurrentLocation.valueOrEmptyString(responseJson.warnings.url);
           if (entry.warningUrl)
@@ -356,13 +375,147 @@ export default class CurrentLocation extends React.Component {
           temperature: entry.temperature && entry.temperature._,
           expanded: entries.length === 0 || entry.condition !== entries[entries.length - 1].summary,
           isNight: currHour > sunset || currHour < sunrise,
-          isHourly: true,
+          isOther: true,
           heading: heading,
         });
       });
     }
     return entries;
   };
+
+  loadYesterday = (responseJson) => {
+    let entries = [];
+    let heading = "Yesterday";
+    const yesterday = responseJson.yesterdayConditions;
+    if (yesterday) {
+      if (yesterday.temperature && yesterday.temperature.length) {
+        yesterday.temperature.forEach((entry, index) => {
+          const isNight = entry.class.endsWith("low");
+          entries.push({
+            category: "Yesterday",
+            heading: heading,
+            title: this.separateWords(entry.class),
+            temperature: entry._,
+            isNight: isNight,
+            isOther: true,
+            icon: { type: "feather", name: isNight ? "arrow-down-circle" : "arrow-up-circle", size: 40, iconStyle: { padding: 5 } },
+          });
+          heading = null;
+        });
+      }
+      if (yesterday.precip && yesterday.precip._ && yesterday.precip._ != "0.0") {
+        let precipVal = yesterday.precip._;
+        if (!isNaN(Number(precipVal)))
+          precipVal += ` ${yesterday.precip.units}`;
+        entries.push({
+          category: "Yesterday",
+          title: "Precipitation",
+          value: precipVal,
+          isOther: true,
+          icon: { type: "feather", name: "umbrella", size: 40, iconStyle: { padding: 5 } },
+        });
+        heading = null;
+      }
+    }
+    return entries;
+  }
+
+  loadAlmanac = (responseJson) => {
+    let normals = [];
+    let extremes = [];
+    let normalsHeading = "Normals for today";
+    let extremesHeading = "Extremes for today";
+
+    let addEntry = (newEntry) => {
+      if (newEntry.title.startsWith("Normal ")) {
+        newEntry.heading = normalsHeading;
+        newEntry.title = newEntry.title.substr(7);
+        normals.push(newEntry);
+        normalsHeading = null;
+      } else if (newEntry.title.startsWith("Extreme ")) {
+        newEntry.heading = extremesHeading;
+        newEntry.title = newEntry.title.substr(8);
+        extremes.push(newEntry);
+        extremesHeading = null;
+      } else {
+        newEntry.heading = normalsHeading;
+        normals.push(newEntry);
+        normalsHeading = null;
+      }
+    };
+
+    const almanac = responseJson.almanac;
+    if (almanac && almanac.temperature && almanac.temperature.length) {
+      almanac.temperature.forEach((entry, index) => {
+        if (entry._) {
+          addEntry({
+            category: "Almanac",
+            key: entry.class,
+            title: this.separateWords(entry.class),
+            temperature: entry._,
+            isNight: entry.class.endsWith("Min"),
+            isOther: true,
+            summary: entry.year,
+            expanded: !!entry.year,
+          });
+        }
+      });
+    }
+    if (almanac && almanac.precipitation && almanac.precipitation.length) {
+      almanac.precipitation.forEach((entry, index) => {
+        if (entry._ && entry._ !== "0.0") {
+          addEntry({
+            category: "Almanac",
+            key: entry.class,
+            title: this.separateWords(entry.class),
+            value: `${entry._} ${entry.units}`,
+            isOther: true,
+            summary: entry.year,
+            expanded: !!entry.year,
+          });
+        }
+      });
+    }
+    return [...normals, ...extremes];
+  }
+
+  getSunRiseSetTitle = (name) => {
+    switch (name) {
+      case "sunrise": return "Rise";
+      case "sunset": return "Set";
+    }
+    return this.separateWords(name);
+  }
+
+  loadSunRiseSet = (responseJson) => {
+    let entries = [];
+    let heading = "Sun rise & set";
+    const riseSet = responseJson.riseSet;
+    if (riseSet && riseSet.dateTime && riseSet.dateTime.length) {
+      riseSet.dateTime.forEach((entry, index) => {
+        if (entry.zone !== "UTC") {
+          let hour = Number(entry.hour);
+          let suffix = "am";
+          if (hour >= 12) {
+            if (hour > 12)
+              hour -= 12;
+            suffix = "pm";
+          }
+          const title = this.getSunRiseSetTitle(entry.name);
+          entries.push({
+            heading: heading,
+            category: "RiseSet",
+            title: title,
+            value: `${hour}:${entry.minute} ${suffix}`,
+            isOther: true,
+            icon: { type: "feather", name: title === "Rise" ? "sunrise" : "sunset", size: 40, color: Colors.primary, iconStyle: { padding: 5 } },
+          });
+          heading = null;
+        }
+      });
+    }
+    return entries;
+  }
 
   static isString = (item) => {
     return item !== null && item !== undefined && 'string' === typeof (item);
@@ -380,18 +533,14 @@ export default class CurrentLocation extends React.Component {
 
     const { navigation, route } = this.props;
     if (!route?.params?.site) {
-      navigation.setParams({ location: 'Location', currentSite: undefined });
+      navigation.setParams({ location: 'Location', currentSite: undefined, subtitle: null });
     }
     this.setState({ isLoading: true }, () => { this.makeRemoteRequest(); });
   };
 
-  newFlatList = (data, key) => {
-    const keyProps = {};
-    if (key)
-      keyProps.key = key;
+  newFlatList = (data) => {
     return (
       <FlatList
-        {...keyProps}
         style={{ flex: 1 }}
         data={data}
         renderItem={({ item, index }) => <ForecastItem {...item}
@@ -402,7 +551,16 @@ export default class CurrentLocation extends React.Component {
             item.expanded = !item.expanded;
             this.setState({ dataSource: this.state.dataSource });
           }} />}
-        keyExtractor={item => item.title}
+        keyExtractor={(item) => {
+          let key = item.title;
+          if (item.temperature)
+            key += item.temperature;
+          else if (item.value)
+            key += item.value;
+          else if (item.summary)
+            key += item.summary;
+          return key;
+        }}
         refreshing={this.state.isLoading}
         onRefresh={this.handleRefresh}
       />
@@ -414,9 +572,10 @@ export default class CurrentLocation extends React.Component {
     const isCurrLocation = !route?.params?.site;
     const hasLocation = !isCurrLocation || route?.params?.currentSite;
     const site = route?.params?.site || route?.params?.currentSite;
+    // const subtitle = route?.params?.location ? this.state.subtitle : null;
 
     const headerBar = (
-      <HeaderBar navigation={navigation} title={route?.params?.location ?? 'Location'} showBackButton={!isCurrLocation}>
+      <HeaderBar navigation={navigation} title={route?.params?.location ?? 'Location'} showBackButton={!isCurrLocation} /* subtitle={subtitle} */ >
         {site && <FavoriteIcon site={site} />}
         {hasLocation && <HeaderBarAction icon={Platform.OS === "ios" ? "export-variant" : "share-variant"} onPress={this.context.onShare} />}
         {isCurrLocation && <HeaderBarNavigationAction icon="settings" screen="Settings" navigation={navigation} />}
@@ -433,6 +592,7 @@ export default class CurrentLocation extends React.Component {
       )
     }
 
+    let startPage = 0;
     let pages = [
       (<View key="1" style={{ flex: 1 }}>
         {this.newFlatList(this.state.dataSource.forecasts)}
@@ -445,7 +605,8 @@ export default class CurrentLocation extends React.Component {
     ];
 
     if (this.state.dataSource.nearestSites && this.state.dataSource.nearestSites.length) {
-      pages.push(
+      startPage = 1;
+      pages.splice(0, 0,
         <View key="3" style={{ flex: 1 }}>
           <HeadingText text="Nearby" />
           <CityListScreen
@@ -458,12 +619,50 @@ export default class CurrentLocation extends React.Component {
         </View>);
     }
 
+    let otherEntries = [];
+    if (this.state.dataSource.sunRiseSet && this.state.dataSource.sunRiseSet.length)
+      otherEntries.push(...this.state.dataSource.sunRiseSet);
+    if (this.state.dataSource.yesterday && this.state.dataSource.yesterday.length)
+      otherEntries.push(...this.state.dataSource.yesterday);
+    if (this.state.dataSource.almanac && this.state.dataSource.almanac.length)
+      otherEntries.push(...this.state.dataSource.almanac);
+
+    if (otherEntries.length) {
+      pages.push(
+        <View key="4" style={{ flex: 1 }}>
+          {this.newFlatList(otherEntries)}
+          <View style={{ height: 24 }} />
+        </View>);
+    }
+
+    const setSubTitleFromPageIndex = (index) => {
+      let subtitle = null;
+      switch (index) {
+        case 0:
+          subtitle = "Nearby Locations";
+          break;
+        case 1:
+          subtitle = "Daily Forecast";
+          break;
+        case 2:
+          subtitle = "Hourly Forecast";
+          break;
+      }
+      this.setState({ subtitle });
+    }
     return (
       <View style={{ flex: 1, backgroundColor: 'white' }}>
         {headerBar}
-        <Pages indicatorColor={Colors.primaryDark} indicatorPosition='bottom'>
+        < Pages
+          indicatorColor={Colors.primaryDark}
+          indicatorPosition='bottom'
+          startPage={startPage}
+          onHalfway={(nextIndex, activeIndex) => {
+            setSubTitleFromPageIndex(nextIndex);
+          }}
+        >
           {pages}
-        </Pages>
+        </Pages >
       </View >
     );
   }
@@ -557,21 +756,28 @@ function getDateTimeString(dateTime) {
 }
 
 function ForecastItem(props) {
-  const { title, temperature, summary, icon, isNight, isHourly, warning, warningUrl, index, heading, expanded, dateTime } = props;
+  const { title, temperature, summary, icon, isNight, isOther, warning, warningUrl, index, heading, expanded, dateTime, value } = props;
   const { settings } = React.useContext(SettingsContext);
-  const [allowNight] = React.useState(settings.night);
-  const [rounded] = React.useState(settings.round);
+  const [allowNight, setAllowNight] = React.useState(settings.night);
+  const [rounded, setRounded] = React.useState(settings.round);
   const [isExpanded, setExpanded] = React.useState(expanded);
 
-  if (index > 1 && !allowNight && isNight && !isHourly)
+  React.useEffect(() => {
+    setRounded(settings.round);
+    setAllowNight(settings.night);
+  }, [settings]);
+
+  if (index > 1 && !allowNight && isNight && !isOther)
     return null;
 
   let imageView;
-  if (icon !== undefined)
+  if (typeof icon === "string") {
     imageView = <Image style={{ width: 50, height: 50, resizeMode: "contain" }} source={iconCodeToName(icon)} />;
-  else
+  } else if (!!icon && typeof icon === "object") {
+    imageView = <Icon {...icon} />;
+  } else if (!isOther) {
     imageView = <View style={{ width: 50, height: 50 }} />;
-
+  }
   let warningView = null;
   if (warning && warningUrl)
     warningView = (
@@ -586,14 +792,14 @@ function ForecastItem(props) {
   let fontColor = isNight ? '#777777' : 'black';
   let fontWeight = isNight ? 'normal' : 'bold';
   let displayTemp = temperature;
-  if (index === 0 && displayTemp.length && rounded) {
+  if (displayTemp && displayTemp.length && rounded) {
     let tempVal = Number(displayTemp);
     if (!isNaN(tempVal))
       displayTemp = '' + Math.round(tempVal);
   }
   let headingView = null;
   let headingText = heading;
-  if (!heading && !isHourly) {
+  if (!heading && !isOther) {
     if (index === 0) {
       headingText = "Conditions";
     } else if (index === 1) {
@@ -625,7 +831,7 @@ function ForecastItem(props) {
           <View style={{ flex: 1, flexDirection: "column", paddingLeft: 10, paddingTop: 5 }}>
             <View style={{ flexDirection: "row" }} >
               {titleText}
-              <Text style={{ fontSize: 18, fontWeight: fontWeight, color: fontColor }}>{displayTemp ? displayTemp + '°' : ''}</Text>
+              <Text style={{ fontSize: 18, fontWeight: fontWeight, color: fontColor }}>{displayTemp ? displayTemp + '°' : value ?? ''}</Text>
             </View>
             {summmaryView}
             {warningView}
@@ -671,7 +877,7 @@ function FavoriteIcon(props) {
       <Portal>
         <Snackbar
           visible={snackVisible}
-          duration={Snackbar.DURATION_SHORT}
+          duration={1000}
           action={{ label: "Undo", onPress: () => toggleFav(false) }}
           onDismiss={() => setSnackVisible(false)}
         >{snackMessage}</Snackbar>

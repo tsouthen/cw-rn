@@ -2,12 +2,11 @@ import React from 'react';
 import { FlatList, View } from 'react-native';
 import { SimpleListItem } from '../components/SimpleListItem';
 import sitelocations from '../constants/sitelocations';
-import DraggableFlatList from 'react-native-draggable-dynamic-flatlist';
 import HeaderBar from '../components/HeaderBar';
 
 export default function CityListScreen(props) {
   let { cities, showProv, title, ...rest } = props;
-  const { draggable, navigation, route, ...remainingProps } = rest;
+  const { navigation, route, onDelete, ...remainingProps } = rest;
   const prov = route?.params?.province;
 
   if (prov) {
@@ -18,12 +17,14 @@ export default function CityListScreen(props) {
     cities = route?.params?.cities;
   }
 
-  let commonProps = {
+  const commonProps = {
     style: { flex: 1, backgroundColor: 'white' },
     data: cities,
     keyExtractor: item => item.site,
+    bounces: false,
   }
-  let getLabel = (item) => {
+
+  const getLabel = (item) => {
     let label = item.nameEn;
     if (showProv) {
       label += ', ';
@@ -31,25 +32,15 @@ export default function CityListScreen(props) {
     }
     return label;
   }
-  let onPress = (item) => {
+
+  const onPress = (item) => {
     navigation.navigate('City', {
       site: item,
       location: item.nameEn,
     });
   }
+
   const getListComponent = () => {
-    if (draggable && cities)
-      return (
-        <DraggableFlatList
-          {...commonProps}
-          {...remainingProps}
-          renderItem={({ item, index, move, moveEnd, isActive }) => {
-            return (
-              <SimpleListItem isActive={isActive} onPress={() => onPress(item)} onLongPress={move} onPressOut={moveEnd} >
-                {getLabel(item)}
-              </SimpleListItem>);
-          }}
-        />);
     return (
       <FlatList
         {...commonProps}
@@ -62,6 +53,7 @@ export default function CityListScreen(props) {
         }}
       />);
   }
+
   title = title ?? prov?.name;
   return (
     <View style={{ flex: 1 }}>
