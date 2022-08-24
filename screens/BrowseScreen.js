@@ -45,12 +45,6 @@ export default class BrowseScreen extends React.Component {
             return (<SimpleListItem itemPress={() => this.handlePress(item)}>{item.name}</SimpleListItem>);
           }}
           keyExtractor={item => item.name}         
-          ItemSeparatorComponent={({highlighted}) => (
-            <View style={{height: 1, backgroundColor: "#eeeeee"}} />
-            )}
-          ListFooterComponent={({highlighted}) => (
-            <View style={{height: 1, backgroundColor: "#eeeeee"}} />
-            )}
         />
       </View>
     );
