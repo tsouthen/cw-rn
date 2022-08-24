@@ -304,10 +304,11 @@ export default class CurrentLocation extends React.Component {
 
           let fontColor = item.isNight ? '#777777' : 'black';
           let fontWeight = item.isNight ? 'normal' : 'bold';
-          if (item.temperature && global.settings && global.settings.round) {
-            let tempVal = Number(item.temperature);
+          let temperature = item.temperature;
+          if (temperature && global.settings && global.settings.round) {
+            let tempVal = Number(temperature);
             if (!isNaN(tempVal))
-              item.temperature = Math.round(tempVal);
+              temperature = Math.round(tempVal);
           }
           return (
             <TouchableHighlight underlayColor='#ffb944' onPress={() => this.handlePress(item, index)}>
@@ -317,7 +318,7 @@ export default class CurrentLocation extends React.Component {
                   <View style={{flex:1, flexDirection: "column", paddingLeft: 10, paddingTop: 5}}>
                     <View style={{flexDirection: "row"}} >
                       <Text style={{fontSize: 18, fontFamily: 'montserrat', flex:1, color: fontColor}}>{item.title}</Text>
-                      <Text style={{fontSize: 18, fontWeight: fontWeight, color: fontColor}}>{item.temperature ? item.temperature + '°' : ''}</Text>
+                      <Text style={{fontSize: 18, fontWeight: fontWeight, color: fontColor}}>{temperature ? temperature + '°' : ''}</Text>
                     </View>
                     {summmaryView}
                     {warningView}
