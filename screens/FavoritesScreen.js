@@ -1,6 +1,6 @@
 import React from 'react';
-import { View } from 'react-native';
-import DraggableFlatList from 'react-native-draggable-dynamic-flatlist';
+import { View, FlatList } from 'react-native';
+//import DraggableFlatList from 'react-native-draggable-flatlist';
 import { FavoritesContext } from '../components/FavoritesContext';
 import { SimpleListItem } from '../components/SimpleListItem';
 import HeaderBar, { HeaderBarAction } from '../components/HeaderBar';
@@ -150,13 +150,13 @@ export default function FavoritesScreen({ navigation }) {
 
   const getListComponent = () => {
     return (
-      <DraggableFlatList
+      <FlatList
         style={{ flex: 1, backgroundColor: settings.dark ? Colors.darkBackground : Colors.lightBackground }}
         data={data}
         keyExtractor={item => item.site}
-        bounces={false}
-        onMoveEnd={({ data }) => updateFavorites(data)}
-        onDelete={onDelete}
+        // bounces={false}
+        onDragEnd={({ data }) => updateFavorites(data)}
+        // onDelete={onDelete}
         renderItem={({ item, index, move, moveEnd, isActive }) => {
           return (
             <SimpleListItem
