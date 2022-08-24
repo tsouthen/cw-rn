@@ -1,5 +1,11 @@
 import React from 'react';
-import { FlatList, ActivityIndicator, StyleSheet, Text, View, Image, TouchableHighlight  } from 'react-native';
+import { Platform, FlatList, ActivityIndicator, StyleSheet, Text, View, Image, TouchableHighlight  } from 'react-native';
+import { findNearest, orderByDistance } from 'geolib';
+import sitelist from '../constants/sitelist';
+import sitelocations from '../constants/sitelocations';
+import * as Location from 'expo-location';
+import Constants from 'expo-constants';
+import * as Permissions from 'expo-permissions';
 
 export default function LocationScreen() {
   return (
@@ -46,38 +52,88 @@ export class CurrentLocation extends React.Component {
     this.makeRemoteRequest();
   }
 
-  makeRemoteRequest = () => {
-    var targetUrl = 'https://proxy.hackeryou.com/?reqUrl=https://dd.weather.gc.ca/citypage_weather/xml/BC/s0000656_e.xml&xmlToJSON=true';
-    return fetch(targetUrl)
-      .then((response) => response.json())
-      .then((responseJson) => {
-        var expanded = [];
-        responseJson.siteData.forecastGroup.forecast.forEach((entry, index) => {
-          //remove temperature summary from overall summary
-          if (entry.temperatures.textSummary)
-            entry.textSummary = entry.textSummary.replace(entry.temperatures.textSummary, '');
-          expanded.push(false);
-        });
-        //create a new forecast entry for the current conditions
-        var now = {
-            period : { textForecastName: responseJson.siteData.location.name.$t },
-            textSummary : responseJson.siteData.currentConditions.condition,
-            expanded : true,
-            abbreviatedForecast : { iconCode: responseJson.siteData.currentConditions.iconCode },
-            temperatures : { temperature: responseJson.siteData.currentConditions.temperature },
+  randomInRange = (start, end) => {
+    return start + ((end - start) * Math.random());
+  };
+
+  makeRemoteRequest = async () => {
+    try
+    {
+      await Location.requestPermissionsAsync();
+      console.debug('Got permission');
+      let location;
+      if (Platform.OS === 'android' && !Constants.isDevice) {
+        location = {
+          coords: { 
+            latitude: this.randomInRange(42, 60), 
+            longitude: this.randomInRange(-51, -130)
+          }
         };
-        responseJson.siteData.forecastGroup.forecast.unshift(now);
-        expanded.unshift(true);
-        this.setState({
-          isLoading: false,
-          dataSource: responseJson.siteData,
-          expanded: expanded,
-        }, function(){
-        });
-      })
-      .catch((error) =>{
-        console.error(error);
+        console.debug('Location not supported in emulator, generating random location: ' + location);
+      } else {
+        location = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Lowest, maximumAge: 900000 }); 
+        console.debug('Got location: ' + location);
+      }
+      let nearest = findNearest(location.coords, sitelocations);
+      let site = 's0000047'; //Calgary
+      site = 's0000174';
+      let prov = 'AB';
+      prov = 'QC';
+      // if (nearest) {
+      //   console.debug(nearest);
+      //   site = nearest.site;
+      //   prov = sitelist[site].prov;
+      // }
+      let targetUrl = 'https://proxy.hackeryou.com/?reqUrl=https://dd.weather.gc.ca/citypage_weather/xml/' + prov + '/' + site + '_e.xml&xmlToJSON=true';     
+      console.debug('targetUrl: ' + targetUrl);
+      const response = await fetch(targetUrl);
+      const responseJson = await response.json();
+      let expanded = [];
+      responseJson.siteData.forecastGroup.forecast.forEach((entry, index) =>
+      {
+        //remove temperature summary from overall summary
+        if (entry.temperatures.textSummary)
+          entry.textSummary = entry.textSummary.replace(entry.temperatures.textSummary, '');
+        expanded.push(false);
       });
+      
+      //create a new forecast entry for the current conditions
+      if (responseJson.siteData.currentConditions && responseJson.siteData.currentConditions.temperature) {
+        console.debug(responseJson.siteData.location.name);
+        console.debug(sitelist[responseJson.siteData.location.name.code].nameEn);
+        
+        responseJson.siteData.forecastGroup.forecast.unshift({
+          period: { textForecastName: sitelist[responseJson.siteData.location.name.code].nameEn },
+          textSummary: CurrentLocation.valueOrEmptyString(responseJson.siteData.currentConditions.condition),
+          expanded: true,
+          abbreviatedForecast: { iconCode: responseJson.siteData.currentConditions.iconCode },
+          temperatures: { temperature: responseJson.siteData.currentConditions.temperature },
+        });
+        expanded.unshift(true); 
+      }
+
+      this.setState({
+        isLoading: false,
+        dataSource: responseJson.siteData,
+        expanded: expanded,
+      }, function ()
+      {
+      });
+    }
+    catch (error)
+    {
+      console.error(error);
+    }
+  };
+
+  static isString = (item) => {
+    return item !== null && item !== undefined && 'string' === typeof(item);
+  };
+
+  static valueOrEmptyString = (item) => {
+    if (!CurrentLocation.isString(item))
+      return '';
+    return item;
   };
 
   handleRefresh = () => {
@@ -115,6 +171,15 @@ export class CurrentLocation extends React.Component {
             if (index !== 0 && item.temperatures.temperature.class === "low") {
               return <View></View>
             }
+            if (!CurrentLocation.isString(item.textSummary)) {
+              console.debug('Non-string text summary at index: ' + index);
+              if (item.textSummary)
+                console.debug('Text summary: ' + item.textSummary);
+              // return <View></View>
+            }
+            // console.debug('------------------------------------------------------------');
+            // console.debug('item: ' + index);
+            // console.debug(item);
             return (             
               <TouchableHighlight underlayColor='#ffb944' onPress={() => this.handlePress(item, index)}>
               <View style={{flex:100, flexDirection: "row", paddingTop: 0, paddingBottom: 5, paddingRight: 5}}>
@@ -124,7 +189,7 @@ export class CurrentLocation extends React.Component {
                     <Text style={{fontSize: 18, fontFamily: 'montserrat', flex:1}}>{item.period.textForecastName}</Text>
                     <Text style={{fontSize: 18, fontWeight: "bold"}}>{item.temperatures.temperature.$t + '°'}</Text>
                   </View>
-                  <Text style={{fontSize: 13}}>{this.state.expanded && this.state.expanded[index] ? item.textSummary : ''}</Text>
+                  <Text style={{fontSize: 13}}>{item.textSummary && this.state.expanded && this.state.expanded[index] ? item.textSummary : ''}</Text>
                 </View>
               </View>
               </TouchableHighlight>);
@@ -144,6 +209,9 @@ export class CurrentLocation extends React.Component {
   }
 
   iconCodeToName = (iconCode) => {
+    if (!CurrentLocation.isString(iconCode))
+      return require('../assets/images/clever_weather.png');
+
     switch (Number(iconCode)) {
       case 0: //sun
           return require('../assets/images/sun.png');
@@ -210,6 +278,6 @@ export class CurrentLocation extends React.Component {
       case 39:
           return require('../assets/images/cloud_lightning_moon.png');
     }
-    return require('../assets/images/sun.png');
+    return require('../assets/images/clever_weather.png');
   }
 };
