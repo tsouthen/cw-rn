@@ -383,10 +383,58 @@ export default class CurrentLocation extends React.Component {
       Linking.openURL(item.warningUrl);
   };
 
+  renderItem = ({item, index}) => {
+    let allowNight = global.settings && global.settings.night;
+    if (index > 1 && !allowNight && item.isNight && !item.isHourly)
+      return null;
+
+    let imageView;
+    if (item.icon !== undefined)
+      imageView = <Image style={{width: 50, height: 50, resizeMode: "contain"}} source={ this.iconCodeToName(item.icon) } />;
+    else
+      imageView = <View style={{width: 50, height: 50}}/>;
+
+    let warningView = null;
+    if (item.warning && item.warningUrl)
+      warningView = (
+        <TouchableHighlight style={{alignSelf:'flex-start'}} underlayColor='#ffffff' onPress={() => this.handleUrl(item, index)}>
+          <Text style={{textDecorationLine:'underline', fontSize:13, color:'#c55900'}}>{item.warning && item.expanded ? item.warning : ''}</Text>
+        </TouchableHighlight>);
+
+    let summmaryView = null;
+    if (item.summary && item.expanded)
+        summmaryView = (<Text style={{fontSize:13, flex:1}}>{item.summary}</Text>);
+
+    let fontColor = item.isNight ? '#777777' : 'black';
+    let fontWeight = item.isNight ? 'normal' : 'bold';
+    let temperature = item.temperature;
+    if (temperature && global.settings && global.settings.round) {
+      let tempVal = Number(temperature);
+      if (!isNaN(tempVal))
+        temperature = Math.round(tempVal);
+    }
+    return (
+      <TouchableHighlight underlayColor='#ffb944' onPress={() => this.handlePress(item, index)}>
+        <View style={{flex:100, flexDirection: "column"}} >
+          <View style={{flex:100, flexDirection: "row", paddingTop: 0, paddingBottom: 5, paddingRight: 5}}>
+            {imageView}
+            <View style={{flex:1, flexDirection: "column", paddingLeft: 10, paddingTop: 5}}>
+              <View style={{flexDirection: "row"}} >
+                <Text style={{fontSize: 18, fontFamily: 'montserrat', flex:1, color: fontColor}}>{item.title}</Text>
+                <Text style={{fontSize: 18, fontWeight: fontWeight, color: fontColor}}>{temperature ? temperature + '°' : ''}</Text>
+              </View>
+              {summmaryView}
+              {warningView}
+            </View>
+          </View>
+          <View style={{ height:1, backgroundColor: '#eeeeee' }} />
+        </View>
+      </TouchableHighlight>);
+  };
+
   render() {
     if (this.state.isLoading) {
       // <Text>Loading...</Text>
-
       return (
         <View style={{flex: 1, marginTop: 40 }}>
           <ActivityIndicator color='#c55900' />
@@ -395,84 +443,10 @@ export default class CurrentLocation extends React.Component {
     }
 
     return(
-      <FlatList style={{flex: 1}}
-        data={ this.state.dataSource }
-        renderItem={({item, index}) => {
-          let allowNight = global.settings && global.settings.night;
-          if (index > 1 && !allowNight && item.isNight && !item.isHourly)
-            return null;
-
-          let imageView;
-          if (item.icon !== undefined)
-            imageView = <Image style={{width: 50, height: 50, resizeMode: "contain"}} source={ this.iconCodeToName(item.icon) } />;
-          else
-            imageView = <View style={{width: 50, height: 50}}/>;
-
-          let warningView = null;
-          if (item.warning && item.warningUrl)
-            warningView = (
-              <TouchableHighlight style={{alignSelf:'flex-start'}} underlayColor='#ffffff' onPress={() => this.handleUrl(item, index)}>
-                <Text style={{textDecorationLine:'underline', fontSize:13, color:'#c55900'}}>{item.warning && item.expanded ? item.warning : ''}</Text>
-              </TouchableHighlight>);
-
-          let summmaryView = null;
-          if (item.summary && item.expanded)
-              summmaryView = (<Text style={{fontSize:13, flex:1}}>{item.summary}</Text>);
-
-          let fontColor = item.isNight ? '#777777' : 'black';
-          let fontWeight = item.isNight ? 'normal' : 'bold';
-          let temperature = item.temperature;
-          if (temperature && global.settings && global.settings.round) {
-            let tempVal = Number(temperature);
-            if (!isNaN(tempVal))
-              temperature = Math.round(tempVal);
-          }
-          // let listProps = {
-          //   title: item.title,
-          //   titleStyle: {fontFamily: 'montserrat', color: fontColor, fontSize: 18},
-          //   onPress: () => this.handlePress(item, index),
-          //   bottomDivider: true,
-          // };
-          // if (temperature) {
-          //   listProps = {
-          //     ...listProps,
-          //     rightTitle: temperature + '°',
-          //     rightTitleStyle: {fontSize: 18, fontWeight: fontWeight, color: fontColor},
-          //   };
-          // }
-          // if (item.summary && item.expanded) {
-          //   listProps = {
-          //     ...listProps,
-          //     subtitle: item.summary,
-          //   };
-          // }
-          // if (item.icon !== undefined) {
-          //   listProps = {
-          //     ...listProps,
-          //     leftIcon: imageView,
-          //   };
-          // }
-          //TODO: handle warningView
-          // return (<ListItem {...listProps} />);
-
-          return (
-            <TouchableHighlight underlayColor='#ffb944' onPress={() => this.handlePress(item, index)}>
-              <View style={{flex:100, flexDirection: "column"}} >
-                <View style={{flex:100, flexDirection: "row", paddingTop: 0, paddingBottom: 5, paddingRight: 5}}>
-                  {imageView}
-                  <View style={{flex:1, flexDirection: "column", paddingLeft: 10, paddingTop: 5}}>
-                    <View style={{flexDirection: "row"}} >
-                      <Text style={{fontSize: 18, fontFamily: 'montserrat', flex:1, color: fontColor}}>{item.title}</Text>
-                      <Text style={{fontSize: 18, fontWeight: fontWeight, color: fontColor}}>{temperature ? temperature + '°' : ''}</Text>
-                    </View>
-                    {summmaryView}
-                    {warningView}
-                  </View>
-                </View>
-                <View style={{ height:1, backgroundColor: '#eeeeee' }} />
-              </View>
-            </TouchableHighlight>);
-          }}
+      <FlatList
+        style={{flex: 1}}
+        data={this.state.dataSource}
+        renderItem={this.renderItem}
         keyExtractor={item => item.title}
         refreshing={this.state.isLoading}
         onRefresh={this.handleRefresh}
