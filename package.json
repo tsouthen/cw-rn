@@ -33,7 +33,9 @@
     "react-native-xml2js": "^1.0.3",
     "react-navigation": "^3.12.0",
     "react-navigation-addon-search-layout": "^0.13.1",
-    "stream": "0.0.2"
+    "stream": "0.0.2",
+    "react-native-view-shot": "~2.6.0",
+    "expo-sharing": "~7.0.0"
   },
   "devDependencies": {
     "babel-preset-expo": "^7.0.0",

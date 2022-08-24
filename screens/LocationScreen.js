@@ -12,6 +12,7 @@ import Colors from '../constants/Colors';
 import { SettingsContext } from '../components/SettingsContext';
 import { FavoritesContext } from '../components/FavoritesContext';
 import { HeaderButton, NavigationHeaderButton } from '../components/HeaderButton';
+import { ShareContext } from '../components/ShareContext';
 
 // const styles = StyleSheet.create({
 //   container: {
@@ -32,9 +33,14 @@ import { HeaderButton, NavigationHeaderButton } from '../components/HeaderButton
 export default class CurrentLocation extends React.Component {
   static navigationOptions = ({ navigation }) => {
     let favIcon = null;
+    let shareIcon = null;
     let site = navigation.getParam('currentSite', undefined);
-    if (site !== undefined)
+    if (site !== undefined) {
       favIcon = (<FavoriteIcon site={site} />);
+      const onShare = navigation.getParam('onShare');
+      if (onShare)
+        shareIcon = (<HeaderButton type='material' name='share' onPress={onShare} />);
+    }
     let settingsIcon = null;
     if (navigation.getParam('site') === undefined) {
       settingsIcon = (<NavigationHeaderButton type='material' name='settings' navigation={navigation} routeName='Settings' />);
@@ -44,6 +50,7 @@ export default class CurrentLocation extends React.Component {
       headerRight: (
         <View style={{flexDirection:'row'}}>
           {favIcon}
+          {shareIcon}
           {settingsIcon}
         </View>),
     };
@@ -164,10 +171,11 @@ export default class CurrentLocation extends React.Component {
       let entries = this.loadJsonData(responseJson);
       let hourlyData = this.loadHourlyForecasts(responseJson);
       // let isFav = this.isFavorite(site);
-      
+              
       this.props.navigation.setParams({ 
         location: responseJson.location.name._,
         currentSite: nearest,
+        onShare: this.context.onShare,
       });
 
       this.setState({
@@ -438,7 +446,7 @@ export default class CurrentLocation extends React.Component {
     );
   }
 };
-CurrentLocation.contextType = FavoritesContext;
+CurrentLocation.contextType = ShareContext;
 
 function iconCodeToName(iconCode) {
   if (!CurrentLocation.isString(iconCode)) {
