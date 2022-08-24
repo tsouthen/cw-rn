@@ -436,9 +436,11 @@ export default class CurrentLocation extends React.Component {
     let pages = [
       (<View key="1" style={{ flex: 1 }}>
         {this.newFlatList(this.state.dataSource.forecasts)}
+        <View style={{ height: 24 }} />
       </View>),
       (<View key="2" style={{ flex: 1 }}>
         {this.newFlatList(this.state.dataSource.hourlyData)}
+        <View style={{ height: 24 }} />
       </View>)
     ];
 
@@ -452,13 +454,14 @@ export default class CurrentLocation extends React.Component {
             refreshing={this.state.isLoading}
             onRefresh={this.handleRefresh}
           />
+          <View style={{ height: 24 }} />
         </View>);
     }
 
     return (
       <View style={{ flex: 1, backgroundColor: 'white' }}>
         {headerBar}
-        <Pages indicatorColor={Colors.primaryDark} indicatorPosition='top'>
+        <Pages indicatorColor={Colors.primaryDark} indicatorPosition='bottom'>
           {pages}
         </Pages>
       </View >
