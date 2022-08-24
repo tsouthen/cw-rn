@@ -53,12 +53,12 @@ export default function LocationScreen(props) {
     }
     navigation.setOptions({
       title: route?.params?.location ?? 'Location',
-      headerRight: (
+      headerRight: () =>
         <View style={{ flexDirection: 'row' }}>
           {favIcon}
           {shareIcon}
           {settingsIcon}
-        </View>),
+        </View>,
     });
   }, [navigation]);
 

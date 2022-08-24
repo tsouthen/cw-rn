@@ -12,7 +12,7 @@ export default function SearchScreen(props) {
 
   React.useEffect(() => {
     navigation.setOptions({
-      headerTitle: (
+      headerTitle: props =>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <TextInput
             style={{ flex: 1, color: 'white', fontFamily: 'montserrat', fontSize: 16 }}
@@ -23,13 +23,14 @@ export default function SearchScreen(props) {
             selectionColor={Colors.primaryDark}
             returnKeyType='search'
             onChangeText={updateSearch}
-            ref={input => {
-              this.input = input;
-            }}
+            ref={input => { if (this) this.input = input; }}
           />
           <Icon type='material' name='clear' color='#ffffff' underlayColor={Colors.primary} size={25}
             iconStyle={{ marginRight: 10 }}
             onPress={() => {
+              if (!this || !this.input)
+                return;
+
               this.input.clear();
               if (!this.input.isFocused())
                 this.input.focus();
@@ -37,16 +38,11 @@ export default function SearchScreen(props) {
               updateSearch("");
             }}
           />
-        </View>
-      ),
+        </View>,
     });
   }, [navigation]);
 
-  removeAccents = (input) => {
-    return input.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-  };
-
-  updateSearch = (search) => {
+  function updateSearch(search) {
     let cities = [];
     if (search.length > 0) {
       let searchVal = removeAccents(search);
@@ -77,3 +73,8 @@ export default function SearchScreen(props) {
     </View>
   );
 };
+
+function removeAccents(input) {
+  return input.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+};
+
