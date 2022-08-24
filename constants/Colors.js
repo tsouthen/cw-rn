@@ -20,7 +20,10 @@ export default {
   primary: primary,
   primaryDark: primaryDark,
   primaryLight: primaryLight,
-  // darkBackground: '#444444',
-  darkBackground: '#121212',
+  darkBackground: '#444444',
+  // darkBackground: '#121212',
   lightBackground: 'white',
+  // lightListBackground: '#f2f2f7',
+  lightListBackground: '#d3d3d3', //'lightgray',
+  darkListBackground: 'black'
 };

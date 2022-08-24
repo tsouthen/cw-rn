@@ -8,7 +8,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
 import * as Sharing from 'expo-sharing';
 import React from 'react';
-import { Platform, StyleSheet, useColorScheme, View } from 'react-native';
+import { Platform, StyleSheet, useColorScheme, UIManager, View } from 'react-native';
 import { DarkTheme, DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import { captureRef } from 'react-native-view-shot';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -204,6 +204,12 @@ export default function App(props) {
     async function loadResourcesAndDataAsync() {
       try {
         SplashScreen.preventAutoHideAsync();
+
+        if (Platform.OS === 'android') {
+          if (UIManager.setLayoutAnimationEnabledExperimental) {
+            UIManager.setLayoutAnimationEnabledExperimental(true);
+          }
+        }
 
         // Load our initial navigation state
         setInitialNavigationState(await getInitialState());

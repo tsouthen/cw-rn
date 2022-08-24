@@ -3,13 +3,14 @@ import Constants from 'expo-constants';
 import * as Location from 'expo-location';
 import iconv from 'iconv-lite';
 import React from 'react';
-import { ActivityIndicator, FlatList, Image, Linking, Platform, StyleSheet, Text, TouchableHighlight, View, AppState } from 'react-native';
+import { ActivityIndicator, FlatList, Image, LayoutAnimation, Linking, Platform, StyleSheet, Text, TouchableHighlight, View, AppState } from 'react-native';
 import { Snackbar, Portal } from 'react-native-paper';
 import { parseString } from 'react-native-xml2js';
 import Swiper from 'react-native-swiper';
 import { FavoritesContext } from '../components/FavoritesContext';
 import { SettingsContext } from '../components/SettingsContext';
 import Colors from '../constants/Colors';
+import Layout from '../constants/Layout';
 import sitelocations from '../constants/sitelocations';
 import CityListScreen from './CityListScreen';
 const moment = require('moment');
@@ -567,7 +568,7 @@ export default class CurrentLocation extends React.Component {
   newFlatList = (data) => {
     return (
       <FlatList
-        style={{ flex: 1, backgroundColor: this.context.settings.dark ? Colors.darkBackground : Colors.lightBackground }}
+        style={{ flex: 1, backgroundColor: this.context.settings.dark ? Colors.darkListBackground : Colors.lightListBackground }}
         data={data}
         renderItem={({ item, index }) => <ForecastItem {...item}
           navigation={this.props.navigation}
@@ -604,7 +605,7 @@ export default class CurrentLocation extends React.Component {
       <HeaderBar navigation={navigation} title={route?.params?.location ?? 'Location'} showBackButton={!isCurrLocation} /* subtitle={subtitle} */ >
         {site && <FavoriteIcon site={site} />}
         {site && <NightForecastsIcon />}
-        {hasLocation && <HeaderBarShareAction />}
+        {/* {hasLocation && <HeaderBarShareAction />} */}
       </HeaderBar>);
 
     if (this.state.isLoading) {
@@ -664,18 +665,46 @@ export default class CurrentLocation extends React.Component {
     return (
       <View style={{ flex: 1 }}>
         {headerBar}
-        <Swiper loop={false} index={startPage} activeDotColor={Colors.primaryDark} paginationStyle={{ bottom: 5 }}>
-          {pages}
-        </Swiper>
+        <MySwiper {...{ pages, startPage }} />
       </View>
     );
   }
 };
 CurrentLocation.contextType = SettingsContext;
 
+function MySwiper({ startPage, pages }) {
+  const [touching, setTouching] = React.useState(false);
+
+  return <Swiper loop={false} index={startPage} activeDotColor={Colors.primaryDark}
+    showsPagination={true}
+    // showsButtons={touching}
+    paginationStyle={{
+      top: 4,
+      // backgroundColor: touching ? Colors.lightListBackground + '80' : undefined,
+      // backgroundColor: 'red',
+      left: (Layout.window.width / 2) - 35,
+      width: 70, height: 27, borderRadius: 50,
+    }}
+    onTouchStart={() => {
+      LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+      setTouching(true);
+    }}
+    onTouchEnd={() => {
+      LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+      setTouching(false);
+    }}
+  >
+    {pages}
+  </Swiper>
+
+}
 function IndicatorBackgroundView() {
+  return null;
   const { settings } = React.useContext(SettingsContext);
-  return <View style={{ height: 24, backgroundColor: settings.dark ? Colors.darkBackground : Colors.lightBackground }} />;
+  return <View style={{
+    height: 24, opacity: 50,
+    backgroundColor: settings.dark ? Colors.darkListBackground : Colors.lightListBackground
+  }} />;
 }
 
 function iconCodeToImage(iconCode) {
@@ -940,13 +969,22 @@ function ForecastItem(props) {
     titleText = <Text style={titleTextStyle}>{title}</Text>
 
   const toggleExpanded = () => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     setExpanded(!isExpanded);
   }
   return (
-    // , marginTop: index === 0 ? 0 : 1
-    //style={{ marginTop: index === 0 ? 0 : 1 }}
-    <TouchableHighlight underlayColor={Colors.primaryLight} onPress={toggleExpanded} >
-      <View style={{ flex: 100, flexDirection: "column", backgroundColor: settings.dark ? Colors.darkBackground : Colors.lightBackground }} >
+    <TouchableHighlight underlayColor={Colors.primaryLight} onPress={toggleExpanded}
+      style={{
+        marginLeft: 5, marginRight: 5,
+        marginTop: headingText ? (index ? 7 : 5) : 2,
+        // marginBottom: isNight && !isOther ? 2 : 0,
+        borderRadius: 8, overflow: 'hidden'
+      }}
+    >
+      <View style={{
+        flex: 100, flexDirection: "column",
+        backgroundColor: settings.dark ? Colors.darkBackground : Colors.lightBackground,
+      }} >
         {/* {index === 0 && <Divider />} */}
         {headingView}
         <View style={{ flex: 100, flexDirection: "row", paddingTop: 0, paddingBottom: 5, paddingRight: 5, alignItems: summary || warning ? "flex-start" : "center" }}>
@@ -1025,6 +1063,7 @@ function NightForecastsIcon(props) {
   const { settings, updateSetting } = React.useContext(SettingsContext);
   return <HeaderBarAction type="ionicon" name={settings.night ? "moon" : "moon-outline"}
     onPress={() => {
+      LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
       updateSetting("night", !settings.night);
     }} />;
 }
@@ -1156,7 +1195,8 @@ function HeadingText({ text }) {
   return <Text style={{
     padding: 10, paddingTop: 5, paddingBottom: 5,
     backgroundColor: settings.dark ? '#444444' : '#eeeeee',
+    // backgroundColor: 'orange',
     color: settings.dark ? 'white' : 'black',
-    fontFamily: 'montserrat',
+    fontFamily: 'montserrat'
   }}>{text}</Text>
 }

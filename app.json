@@ -37,6 +37,7 @@
       "backgroundColor": "#c55900"
     },
     "description": "",
-    "userInterfaceStyle": "automatic"
+    "userInterfaceStyle": "automatic",
+    "orientation": "portrait"
   }
 }
