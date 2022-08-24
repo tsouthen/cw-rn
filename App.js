@@ -22,16 +22,13 @@ import LocationScreen from './screens/LocationScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-
 import TabBarIcon from './components/TabBarIcon';
-import { FrameAttribute } from 'expo/build/AR';
 
 function LocationStackScreen() {
   const LocationStack = createStackNavigator();
   return (
     <LocationStack.Navigator screenOptions={defaultScreenOptions} headerMode='none'>
       <LocationStack.Screen name="Location" component={LocationScreen} />
-      <LocationStack.Screen name="Settings" component={SettingsScreen} />
       <LocationStack.Screen name="City" component={LocationScreen} />
     </LocationStack.Navigator>
   );
@@ -69,6 +66,15 @@ function BrowseStackScreen(props) {
   );
 }
 
+function SettingsStackScreen(props) {
+  const SettingsStack = createStackNavigator();
+  return (
+    <SettingsStack.Navigator screenOptions={defaultScreenOptions} headerMode='none'>
+      <SettingsStack.Screen name="Settings" component={SettingsScreen} />
+    </SettingsStack.Navigator>
+  );
+}
+
 function HomeTabs() {
   let Tab;
   let tabOptions;
@@ -89,6 +95,7 @@ function HomeTabs() {
     tabOptions = {
       activeColor: Colors.primaryDark,
       barStyle: { backgroundColor: 'white' },
+      // shifting: false,
     }
   }
   return (
@@ -98,12 +105,12 @@ function HomeTabs() {
       <Tab.Screen name="Location" component={LocationStackScreen}
         options={{
           title: 'Location',
-          tabBarIcon: ({ focused, color, size }) => <TabBarIcon focused={focused} type='entypo' name='location-pin' color={color} size={size} />
+          tabBarIcon: ({ focused, color, size }) => <TabBarIcon focused={focused} type='feather' name='map-pin' color={color} size={size} />
         }}
       />
       <Tab.Screen name="Favourites" component={FavoritesStackScreen}
         options={{
-          title: "Favourites", tabBarIcon: ({ focused, color, size }) => <TabBarIcon focused={focused} type='font-awesome' name='star' color={color} size={size} />
+          title: "Favourites", tabBarIcon: ({ focused, color, size }) => <TabBarIcon focused={focused} type='feather' name='star' color={color} size={size} />
         }}
       />
       {/* <Tab.Screen name="Search" component={SearchStackScreen}
@@ -115,7 +122,13 @@ function HomeTabs() {
       <Tab.Screen name="Browse" component={BrowseStackScreen}
         options={{
           title: 'Browse',
-          tabBarIcon: ({ focused, color, size }) => <TabBarIcon focused={focused} type='font-awesome' name='globe' color={color} size={size} />
+          tabBarIcon: ({ focused, color, size }) => <TabBarIcon focused={focused} type='feather' name='globe' color={color} size={size} />
+        }}
+      />
+      <Tab.Screen name="Search" component={SettingsStackScreen}
+        options={{
+          title: 'Settings',
+          tabBarIcon: ({ focused, color, size }) => <TabBarIcon focused={focused} type='feather' name='sliders' color={color} size={size} />
         }}
       />
     </Tab.Navigator>
@@ -201,12 +214,9 @@ export default function App(props) {
         // Load fonts
         await Font.loadAsync({
           'montserrat': require('./assets/fonts/montserrat.ttf'),
-          //Icons used in the tabs
-          ...Entypo.font,
+          //Icons used in the app
           ...MaterialIcons.font,
           ...MaterialCommunityIcons.font,
-          ...Ionicons.font,
-          ...FontAwesome.font,
           ...Feather.font,
         });
 

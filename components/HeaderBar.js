@@ -1,5 +1,6 @@
 import React from 'react';
 import { Appbar } from 'react-native-paper';
+import { Icon } from 'react-native-elements';
 
 export default function HeaderBar({ title, subtitle, navigation, showBackButton, buttons, ...rest }) {
   return (
@@ -11,9 +12,15 @@ export default function HeaderBar({ title, subtitle, navigation, showBackButton,
   );
 }
 
-export function HeaderBarAction({ color, ...props }) {
+export function HeaderBarAction({ color, type, name, ...props }) {
+  let iconProps = {};
+  if (!props.icon && type && name) {
+    iconProps = {
+      icon: (props) => <Icon type={type} name={name} color={props.color || "white"} />
+    }
+  }
   return (
-    <Appbar.Action color={color || "white"} {...props} />
+    <Appbar.Action color={color || "white"} {...iconProps} {...props} />
   );
 }
 export function HeaderBarNavigationAction({ navigation, screen, ...rest }) {
