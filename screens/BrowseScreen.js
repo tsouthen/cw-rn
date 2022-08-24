@@ -21,27 +21,20 @@ const provinces = [
 ];
   
 export default class BrowseScreen extends React.Component {
-
   static navigationOptions = ({ navigation }) => {
-    let search = (<Icon type='material' name='search' color='#ffffff' underlayColor={Colors.primary} size={24} iconStyle={{marginRight: 10}} onPress={navigation.getParam('searchAction')} />);
     return {
       title: 'Browse',
       headerRight: (
-        <View style={{flexDirection:'row'}}>
-          {search}
-        </View>),
+        <Icon type='material' name='search' color='#ffffff' underlayColor={Colors.primary} size={24} 
+            iconStyle={{marginRight: 10}} 
+            onPress={() => navigation.navigate('Search', {title: 'Search'})} 
+            />),
     };
   };
 
   componentDidMount() {
     this.props.navigation.setParams({
       searchAction : this.handleSearch, 
-    });
-  };
-
-  handleSearch = () => {
-    this.props.navigation.navigate('Search', { 
-      title: 'Search',
     });
   };
 
