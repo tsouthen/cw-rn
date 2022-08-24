@@ -155,12 +155,12 @@ export default function FavoritesScreen({ navigation }) {
         data={data}
         keyExtractor={item => item.site}
         // bounces={false}
-        onDragEnd={({ data }) => updateFavorites(data)}
+        // onDragEnd={({ data }) => updateFavorites(data)}
         // onDelete={onDelete}
-        renderItem={({ item, index, move, moveEnd, isActive }) => {
+        renderItem={({ item/* , index, move, moveEnd, isActive */ }) => {
           return (
             <SimpleListItem
-              isActive={isActive}
+              // isActive={isActive}
               // onPressIn={() => {
               //   if (editing) {
               //     move();
@@ -171,16 +171,16 @@ export default function FavoritesScreen({ navigation }) {
                   onPress(item)
                 }
               }}
-              onLongPress={() => {
-                if (editing) {
-                  move();
-                }
-              }}
-              onPressOut={() => {
-                moveEnd();
-              }}
-              editing={editing}
-              onDelete={onDelete && (() => { onDelete(item, index) })}
+            // onLongPress={() => {
+            //   if (editing) {
+            //     move();
+            //   }
+            // }}
+            // onPressOut={() => {
+            //   moveEnd();
+            // }}
+            // editing={editing}
+            // onDelete={onDelete && (() => { onDelete(item, index) })}
             >
               {`${item.nameEn}, ${item.prov}`}
             </SimpleListItem>);
