@@ -9,7 +9,7 @@ export default function TabBarIcon(props) {
   var iconProps = {
     name: props.name,
     size: 32,
-    style: { marginBottom: -32 },
+    // style: { marginBottom: -32 },
     color: props.focused ? Colors.tabIconSelected : Colors.tabIconDefault,
   };
   if (props.library === 'Entypo')
