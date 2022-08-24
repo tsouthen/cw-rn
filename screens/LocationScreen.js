@@ -2,8 +2,8 @@ import { Buffer } from 'buffer';
 import Constants from 'expo-constants';
 import * as Location from 'expo-location';
 import iconv from 'iconv-lite';
-import React, { useContext } from 'react';
-import { ActivityIndicator, FlatList, Image, Linking, Platform, Text, ToastAndroid, TouchableHighlight, View } from 'react-native';
+import React, { useContext, useEffect, useState, useRef } from 'react';
+import { ActivityIndicator, FlatList, Image, Linking, Platform, Text, ToastAndroid, TouchableHighlight, View, AppState } from 'react-native';
 import { ButtonGroup, Icon } from 'react-native-elements';
 import { parseString } from 'react-native-xml2js';
 import { FavoritesContext } from '../components/FavoritesContext';
@@ -13,6 +13,7 @@ import { ShareContext } from '../components/ShareContext';
 import Colors from '../constants/Colors';
 import sitelocations from '../constants/sitelocations';
 import CityListScreen from './CityListScreen';
+import { withNavigation } from 'react-navigation';
 const moment = require('moment');
 
 // const styles = StyleSheet.create({
@@ -31,7 +32,7 @@ const moment = require('moment');
 //   },
 // });
 
-export default class CurrentLocation extends React.Component {
+class CurrentLocation extends React.Component {
   static navigationOptions = ({ navigation }) => {
     let favIcon = null;
     let shareIcon = null;
@@ -60,6 +61,7 @@ export default class CurrentLocation extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      lastFetch: undefined,
       isLoading: true,
       dataSource: {
         forecasts: [],
@@ -70,9 +72,57 @@ export default class CurrentLocation extends React.Component {
     }
   };
 
-  async componentDidMount() {
-    await this.makeRemoteRequest();
+  possiblyRefreshData() {
+    const forecasts = this.state.dataSource.forecasts;
+    const lastFetch = this.state.lastFetch;
+    // determine if a new xml file will be available: 
+    //   now - lastFetch > 5 mins &&
+    //   now - lastForecastDateTime > 65 mins 
+    if (!this.state.isLoading && lastFetch && forecasts && forecasts.length > 0 && forecasts[0].dateTime) {
+      const now = moment();
+      let lastFetchMins = now.diff(lastFetch, 'minutes');
+      let lastForecastMins = now.diff(forecasts[0].dateTime, 'minutes');
+
+      if (lastFetchMins >= 5 && lastForecastMins >= 65) {
+        console.log("refreshing old data");
+        this.makeRemoteRequest();
+      } else {
+        console.log(`Not refreshing data, lastFetch:${lastFetchMins}, lastForecast:${lastForecastMins}`);
+      }
+    } else {
+      console.log("No data to refresh");
+      console.log(`  lastFetch:${data.lastFetch}`);
+      console.log(`  num forecasts:${data.forecasts.length}`);
+      if (data.forecasts.length > 0)
+        console.log(`  last dateTime:${data.forecasts[0].dateTime}`);
+    }
+  }
+
+  handleAppStateChange = nextAppState => {
+    if (nextAppState === "active") {
+      this.possiblyRefreshData();
+    }
   };
+
+  async componentDidMount() {
+    if (this.state.isLoading) {
+      console.log("requesting remote data");
+      await this.makeRemoteRequest();
+    }
+
+    AppState.addEventListener('change', this.handleAppStateChange);
+
+    this.willFocusSubscription = this.props.navigation.addListener('willFocus', (payLoad) => {
+      this.possiblyRefreshData();
+    });
+  };
+
+  componentWillUnmount() {
+    if (this.willFocusSubscription)
+      this.willFocusSubscription.remove();
+
+    AppState.removeEventListener('change', this.handleAppStateChange);
+  }
 
   randomInRange = (start, end) => {
     return start + ((end - start) * Math.random());
@@ -180,6 +230,7 @@ export default class CurrentLocation extends React.Component {
       });
 
       this.setState({
+        lastFetch: moment(),
         isLoading: false,
         dataSource: {
           forecasts: entries,
@@ -199,6 +250,10 @@ export default class CurrentLocation extends React.Component {
     try {
       //create a new forecast entry for the current conditions
       if (responseJson.currentConditions && responseJson.currentConditions.temperature && responseJson.currentConditions.temperature._) {
+        let dateTime = undefined;
+        if (responseJson.currentConditions.dateTime && responseJson.currentConditions.dateTime.length > 0) {
+          dateTime = this.parseTimeStamp(responseJson.currentConditions.dateTime[0].timeStamp);
+        }
         const entry = {
           icon: responseJson.currentConditions.iconCode._,
           title: 'Now',
@@ -206,11 +261,8 @@ export default class CurrentLocation extends React.Component {
           temperature: responseJson.currentConditions.temperature._,
           expanded: true,
           isNight: false,
+          dateTime: dateTime,
         };
-
-        if (responseJson.currentConditions.dateTime && responseJson.currentConditions.dateTime.length > 0) {
-          entry.dateTime = this.parseTimeStamp(responseJson.currentConditions.dateTime[0].timeStamp);
-        }
 
         if (responseJson.warnings.event && responseJson.warnings.event.description) {
           let warning = responseJson.warnings.event.description;
@@ -374,6 +426,7 @@ export default class CurrentLocation extends React.Component {
         style={{ flex: 1 }}
         data={data}
         renderItem={({ item, index }) => <ForecastItem {...item}
+          navigation={this.props.navigation}
           index={index}
           onPress={() => {
             //we need the expanded state outside the ForecastItem as the FlatList is a virtualized list and items can be re-used
@@ -464,6 +517,7 @@ export default class CurrentLocation extends React.Component {
   }
 };
 CurrentLocation.contextType = ShareContext;
+export default withNavigation(CurrentLocation);
 
 function iconCodeToName(iconCode) {
   if (!CurrentLocation.isString(iconCode)) {
@@ -544,13 +598,15 @@ function iconCodeToName(iconCode) {
   return null;
 }
 
+function getDateTimeString(dateTime) {
+  let format = 'h:mm a';
+  if (moment().dayOfYear() !== moment(dateTime).dayOfYear())
+    format = 'MMM D, ' + format;
+  return moment(dateTime).format(format);
+}
+
 function ForecastItem(props) {
   const { title, temperature, summary, icon, isNight, isHourly, warning, warningUrl, index, heading, expanded, onPress, dateTime } = props;
-  var titleText = title;
-  if (index === 0 && !isHourly && dateTime) {
-    titleText = moment(dateTime).fromNow();
-    titleText = titleText.charAt(0).toUpperCase() + titleText.substring(1);
-  }
   const settings = useContext(SettingsContext);
 
   let allowNight = settings && settings.night;
@@ -590,17 +646,19 @@ function ForecastItem(props) {
     } else if (index === 1) {
       headingText = "Forecast";
     }
-    if (headingText && dateTime) {
-      headingText += " (";
-      let format = 'h:mm a';
-      if (moment().dayOfYear() !== moment(dateTime).dayOfYear())
-        format = 'MMM d, ' + format;
-      headingText += moment(dateTime).format(format);
-      headingText += ")";
-    }
+    // if (headingText && dateTime) {
+    //   headingText += ` (${getDateTimeString(dateTime)})`;
+    // }
   }
   if (headingText)
     headingView = (<Text style={{ padding: 10, paddingTop: 5, paddingBottom: 5, backgroundColor: '#eeeeee', fontFamily: 'montserrat' }}>{headingText}</Text>);
+
+  let titleText = null;
+  const titleTextStyle = { fontSize: 18, fontFamily: 'montserrat', flex: 1, color: fontColor };
+  if (dateTime && index === 0)
+    titleText = <AutoUpdateText style={titleTextStyle} dateTime={dateTime} interval={60000} navigation={props.navigation}>{title}</AutoUpdateText>;
+  else
+    titleText = <Text style={titleTextStyle}>{title}</Text>
 
   return (
     <TouchableHighlight underlayColor={Colors.primaryLight} onPress={onPress}>
@@ -610,7 +668,7 @@ function ForecastItem(props) {
           {imageView}
           <View style={{ flex: 1, flexDirection: "column", paddingLeft: 10, paddingTop: 5 }}>
             <View style={{ flexDirection: "row" }} >
-              <Text style={{ fontSize: 18, fontFamily: 'montserrat', flex: 1, color: fontColor }}>{titleText}</Text>
+              {titleText}
               <Text style={{ fontSize: 18, fontWeight: fontWeight, color: fontColor }}>{displayTemp ? displayTemp + '°' : ''}</Text>
             </View>
             {summmaryView}
@@ -640,11 +698,118 @@ function FavoriteIcon(props) {
     }
     favorites.updateFavorites(newFavorites);
     if (Platform.OS === 'android') {
-      let message = ' added to favorites';
+      let message = ' added to Favorites';
       if (isFav)
-        message = ' removed from favorites';
+        message = ' removed from Favorites';
       ToastAndroid.show(site.nameEn + message, ToastAndroid.SHORT);
     }
   };
   return (<HeaderButton type='font-awesome' name={isFavorite() ? 'star' : 'star-o'} onPress={toggleFav} />);
+}
+
+function AutoUpdateText(props) {
+  const getLabel = (dateTime) => {
+    // const minutes = Math.ceil(moment().diff(dateTime, 'minutes') / 15) * 15;
+    let minutes = moment().diff(dateTime, 'minutes');
+    if (minutes > 60) {
+      minutes = Math.round(minutes / 15) * 15;
+      const hours = Math.round(minutes / 60 * 100) / 100;
+      if (hours === 1)
+        titleText = `An hour ago`;
+      else
+        titleText = `${hours} hours ago`;
+    } else if (minutes === 60)
+      titleText = "An hour ago";
+    else if (minutes === 30)
+      titleText = "Half an hour ago";
+    else
+      titleText = `${minutes} minutes ago`;
+    return titleText;
+  }
+
+  const { dateTime, interval, style } = props;
+  const [label, setLabel] = useState(getLabel(dateTime));
+  const [visible, setVisible] = useState(true);
+
+  useInterval(() => {
+    setLabel(getLabel(dateTime));
+  }, visible ? interval : null);
+
+  useAppStateChange((isActive) => {
+    setVisible(isActive);
+    if (isActive)
+      setLabel(getLabel(dateTime));
+  });
+
+  useNavigationFocus((focused) => {
+    setVisible(focused);
+    if (focused)
+      setLabel(getLabel(dateTime));
+  }, props.navigation);
+
+  return <Text style={style}>{label}</Text>;
+}
+
+function useInterval(callback, delay) {
+  const savedCallback = useRef();
+
+  // Remember the latest callback.
+  useEffect(() => {
+    savedCallback.current = callback;
+  }, [callback]);
+
+  // Set up the interval.
+  useEffect(() => {
+    function tick() {
+      savedCallback.current();
+    }
+    if (delay !== null) {
+      let id = setInterval(tick, delay);
+      return () => clearInterval(id);
+    }
+  }, [delay]);
+}
+
+function useAppStateChange(callback) {
+  const savedCallback = useRef();
+
+  // Remember the latest callback.
+  useEffect(() => {
+    savedCallback.current = callback;
+  }, [callback]);
+
+  // Setup the AppState handler
+  useEffect(() => {
+    function eventHandler(nextState) {
+      savedCallback.current(nextState === 'active');
+    }
+    AppState.addEventListener('change', eventHandler);
+    return () => AppState.removeEventListener('change', eventHandler);
+  }, []);
+}
+
+function useNavigationFocus(callback, navigation) {
+  const savedCallback = useRef();
+
+  // Remember the latest callback.
+  useEffect(() => {
+    savedCallback.current = callback;
+  }, [callback]);
+
+  // Setup the handlers
+  useEffect(() => {
+    if (!navigation)
+      return () => { };
+
+    willFocus = navigation.addListener('willFocus', (payLoad) => {
+      savedCallback.current(true, payLoad);
+    });
+    willBlur = navigation.addListener('willBlur', (payLoad) => {
+      savedCallback.current(false, payLoad);
+    });
+    return () => {
+      willFocus.remove();
+      willBlur.remove();
+    };
+  }, [navigation]);
 }
