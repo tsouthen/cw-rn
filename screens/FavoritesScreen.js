@@ -110,7 +110,7 @@ const favorites = [
 
 export default function FavoritesScreen(props) {
   return (
-    <CityListScreen cities={favorites} {...props} />
+    <CityListScreen cities={favorites} showProv='true' {...props} />
   );
 };
 

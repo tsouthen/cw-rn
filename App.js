@@ -1,11 +1,9 @@
 import { AppLoading } from 'expo';
-//import { Asset } from 'expo-asset';
 import * as Font from 'expo-font';
 import React, { useState } from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
-//import { Ionicons } from '@expo/vector-icons';
-
 import AppNavigator from './navigation/AppNavigator';
+import { Entypo, MaterialIcons, FontAwesome, Ionicons } from '@expo/vector-icons';
 
 export default function App(props) {
   const [isLoadingComplete, setLoadingComplete] = useState(false);
@@ -36,8 +34,11 @@ async function loadResourcesAsync() {
     // ]),
     Font.loadAsync({
       'montserrat': require('./assets/fonts/montserrat.ttf'),
-      // This is the font that we are using for our tab bar
-      //...Ionicons.font,
+      //Icons used in the tabs
+      ...Entypo.font,
+      ...MaterialIcons.font,
+      ...Ionicons.font,
+      ...FontAwesome.font,
     }),
   ]);
 }
