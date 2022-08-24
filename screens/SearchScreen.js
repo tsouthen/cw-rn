@@ -25,7 +25,7 @@ function debounce(func, wait, immediate) {
 	};
 };
 
-export default class SearchScreen extends React.Component {
+/* export default */ class NEW_SearchScreen extends React.Component {
   static navigationOptions = {
     header: null,
   };
@@ -55,7 +55,7 @@ export default class SearchScreen extends React.Component {
   }
 }
 
-class OLD_SearchScreen extends React.Component {
+export default class SearchScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: 'Search',
