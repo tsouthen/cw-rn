@@ -976,7 +976,7 @@ function ForecastItem(props) {
     <TouchableHighlight underlayColor={Colors.primaryLight} onPress={toggleExpanded}
       style={{
         marginLeft: 5, marginRight: 5,
-        marginTop: headingText ? (index ? 7 : 5) : 2,
+        marginTop: headingText ? (index ? 7 : 5) : 5,
         // marginBottom: isNight && !isOther ? 2 : 0,
         borderRadius: 8, overflow: 'hidden'
       }}
