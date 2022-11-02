@@ -1,4 +1,3 @@
-// import { StatusBar } from 'expo-status-bar';
 import { Feather, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
@@ -241,13 +240,13 @@ export default function App(props) {
     return null;
   } else {
     return (
-      <PaperProvider theme={theme}>
+      <PaperProvider theme={settings.dark ? darkTheme : theme}>
         <ShareContext.Provider value={{ onShare }}>
           <SettingsContext.Provider value={{ settings, updateSetting }}>
             <FavoritesContext.Provider value={{ favorites, updateFavorites }}>
               <SafeAreaProvider>
                 {/* {Platform.OS === 'ios' && <StatusBar barStyle="default" />} */}
-                <NavigationContainer ref={containerRef} initialState={initialNavigationState} >
+                <NavigationContainer ref={containerRef} initialState={initialNavigationState} theme={settings.dark ? darkTheme : theme}>
                   <View ref={mainViewRef} style={{ flex: 1, backgroundColor: settings.dark ? Colors.darkBackground : Colors.lightBackground }}>
                     <Stack.Navigator headerMode='none'>
                       <Stack.Screen name="Root" component={HomeTabs} />
@@ -292,11 +291,11 @@ const theme = {
 
 const darkTheme = {
   ...DarkTheme,
-  dark: true,
+  // dark: true,
   colors: {
     ...DarkTheme.colors,
     primary: '#FF8800',
     accent: '#f1c40f',
-    surface: '#FF8800',
+    // surface: '#FF8800',
   },
 };

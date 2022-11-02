@@ -8,8 +8,8 @@ export default function HeaderBar({ title, subtitle, navigation, showBackButton,
   const { settings } = React.useContext(SettingsContext);
   return (
     <Appbar.Header dark={!settings.dark}>
-      {navigation && showBackButton && <Appbar.BackAction color={settings.dark ? "black" : "white"} onPress={() => navigation.goBack()} />}
-      {title && <Appbar.Content title={title} titleStyle={{ fontFamily: 'montserrat' }} subtitle={subtitle} color={settings.dark ? "black" : "white"} />}
+      {navigation && showBackButton && <Appbar.BackAction color="white" onPress={() => navigation.goBack()} />}
+      {title && <Appbar.Content title={title} titleStyle={{ fontFamily: 'montserrat' }} subtitle={subtitle} color="white" />}
       {rest.children}
     </Appbar.Header>
   );
@@ -20,11 +20,11 @@ export function HeaderBarAction({ color, type, name, ...props }) {
   let iconProps = {};
   if (!props.icon && type && name) {
     iconProps = {
-      icon: (props) => <Icon type={type} name={name} color={props.color || (settings.dark ? "black" : "white")} />
+      icon: (props) => <Icon type={type} name={name} color={props.color || "white"} />
     }
   }
   return (
-    <Appbar.Action animated={false} color={color || (settings.dark ? "black" : "white")} {...iconProps} {...props} />
+    <Appbar.Action animated={false} color={color || "white"} {...iconProps} {...props} />
   );
 }
 
