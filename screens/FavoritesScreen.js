@@ -192,7 +192,7 @@ export default function FavoritesScreen({ navigation }) {
     <View style={{ flex: 1 }}>
       <HeaderBar navigation={navigation} title="Favourites" showBackButton={false}>
         {editing && <HeaderBarAction icon="sort" onPress={onSort} />}
-        <HeaderBarAction type="feather" name="edit-2" color={editing ? Colors.primaryDark : (settings.dark ? "black" : "white")} onPress={onEditPress} />
+        <HeaderBarAction type="feather" name="edit-2" color={editing ? Colors.primaryDark : "white"} onPress={onEditPress} />
       </HeaderBar>
       {getListComponent()}
     </View>

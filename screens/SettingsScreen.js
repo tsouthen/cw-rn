@@ -9,7 +9,7 @@ export default function SettingsScreen({ navigation }) {
   const { settings } = React.useContext(SettingsContext);
   return (
     <View style={{ flex: 1, backgroundColor: settings.dark ? Colors.darkBackground : Colors.lightBackground }}>
-      <HeaderBar title="Settings" navigation={navigation} />
+      <HeaderBar title="Settings" navigation={navigation} showBackButton={true} />
       <View style={{ flexDirection: 'column' }} >
         <SettingItem
           title='Night Forecasts'

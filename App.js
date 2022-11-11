@@ -250,6 +250,7 @@ export default function App(props) {
                   <View ref={mainViewRef} style={{ flex: 1, backgroundColor: settings.dark ? Colors.darkBackground : Colors.lightBackground }}>
                     <Stack.Navigator headerMode='none'>
                       <Stack.Screen name="Root" component={HomeTabs} />
+                      <Stack.Screen name="Settings" component={SettingsScreen} />
                       {/* <Stack.Screen name="CityList" component={CityListScreen} />
                     <Stack.Screen name="Settings" component={SettingsScreen} /> */}
                     </Stack.Navigator>

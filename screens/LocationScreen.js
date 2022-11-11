@@ -4,7 +4,7 @@ import * as Location from 'expo-location';
 import iconv from 'iconv-lite';
 import React from 'react';
 import { ActivityIndicator, FlatList, Image, LayoutAnimation, Linking, Platform, StyleSheet, Text, TouchableHighlight, View, AppState } from 'react-native';
-import { Snackbar, Portal } from 'react-native-paper';
+import { Menu, Portal, Snackbar, useTheme } from 'react-native-paper';
 import { parseString } from 'react-native-xml2js';
 import Swiper from 'react-native-swiper';
 import { FavoritesContext } from '../components/FavoritesContext';
@@ -605,6 +605,8 @@ export default class CurrentLocation extends React.Component {
       <HeaderBar navigation={navigation} title={route?.params?.location ?? 'Location'} showBackButton={!isCurrLocation} /* subtitle={subtitle} */ >
         {site && <FavoriteIcon site={site} />}
         {site && <NightForecastsIcon />}
+        {site && <MenuIcon navigation={navigation} />}
+        {/* {site && <SettingsIcon navigation={navigation} />} */}
         {/* {hasLocation && <HeaderBarShareAction />} */}
       </HeaderBar>);
 
@@ -1066,6 +1068,39 @@ function NightForecastsIcon(props) {
       LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
       updateSetting("night", !settings.night);
     }} />;
+}
+
+function SettingsIcon({ navigation }) {
+  return <HeaderBarAction type="feather" name="settings" onPress={() => navigation?.navigate("Settings")} />;
+}
+
+function MenuIcon({ navigation }) {
+  const [visible, setVisible] = React.useState(false);
+  const openMenu = () => setVisible(true);
+  const closeMenu = () => setVisible(false);
+  const theme = useTheme({ colors: { text: "white" } });
+  return <Menu
+    theme={theme}
+    visible={visible}
+    onDismiss={closeMenu}
+    anchor={<HeaderBarAction type="material-community" name="dots-horizontal-circle-outline" onPress={openMenu} />}>
+    <Menu.Item title="Settings" icon="cog"
+      theme={theme}
+      onPress={() => {
+        navigation?.navigate("Settings");
+        closeMenu();
+      }
+      } />
+    <Menu.Item title="About" icon="information-outline"
+      theme={theme}
+      onPress={() => {
+        navigation?.navigate("About");
+        closeMenu();
+      }
+      } />
+  </Menu>;
+
+  return;
 }
 
 function getAsOfLabel(dateTime) {
