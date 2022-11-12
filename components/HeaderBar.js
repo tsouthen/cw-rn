@@ -1,6 +1,6 @@
 import React from 'react';
 import { Appbar } from 'react-native-paper';
-import { Icon } from 'react-native-elements';
+import { Icon } from './Icon';
 import { SettingsContext } from '../components/SettingsContext';
 import { ShareContext } from '../components/ShareContext';
 

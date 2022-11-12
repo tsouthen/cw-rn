@@ -15,7 +15,7 @@ import sitelocations from '../constants/sitelocations';
 import CityListScreen from './CityListScreen';
 const moment = require('moment');
 import HeaderBar, { HeaderBarAction, HeaderBarShareAction } from '../components/HeaderBar';
-import { Icon } from 'react-native-elements';
+import { Icon } from '../components/Icon';
 
 // const styles = StyleSheet.create({
 //   container: {

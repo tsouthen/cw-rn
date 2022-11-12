@@ -1,6 +1,6 @@
 import React from 'react';
 import { Platform } from 'react-native';
-import { Icon } from 'react-native-elements';
+import { Icon } from './Icon';
 import { BorderlessButton } from 'react-native-gesture-handler';
 
 export function HeaderButton(props) {

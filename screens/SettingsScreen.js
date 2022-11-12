@@ -1,9 +1,10 @@
 import React from 'react';
-import { View, Platform } from 'react-native';
-import { ListItem } from 'react-native-elements';
+import { View, Text } from 'react-native';
 import Colors from '../constants/Colors';
 import { SettingsContext } from '../components/SettingsContext';
 import HeaderBar from '../components/HeaderBar';
+import { Icon } from '../components/Icon';
+import { Switch } from 'react-native-paper';
 
 export default function SettingsScreen({ navigation }) {
   const { settings } = React.useContext(SettingsContext);
@@ -49,9 +50,12 @@ function useSetting(propName) {
 }
 
 function SettingItem(props) {
-  const { propName, name, type } = props;
+  const { propName, name, type, title } = props;
   const { settings, updateSetting } = React.useContext(SettingsContext);
   const [turnedOn, setTurnedOn] = React.useState(settings[propName]);
+  const viewStyle = { flexDirection: 'row', margin: 5, marginLeft: 10, alignItems: 'center' };
+  const color = settings.dark ? 'white' : 'black';
+  const textStyle = { flex: 1, fontSize: 18, fontFamily: 'montserrat', color: color, marginLeft: 0 };
 
   const onValueChanged = (value) => {
     setTurnedOn(value);
@@ -59,19 +63,9 @@ function SettingItem(props) {
   }
 
   return (
-    <ListItem
-      containerStyle={{ backgroundColor: settings.dark ? Colors.darkBackground : Colors.lightBackground }}
-      titleStyle={{ fontFamily: 'montserrat', color: settings.dark ? 'white' : 'black' }}
-      subtitleStyle={{ fontFamily: 'montserrat', color: settings.dark ? 'white' : 'black' }}
-      underlayColor={Colors.primaryLight}
-      leftIcon={{ name, type, color: settings.dark ? 'white' : 'black', size: 36 }}
-      switch={{
-        thumbColor: Platform.OS === 'ios' ? 'white' : Colors.primaryDark,
-        trackColor: { false: '#b2b2b2', true: Colors.primary },
-        ios_backgroundColor: '#eeeeee',
-        value: turnedOn,
-        onValueChange: (value) => { onValueChanged(value) },
-      }}
-      {...props}
-    />);
+    <View style={viewStyle}>
+      <Icon style={{ marginRight: 10 }} {...{ name, type }} color={color} />
+      <Text style={textStyle}>{title}</Text>
+      <Switch color={Colors.primary} value={turnedOn} onValueChange={onValueChanged} />
+    </View>);
 }

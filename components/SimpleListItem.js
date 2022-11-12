@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableHighlight } from 'react-native';
-import { Icon } from 'react-native-elements';
+import { Icon } from './Icon';
 import Colors from '../constants/Colors';
 import { SettingsContext } from '../components/SettingsContext';
 
