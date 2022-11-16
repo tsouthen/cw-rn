@@ -134,18 +134,23 @@ export default function App(props) {
   const Stack = createStackNavigator();
   const colorScheme = useColorScheme();
 
-  saveSettings = async (updatedSettings) => {
+  const saveSettings = async (updatedSettings) => {
     await JsonStorage.setItem('Settings', updatedSettings);
   }
 
-  updateSetting = (prop, value) => {
-    let newSettings = { ...settings };
-    newSettings[prop] = value;
+  const updateSetting = (prop, value) => {
+    let newSettings;
+    if (typeof prop === 'object') {
+      newSettings = { ...settings, ...prop };
+    } else if (typeof prop === 'string') {
+      newSettings = { ...settings };
+      newSettings[prop] = value;
+    }
     setSettings(newSettings);
     saveSettings(newSettings);
   }
 
-  loadSettings = async () => {
+  const loadSettings = async () => {
     let savedSettings = await JsonStorage.getItem('Settings');
     if (savedSettings !== null && typeof savedSettings === 'object')
       setSettings(savedSettings);
@@ -154,28 +159,28 @@ export default function App(props) {
   React.useEffect(() => {
     if (!isLoadingComplete)
       return;
-    updateSetting('dark', colorScheme === 'dark');
-    console.log(`Color scheme: ${colorScheme}`);
+    if (settings.autoAppearance)
+      updateSetting('dark', colorScheme === 'dark');
   }, [colorScheme, isLoadingComplete]);
 
-  saveFavorites = async (updatedFavorites) => {
+  const saveFavorites = async (updatedFavorites) => {
     await JsonStorage.setItem('Favorites', updatedFavorites);
   }
 
-  updateFavorites = (updatedFavorites) => {
+  const updateFavorites = (updatedFavorites) => {
     const newFavs = updatedFavorites.slice();
     setFavorites(newFavs);
     saveFavorites(newFavs)
   }
 
-  loadFavorites = async () => {
+  const loadFavorites = async () => {
     let savedFavorites = await JsonStorage.getItem('Favorites');
     if (savedFavorites !== null && Array.isArray(savedFavorites)) {
       setFavorites(savedFavorites);
     }
   }
 
-  onShare = async () => {
+  const onShare = async () => {
     if (!mainViewRef) {
       alert("Sorry, no view to share!");
       return;
