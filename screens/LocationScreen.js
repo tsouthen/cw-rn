@@ -709,7 +709,7 @@ function IndicatorBackgroundView() {
   }} />;
 }
 
-function iconCodeToImage(iconCode) {
+function iconCodeToImage(iconCode, isDark) {
   if (!CurrentLocation.isString(iconCode)) {
     // console.debug('Non-string icon code: ' + iconCode);
     // return require('../assets/images/light/clever_weather.png');
@@ -721,176 +721,83 @@ function iconCodeToImage(iconCode) {
 
   switch (iconCode) {
     case "sunrise":
-      return require('../assets/images/light/sunrise.png');
+      return isDark ? require('../assets/images/dark/sunrise.png') : require('../assets/images/light/sunrise.png');
     case "sunset":
-      return require('../assets/images/light/sunset.png');
+      return isDark ? require('../assets/images/dark/sunset.png') : require('../assets/images/light/sunset.png');
     case "thermometer_min":
-      return require('../assets/images/light/thermometer_min.png');
+      return isDark ? require('../assets/images/dark/thermometer_min.png') : require('../assets/images/light/thermometer_min.png');
     case "thermometer_max":
-      return require('../assets/images/light/thermometer_max.png');
+      return isDark ? require('../assets/images/dark/thermometer_max.png') : require('../assets/images/light/thermometer_max.png');
     case "thermometer_mean":
-      return require('../assets/images/light/thermometer_mean.png');
+      return isDark ? require('../assets/images/dark/thermometer_mean.png') : require('../assets/images/light/thermometer_mean.png');
     case 0: //sun
-      return require('../assets/images/light/sun.png');
+      return isDark ? require('../assets/images/dark/sun.png') : require('../assets/images/light/sun.png');
     case 1: //little clouds
-      return require('../assets/images/light/sun_cloud.png');
+      return isDark ? require('../assets/images/dark/sun_cloud.png') : require('../assets/images/light/sun_cloud.png');
     case 4: //increasing cloud
-      return require('../assets/images/light/sun_cloud_increasing.png');
+      return isDark ? require('../assets/images/dark/sun_cloud_increasing.png') : require('../assets/images/light/sun_cloud_increasing.png');
     case 5: //decreasing cloud
     case 20: //decreasing cloud
-      return require('../assets/images/light/sun_cloud_decreasing.png');
+      return isDark ? require('../assets/images/dark/sun_cloud_decreasing.png') : require('../assets/images/light/sun_cloud_decreasing.png');
     case 2: //big cloud with sun
     case 3: //sun behind big cloud
     case 22: //big cloud with sun
-      return require('../assets/images/light/cloud_sun.png');
+      return isDark ? require('../assets/images/dark/cloud_sun.png') : require('../assets/images/light/cloud_sun.png');
     case 6: //rain with sun behind cloud
-      return require('../assets/images/light/cloud_drizzle_sun_alt.png');
+      return isDark ? require('../assets/images/dark/cloud_drizzle_sun_alt.png') : require('../assets/images/light/cloud_drizzle_sun_alt.png');
     case 7: //rain and snow with sun behind cloud
     case 8: //snow with sun behind cloud
-      return require('../assets/images/light/cloud_snow_sun_alt.png');
+      return isDark ? require('../assets/images/dark/cloud_snow_sun_alt.png') : require('../assets/images/light/cloud_snow_sun_alt.png');
     case 9: //cloud rain lightning
-      return require('../assets/images/light/cloud_lightning_sun.png');
+      return isDark ? require('../assets/images/dark/cloud_lightning_sun.png') : require('../assets/images/light/cloud_lightning_sun.png');
     case 10: //cloud
-      return require('../assets/images/light/cloud.png');
+      return isDark ? require('../assets/images/dark/cloud.png') : require('../assets/images/light/cloud.png');
     case 11:
     case 28:
-      return require('../assets/images/light/cloud_drizzle_alt.png');
+      return isDark ? require('../assets/images/dark/cloud_drizzle_alt.png') : require('../assets/images/light/cloud_drizzle_alt.png');
     case 12:
-      return require('../assets/images/light/cloud_drizzle.png');
+      return isDark ? require('../assets/images/dark/cloud_drizzle.png') : require('../assets/images/light/cloud_drizzle.png');
     case 13:
-      return require('../assets/images/light/cloud_rain.png');
+      return isDark ? require('../assets/images/dark/cloud_rain.png') : require('../assets/images/light/cloud_rain.png');
     case 15:
     case 16:
     case 17:
     case 18:
-      return require('../assets/images/light/cloud_snow_alt.png');
+      return isDark ? require('../assets/images/dark/cloud_snow_alt.png') : require('../assets/images/light/cloud_snow_alt.png');
     case 19:
-      return require('../assets/images/light/cloud_lightning.png');
+      return isDark ? require('../assets/images/dark/cloud_lightning.png') : require('../assets/images/light/cloud_lightning.png');
     case 23:
     case 24:
     case 44:
-      return require('../assets/images/light/cloud_fog.png');
+      return isDark ? require('../assets/images/dark/cloud_fog.png') : require('../assets/images/light/cloud_fog.png');
     case 25:
     case 45:
-      return require('../assets/images/light/cloud_wind.png');
+      return isDark ? require('../assets/images/dark/cloud_wind.png') : require('../assets/images/light/cloud_wind.png');
     case 14: //freezing rain
     case 26: //ice
     case 27: //hail
-      return require('../assets/images/light/cloud_hail.png');
+      return isDark ? require('../assets/images/dark/cloud_hail.png') : require('../assets/images/light/cloud_hail.png');
     case 30:
-      return require('../assets/images/light/moon.png');
+      return isDark ? require('../assets/images/dark/moon.png') : require('../assets/images/light/moon.png');
     case 31:
     case 32:
     case 33:
-      return require('../assets/images/light/cloud_moon.png');
+      return isDark ? require('../assets/images/dark/cloud_moon.png') : require('../assets/images/light/cloud_moon.png');
     case 21:
     case 34:
-      return require('../assets/images/light/cloud_moon_increasing.png');
+      return isDark ? require('../assets/images/dark/cloud_moon_increasing.png') : require('../assets/images/light/cloud_moon_increasing.png');
     case 35:
-      return require('../assets/images/light/cloud_moon_decreasing.png');
+      return isDark ? require('../assets/images/dark/cloud_moon_decreasing.png') : require('../assets/images/light/cloud_moon_decreasing.png');
     case 36:
-      return require('../assets/images/light/cloud_drizzle_moon_alt.png');
+      return isDark ? require('../assets/images/dark/cloud_drizzle_moon_alt.png') : require('../assets/images/light/cloud_drizzle_moon_alt.png');
     case 37:
     case 38:
-      return require('../assets/images/light/cloud_snow_moon_alt.png');
+      return isDark ? require('../assets/images/dark/cloud_snow_moon_alt.png') : require('../assets/images/light/cloud_snow_moon_alt.png');
     case 39:
-      return require('../assets/images/light/cloud_lightning_moon.png');
+      return isDark ? require('../assets/images/dark/cloud_lightning_moon.png') : require('../assets/images/light/cloud_lightning_moon.png');
   }
   // console.debug('Unknown icon code: ' + iconCode);
   // return require('../assets/images/light/clever_weather.png');
-  return null;
-}
-
-function iconCodeToDarkImage(iconCode) {
-  if (!CurrentLocation.isString(iconCode)) {
-    // console.debug('Non-string icon code: ' + iconCode);
-    // return require('../assets/images/dark/clever_weather.png');
-    return null;
-  }
-
-  const codeNum = Number(iconCode.trim());
-  if (!isNaN(codeNum))
-    iconCode = codeNum;
-
-  switch (iconCode) {
-    case "sunrise":
-      return require('../assets/images/dark/sunrise.png');
-    case "sunset":
-      return require('../assets/images/dark/sunset.png');
-    case "thermometer_min":
-      return require('../assets/images/dark/thermometer_min.png');
-    case "thermometer_max":
-      return require('../assets/images/dark/thermometer_max.png');
-    case "thermometer_mean":
-      return require('../assets/images/dark/thermometer_mean.png');
-    case 0: //sun
-      return require('../assets/images/dark/sun.png');
-    case 1: //little clouds
-      return require('../assets/images/dark/sun_cloud.png');
-    case 4: //increasing cloud
-      return require('../assets/images/dark/sun_cloud_increasing.png');
-    case 5: //decreasing cloud
-    case 20: //decreasing cloud
-      return require('../assets/images/dark/sun_cloud_decreasing.png');
-    case 2: //big cloud with sun
-    case 3: //sun behind big cloud
-    case 22: //big cloud with sun
-      return require('../assets/images/dark/cloud_sun.png');
-    case 6: //rain with sun behind cloud
-      return require('../assets/images/dark/cloud_drizzle_sun_alt.png');
-    case 7: //rain and snow with sun behind cloud
-    case 8: //snow with sun behind cloud
-      return require('../assets/images/dark/cloud_snow_sun_alt.png');
-    case 9: //cloud rain lightning
-      return require('../assets/images/dark/cloud_lightning_sun.png');
-    case 10: //cloud
-      return require('../assets/images/dark/cloud.png');
-    case 11:
-    case 28:
-      return require('../assets/images/dark/cloud_drizzle_alt.png');
-    case 12:
-      return require('../assets/images/dark/cloud_drizzle.png');
-    case 13:
-      return require('../assets/images/dark/cloud_rain.png');
-    case 15:
-    case 16:
-    case 17:
-    case 18:
-      return require('../assets/images/dark/cloud_snow_alt.png');
-    case 19:
-      return require('../assets/images/dark/cloud_lightning.png');
-    case 23:
-    case 24:
-    case 44:
-      return require('../assets/images/dark/cloud_fog.png');
-    case 25:
-    case 45:
-      return require('../assets/images/dark/cloud_wind.png');
-    case 14: //freezing rain
-    case 26: //ice
-    case 27: //hail
-      return require('../assets/images/dark/cloud_hail.png');
-    case 30:
-      return require('../assets/images/dark/moon.png');
-    case 31:
-    case 32:
-    case 33:
-      return require('../assets/images/dark/cloud_moon.png');
-    case 21:
-    case 34:
-      return require('../assets/images/dark/cloud_moon_increasing.png');
-    case 35:
-      return require('../assets/images/dark/cloud_moon_decreasing.png');
-    case 36:
-      return require('../assets/images/dark/cloud_drizzle_moon_alt.png');
-    case 37:
-    case 38:
-      return require('../assets/images/dark/cloud_snow_moon_alt.png');
-    case 39:
-      return require('../assets/images/dark/cloud_lightning_moon.png');
-  }
-  // console.debug('Unknown icon code: ' + iconCode);
-  // return require('../assets/images/dark/clever_weather.png');
   return null;
 }
 
@@ -918,7 +825,7 @@ function ForecastItem(props) {
 
   let imageView;
   if (typeof icon === "string") {
-    imageView = <Image style={{ width: 50, height: 50, resizeMode: "contain" }} source={settings.dark ? iconCodeToDarkImage(icon) : iconCodeToImage(icon)} />;
+    imageView = <Image style={{ width: 50, height: 50, resizeMode: "contain" }} source={iconCodeToImage(icon, settings.dark)} />;
   } else if (!!icon && typeof icon === "object") {
     imageView = <Icon {...icon} size={32} iconStyle={{ width: 50, height: 50, paddingTop: 10, paddingLeft: 10 }} color={settings.dark ? "white" : "black"} />;
   } else if (!isOther) {
