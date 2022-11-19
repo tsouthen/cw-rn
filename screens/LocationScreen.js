@@ -89,7 +89,7 @@ export default class CurrentLocation extends React.Component {
       await this.makeRemoteRequest();
     }
 
-    AppState.addEventListener('change', this.handleAppStateChange);
+    this.subscription = AppState.addEventListener('change', this.handleAppStateChange);
 
     this.unsubscribeFocusSubscription = this.props.navigation.addListener('focus', (payLoad) => {
       this.possiblyRefreshData();
@@ -100,7 +100,10 @@ export default class CurrentLocation extends React.Component {
     if (this.unsubscribeFocusSubscription)
       this.unsubscribeFocusSubscription();
 
-    AppState.removeEventListener('change', this.handleAppStateChange);
+    if (this.subscription) {
+      this.subscription.remove();
+      this.subscription = null;
+    }
   }
 
   randomInRange = (start, end) => {
@@ -1101,8 +1104,8 @@ function useAppStateChange(callback) {
     function eventHandler(nextState) {
       savedCallback.current(nextState === 'active');
     }
-    AppState.addEventListener('change', eventHandler);
-    return () => AppState.removeEventListener('change', eventHandler);
+    const subscription = AppState.addEventListener('change', eventHandler);
+    return () => subscription.remove();
   }, []);
 }
 
