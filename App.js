@@ -24,6 +24,7 @@ import FavoritesScreen, { defaultFavorites } from './screens/FavoritesScreen';
 import LocationScreen from './screens/LocationScreen';
 import SearchScreen from './screens/SearchScreen';
 import SettingsScreen from './screens/SettingsScreen';
+import WarningScreen from './screens/WarningScreen';
 
 function LocationStackScreen() {
   const LocationStack = createStackNavigator();
@@ -256,6 +257,7 @@ export default function App(props) {
                     <Stack.Navigator headerMode='none'>
                       <Stack.Screen name="Root" component={HomeTabs} />
                       <Stack.Screen name="Settings" component={SettingsScreen} />
+                      <Stack.Screen name="Warning" component={WarningScreen} />
                       {/* <Stack.Screen name="CityList" component={CityListScreen} />
                     <Stack.Screen name="Settings" component={SettingsScreen} /> */}
                     </Stack.Navigator>

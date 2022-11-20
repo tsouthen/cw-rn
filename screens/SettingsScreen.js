@@ -32,7 +32,7 @@ export default function SettingsScreen({ navigation }) {
       </View>
     </View>
   );
-};
+}
 
 function AppearanceButtons(props) {
   const { settings, updateSetting } = React.useContext(SettingsContext);

@@ -260,8 +260,6 @@ export default class CurrentLocation extends React.Component {
           warning = this.upperCaseFirstLetters(warning);
           entry.warning = CurrentLocation.valueOrEmptyString(warning);
           entry.warningUrl = CurrentLocation.valueOrEmptyString(responseJson.warnings.url);
-          if (entry.warningUrl)
-            entry.warningUrl += "#wb-cont"; // to scroll to the main heading in the page
         }
         // console.debug(entry);
         entries.push(entry);
@@ -838,7 +836,7 @@ function ForecastItem(props) {
   let warningView = null;
   if (warning && warningUrl)
     warningView = (
-      <TouchableHighlight style={{ alignSelf: 'flex-start' }} underlayColor='#ffffff' onPress={() => Linking.openURL(warningUrl)}>
+      <TouchableHighlight style={{ alignSelf: 'flex-start' }} underlayColor='#ffffff' onPress={() => props.navigation.push("Warning", { url: warningUrl })}>
         <Text style={{ textDecorationLine: 'underline', fontSize: 13, color: Colors.primaryDark }}>{warning && isExpanded ? warning : ''}</Text>
       </TouchableHighlight>);
 
