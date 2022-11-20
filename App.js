@@ -26,12 +26,26 @@ import SearchScreen from './screens/SearchScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import WarningScreen from './screens/WarningScreen';
 
+function MainStack() {
+  const Stack = createStackNavigator();
+  return (
+    <Stack.Navigator headerMode='none'>
+      <Stack.Screen name="Root" component={HomeTabs} />
+      <Stack.Screen name="Settings" component={SettingsScreen} />
+      <Stack.Screen name="Warning" component={WarningScreen} />
+      <Stack.Screen name="City" component={LocationScreen} />
+      <Stack.Screen name="CityList" component={CityListScreen} />
+      <Stack.Screen name="Search" component={SearchScreen} />
+    </Stack.Navigator>
+  );
+}
+
 function LocationStackScreen() {
   const LocationStack = createStackNavigator();
   return (
     <LocationStack.Navigator screenOptions={defaultScreenOptions} headerMode='none'>
       <LocationStack.Screen name="Location" component={LocationScreen} />
-      <LocationStack.Screen name="City" component={LocationScreen} />
+      {/* <LocationStack.Screen name="City" component={LocationScreen} /> */}
     </LocationStack.Navigator>
   );
 }
@@ -41,7 +55,7 @@ function FavoritesStackScreen(props) {
   return (
     <FavoritesStack.Navigator screenOptions={defaultScreenOptions} headerMode='none'>
       <FavoritesStack.Screen name="Favorites" component={FavoritesScreen} />
-      <FavoritesStack.Screen name="City" component={LocationScreen} />
+      {/* <FavoritesStack.Screen name="City" component={LocationScreen} /> */}
     </FavoritesStack.Navigator>
   );
 }
@@ -51,9 +65,9 @@ function BrowseStackScreen(props) {
   return (
     <BrowseStack.Navigator screenOptions={defaultScreenOptions} headerMode='none'>
       <BrowseStack.Screen name="Browse" component={BrowseScreen} />
-      <BrowseStack.Screen name="CityList" component={CityListScreen} />
+      {/* <BrowseStack.Screen name="CityList" component={CityListScreen} />
       <BrowseStack.Screen name="City" component={LocationScreen} />
-      <BrowseStack.Screen name="Search" component={SearchScreen} />
+      <BrowseStack.Screen name="Search" component={SearchScreen} /> */}
     </BrowseStack.Navigator>
   );
 }
@@ -251,19 +265,11 @@ export default function App(props) {
           <SettingsContext.Provider value={{ settings, updateSetting }}>
             <FavoritesContext.Provider value={{ favorites, updateFavorites }}>
               <SafeAreaProvider>
-                {/* {Platform.OS === 'ios' && <StatusBar barStyle="default" />} */}
                 <NavigationContainer ref={containerRef} initialState={initialNavigationState} theme={settings.dark ? darkTheme : theme}>
                   <View ref={mainViewRef} style={{ flex: 1, backgroundColor: settings.dark ? Colors.darkBackground : Colors.lightBackground }}>
-                    <Stack.Navigator headerMode='none'>
-                      <Stack.Screen name="Root" component={HomeTabs} />
-                      <Stack.Screen name="Settings" component={SettingsScreen} />
-                      <Stack.Screen name="Warning" component={WarningScreen} />
-                      {/* <Stack.Screen name="CityList" component={CityListScreen} />
-                    <Stack.Screen name="Settings" component={SettingsScreen} /> */}
-                    </Stack.Navigator>
+                    <MainStack />
                   </View>
                 </NavigationContainer>
-                {/* <StatusBar /> */}
               </SafeAreaProvider>
             </FavoritesContext.Provider>
           </SettingsContext.Provider>

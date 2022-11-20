@@ -606,7 +606,7 @@ export default class CurrentLocation extends React.Component {
       <HeaderBar navigation={navigation} title={route?.params?.location ?? 'Location'} showBackButton={!isCurrLocation} /* subtitle={subtitle} */ >
         {site && <FavoriteIcon site={site} />}
         {site && <NightForecastsIcon />}
-        {site && <MenuIcon navigation={navigation} />}
+        {isCurrLocation && <MenuIcon navigation={navigation} />}
         {/* {site && <SettingsIcon navigation={navigation} />} */}
         {/* {hasLocation && <HeaderBarShareAction />} */}
       </HeaderBar>);
