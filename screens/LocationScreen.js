@@ -4,6 +4,7 @@ import * as Location from 'expo-location';
 import iconv from 'iconv-lite';
 import React from 'react';
 import { ActivityIndicator, FlatList, Image, LayoutAnimation, Linking, Platform, StyleSheet, Text, TouchableHighlight, View, AppState } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Menu, Portal, Snackbar, useTheme } from 'react-native-paper';
 import { parseString } from 'react-native-xml2js';
 import Swiper from 'react-native-swiper';
@@ -598,7 +599,7 @@ export default class CurrentLocation extends React.Component {
   render() {
     const { navigation, route } = this.props;
     const isCurrLocation = !route?.params?.site;
-    const hasLocation = !isCurrLocation || route?.params?.currentSite;
+    // const hasLocation = !isCurrLocation || route?.params?.currentSite;
     const site = route?.params?.site || route?.params?.currentSite;
     // const subtitle = route?.params?.location ? this.state.subtitle : null;
 
@@ -666,14 +667,22 @@ export default class CurrentLocation extends React.Component {
     }
 
     return (
-      <View style={{ flex: 1 }}>
+      <LocationSafeAreaView isCurrent={isCurrLocation}>
         {headerBar}
         <MySwiper {...{ pages, startPage }} />
-      </View>
+      </LocationSafeAreaView>
     );
   }
 };
 CurrentLocation.contextType = SettingsContext;
+
+function LocationSafeAreaView({ isCurrent, children }) {
+  const insets = useSafeAreaInsets();
+
+  return <View style={{ flex: 1, paddingBottom: isCurrent ? 0 : insets.bottom }}>
+    {children}
+  </View>;
+}
 
 function MySwiper({ startPage, pages }) {
   const [touching, setTouching] = React.useState(false);

@@ -112,23 +112,27 @@ function HomeTabs() {
       {...tabOptions}
     >
       <Tab.Screen name="Location" component={LocationStackScreen}
+        initialParams={{ isTabbed: true }}
         options={{
           title: 'Location',
           tabBarIcon: ({ focused, color, size }) => <TabBarIcon focused={focused} type='feather' name='map-pin' color={color} size={size} />
         }}
       />
       <Tab.Screen name="Favourites" component={FavoritesStackScreen}
+        initialParams={{ isTabbed: true }}
         options={{
           title: "Favourites", tabBarIcon: ({ focused, color, size }) => <TabBarIcon focused={focused} type='feather' name='star' color={color} size={size} />
         }}
       />
       <Tab.Screen name="Browse" component={BrowseStackScreen}
+        initialParams={{ isTabbed: true }}
         options={{
           title: 'Browse',
           tabBarIcon: ({ focused, color, size }) => <TabBarIcon focused={focused} type='feather' name='globe' color={color} size={size} />
         }}
       />
       {/* <Tab.Screen name="Settings" component={SettingsStackScreen}
+        initialParams={{isTabbed: true}}
         options={{
           title: 'Settings',
           tabBarIcon: ({ focused, color, size }) => <TabBarIcon focused={focused} type='feather' name='sliders' color={color} size={size} />

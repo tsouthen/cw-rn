@@ -5,12 +5,14 @@ import sitelocations from '../constants/sitelocations';
 import HeaderBar from '../components/HeaderBar';
 import { SettingsContext } from '../components/SettingsContext';
 import Colors from '../constants/Colors';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function CityListScreen(props) {
   const { settings } = React.useContext(SettingsContext);
   let { cities, showProv, title, ...rest } = props;
   const { navigation, route, onDelete, ...remainingProps } = rest;
   const prov = route?.params?.province;
+  const insets = useSafeAreaInsets();
 
   if (prov) {
     showProv = false;
@@ -59,7 +61,7 @@ export default function CityListScreen(props) {
 
   title = title ?? prov?.name;
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, paddingBottom: insets.bottom }}>
       {title && <HeaderBar navigation={navigation} title={title} showBackButton={!!prov} />}
       {getListComponent()}
     </View>
