@@ -1,11 +1,12 @@
 import React from 'react';
-import { View, FlatList } from 'react-native';
-//import DraggableFlatList from 'react-native-draggable-flatlist';
+import { View } from 'react-native';
+import DraggableFlatList, { useOnCellActiveAnimation } from 'react-native-draggable-flatlist';
 import { FavoritesContext } from '../components/FavoritesContext';
 import { SimpleListItem } from '../components/SimpleListItem';
 import HeaderBar, { HeaderBarAction } from '../components/HeaderBar';
 import Colors from '../constants/Colors';
 import { SettingsContext } from '../components/SettingsContext';
+import Animated, { interpolate, useAnimatedStyle } from "react-native-reanimated";
 
 export const defaultFavorites = [
   {
@@ -150,40 +151,46 @@ export default function FavoritesScreen({ navigation }) {
 
   const getListComponent = () => {
     return (
-      <FlatList
+      <DraggableFlatList
         style={{ flex: 1, backgroundColor: settings.dark ? Colors.darkBackground : Colors.lightBackground }}
+        containerStyle={{ flex: 1 }}
         data={data}
         keyExtractor={item => item.site}
-        // bounces={false}
-        // onDragEnd={({ data }) => updateFavorites(data)}
-        // onDelete={onDelete}
-        renderItem={({ item/* , index, move, moveEnd, isActive */ }) => {
+        onDragEnd={({ data }) => {
+          updateFavorites(data);
+          setData(data);
+        }}
+        onDelete={onDelete}
+        renderItem={({ item, getIndex, drag, isActive }) => {
           return (
-            <SimpleListItem
-              // isActive={isActive}
-              // onPressIn={() => {
-              //   if (editing) {
-              //     move();
-              //   }
-              // }}
-              onPress={() => {
-                if (!editing) {
-                  onPress(item)
-                }
-              }}
-            // onLongPress={() => {
-            //   if (editing) {
-            //     move();
-            //   }
-            // }}
-            // onPressOut={() => {
-            //   moveEnd();
-            // }}
-            // editing={editing}
-            // onDelete={onDelete && (() => { onDelete(item, index) })}
-            >
-              {`${item.nameEn}, ${item.prov}`}
-            </SimpleListItem>);
+            <ScaleYDecorator activeScale={editing ? 1.0 : 1.2}>
+              <SimpleListItem
+                isActive={isActive}
+                onPressIn={() => {
+                  if (editing) {
+                    drag();
+                  }
+                }}
+                onPress={() => {
+                  if (!editing) {
+                    onPress(item)
+                  }
+                }}
+                onLongPress={() => {
+                  if (!editing) {
+                    drag();
+                  }
+                }}
+                // onPressOut={() => {
+                //   moveEnd();
+                // }}
+                editing={editing}
+                onDelete={onDelete && (() => { onDelete(item, getIndex()) })}
+              >
+                {`${item.nameEn}, ${item.prov}`}
+              </SimpleListItem>
+            </ScaleYDecorator>
+          );
         }}
       />);
   }
@@ -196,5 +203,25 @@ export default function FavoritesScreen({ navigation }) {
       </HeaderBar>
       {getListComponent()}
     </View>
+  );
+}
+
+function ScaleYDecorator({ activeScale = 1.2, children }) {
+  const { isActive, onActiveAnim } = useOnCellActiveAnimation({
+    animationConfig: { mass: 0.1, restDisplacementThreshold: 0.0001 },
+  });
+
+  const style = useAnimatedStyle(() => {
+    const animScale = interpolate(onActiveAnim.value, [0, 1], [1, activeScale]);
+    const scale = isActive ? animScale : 1;
+    return {
+      transform: [{ scaleX: 1 }, { scaleY: scale }],
+    };
+  }, [isActive]);
+
+  return (
+    <Animated.View style={[style]}>
+      {children}
+    </Animated.View>
   );
 }
