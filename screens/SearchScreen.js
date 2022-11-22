@@ -63,6 +63,8 @@ export default function SearchScreen(props) {
           placeholderStyle={{ color: 'white', fontFamily: 'montserrat' }}
           placeholderTextColor='white'
           placeholder='Search cities'
+          autoCapitalize='none'
+          autoCorrect={false}
           autoFocus={true}
           selectionColor={Colors.primaryDark}
           returnKeyType='search'
