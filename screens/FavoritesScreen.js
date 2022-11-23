@@ -33,13 +33,11 @@ export default function FavoritesScreen({ navigation }) {
     let newData = data.slice();
     newData.splice(index, 1);
     updateFavorites(newData);
-    setData(newData);
   }
 
   const onSort = () => {
     let newData = data.sort((a, b) => a.nameEn.localeCompare(b.nameEn));
     updateFavorites(newData);
-    setData(newData);
   }
 
   const getListComponent = () => {
@@ -51,12 +49,11 @@ export default function FavoritesScreen({ navigation }) {
         keyExtractor={item => item.site}
         onDragEnd={({ data }) => {
           updateFavorites(data);
-          setData(data);
         }}
         onDelete={onDelete}
         renderItem={({ item, getIndex, drag, isActive }) => {
           return (
-            <ScaleYDecorator activeScale={editing ? 1.0 : 1.2}>
+            <ScaleYDecorator activeScale={1.2}>
               <SimpleListItem
                 isActive={isActive}
                 onPressIn={() => {
@@ -74,9 +71,6 @@ export default function FavoritesScreen({ navigation }) {
                     drag();
                   }
                 }}
-                // onPressOut={() => {
-                //   moveEnd();
-                // }}
                 editing={editing}
                 onDelete={onDelete && (() => { onDelete(item, getIndex()) })}
               >
