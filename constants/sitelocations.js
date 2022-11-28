@@ -5,7 +5,7 @@ export default [
 		nameFr: "Athabasca",
 		prov: "AB",
 		latitude: 54.72,
-		longitude: -113.28
+		longitude: -113.28,
 	},
 	{
 		site: "s0000002",
@@ -13,7 +13,7 @@ export default [
 		nameFr: "Clearwater",
 		prov: "BC",
 		latitude: 51.65,
-		longitude: -120.03
+		longitude: -120.03,
 	},
 	{
 		site: "s0000003",
@@ -21,7 +21,7 @@ export default [
 		nameFr: "Valemount",
 		prov: "BC",
 		latitude: 52.83,
-		longitude: -119.25
+		longitude: -119.25,
 	},
 	{
 		site: "s0000004",
@@ -29,7 +29,7 @@ export default [
 		nameFr: "Grand Forks",
 		prov: "BC",
 		latitude: 49.03,
-		longitude: -118.43
+		longitude: -118.43,
 	},
 	{
 		site: "s0000005",
@@ -37,7 +37,7 @@ export default [
 		nameFr: "McBride",
 		prov: "BC",
 		latitude: 53.3,
-		longitude: -120.17
+		longitude: -120.17,
 	},
 	{
 		site: "s0000006",
@@ -45,7 +45,7 @@ export default [
 		nameFr: "Merritt",
 		prov: "BC",
 		latitude: 50.11,
-		longitude: -120.79
+		longitude: -120.79,
 	},
 	{
 		site: "s0000007",
@@ -53,7 +53,7 @@ export default [
 		nameFr: "Masset",
 		prov: "BC",
 		latitude: 54.02,
-		longitude: -132.1
+		longitude: -132.1,
 	},
 	{
 		site: "s0000008",
@@ -61,7 +61,7 @@ export default [
 		nameFr: "Invermere",
 		prov: "BC",
 		latitude: 50.52,
-		longitude: -116.03
+		longitude: -116.03,
 	},
 	{
 		site: "s0000009",
@@ -69,7 +69,7 @@ export default [
 		nameFr: "Dome Creek",
 		prov: "BC",
 		latitude: 53.75,
-		longitude: -121.03
+		longitude: -121.03,
 	},
 	{
 		site: "s0000010",
@@ -77,7 +77,7 @@ export default [
 		nameFr: "Little Grand Rapids",
 		prov: "MB",
 		latitude: 52.04,
-		longitude: -95.46
+		longitude: -95.46,
 	},
 	{
 		site: "s0000011",
@@ -85,7 +85,7 @@ export default [
 		nameFr: "Oxford House",
 		prov: "MB",
 		latitude: 54.95,
-		longitude: -95.27
+		longitude: -95.27,
 	},
 	{
 		site: "s0000012",
@@ -93,7 +93,7 @@ export default [
 		nameFr: "Bissett",
 		prov: "MB",
 		latitude: 51.03,
-		longitude: -95.68
+		longitude: -95.68,
 	},
 	{
 		site: "s0000013",
@@ -101,7 +101,7 @@ export default [
 		nameFr: "Shamattawa",
 		prov: "MB",
 		latitude: 55.85,
-		longitude: -92.09
+		longitude: -92.09,
 	},
 	{
 		site: "s0000014",
@@ -109,7 +109,7 @@ export default [
 		nameFr: "York Factory",
 		prov: "MB",
 		latitude: 57,
-		longitude: -92.31
+		longitude: -92.31,
 	},
 	{
 		site: "s0000015",
@@ -117,7 +117,7 @@ export default [
 		nameFr: "Flin Flon",
 		prov: "MB",
 		latitude: 54.77,
-		longitude: -101.86
+		longitude: -101.86,
 	},
 	{
 		site: "s0000016",
@@ -125,7 +125,7 @@ export default [
 		nameFr: "Musgrave Harbour",
 		prov: "NL",
 		latitude: 49.45,
-		longitude: -53.97
+		longitude: -53.97,
 	},
 	{
 		site: "s0000017",
@@ -133,7 +133,7 @@ export default [
 		nameFr: "New-Wes-Valley",
 		prov: "NL",
 		latitude: 49.17,
-		longitude: -53.57
+		longitude: -53.57,
 	},
 	{
 		site: "s0000018",
@@ -141,7 +141,7 @@ export default [
 		nameFr: "Bay Roberts",
 		prov: "NL",
 		latitude: 47.6,
-		longitude: -53.27
+		longitude: -53.27,
 	},
 	{
 		site: "s0000019",
@@ -149,7 +149,7 @@ export default [
 		nameFr: "St. Alban's",
 		prov: "NL",
 		latitude: 47.88,
-		longitude: -55.85
+		longitude: -55.85,
 	},
 	{
 		site: "s0000020",
@@ -157,7 +157,7 @@ export default [
 		nameFr: "Cap Fourchu",
 		prov: "NS",
 		latitude: 45.72,
-		longitude: -60.23
+		longitude: -60.23,
 	},
 	{
 		site: "s0000021",
@@ -165,7 +165,7 @@ export default [
 		nameFr: "North Mountain (Cap-Breton)",
 		prov: "NS",
 		latitude: 46.88,
-		longitude: -60.58
+		longitude: -60.58,
 	},
 	{
 		site: "s0000022",
@@ -173,7 +173,7 @@ export default [
 		nameFr: "Marathon",
 		prov: "ON",
 		latitude: 48.72,
-		longitude: -86.38
+		longitude: -86.38,
 	},
 	{
 		site: "s0000023",
@@ -181,7 +181,7 @@ export default [
 		nameFr: "Terrace Bay",
 		prov: "ON",
 		latitude: 48.8,
-		longitude: -87.1
+		longitude: -87.1,
 	},
 	{
 		site: "s0000024",
@@ -189,7 +189,7 @@ export default [
 		nameFr: "Attawapiskat",
 		prov: "ON",
 		latitude: 52.92,
-		longitude: -82.43
+		longitude: -82.43,
 	},
 	{
 		site: "s0000025",
@@ -197,7 +197,7 @@ export default [
 		nameFr: "Gogama",
 		prov: "ON",
 		latitude: 47.67,
-		longitude: -81.73
+		longitude: -81.73,
 	},
 	{
 		site: "s0000026",
@@ -205,7 +205,7 @@ export default [
 		nameFr: "Maple Plains",
 		prov: "PE",
 		latitude: 46.28,
-		longitude: -63.57
+		longitude: -63.57,
 	},
 	{
 		site: "s0000027",
@@ -213,7 +213,7 @@ export default [
 		nameFr: "Murdochville",
 		prov: "QC",
 		latitude: 48.97,
-		longitude: -65.5
+		longitude: -65.5,
 	},
 	{
 		site: "s0000028",
@@ -221,7 +221,7 @@ export default [
 		nameFr: "Escoumins",
 		prov: "QC",
 		latitude: 48.42,
-		longitude: -69.42
+		longitude: -69.42,
 	},
 	{
 		site: "s0000029",
@@ -229,7 +229,7 @@ export default [
 		nameFr: "Saint-Michel-des-Saints",
 		prov: "QC",
 		latitude: 46.68,
-		longitude: -73.92
+		longitude: -73.92,
 	},
 	{
 		site: "s0000030",
@@ -237,7 +237,7 @@ export default [
 		nameFr: "Rancheria",
 		prov: "YT",
 		latitude: 60.09,
-		longitude: -130.6
+		longitude: -130.6,
 	},
 	{
 		site: "s0000031",
@@ -245,7 +245,7 @@ export default [
 		nameFr: "Dempster (Route)",
 		prov: "YT",
 		latitude: 66.16,
-		longitude: -137.15
+		longitude: -137.15,
 	},
 	{
 		site: "s0000032",
@@ -253,7 +253,7 @@ export default [
 		nameFr: "Burgeo",
 		prov: "NL",
 		latitude: 47.61,
-		longitude: -57.62
+		longitude: -57.62,
 	},
 	{
 		site: "s0000033",
@@ -261,7 +261,7 @@ export default [
 		nameFr: "Bouctouche",
 		prov: "NB",
 		latitude: 46.47,
-		longitude: -64.74
+		longitude: -64.74,
 	},
 	{
 		site: "s0000034",
@@ -269,7 +269,7 @@ export default [
 		nameFr: "Richibucto",
 		prov: "NB",
 		latitude: 46.68,
-		longitude: -64.88
+		longitude: -64.88,
 	},
 	{
 		site: "s0000035",
@@ -277,7 +277,7 @@ export default [
 		nameFr: "Rogersville",
 		prov: "NB",
 		latitude: 46.75,
-		longitude: -65.5
+		longitude: -65.5,
 	},
 	{
 		site: "s0000036",
@@ -285,7 +285,7 @@ export default [
 		nameFr: "Miramichi",
 		prov: "NB",
 		latitude: 47,
-		longitude: -65.47
+		longitude: -65.47,
 	},
 	{
 		site: "s0000037",
@@ -293,7 +293,7 @@ export default [
 		nameFr: "Point Escuminac",
 		prov: "NB",
 		latitude: 47.07,
-		longitude: -64.8
+		longitude: -64.8,
 	},
 	{
 		site: "s0000038",
@@ -301,7 +301,7 @@ export default [
 		nameFr: "Kouchibouguac",
 		prov: "NB",
 		latitude: 46.86,
-		longitude: -64.98
+		longitude: -64.98,
 	},
 	{
 		site: "s0000039",
@@ -309,7 +309,7 @@ export default [
 		nameFr: "St. Lawrence",
 		prov: "NL",
 		latitude: 46.92,
-		longitude: -55.4
+		longitude: -55.4,
 	},
 	{
 		site: "s0000040",
@@ -317,7 +317,7 @@ export default [
 		nameFr: "Parrsboro",
 		prov: "NS",
 		latitude: 45.41,
-		longitude: -64.33
+		longitude: -64.33,
 	},
 	{
 		site: "s0000041",
@@ -325,7 +325,7 @@ export default [
 		nameFr: "Bonavista",
 		prov: "NL",
 		latitude: 48.65,
-		longitude: -53.11
+		longitude: -53.11,
 	},
 	{
 		site: "s0000042",
@@ -333,7 +333,7 @@ export default [
 		nameFr: "Wreckhouse",
 		prov: "NL",
 		latitude: 47.71,
-		longitude: -59.31
+		longitude: -59.31,
 	},
 	{
 		site: "s0000043",
@@ -341,7 +341,7 @@ export default [
 		nameFr: "Edmundston",
 		prov: "NB",
 		latitude: 47.38,
-		longitude: -68.29
+		longitude: -68.29,
 	},
 	{
 		site: "s0000044",
@@ -349,7 +349,7 @@ export default [
 		nameFr: "Beauharnois",
 		prov: "QC",
 		latitude: 45.32,
-		longitude: -73.87
+		longitude: -73.87,
 	},
 	{
 		site: "s0000045",
@@ -357,7 +357,7 @@ export default [
 		nameFr: "Edmonton",
 		prov: "AB",
 		latitude: 53.53,
-		longitude: -113.49
+		longitude: -113.49,
 	},
 	{
 		site: "s0000046",
@@ -365,7 +365,7 @@ export default [
 		nameFr: "Candiac",
 		prov: "QC",
 		latitude: 45.38,
-		longitude: -73.52
+		longitude: -73.52,
 	},
 	{
 		site: "s0000047",
@@ -373,7 +373,7 @@ export default [
 		nameFr: "Calgary",
 		prov: "AB",
 		latitude: 51.05,
-		longitude: -114.06
+		longitude: -114.06,
 	},
 	{
 		site: "s0000048",
@@ -381,7 +381,7 @@ export default [
 		nameFr: "La Prairie",
 		prov: "QC",
 		latitude: 45.42,
-		longitude: -73.5
+		longitude: -73.5,
 	},
 	{
 		site: "s0000049",
@@ -389,7 +389,7 @@ export default [
 		nameFr: "Saint-Constant",
 		prov: "QC",
 		latitude: 45.37,
-		longitude: -73.57
+		longitude: -73.57,
 	},
 	{
 		site: "s0000050",
@@ -397,7 +397,7 @@ export default [
 		nameFr: "Sainte-Catherine",
 		prov: "QC",
 		latitude: 45.4,
-		longitude: -73.58
+		longitude: -73.58,
 	},
 	{
 		site: "s0000051",
@@ -405,7 +405,7 @@ export default [
 		nameFr: "Saint-Rémi",
 		prov: "QC",
 		latitude: 45.27,
-		longitude: -73.62
+		longitude: -73.62,
 	},
 	{
 		site: "s0000052",
@@ -413,7 +413,7 @@ export default [
 		nameFr: "Granby",
 		prov: "QC",
 		latitude: 45.4,
-		longitude: -72.73
+		longitude: -72.73,
 	},
 	{
 		site: "s0000053",
@@ -421,7 +421,7 @@ export default [
 		nameFr: "Cowansville",
 		prov: "QC",
 		latitude: 45.2,
-		longitude: -72.75
+		longitude: -72.75,
 	},
 	{
 		site: "s0000054",
@@ -429,7 +429,7 @@ export default [
 		nameFr: "Victoriaville",
 		prov: "QC",
 		latitude: 46.05,
-		longitude: -71.97
+		longitude: -71.97,
 	},
 	{
 		site: "s0000055",
@@ -437,7 +437,7 @@ export default [
 		nameFr: "Prévost",
 		prov: "QC",
 		latitude: 45.87,
-		longitude: -74.08
+		longitude: -74.08,
 	},
 	{
 		site: "s0000056",
@@ -445,7 +445,7 @@ export default [
 		nameFr: "Sainte-Sophie",
 		prov: "QC",
 		latitude: 45.82,
-		longitude: -73.9
+		longitude: -73.9,
 	},
 	{
 		site: "s0000057",
@@ -453,7 +453,7 @@ export default [
 		nameFr: "Saint-Lin-Laurentides",
 		prov: "QC",
 		latitude: 45.85,
-		longitude: -73.77
+		longitude: -73.77,
 	},
 	{
 		site: "s0000058",
@@ -461,7 +461,7 @@ export default [
 		nameFr: "Saint-Sauveur",
 		prov: "QC",
 		latitude: 45.9,
-		longitude: -74.17
+		longitude: -74.17,
 	},
 	{
 		site: "s0000059",
@@ -469,7 +469,7 @@ export default [
 		nameFr: "Saint-Hyacinthe",
 		prov: "QC",
 		latitude: 45.62,
-		longitude: -72.95
+		longitude: -72.95,
 	},
 	{
 		site: "s0000060",
@@ -477,7 +477,7 @@ export default [
 		nameFr: "Marieville",
 		prov: "QC",
 		latitude: 45.43,
-		longitude: -73.17
+		longitude: -73.17,
 	},
 	{
 		site: "s0000061",
@@ -485,7 +485,7 @@ export default [
 		nameFr: "Rigaud",
 		prov: "QC",
 		latitude: 45.48,
-		longitude: -74.3
+		longitude: -74.3,
 	},
 	{
 		site: "s0000062",
@@ -493,7 +493,7 @@ export default [
 		nameFr: "Saint-Lazare",
 		prov: "QC",
 		latitude: 45.4,
-		longitude: -74.13
+		longitude: -74.13,
 	},
 	{
 		site: "s0000063",
@@ -501,7 +501,7 @@ export default [
 		nameFr: "Farnham",
 		prov: "QC",
 		latitude: 45.28,
-		longitude: -72.98
+		longitude: -72.98,
 	},
 	{
 		site: "s0000064",
@@ -509,7 +509,7 @@ export default [
 		nameFr: "Thetford Mines",
 		prov: "QC",
 		latitude: 46.1,
-		longitude: -71.3
+		longitude: -71.3,
 	},
 	{
 		site: "s0000065",
@@ -517,7 +517,7 @@ export default [
 		nameFr: "Kugaaruk",
 		prov: "NU",
 		latitude: 68.53,
-		longitude: -89.83
+		longitude: -89.83,
 	},
 	{
 		site: "s0000066",
@@ -525,7 +525,7 @@ export default [
 		nameFr: "Highvale",
 		prov: "AB",
 		latitude: 53.45,
-		longitude: -114.52
+		longitude: -114.52,
 	},
 	{
 		site: "s0000067",
@@ -533,7 +533,7 @@ export default [
 		nameFr: "Pelican Narrows",
 		prov: "SK",
 		latitude: 55.19,
-		longitude: -102.93
+		longitude: -102.93,
 	},
 	{
 		site: "s0000068",
@@ -541,7 +541,7 @@ export default [
 		nameFr: "Strathmore",
 		prov: "AB",
 		latitude: 51.05,
-		longitude: -113.39
+		longitude: -113.39,
 	},
 	{
 		site: "s0000069",
@@ -549,7 +549,7 @@ export default [
 		nameFr: "Hawkesbury",
 		prov: "ON",
 		latitude: 45.61,
-		longitude: -74.6
+		longitude: -74.6,
 	},
 	{
 		site: "s0000070",
@@ -557,7 +557,7 @@ export default [
 		nameFr: "Alexandria",
 		prov: "ON",
 		latitude: 45.31,
-		longitude: -74.63
+		longitude: -74.63,
 	},
 	{
 		site: "s0000071",
@@ -565,7 +565,7 @@ export default [
 		nameFr: "Cornwall",
 		prov: "ON",
 		latitude: 45.03,
-		longitude: -74.73
+		longitude: -74.73,
 	},
 	{
 		site: "s0000072",
@@ -573,7 +573,7 @@ export default [
 		nameFr: "Morrisburg",
 		prov: "ON",
 		latitude: 44.9,
-		longitude: -75.18
+		longitude: -75.18,
 	},
 	{
 		site: "s0000073",
@@ -581,7 +581,7 @@ export default [
 		nameFr: "Parc Algonquin (Brent)",
 		prov: "ON",
 		latitude: 46.03,
-		longitude: -78.48
+		longitude: -78.48,
 	},
 	{
 		site: "s0000074",
@@ -589,7 +589,7 @@ export default [
 		nameFr: "Parc Algonquin (Lake of Two Rivers)",
 		prov: "ON",
 		latitude: 45.58,
-		longitude: -78.48
+		longitude: -78.48,
 	},
 	{
 		site: "s0000075",
@@ -597,7 +597,7 @@ export default [
 		nameFr: "Oxtongue Lake",
 		prov: "ON",
 		latitude: 45.36,
-		longitude: -78.92
+		longitude: -78.92,
 	},
 	{
 		site: "s0000076",
@@ -605,7 +605,7 @@ export default [
 		nameFr: "Welland",
 		prov: "ON",
 		latitude: 43,
-		longitude: -79.23
+		longitude: -79.23,
 	},
 	{
 		site: "s0000077",
@@ -613,7 +613,7 @@ export default [
 		nameFr: "Winchester",
 		prov: "ON",
 		latitude: 45.09,
-		longitude: -75.35
+		longitude: -75.35,
 	},
 	{
 		site: "s0000078",
@@ -621,7 +621,7 @@ export default [
 		nameFr: "Whistler",
 		prov: "BC",
 		latitude: 50.12,
-		longitude: -122.97
+		longitude: -122.97,
 	},
 	{
 		site: "s0000079",
@@ -629,7 +629,7 @@ export default [
 		nameFr: "La Scie",
 		prov: "NL",
 		latitude: 49.96,
-		longitude: -55.59
+		longitude: -55.59,
 	},
 	{
 		site: "s0000080",
@@ -637,7 +637,7 @@ export default [
 		nameFr: "Rondeau (Parc provincial)",
 		prov: "ON",
 		latitude: 42.3,
-		longitude: -81.89
+		longitude: -81.89,
 	},
 	{
 		site: "s0000081",
@@ -645,7 +645,7 @@ export default [
 		nameFr: "Coronach",
 		prov: "SK",
 		latitude: 49.11,
-		longitude: -105.51
+		longitude: -105.51,
 	},
 	{
 		site: "s0000082",
@@ -653,7 +653,7 @@ export default [
 		nameFr: "Placentia",
 		prov: "NL",
 		latitude: 47.3,
-		longitude: -53.99
+		longitude: -53.99,
 	},
 	{
 		site: "s0000083",
@@ -661,7 +661,7 @@ export default [
 		nameFr: "Sundre",
 		prov: "AB",
 		latitude: 51.8,
-		longitude: -114.64
+		longitude: -114.64,
 	},
 	{
 		site: "s0000084",
@@ -669,7 +669,7 @@ export default [
 		nameFr: "Halifax (Shearwater)",
 		prov: "NS",
 		latitude: 44.66,
-		longitude: -63.59
+		longitude: -63.59,
 	},
 	{
 		site: "s0000085",
@@ -677,7 +677,7 @@ export default [
 		nameFr: "Témiscamingue",
 		prov: "QC",
 		latitude: 47.55,
-		longitude: -79.23
+		longitude: -79.23,
 	},
 	{
 		site: "s0000086",
@@ -685,7 +685,7 @@ export default [
 		nameFr: "Indian Head",
 		prov: "SK",
 		latitude: 50.53,
-		longitude: -103.67
+		longitude: -103.67,
 	},
 	{
 		site: "s0000087",
@@ -693,7 +693,7 @@ export default [
 		nameFr: "Fort Qu'Appelle",
 		prov: "SK",
 		latitude: 50.77,
-		longitude: -103.79
+		longitude: -103.79,
 	},
 	{
 		site: "s0000088",
@@ -701,7 +701,7 @@ export default [
 		nameFr: "Killarney",
 		prov: "ON",
 		latitude: 46.06,
-		longitude: -80.98
+		longitude: -80.98,
 	},
 	{
 		site: "s0000089",
@@ -709,7 +709,7 @@ export default [
 		nameFr: "New Glasgow",
 		prov: "NS",
 		latitude: 45.59,
-		longitude: -62.64
+		longitude: -62.64,
 	},
 	{
 		site: "s0000090",
@@ -717,7 +717,7 @@ export default [
 		nameFr: "Caribou",
 		prov: "NS",
 		latitude: 45.73,
-		longitude: -62.72
+		longitude: -62.72,
 	},
 	{
 		site: "s0000091",
@@ -725,7 +725,7 @@ export default [
 		nameFr: "Bachelors Island",
 		prov: "MB",
 		latitude: 51.75,
-		longitude: -99.9
+		longitude: -99.9,
 	},
 	{
 		site: "s0000092",
@@ -733,7 +733,7 @@ export default [
 		nameFr: "Beaverlodge",
 		prov: "AB",
 		latitude: 55.21,
-		longitude: -119.43
+		longitude: -119.43,
 	},
 	{
 		site: "s0000093",
@@ -741,7 +741,7 @@ export default [
 		nameFr: "Brooks",
 		prov: "AB",
 		latitude: 50.57,
-		longitude: -111.9
+		longitude: -111.9,
 	},
 	{
 		site: "s0000094",
@@ -749,7 +749,7 @@ export default [
 		nameFr: "Mingan",
 		prov: "QC",
 		latitude: 50.3,
-		longitude: -64.03
+		longitude: -64.03,
 	},
 	{
 		site: "s0000095",
@@ -757,7 +757,7 @@ export default [
 		nameFr: "Nipawin",
 		prov: "SK",
 		latitude: 53.36,
-		longitude: -104.02
+		longitude: -104.02,
 	},
 	{
 		site: "s0000096",
@@ -765,7 +765,7 @@ export default [
 		nameFr: "Beaver Island",
 		prov: "NS",
 		latitude: 44.75,
-		longitude: -62.8
+		longitude: -62.8,
 	},
 	{
 		site: "s0000097",
@@ -773,7 +773,7 @@ export default [
 		nameFr: "Port-Menier",
 		prov: "QC",
 		latitude: 49.82,
-		longitude: -64.35
+		longitude: -64.35,
 	},
 	{
 		site: "s0000098",
@@ -781,7 +781,7 @@ export default [
 		nameFr: "Salaberry-de-Valleyfield",
 		prov: "QC",
 		latitude: 45.25,
-		longitude: -74.13
+		longitude: -74.13,
 	},
 	{
 		site: "s0000099",
@@ -789,7 +789,7 @@ export default [
 		nameFr: "Huntingdon",
 		prov: "QC",
 		latitude: 45.08,
-		longitude: -74.17
+		longitude: -74.17,
 	},
 	{
 		site: "s0000100",
@@ -797,7 +797,7 @@ export default [
 		nameFr: "Cartwright",
 		prov: "NL",
 		latitude: 53.71,
-		longitude: -57.01
+		longitude: -57.01,
 	},
 	{
 		site: "s0000101",
@@ -805,7 +805,7 @@ export default [
 		nameFr: "Bloodvein",
 		prov: "MB",
 		latitude: 51.79,
-		longitude: -96.71
+		longitude: -96.71,
 	},
 	{
 		site: "s0000102",
@@ -813,7 +813,7 @@ export default [
 		nameFr: "Berens River",
 		prov: "MB",
 		latitude: 52.37,
-		longitude: -97.03
+		longitude: -97.03,
 	},
 	{
 		site: "s0000103",
@@ -821,7 +821,7 @@ export default [
 		nameFr: "Atikokan",
 		prov: "ON",
 		latitude: 48.76,
-		longitude: -91.61
+		longitude: -91.61,
 	},
 	{
 		site: "s0000104",
@@ -829,7 +829,7 @@ export default [
 		nameFr: "Fort Frances",
 		prov: "ON",
 		latitude: 48.61,
-		longitude: -93.39
+		longitude: -93.39,
 	},
 	{
 		site: "s0000105",
@@ -837,7 +837,7 @@ export default [
 		nameFr: "Mine Centre",
 		prov: "ON",
 		latitude: 48.77,
-		longitude: -92.62
+		longitude: -92.62,
 	},
 	{
 		site: "s0000106",
@@ -845,7 +845,7 @@ export default [
 		nameFr: "100 Mile House",
 		prov: "BC",
 		latitude: 51.65,
-		longitude: -121.28
+		longitude: -121.28,
 	},
 	{
 		site: "s0000107",
@@ -853,7 +853,7 @@ export default [
 		nameFr: "Clinton",
 		prov: "BC",
 		latitude: 51.08,
-		longitude: -121.58
+		longitude: -121.58,
 	},
 	{
 		site: "s0000108",
@@ -861,7 +861,7 @@ export default [
 		nameFr: "Collingwood",
 		prov: "ON",
 		latitude: 44.5,
-		longitude: -80.24
+		longitude: -80.24,
 	},
 	{
 		site: "s0000109",
@@ -869,7 +869,7 @@ export default [
 		nameFr: "Shelburne",
 		prov: "NS",
 		latitude: 43.76,
-		longitude: -65.32
+		longitude: -65.32,
 	},
 	{
 		site: "s0000110",
@@ -877,7 +877,7 @@ export default [
 		nameFr: "Cap Baccaro",
 		prov: "NS",
 		latitude: 43.45,
-		longitude: -65.47
+		longitude: -65.47,
 	},
 	{
 		site: "s0000111",
@@ -885,7 +885,7 @@ export default [
 		nameFr: "Coronation",
 		prov: "AB",
 		latitude: 52.09,
-		longitude: -111.45
+		longitude: -111.45,
 	},
 	{
 		site: "s0000112",
@@ -893,7 +893,7 @@ export default [
 		nameFr: "Englee",
 		prov: "NL",
 		latitude: 50.73,
-		longitude: -56.1
+		longitude: -56.1,
 	},
 	{
 		site: "s0000113",
@@ -901,7 +901,7 @@ export default [
 		nameFr: "Uranium City",
 		prov: "SK",
 		latitude: 59.57,
-		longitude: -108.61
+		longitude: -108.61,
 	},
 	{
 		site: "s0000114",
@@ -909,7 +909,7 @@ export default [
 		nameFr: "Port-au-Choix",
 		prov: "NL",
 		latitude: 50.71,
-		longitude: -57.36
+		longitude: -57.36,
 	},
 	{
 		site: "s0000115",
@@ -917,7 +917,7 @@ export default [
 		nameFr: "Daniel's Harbour",
 		prov: "NL",
 		latitude: 50.24,
-		longitude: -57.59
+		longitude: -57.59,
 	},
 	{
 		site: "s0000116",
@@ -925,7 +925,7 @@ export default [
 		nameFr: "Badger",
 		prov: "NL",
 		latitude: 48.98,
-		longitude: -56.04
+		longitude: -56.04,
 	},
 	{
 		site: "s0000117",
@@ -933,7 +933,7 @@ export default [
 		nameFr: "Buchans",
 		prov: "NL",
 		latitude: 48.82,
-		longitude: -56.86
+		longitude: -56.86,
 	},
 	{
 		site: "s0000118",
@@ -941,7 +941,7 @@ export default [
 		nameFr: "Grand Falls-Windsor",
 		prov: "NL",
 		latitude: 48.94,
-		longitude: -55.67
+		longitude: -55.67,
 	},
 	{
 		site: "s0000119",
@@ -949,7 +949,7 @@ export default [
 		nameFr: "Willow Creek (Parc provincial)",
 		prov: "AB",
 		latitude: 50.12,
-		longitude: -113.77
+		longitude: -113.77,
 	},
 	{
 		site: "s0000120",
@@ -957,7 +957,7 @@ export default [
 		nameFr: "Claresholm",
 		prov: "AB",
 		latitude: 50.02,
-		longitude: -113.58
+		longitude: -113.58,
 	},
 	{
 		site: "s0000121",
@@ -965,7 +965,7 @@ export default [
 		nameFr: "Chevery",
 		prov: "QC",
 		latitude: 50.47,
-		longitude: -59.6
+		longitude: -59.6,
 	},
 	{
 		site: "s0000122",
@@ -973,7 +973,7 @@ export default [
 		nameFr: "Twillingate",
 		prov: "NL",
 		latitude: 49.65,
-		longitude: -54.76
+		longitude: -54.76,
 	},
 	{
 		site: "s0000123",
@@ -981,7 +981,7 @@ export default [
 		nameFr: "Manicouagan",
 		prov: "QC",
 		latitude: 50.64,
-		longitude: -68.74
+		longitude: -68.74,
 	},
 	{
 		site: "s0000124",
@@ -989,7 +989,7 @@ export default [
 		nameFr: "La Tuque",
 		prov: "QC",
 		latitude: 47.43,
-		longitude: -72.78
+		longitude: -72.78,
 	},
 	{
 		site: "s0000125",
@@ -997,7 +997,7 @@ export default [
 		nameFr: "Mauricie",
 		prov: "QC",
 		latitude: 46.8,
-		longitude: -72.97
+		longitude: -72.97,
 	},
 	{
 		site: "s0000126",
@@ -1005,7 +1005,7 @@ export default [
 		nameFr: "Calgary (Parc Olympique)",
 		prov: "AB",
 		latitude: 51.09,
-		longitude: -114.23
+		longitude: -114.23,
 	},
 	{
 		site: "s0000127",
@@ -1013,7 +1013,7 @@ export default [
 		nameFr: "Upsala",
 		prov: "ON",
 		latitude: 49.06,
-		longitude: -90.5
+		longitude: -90.5,
 	},
 	{
 		site: "s0000128",
@@ -1021,7 +1021,7 @@ export default [
 		nameFr: "St. Anthony",
 		prov: "NL",
 		latitude: 51.37,
-		longitude: -55.59
+		longitude: -55.59,
 	},
 	{
 		site: "s0000129",
@@ -1029,7 +1029,7 @@ export default [
 		nameFr: "Drumheller",
 		prov: "AB",
 		latitude: 51.46,
-		longitude: -112.72
+		longitude: -112.72,
 	},
 	{
 		site: "s0000130",
@@ -1037,7 +1037,7 @@ export default [
 		nameFr: "Pinawa",
 		prov: "MB",
 		latitude: 50.15,
-		longitude: -95.88
+		longitude: -95.88,
 	},
 	{
 		site: "s0000131",
@@ -1045,7 +1045,7 @@ export default [
 		nameFr: "Whiteshell",
 		prov: "MB",
 		latitude: 49.74,
-		longitude: -95.2
+		longitude: -95.2,
 	},
 	{
 		site: "s0000132",
@@ -1053,7 +1053,7 @@ export default [
 		nameFr: "Estevan Point",
 		prov: "BC",
 		latitude: 49.38,
-		longitude: -126.55
+		longitude: -126.55,
 	},
 	{
 		site: "s0000133",
@@ -1061,7 +1061,7 @@ export default [
 		nameFr: "Shaunavon",
 		prov: "SK",
 		latitude: 49.65,
-		longitude: -108.42
+		longitude: -108.42,
 	},
 	{
 		site: "s0000134",
@@ -1069,7 +1069,7 @@ export default [
 		nameFr: "Eastend",
 		prov: "SK",
 		latitude: 49.52,
-		longitude: -108.82
+		longitude: -108.82,
 	},
 	{
 		site: "s0000135",
@@ -1077,7 +1077,7 @@ export default [
 		nameFr: "Virden",
 		prov: "MB",
 		latitude: 49.85,
-		longitude: -100.93
+		longitude: -100.93,
 	},
 	{
 		site: "s0000136",
@@ -1085,7 +1085,7 @@ export default [
 		nameFr: "Melita",
 		prov: "MB",
 		latitude: 49.27,
-		longitude: -101
+		longitude: -101,
 	},
 	{
 		site: "s0000137",
@@ -1093,7 +1093,7 @@ export default [
 		nameFr: "Turtle Mountain (Parc provincial)",
 		prov: "MB",
 		latitude: 49.05,
-		longitude: -100.25
+		longitude: -100.25,
 	},
 	{
 		site: "s0000138",
@@ -1101,7 +1101,7 @@ export default [
 		nameFr: "East Point",
 		prov: "PE",
 		latitude: 46.45,
-		longitude: -62
+		longitude: -62,
 	},
 	{
 		site: "s0000139",
@@ -1109,7 +1109,7 @@ export default [
 		nameFr: "Swan River",
 		prov: "MB",
 		latitude: 52.11,
-		longitude: -101.27
+		longitude: -101.27,
 	},
 	{
 		site: "s0000140",
@@ -1117,7 +1117,7 @@ export default [
 		nameFr: "Eureka",
 		prov: "NU",
 		latitude: 79.98,
-		longitude: -85.95
+		longitude: -85.95,
 	},
 	{
 		site: "s0000141",
@@ -1125,7 +1125,7 @@ export default [
 		nameFr: "Vancouver",
 		prov: "BC",
 		latitude: 49.25,
-		longitude: -123.12
+		longitude: -123.12,
 	},
 	{
 		site: "s0000142",
@@ -1133,7 +1133,7 @@ export default [
 		nameFr: "L'Assomption",
 		prov: "QC",
 		latitude: 45.83,
-		longitude: -73.42
+		longitude: -73.42,
 	},
 	{
 		site: "s0000143",
@@ -1141,7 +1141,7 @@ export default [
 		nameFr: "Berthierville",
 		prov: "QC",
 		latitude: 46.08,
-		longitude: -73.18
+		longitude: -73.18,
 	},
 	{
 		site: "s0000144",
@@ -1149,7 +1149,7 @@ export default [
 		nameFr: "Contrecoeur",
 		prov: "QC",
 		latitude: 45.85,
-		longitude: -73.23
+		longitude: -73.23,
 	},
 	{
 		site: "s0000145",
@@ -1157,7 +1157,7 @@ export default [
 		nameFr: "Mascouche",
 		prov: "QC",
 		latitude: 45.75,
-		longitude: -73.6
+		longitude: -73.6,
 	},
 	{
 		site: "s0000146",
@@ -1165,7 +1165,7 @@ export default [
 		nameFr: "Prince George",
 		prov: "BC",
 		latitude: 53.92,
-		longitude: -122.75
+		longitude: -122.75,
 	},
 	{
 		site: "s0000147",
@@ -1173,7 +1173,7 @@ export default [
 		nameFr: "Sorel-Tracy",
 		prov: "QC",
 		latitude: 46.03,
-		longitude: -73.12
+		longitude: -73.12,
 	},
 	{
 		site: "s0000148",
@@ -1181,7 +1181,7 @@ export default [
 		nameFr: "Tracy",
 		prov: "QC",
 		latitude: 46.03,
-		longitude: -73.14
+		longitude: -73.14,
 	},
 	{
 		site: "s0000149",
@@ -1189,7 +1189,7 @@ export default [
 		nameFr: "Le Gardeur",
 		prov: "QC",
 		latitude: 45.75,
-		longitude: -73.47
+		longitude: -73.47,
 	},
 	{
 		site: "s0000150",
@@ -1197,7 +1197,7 @@ export default [
 		nameFr: "Morris",
 		prov: "MB",
 		latitude: 49.36,
-		longitude: -97.37
+		longitude: -97.37,
 	},
 	{
 		site: "s0000151",
@@ -1205,7 +1205,7 @@ export default [
 		nameFr: "Steinbach",
 		prov: "MB",
 		latitude: 49.53,
-		longitude: -96.68
+		longitude: -96.68,
 	},
 	{
 		site: "s0000152",
@@ -1213,7 +1213,7 @@ export default [
 		nameFr: "Dominion City",
 		prov: "MB",
 		latitude: 49.14,
-		longitude: -97.16
+		longitude: -97.16,
 	},
 	{
 		site: "s0000153",
@@ -1221,7 +1221,7 @@ export default [
 		nameFr: "Emerson",
 		prov: "MB",
 		latitude: 49.01,
-		longitude: -97.21
+		longitude: -97.21,
 	},
 	{
 		site: "s0000154",
@@ -1229,7 +1229,7 @@ export default [
 		nameFr: "Vita",
 		prov: "MB",
 		latitude: 49.13,
-		longitude: -96.56
+		longitude: -96.56,
 	},
 	{
 		site: "s0000155",
@@ -1237,7 +1237,7 @@ export default [
 		nameFr: "Gulf Islands (Secteur sud)",
 		prov: "BC",
 		latitude: 48.95,
-		longitude: -123.53
+		longitude: -123.53,
 	},
 	{
 		site: "s0000156",
@@ -1245,7 +1245,7 @@ export default [
 		nameFr: "Elk Island (Parc national)",
 		prov: "AB",
 		latitude: 53.61,
-		longitude: -112.87
+		longitude: -112.87,
 	},
 	{
 		site: "s0000157",
@@ -1253,7 +1253,7 @@ export default [
 		nameFr: "Tisdale",
 		prov: "SK",
 		latitude: 52.85,
-		longitude: -104.05
+		longitude: -104.05,
 	},
 	{
 		site: "s0000158",
@@ -1261,7 +1261,7 @@ export default [
 		nameFr: "Melfort",
 		prov: "SK",
 		latitude: 52.86,
-		longitude: -104.61
+		longitude: -104.61,
 	},
 	{
 		site: "s0000159",
@@ -1269,7 +1269,7 @@ export default [
 		nameFr: "Cardston",
 		prov: "AB",
 		latitude: 49.2,
-		longitude: -113.3
+		longitude: -113.3,
 	},
 	{
 		site: "s0000160",
@@ -1277,7 +1277,7 @@ export default [
 		nameFr: "Snow Lake",
 		prov: "MB",
 		latitude: 54.88,
-		longitude: -100.04
+		longitude: -100.04,
 	},
 	{
 		site: "s0000161",
@@ -1285,7 +1285,7 @@ export default [
 		nameFr: "Pukatawagan",
 		prov: "MB",
 		latitude: 55.74,
-		longitude: -101.32
+		longitude: -101.32,
 	},
 	{
 		site: "s0000162",
@@ -1293,7 +1293,7 @@ export default [
 		nameFr: "Nain",
 		prov: "NL",
 		latitude: 56.55,
-		longitude: -61.69
+		longitude: -61.69,
 	},
 	{
 		site: "s0000163",
@@ -1301,7 +1301,7 @@ export default [
 		nameFr: "Sutton",
 		prov: "QC",
 		latitude: 45.1,
-		longitude: -72.62
+		longitude: -72.62,
 	},
 	{
 		site: "s0000164",
@@ -1309,7 +1309,7 @@ export default [
 		nameFr: "Colville Lake",
 		prov: "NT",
 		latitude: 67.03,
-		longitude: -126.12
+		longitude: -126.12,
 	},
 	{
 		site: "s0000165",
@@ -1317,7 +1317,7 @@ export default [
 		nameFr: "Goderich",
 		prov: "ON",
 		latitude: 43.74,
-		longitude: -81.7
+		longitude: -81.7,
 	},
 	{
 		site: "s0000166",
@@ -1325,7 +1325,7 @@ export default [
 		nameFr: "Kincardine",
 		prov: "ON",
 		latitude: 44.17,
-		longitude: -81.63
+		longitude: -81.63,
 	},
 	{
 		site: "s0000167",
@@ -1333,7 +1333,7 @@ export default [
 		nameFr: "Garden Creek",
 		prov: "AB",
 		latitude: 58.7,
-		longitude: -113.88
+		longitude: -113.88,
 	},
 	{
 		site: "s0000168",
@@ -1341,7 +1341,7 @@ export default [
 		nameFr: "Brockville",
 		prov: "ON",
 		latitude: 44.6,
-		longitude: -75.69
+		longitude: -75.69,
 	},
 	{
 		site: "s0000169",
@@ -1349,7 +1349,7 @@ export default [
 		nameFr: "Gananoque",
 		prov: "ON",
 		latitude: 44.33,
-		longitude: -76.16
+		longitude: -76.16,
 	},
 	{
 		site: "s0000170",
@@ -1357,7 +1357,7 @@ export default [
 		nameFr: "Parc Waterton",
 		prov: "AB",
 		latitude: 49.05,
-		longitude: -113.91
+		longitude: -113.91,
 	},
 	{
 		site: "s0000171",
@@ -1365,7 +1365,7 @@ export default [
 		nameFr: "Altona",
 		prov: "MB",
 		latitude: 49.1,
-		longitude: -97.56
+		longitude: -97.56,
 	},
 	{
 		site: "s0000172",
@@ -1373,7 +1373,7 @@ export default [
 		nameFr: "Gretna",
 		prov: "MB",
 		latitude: 49.01,
-		longitude: -97.56
+		longitude: -97.56,
 	},
 	{
 		site: "s0000173",
@@ -1381,7 +1381,7 @@ export default [
 		nameFr: "Pemberton",
 		prov: "BC",
 		latitude: 50.32,
-		longitude: -122.8
+		longitude: -122.8,
 	},
 	{
 		site: "s0000174",
@@ -1389,7 +1389,7 @@ export default [
 		nameFr: "Îles-de-la-Madeleine",
 		prov: "QC",
 		latitude: 47.4,
-		longitude: -61.78
+		longitude: -61.78,
 	},
 	{
 		site: "s0000175",
@@ -1397,7 +1397,7 @@ export default [
 		nameFr: "Sparwood",
 		prov: "BC",
 		latitude: 49.72,
-		longitude: -114.9
+		longitude: -114.9,
 	},
 	{
 		site: "s0000176",
@@ -1405,7 +1405,7 @@ export default [
 		nameFr: "Esther",
 		prov: "AB",
 		latitude: 51.68,
-		longitude: -110.26
+		longitude: -110.26,
 	},
 	{
 		site: "s0000177",
@@ -1413,7 +1413,7 @@ export default [
 		nameFr: "Grise Fiord",
 		prov: "NU",
 		latitude: 76.42,
-		longitude: -82.9
+		longitude: -82.9,
 	},
 	{
 		site: "s0000178",
@@ -1421,7 +1421,7 @@ export default [
 		nameFr: "Hunters Point",
 		prov: "MB",
 		latitude: 53.03,
-		longitude: -100.94
+		longitude: -100.94,
 	},
 	{
 		site: "s0000179",
@@ -1429,7 +1429,7 @@ export default [
 		nameFr: "Three Hills",
 		prov: "AB",
 		latitude: 51.7,
-		longitude: -113.27
+		longitude: -113.27,
 	},
 	{
 		site: "s0000180",
@@ -1437,7 +1437,7 @@ export default [
 		nameFr: "Varennes",
 		prov: "QC",
 		latitude: 45.68,
-		longitude: -73.43
+		longitude: -73.43,
 	},
 	{
 		site: "s0000181",
@@ -1445,7 +1445,7 @@ export default [
 		nameFr: "Hopedale",
 		prov: "NL",
 		latitude: 55.47,
-		longitude: -60.22
+		longitude: -60.22,
 	},
 	{
 		site: "s0000182",
@@ -1453,7 +1453,7 @@ export default [
 		nameFr: "Donnacona",
 		prov: "QC",
 		latitude: 46.67,
-		longitude: -71.75
+		longitude: -71.75,
 	},
 	{
 		site: "s0000183",
@@ -1461,7 +1461,7 @@ export default [
 		nameFr: "Haines Junction",
 		prov: "YT",
 		latitude: 60.75,
-		longitude: -137.51
+		longitude: -137.51,
 	},
 	{
 		site: "s0000185",
@@ -1469,7 +1469,7 @@ export default [
 		nameFr: "Beauceville",
 		prov: "QC",
 		latitude: 46.2,
-		longitude: -70.78
+		longitude: -70.78,
 	},
 	{
 		site: "s0000186",
@@ -1477,7 +1477,7 @@ export default [
 		nameFr: "Lac-Mégantic",
 		prov: "QC",
 		latitude: 45.58,
-		longitude: -70.88
+		longitude: -70.88,
 	},
 	{
 		site: "s0000187",
@@ -1485,7 +1485,7 @@ export default [
 		nameFr: "Saint-Georges",
 		prov: "QC",
 		latitude: 46.12,
-		longitude: -70.67
+		longitude: -70.67,
 	},
 	{
 		site: "s0000188",
@@ -1493,7 +1493,7 @@ export default [
 		nameFr: "Fort Providence",
 		prov: "NT",
 		latitude: 61.35,
-		longitude: -117.65
+		longitude: -117.65,
 	},
 	{
 		site: "s0000189",
@@ -1501,7 +1501,7 @@ export default [
 		nameFr: "Pine Falls",
 		prov: "MB",
 		latitude: 50.57,
-		longitude: -96.22
+		longitude: -96.22,
 	},
 	{
 		site: "s0000190",
@@ -1509,7 +1509,7 @@ export default [
 		nameFr: "Victoria Beach",
 		prov: "MB",
 		latitude: 50.7,
-		longitude: -96.56
+		longitude: -96.56,
 	},
 	{
 		site: "s0000191",
@@ -1517,7 +1517,7 @@ export default [
 		nameFr: "Grand Beach",
 		prov: "MB",
 		latitude: 50.55,
-		longitude: -96.63
+		longitude: -96.63,
 	},
 	{
 		site: "s0000192",
@@ -1525,7 +1525,7 @@ export default [
 		nameFr: "Broadview",
 		prov: "SK",
 		latitude: 50.38,
-		longitude: -102.58
+		longitude: -102.58,
 	},
 	{
 		site: "s0000193",
@@ -1533,7 +1533,7 @@ export default [
 		nameFr: "Winnipeg",
 		prov: "MB",
 		latitude: 49.88,
-		longitude: -97.15
+		longitude: -97.15,
 	},
 	{
 		site: "s0000194",
@@ -1541,7 +1541,7 @@ export default [
 		nameFr: "Charlevoix",
 		prov: "QC",
 		latitude: 47.48,
-		longitude: -70.48
+		longitude: -70.48,
 	},
 	{
 		site: "s0000195",
@@ -1549,7 +1549,7 @@ export default [
 		nameFr: "Watrous",
 		prov: "SK",
 		latitude: 51.69,
-		longitude: -105.46
+		longitude: -105.46,
 	},
 	{
 		site: "s0000196",
@@ -1557,7 +1557,7 @@ export default [
 		nameFr: "Humboldt",
 		prov: "SK",
 		latitude: 52.2,
-		longitude: -105.12
+		longitude: -105.12,
 	},
 	{
 		site: "s0000197",
@@ -1565,7 +1565,7 @@ export default [
 		nameFr: "Alma",
 		prov: "QC",
 		latitude: 48.55,
-		longitude: -71.65
+		longitude: -71.65,
 	},
 	{
 		site: "s0000198",
@@ -1573,7 +1573,7 @@ export default [
 		nameFr: "Mont Carleton (Parc provincial)",
 		prov: "NB",
 		latitude: 47.38,
-		longitude: -66.83
+		longitude: -66.83,
 	},
 	{
 		site: "s0000199",
@@ -1581,7 +1581,7 @@ export default [
 		nameFr: "Saint-Quentin",
 		prov: "NB",
 		latitude: 47.51,
-		longitude: -67.39
+		longitude: -67.39,
 	},
 	{
 		site: "s0000200",
@@ -1589,7 +1589,7 @@ export default [
 		nameFr: "St. Leonard",
 		prov: "NB",
 		latitude: 47.17,
-		longitude: -67.92
+		longitude: -67.92,
 	},
 	{
 		site: "s0000201",
@@ -1597,7 +1597,7 @@ export default [
 		nameFr: "Grand-Sault",
 		prov: "NB",
 		latitude: 47.05,
-		longitude: -67.74
+		longitude: -67.74,
 	},
 	{
 		site: "s0000202",
@@ -1605,7 +1605,7 @@ export default [
 		nameFr: "Saint-Jean-sur-Richelieu",
 		prov: "QC",
 		latitude: 45.32,
-		longitude: -73.27
+		longitude: -73.27,
 	},
 	{
 		site: "s0000203",
@@ -1613,7 +1613,7 @@ export default [
 		nameFr: "Saint-Luc",
 		prov: "QC",
 		latitude: 45.35,
-		longitude: -73.3
+		longitude: -73.3,
 	},
 	{
 		site: "s0000204",
@@ -1621,7 +1621,7 @@ export default [
 		nameFr: "Vanier",
 		prov: "QC",
 		latitude: 46.82,
-		longitude: -71.26
+		longitude: -71.26,
 	},
 	{
 		site: "s0000205",
@@ -1629,7 +1629,7 @@ export default [
 		nameFr: "Bernières",
 		prov: "QC",
 		latitude: 46.69,
-		longitude: -71.36
+		longitude: -71.36,
 	},
 	{
 		site: "s0000206",
@@ -1637,7 +1637,7 @@ export default [
 		nameFr: "Ennadai",
 		prov: "NU",
 		latitude: 61.13,
-		longitude: -100.88
+		longitude: -100.88,
 	},
 	{
 		site: "s0000207",
@@ -1645,7 +1645,7 @@ export default [
 		nameFr: "Grand Rapids",
 		prov: "MB",
 		latitude: 53.18,
-		longitude: -99.26
+		longitude: -99.26,
 	},
 	{
 		site: "s0000208",
@@ -1653,7 +1653,7 @@ export default [
 		nameFr: "Southend Reindeer",
 		prov: "SK",
 		latitude: 56.32,
-		longitude: -103.27
+		longitude: -103.27,
 	},
 	{
 		site: "s0000209",
@@ -1661,7 +1661,7 @@ export default [
 		nameFr: "Assiniboia",
 		prov: "SK",
 		latitude: 49.63,
-		longitude: -105.99
+		longitude: -105.99,
 	},
 	{
 		site: "s0000210",
@@ -1669,7 +1669,7 @@ export default [
 		nameFr: "Fort Liard",
 		prov: "NT",
 		latitude: 60.23,
-		longitude: -123.47
+		longitude: -123.47,
 	},
 	{
 		site: "s0000211",
@@ -1677,7 +1677,7 @@ export default [
 		nameFr: "Saguenay",
 		prov: "QC",
 		latitude: 48.42,
-		longitude: -71.07
+		longitude: -71.07,
 	},
 	{
 		site: "s0000212",
@@ -1685,7 +1685,7 @@ export default [
 		nameFr: "Creston",
 		prov: "BC",
 		latitude: 49.1,
-		longitude: -116.5
+		longitude: -116.5,
 	},
 	{
 		site: "s0000213",
@@ -1693,7 +1693,7 @@ export default [
 		nameFr: "Mont-Tremblant",
 		prov: "QC",
 		latitude: 46.12,
-		longitude: -74.6
+		longitude: -74.6,
 	},
 	{
 		site: "s0000214",
@@ -1701,7 +1701,7 @@ export default [
 		nameFr: "Sainte-Agathe",
 		prov: "QC",
 		latitude: 46.05,
-		longitude: -74.28
+		longitude: -74.28,
 	},
 	{
 		site: "s0000216",
@@ -1709,7 +1709,7 @@ export default [
 		nameFr: "Vernon",
 		prov: "BC",
 		latitude: 50.26,
-		longitude: -119.27
+		longitude: -119.27,
 	},
 	{
 		site: "s0000217",
@@ -1717,7 +1717,7 @@ export default [
 		nameFr: "Hinton",
 		prov: "AB",
 		latitude: 53.41,
-		longitude: -117.56
+		longitude: -117.56,
 	},
 	{
 		site: "s0000218",
@@ -1725,7 +1725,7 @@ export default [
 		nameFr: "Jasper",
 		prov: "AB",
 		latitude: 52.89,
-		longitude: -118.17
+		longitude: -118.17,
 	},
 	{
 		site: "s0000219",
@@ -1733,7 +1733,7 @@ export default [
 		nameFr: "Leader",
 		prov: "SK",
 		latitude: 50.89,
-		longitude: -109.55
+		longitude: -109.55,
 	},
 	{
 		site: "s0000220",
@@ -1741,7 +1741,7 @@ export default [
 		nameFr: "Marble Mountain",
 		prov: "NL",
 		latitude: 48.94,
-		longitude: -57.84
+		longitude: -57.84,
 	},
 	{
 		site: "s0000221",
@@ -1749,7 +1749,7 @@ export default [
 		nameFr: "Corner Brook",
 		prov: "NL",
 		latitude: 48.94,
-		longitude: -57.97
+		longitude: -57.97,
 	},
 	{
 		site: "s0000222",
@@ -1757,7 +1757,7 @@ export default [
 		nameFr: "Lillooet",
 		prov: "BC",
 		latitude: 50.68,
-		longitude: -121.93
+		longitude: -121.93,
 	},
 	{
 		site: "s0000223",
@@ -1765,7 +1765,7 @@ export default [
 		nameFr: "Kejimkujik (Parc national)",
 		prov: "NS",
 		latitude: 44.39,
-		longitude: -65.29
+		longitude: -65.29,
 	},
 	{
 		site: "s0000224",
@@ -1773,7 +1773,7 @@ export default [
 		nameFr: "Malahat",
 		prov: "BC",
 		latitude: 48.55,
-		longitude: -123.57
+		longitude: -123.57,
 	},
 	{
 		site: "s0000225",
@@ -1781,7 +1781,7 @@ export default [
 		nameFr: "Rockglen",
 		prov: "SK",
 		latitude: 49.18,
-		longitude: -105.95
+		longitude: -105.95,
 	},
 	{
 		site: "s0000226",
@@ -1789,7 +1789,7 @@ export default [
 		nameFr: "Hope Slide",
 		prov: "BC",
 		latitude: 49.3,
-		longitude: -121.27
+		longitude: -121.27,
 	},
 	{
 		site: "s0000227",
@@ -1797,7 +1797,7 @@ export default [
 		nameFr: "Dease Lake",
 		prov: "BC",
 		latitude: 58.43,
-		longitude: -130.02
+		longitude: -130.02,
 	},
 	{
 		site: "s0000228",
@@ -1805,7 +1805,7 @@ export default [
 		nameFr: "Cassiar",
 		prov: "BC",
 		latitude: 59.29,
-		longitude: -129.85
+		longitude: -129.85,
 	},
 	{
 		site: "s0000229",
@@ -1813,7 +1813,7 @@ export default [
 		nameFr: "Lac La Biche",
 		prov: "AB",
 		latitude: 54.77,
-		longitude: -111.98
+		longitude: -111.98,
 	},
 	{
 		site: "s0000230",
@@ -1821,7 +1821,7 @@ export default [
 		nameFr: "Lucky Lake",
 		prov: "SK",
 		latitude: 50.99,
-		longitude: -107.13
+		longitude: -107.13,
 	},
 	{
 		site: "s0000231",
@@ -1829,7 +1829,7 @@ export default [
 		nameFr: "Ogoki",
 		prov: "ON",
 		latitude: 51.63,
-		longitude: -85.95
+		longitude: -85.95,
 	},
 	{
 		site: "s0000232",
@@ -1837,7 +1837,7 @@ export default [
 		nameFr: "Webequie",
 		prov: "ON",
 		latitude: 52.99,
-		longitude: -87.36
+		longitude: -87.36,
 	},
 	{
 		site: "s0000233",
@@ -1845,7 +1845,7 @@ export default [
 		nameFr: "Lansdowne House",
 		prov: "ON",
 		latitude: 52.22,
-		longitude: -87.89
+		longitude: -87.89,
 	},
 	{
 		site: "s0000234",
@@ -1853,7 +1853,7 @@ export default [
 		nameFr: "Gonzales Point",
 		prov: "BC",
 		latitude: 48.41,
-		longitude: -123.29
+		longitude: -123.29,
 	},
 	{
 		site: "s0000235",
@@ -1861,7 +1861,7 @@ export default [
 		nameFr: "Wingham",
 		prov: "ON",
 		latitude: 43.89,
-		longitude: -81.31
+		longitude: -81.31,
 	},
 	{
 		site: "s0000236",
@@ -1869,7 +1869,7 @@ export default [
 		nameFr: "Walkerton",
 		prov: "ON",
 		latitude: 44.13,
-		longitude: -81.15
+		longitude: -81.15,
 	},
 	{
 		site: "s0000237",
@@ -1877,7 +1877,7 @@ export default [
 		nameFr: "Dundalk",
 		prov: "ON",
 		latitude: 44.17,
-		longitude: -80.39
+		longitude: -80.39,
 	},
 	{
 		site: "s0000238",
@@ -1885,7 +1885,7 @@ export default [
 		nameFr: "North Perth",
 		prov: "ON",
 		latitude: 43.73,
-		longitude: -80.97
+		longitude: -80.97,
 	},
 	{
 		site: "s0000239",
@@ -1893,7 +1893,7 @@ export default [
 		nameFr: "Shelburne",
 		prov: "ON",
 		latitude: 44.08,
-		longitude: -80.2
+		longitude: -80.2,
 	},
 	{
 		site: "s0000240",
@@ -1901,7 +1901,7 @@ export default [
 		nameFr: "Mount Forest",
 		prov: "ON",
 		latitude: 43.98,
-		longitude: -80.74
+		longitude: -80.74,
 	},
 	{
 		site: "s0000241",
@@ -1909,7 +1909,7 @@ export default [
 		nameFr: "Waskesiu Lake",
 		prov: "SK",
 		latitude: 53.92,
-		longitude: -106.08
+		longitude: -106.08,
 	},
 	{
 		site: "s0000242",
@@ -1917,7 +1917,7 @@ export default [
 		nameFr: "Lytton",
 		prov: "BC",
 		latitude: 50.23,
-		longitude: -121.57
+		longitude: -121.57,
 	},
 	{
 		site: "s0000243",
@@ -1925,7 +1925,7 @@ export default [
 		nameFr: "Miscou Island",
 		prov: "NB",
 		latitude: 47.95,
-		longitude: -64.57
+		longitude: -64.57,
 	},
 	{
 		site: "s0000244",
@@ -1933,7 +1933,7 @@ export default [
 		nameFr: "Maniwaki",
 		prov: "QC",
 		latitude: 46.38,
-		longitude: -75.97
+		longitude: -75.97,
 	},
 	{
 		site: "s0000245",
@@ -1941,7 +1941,7 @@ export default [
 		nameFr: "La Vérendrye (Réserve faunique)",
 		prov: "QC",
 		latitude: 47.33,
-		longitude: -77
+		longitude: -77,
 	},
 	{
 		site: "s0000246",
@@ -1949,7 +1949,7 @@ export default [
 		nameFr: "Mont-Laurier",
 		prov: "QC",
 		latitude: 46.55,
-		longitude: -75.5
+		longitude: -75.5,
 	},
 	{
 		site: "s0000247",
@@ -1957,7 +1957,7 @@ export default [
 		nameFr: "Pitt Meadows",
 		prov: "BC",
 		latitude: 49.22,
-		longitude: -122.69
+		longitude: -122.69,
 	},
 	{
 		site: "s0000248",
@@ -1965,7 +1965,7 @@ export default [
 		nameFr: "Maple Creek",
 		prov: "SK",
 		latitude: 49.91,
-		longitude: -109.48
+		longitude: -109.48,
 	},
 	{
 		site: "s0000249",
@@ -1973,7 +1973,7 @@ export default [
 		nameFr: "Whati",
 		prov: "NT",
 		latitude: 63.14,
-		longitude: -117.27
+		longitude: -117.27,
 	},
 	{
 		site: "s0000250",
@@ -1981,7 +1981,7 @@ export default [
 		nameFr: "Fredericton",
 		prov: "NB",
 		latitude: 45.95,
-		longitude: -66.67
+		longitude: -66.67,
 	},
 	{
 		site: "s0000251",
@@ -1989,7 +1989,7 @@ export default [
 		nameFr: "Cobourg",
 		prov: "ON",
 		latitude: 43.96,
-		longitude: -78.16
+		longitude: -78.16,
 	},
 	{
 		site: "s0000252",
@@ -1997,7 +1997,7 @@ export default [
 		nameFr: "North Cape",
 		prov: "PE",
 		latitude: 47.07,
-		longitude: -64
+		longitude: -64,
 	},
 	{
 		site: "s0000253",
@@ -2005,7 +2005,7 @@ export default [
 		nameFr: "Rivière-du-Loup",
 		prov: "QC",
 		latitude: 47.83,
-		longitude: -69.53
+		longitude: -69.53,
 	},
 	{
 		site: "s0000254",
@@ -2013,7 +2013,7 @@ export default [
 		nameFr: "Trois-Pistoles",
 		prov: "QC",
 		latitude: 48.12,
-		longitude: -69.18
+		longitude: -69.18,
 	},
 	{
 		site: "s0000255",
@@ -2021,7 +2021,7 @@ export default [
 		nameFr: "Témiscouata",
 		prov: "QC",
 		latitude: 47.68,
-		longitude: -68.88
+		longitude: -68.88,
 	},
 	{
 		site: "s0000256",
@@ -2029,7 +2029,7 @@ export default [
 		nameFr: "Deerwood",
 		prov: "MB",
 		latitude: 49.4,
-		longitude: -98.39
+		longitude: -98.39,
 	},
 	{
 		site: "s0000257",
@@ -2037,7 +2037,7 @@ export default [
 		nameFr: "Carman",
 		prov: "MB",
 		latitude: 49.5,
-		longitude: -98
+		longitude: -98,
 	},
 	{
 		site: "s0000258",
@@ -2045,7 +2045,7 @@ export default [
 		nameFr: "Nelson",
 		prov: "BC",
 		latitude: 49.5,
-		longitude: -117.28
+		longitude: -117.28,
 	},
 	{
 		site: "s0000259",
@@ -2053,7 +2053,7 @@ export default [
 		nameFr: "Nakusp",
 		prov: "BC",
 		latitude: 50.25,
-		longitude: -117.8
+		longitude: -117.8,
 	},
 	{
 		site: "s0000260",
@@ -2061,7 +2061,7 @@ export default [
 		nameFr: "Nicolet",
 		prov: "QC",
 		latitude: 46.22,
-		longitude: -72.62
+		longitude: -72.62,
 	},
 	{
 		site: "s0000261",
@@ -2069,7 +2069,7 @@ export default [
 		nameFr: "Drummondville",
 		prov: "QC",
 		latitude: 45.88,
-		longitude: -72.48
+		longitude: -72.48,
 	},
 	{
 		site: "s0000262",
@@ -2077,7 +2077,7 @@ export default [
 		nameFr: "Saint-Nicéphore",
 		prov: "QC",
 		latitude: 45.83,
-		longitude: -72.42
+		longitude: -72.42,
 	},
 	{
 		site: "s0000263",
@@ -2085,7 +2085,7 @@ export default [
 		nameFr: "Kananaskis (Nakiska Ridgetop)",
 		prov: "AB",
 		latitude: 51.08,
-		longitude: -115.13
+		longitude: -115.13,
 	},
 	{
 		site: "s0000264",
@@ -2093,7 +2093,7 @@ export default [
 		nameFr: "North East Margaree",
 		prov: "NS",
 		latitude: 46.33,
-		longitude: -61.01
+		longitude: -61.01,
 	},
 	{
 		site: "s0000265",
@@ -2101,7 +2101,7 @@ export default [
 		nameFr: "Baddeck",
 		prov: "NS",
 		latitude: 46.1,
-		longitude: -60.75
+		longitude: -60.75,
 	},
 	{
 		site: "s0000266",
@@ -2109,7 +2109,7 @@ export default [
 		nameFr: "Hearst",
 		prov: "ON",
 		latitude: 49.69,
-		longitude: -83.65
+		longitude: -83.65,
 	},
 	{
 		site: "s0000267",
@@ -2117,7 +2117,7 @@ export default [
 		nameFr: "Hornepayne",
 		prov: "ON",
 		latitude: 49.25,
-		longitude: -84.78
+		longitude: -84.78,
 	},
 	{
 		site: "s0000268",
@@ -2125,7 +2125,7 @@ export default [
 		nameFr: "New Carlisle",
 		prov: "QC",
 		latitude: 48.02,
-		longitude: -65.33
+		longitude: -65.33,
 	},
 	{
 		site: "s0000269",
@@ -2133,7 +2133,7 @@ export default [
 		nameFr: "Bonaventure",
 		prov: "QC",
 		latitude: 48.05,
-		longitude: -65.48
+		longitude: -65.48,
 	},
 	{
 		site: "s0000270",
@@ -2141,7 +2141,7 @@ export default [
 		nameFr: "Dolbeau-Mistassini",
 		prov: "QC",
 		latitude: 48.88,
-		longitude: -72.23
+		longitude: -72.23,
 	},
 	{
 		site: "s0000272",
@@ -2149,7 +2149,7 @@ export default [
 		nameFr: "Onefour",
 		prov: "AB",
 		latitude: 49.12,
-		longitude: -110.47
+		longitude: -110.47,
 	},
 	{
 		site: "s0000273",
@@ -2157,7 +2157,7 @@ export default [
 		nameFr: "Oak Point",
 		prov: "MB",
 		latitude: 50.51,
-		longitude: -98.03
+		longitude: -98.03,
 	},
 	{
 		site: "s0000274",
@@ -2165,7 +2165,7 @@ export default [
 		nameFr: "Elbow",
 		prov: "SK",
 		latitude: 51.12,
-		longitude: -106.6
+		longitude: -106.6,
 	},
 	{
 		site: "s0000275",
@@ -2173,7 +2173,7 @@ export default [
 		nameFr: "Dawson",
 		prov: "YT",
 		latitude: 64.06,
-		longitude: -139.43
+		longitude: -139.43,
 	},
 	{
 		site: "s0000276",
@@ -2181,7 +2181,7 @@ export default [
 		nameFr: "McCreary",
 		prov: "MB",
 		latitude: 50.77,
-		longitude: -99.49
+		longitude: -99.49,
 	},
 	{
 		site: "s0000277",
@@ -2189,7 +2189,7 @@ export default [
 		nameFr: "Breton",
 		prov: "AB",
 		latitude: 53.11,
-		longitude: -114.47
+		longitude: -114.47,
 	},
 	{
 		site: "s0000278",
@@ -2197,7 +2197,7 @@ export default [
 		nameFr: "Wynyard",
 		prov: "SK",
 		latitude: 51.77,
-		longitude: -104.18
+		longitude: -104.18,
 	},
 	{
 		site: "s0000279",
@@ -2205,7 +2205,7 @@ export default [
 		nameFr: "Hendrickson Creek",
 		prov: "AB",
 		latitude: 53.77,
-		longitude: -118.37
+		longitude: -118.37,
 	},
 	{
 		site: "s0000280",
@@ -2213,7 +2213,7 @@ export default [
 		nameFr: "St. John's",
 		prov: "NL",
 		latitude: 47.57,
-		longitude: -52.73
+		longitude: -52.73,
 	},
 	{
 		site: "s0000281",
@@ -2221,7 +2221,7 @@ export default [
 		nameFr: "Midland",
 		prov: "ON",
 		latitude: 44.75,
-		longitude: -79.88
+		longitude: -79.88,
 	},
 	{
 		site: "s0000282",
@@ -2229,7 +2229,7 @@ export default [
 		nameFr: "Fort Erie",
 		prov: "ON",
 		latitude: 42.92,
-		longitude: -79.02
+		longitude: -79.02,
 	},
 	{
 		site: "s0000283",
@@ -2237,7 +2237,7 @@ export default [
 		nameFr: "Port Colborne",
 		prov: "ON",
 		latitude: 42.92,
-		longitude: -79.19
+		longitude: -79.19,
 	},
 	{
 		site: "s0000284",
@@ -2245,7 +2245,7 @@ export default [
 		nameFr: "Laurentides (Réserve faunique)",
 		prov: "QC",
 		latitude: 47.75,
-		longitude: -71.25
+		longitude: -71.25,
 	},
 	{
 		site: "s0000285",
@@ -2253,7 +2253,7 @@ export default [
 		nameFr: "Point Lepreau",
 		prov: "NB",
 		latitude: 45.07,
-		longitude: -66.45
+		longitude: -66.45,
 	},
 	{
 		site: "s0000286",
@@ -2261,7 +2261,7 @@ export default [
 		nameFr: "Esquimalt",
 		prov: "BC",
 		latitude: 48.45,
-		longitude: -123.42
+		longitude: -123.42,
 	},
 	{
 		site: "s0000287",
@@ -2269,7 +2269,7 @@ export default [
 		nameFr: "Parent",
 		prov: "QC",
 		latitude: 47.92,
-		longitude: -74.62
+		longitude: -74.62,
 	},
 	{
 		site: "s0000288",
@@ -2277,7 +2277,7 @@ export default [
 		nameFr: "Gouin (Réservoir)",
 		prov: "QC",
 		latitude: 48.63,
-		longitude: -74.9
+		longitude: -74.9,
 	},
 	{
 		site: "s0000289",
@@ -2285,7 +2285,7 @@ export default [
 		nameFr: "Pilot Mound",
 		prov: "MB",
 		latitude: 49.2,
-		longitude: -98.89
+		longitude: -98.89,
 	},
 	{
 		site: "s0000290",
@@ -2293,7 +2293,7 @@ export default [
 		nameFr: "Terrebonne",
 		prov: "QC",
 		latitude: 45.7,
-		longitude: -73.63
+		longitude: -73.63,
 	},
 	{
 		site: "s0000291",
@@ -2301,7 +2301,7 @@ export default [
 		nameFr: "Princeton",
 		prov: "BC",
 		latitude: 49.46,
-		longitude: -120.51
+		longitude: -120.51,
 	},
 	{
 		site: "s0000292",
@@ -2309,7 +2309,7 @@ export default [
 		nameFr: "Puntzi Mountain",
 		prov: "BC",
 		latitude: 52.17,
-		longitude: -124.2
+		longitude: -124.2,
 	},
 	{
 		site: "s0000293",
@@ -2317,7 +2317,7 @@ export default [
 		nameFr: "Burns Lake",
 		prov: "BC",
 		latitude: 54.23,
-		longitude: -125.75
+		longitude: -125.75,
 	},
 	{
 		site: "s0000294",
@@ -2325,7 +2325,7 @@ export default [
 		nameFr: "Port Alberni",
 		prov: "BC",
 		latitude: 49.24,
-		longitude: -124.8
+		longitude: -124.8,
 	},
 	{
 		site: "s0000295",
@@ -2333,7 +2333,7 @@ export default [
 		nameFr: "Tadoussac",
 		prov: "QC",
 		latitude: 48.15,
-		longitude: -69.72
+		longitude: -69.72,
 	},
 	{
 		site: "s0000296",
@@ -2341,7 +2341,7 @@ export default [
 		nameFr: "Coaticook",
 		prov: "QC",
 		latitude: 45.13,
-		longitude: -71.8
+		longitude: -71.8,
 	},
 	{
 		site: "s0000297",
@@ -2349,7 +2349,7 @@ export default [
 		nameFr: "Lacombe",
 		prov: "AB",
 		latitude: 52.46,
-		longitude: -113.73
+		longitude: -113.73,
 	},
 	{
 		site: "s0000298",
@@ -2357,7 +2357,7 @@ export default [
 		nameFr: "Cape Race",
 		prov: "NL",
 		latitude: 46.66,
-		longitude: -53.07
+		longitude: -53.07,
 	},
 	{
 		site: "s0000299",
@@ -2365,7 +2365,7 @@ export default [
 		nameFr: "Red Earth Creek",
 		prov: "AB",
 		latitude: 56.54,
-		longitude: -115.29
+		longitude: -115.29,
 	},
 	{
 		site: "s0000300",
@@ -2373,7 +2373,7 @@ export default [
 		nameFr: "Rosetown",
 		prov: "SK",
 		latitude: 51.55,
-		longitude: -107.99
+		longitude: -107.99,
 	},
 	{
 		site: "s0000301",
@@ -2381,7 +2381,7 @@ export default [
 		nameFr: "Bancroft",
 		prov: "ON",
 		latitude: 45.06,
-		longitude: -77.76
+		longitude: -77.76,
 	},
 	{
 		site: "s0000302",
@@ -2389,7 +2389,7 @@ export default [
 		nameFr: "Barry's Bay",
 		prov: "ON",
 		latitude: 45.49,
-		longitude: -77.68
+		longitude: -77.68,
 	},
 	{
 		site: "s0000303",
@@ -2397,7 +2397,7 @@ export default [
 		nameFr: "Haliburton",
 		prov: "ON",
 		latitude: 45.05,
-		longitude: -78.51
+		longitude: -78.51,
 	},
 	{
 		site: "s0000304",
@@ -2405,7 +2405,7 @@ export default [
 		nameFr: "Apsley",
 		prov: "ON",
 		latitude: 44.76,
-		longitude: -78.09
+		longitude: -78.09,
 	},
 	{
 		site: "s0000305",
@@ -2413,7 +2413,7 @@ export default [
 		nameFr: "Kaladar",
 		prov: "ON",
 		latitude: 44.65,
-		longitude: -77.12
+		longitude: -77.12,
 	},
 	{
 		site: "s0000306",
@@ -2421,7 +2421,7 @@ export default [
 		nameFr: "Rocky Mountain House",
 		prov: "AB",
 		latitude: 52.37,
-		longitude: -114.92
+		longitude: -114.92,
 	},
 	{
 		site: "s0000307",
@@ -2429,7 +2429,7 @@ export default [
 		nameFr: "St. Peter's",
 		prov: "NS",
 		latitude: 45.66,
-		longitude: -60.88
+		longitude: -60.88,
 	},
 	{
 		site: "s0000308",
@@ -2437,7 +2437,7 @@ export default [
 		nameFr: "Hart Island",
 		prov: "NS",
 		latitude: 45.35,
-		longitude: -60.98
+		longitude: -60.98,
 	},
 	{
 		site: "s0000309",
@@ -2445,7 +2445,7 @@ export default [
 		nameFr: "Rock River",
 		prov: "YT",
 		latitude: 66.98,
-		longitude: -136.22
+		longitude: -136.22,
 	},
 	{
 		site: "s0000310",
@@ -2453,7 +2453,7 @@ export default [
 		nameFr: "Crowsnest",
 		prov: "AB",
 		latitude: 49.63,
-		longitude: -114.69
+		longitude: -114.69,
 	},
 	{
 		site: "s0000311",
@@ -2461,7 +2461,7 @@ export default [
 		nameFr: "Camrose",
 		prov: "AB",
 		latitude: 53.02,
-		longitude: -112.82
+		longitude: -112.82,
 	},
 	{
 		site: "s0000312",
@@ -2469,7 +2469,7 @@ export default [
 		nameFr: "Wetaskiwin",
 		prov: "AB",
 		latitude: 52.97,
-		longitude: -113.38
+		longitude: -113.38,
 	},
 	{
 		site: "s0000313",
@@ -2477,7 +2477,7 @@ export default [
 		nameFr: "Milk River",
 		prov: "AB",
 		latitude: 49.15,
-		longitude: -112.09
+		longitude: -112.09,
 	},
 	{
 		site: "s0000314",
@@ -2485,7 +2485,7 @@ export default [
 		nameFr: "Percé",
 		prov: "QC",
 		latitude: 48.53,
-		longitude: -64.22
+		longitude: -64.22,
 	},
 	{
 		site: "s0000315",
@@ -2493,7 +2493,7 @@ export default [
 		nameFr: "Chandler",
 		prov: "QC",
 		latitude: 48.35,
-		longitude: -64.68
+		longitude: -64.68,
 	},
 	{
 		site: "s0000316",
@@ -2501,7 +2501,7 @@ export default [
 		nameFr: "Gibsons",
 		prov: "BC",
 		latitude: 49.4,
-		longitude: -123.5
+		longitude: -123.5,
 	},
 	{
 		site: "s0000317",
@@ -2509,7 +2509,7 @@ export default [
 		nameFr: "Sechelt",
 		prov: "BC",
 		latitude: 49.47,
-		longitude: -123.77
+		longitude: -123.77,
 	},
 	{
 		site: "s0000318",
@@ -2517,7 +2517,7 @@ export default [
 		nameFr: "Halifax",
 		prov: "NS",
 		latitude: 44.87,
-		longitude: -63.72
+		longitude: -63.72,
 	},
 	{
 		site: "s0000319",
@@ -2525,7 +2525,7 @@ export default [
 		nameFr: "Grande-Vallée",
 		prov: "QC",
 		latitude: 49.22,
-		longitude: -65.13
+		longitude: -65.13,
 	},
 	{
 		site: "s0000320",
@@ -2533,7 +2533,7 @@ export default [
 		nameFr: "Cap Chat",
 		prov: "QC",
 		latitude: 49.1,
-		longitude: -66.68
+		longitude: -66.68,
 	},
 	{
 		site: "s0000321",
@@ -2541,7 +2541,7 @@ export default [
 		nameFr: "Gaspésie (Parc national)",
 		prov: "QC",
 		latitude: 48.93,
-		longitude: -66.28
+		longitude: -66.28,
 	},
 	{
 		site: "s0000322",
@@ -2549,7 +2549,7 @@ export default [
 		nameFr: "Sainte-Anne-Des-Monts",
 		prov: "QC",
 		latitude: 49.13,
-		longitude: -66.5
+		longitude: -66.5,
 	},
 	{
 		site: "s0000323",
@@ -2557,7 +2557,7 @@ export default [
 		nameFr: "Squamish",
 		prov: "BC",
 		latitude: 49.75,
-		longitude: -123.13
+		longitude: -123.13,
 	},
 	{
 		site: "s0000324",
@@ -2565,7 +2565,7 @@ export default [
 		nameFr: "Salmon Arm",
 		prov: "BC",
 		latitude: 50.7,
-		longitude: -119.27
+		longitude: -119.27,
 	},
 	{
 		site: "s0000325",
@@ -2573,7 +2573,7 @@ export default [
 		nameFr: "Stratford",
 		prov: "ON",
 		latitude: 43.37,
-		longitude: -80.98
+		longitude: -80.98,
 	},
 	{
 		site: "s0000326",
@@ -2581,7 +2581,7 @@ export default [
 		nameFr: "London",
 		prov: "ON",
 		latitude: 42.97,
-		longitude: -81.23
+		longitude: -81.23,
 	},
 	{
 		site: "s0000327",
@@ -2589,7 +2589,7 @@ export default [
 		nameFr: "Woodstock",
 		prov: "ON",
 		latitude: 43.14,
-		longitude: -80.74
+		longitude: -80.74,
 	},
 	{
 		site: "s0000328",
@@ -2597,7 +2597,7 @@ export default [
 		nameFr: "Strathroy",
 		prov: "ON",
 		latitude: 42.96,
-		longitude: -81.62
+		longitude: -81.62,
 	},
 	{
 		site: "s0000329",
@@ -2605,7 +2605,7 @@ export default [
 		nameFr: "St. Thomas",
 		prov: "ON",
 		latitude: 42.78,
-		longitude: -81.19
+		longitude: -81.19,
 	},
 	{
 		site: "s0000330",
@@ -2613,7 +2613,7 @@ export default [
 		nameFr: "Spiritwood",
 		prov: "SK",
 		latitude: 53.37,
-		longitude: -107.52
+		longitude: -107.52,
 	},
 	{
 		site: "s0000331",
@@ -2621,7 +2621,7 @@ export default [
 		nameFr: "Saint Andrews",
 		prov: "NB",
 		latitude: 45.08,
-		longitude: -67.06
+		longitude: -67.06,
 	},
 	{
 		site: "s0000332",
@@ -2629,7 +2629,7 @@ export default [
 		nameFr: "St. Stephen",
 		prov: "NB",
 		latitude: 45.22,
-		longitude: -67.33
+		longitude: -67.33,
 	},
 	{
 		site: "s0000333",
@@ -2637,7 +2637,7 @@ export default [
 		nameFr: "La Malbaie",
 		prov: "QC",
 		latitude: 47.65,
-		longitude: -70.15
+		longitude: -70.15,
 	},
 	{
 		site: "s0000334",
@@ -2645,7 +2645,7 @@ export default [
 		nameFr: "Montmagny",
 		prov: "QC",
 		latitude: 46.98,
-		longitude: -70.55
+		longitude: -70.55,
 	},
 	{
 		site: "s0000335",
@@ -2653,7 +2653,7 @@ export default [
 		nameFr: "Kamouraska",
 		prov: "QC",
 		latitude: 47.57,
-		longitude: -69.87
+		longitude: -69.87,
 	},
 	{
 		site: "s0000336",
@@ -2661,7 +2661,7 @@ export default [
 		nameFr: "L'Islet",
 		prov: "QC",
 		latitude: 47.1,
-		longitude: -70.35
+		longitude: -70.35,
 	},
 	{
 		site: "s0000337",
@@ -2669,7 +2669,7 @@ export default [
 		nameFr: "Sprague",
 		prov: "MB",
 		latitude: 49.04,
-		longitude: -95.64
+		longitude: -95.64,
 	},
 	{
 		site: "s0000338",
@@ -2677,7 +2677,7 @@ export default [
 		nameFr: "Sachs Harbour",
 		prov: "NT",
 		latitude: 71.98,
-		longitude: -125.24
+		longitude: -125.24,
 	},
 	{
 		site: "s0000339",
@@ -2685,7 +2685,7 @@ export default [
 		nameFr: "Fisher Branch",
 		prov: "MB",
 		latitude: 51.08,
-		longitude: -97.62
+		longitude: -97.62,
 	},
 	{
 		site: "s0000340",
@@ -2693,7 +2693,7 @@ export default [
 		nameFr: "Sambaa K'e",
 		prov: "NT",
 		latitude: 60.43,
-		longitude: -121.25
+		longitude: -121.25,
 	},
 	{
 		site: "s0000341",
@@ -2701,7 +2701,7 @@ export default [
 		nameFr: "Tetsa River (Parc provincial)",
 		prov: "BC",
 		latitude: 58.65,
-		longitude: -123.95
+		longitude: -123.95,
 	},
 	{
 		site: "s0000342",
@@ -2709,7 +2709,7 @@ export default [
 		nameFr: "Baie-Saint-Paul",
 		prov: "QC",
 		latitude: 47.45,
-		longitude: -70.5
+		longitude: -70.5,
 	},
 	{
 		site: "s0000343",
@@ -2717,7 +2717,7 @@ export default [
 		nameFr: "Biggar",
 		prov: "SK",
 		latitude: 52.06,
-		longitude: -107.98
+		longitude: -107.98,
 	},
 	{
 		site: "s0000344",
@@ -2725,7 +2725,7 @@ export default [
 		nameFr: "Scott",
 		prov: "SK",
 		latitude: 52.37,
-		longitude: -108.83
+		longitude: -108.83,
 	},
 	{
 		site: "s0000345",
@@ -2733,7 +2733,7 @@ export default [
 		nameFr: "Magog",
 		prov: "QC",
 		latitude: 45.27,
-		longitude: -72.15
+		longitude: -72.15,
 	},
 	{
 		site: "s0000346",
@@ -2741,7 +2741,7 @@ export default [
 		nameFr: "Trois-Rivières",
 		prov: "QC",
 		latitude: 46.35,
-		longitude: -72.58
+		longitude: -72.58,
 	},
 	{
 		site: "s0000347",
@@ -2749,7 +2749,7 @@ export default [
 		nameFr: "Bécancour",
 		prov: "QC",
 		latitude: 46.33,
-		longitude: -72.43
+		longitude: -72.43,
 	},
 	{
 		site: "s0000348",
@@ -2757,7 +2757,7 @@ export default [
 		nameFr: "Louiseville",
 		prov: "QC",
 		latitude: 46.25,
-		longitude: -72.95
+		longitude: -72.95,
 	},
 	{
 		site: "s0000349",
@@ -2765,7 +2765,7 @@ export default [
 		nameFr: "Faro",
 		prov: "YT",
 		latitude: 62.23,
-		longitude: -133.36
+		longitude: -133.36,
 	},
 	{
 		site: "s0000350",
@@ -2773,7 +2773,7 @@ export default [
 		nameFr: "Ross River",
 		prov: "YT",
 		latitude: 61.98,
-		longitude: -132.43
+		longitude: -132.43,
 	},
 	{
 		site: "s0000351",
@@ -2781,7 +2781,7 @@ export default [
 		nameFr: "Summerland",
 		prov: "BC",
 		latitude: 49.6,
-		longitude: -119.67
+		longitude: -119.67,
 	},
 	{
 		site: "s0000352",
@@ -2789,7 +2789,7 @@ export default [
 		nameFr: "Shoal Lake",
 		prov: "MB",
 		latitude: 50.44,
-		longitude: -100.59
+		longitude: -100.59,
 	},
 	{
 		site: "s0000353",
@@ -2797,7 +2797,7 @@ export default [
 		nameFr: "Rouyn-Noranda",
 		prov: "QC",
 		latitude: 48.23,
-		longitude: -79.02
+		longitude: -79.02,
 	},
 	{
 		site: "s0000354",
@@ -2805,7 +2805,7 @@ export default [
 		nameFr: "La Sarre",
 		prov: "QC",
 		latitude: 48.8,
-		longitude: -79.2
+		longitude: -79.2,
 	},
 	{
 		site: "s0000355",
@@ -2813,7 +2813,7 @@ export default [
 		nameFr: "Swift Current",
 		prov: "SK",
 		latitude: 50.29,
-		longitude: -107.79
+		longitude: -107.79,
 	},
 	{
 		site: "s0000356",
@@ -2821,7 +2821,7 @@ export default [
 		nameFr: "Vegreville",
 		prov: "AB",
 		latitude: 53.5,
-		longitude: -112.05
+		longitude: -112.05,
 	},
 	{
 		site: "s0000357",
@@ -2829,7 +2829,7 @@ export default [
 		nameFr: "Val Marie",
 		prov: "SK",
 		latitude: 49.25,
-		longitude: -107.73
+		longitude: -107.73,
 	},
 	{
 		site: "s0000358",
@@ -2837,7 +2837,7 @@ export default [
 		nameFr: "Vauxhall",
 		prov: "AB",
 		latitude: 50.07,
-		longitude: -112.11
+		longitude: -112.11,
 	},
 	{
 		site: "s0000359",
@@ -2845,7 +2845,7 @@ export default [
 		nameFr: "Taber",
 		prov: "AB",
 		latitude: 49.78,
-		longitude: -112.15
+		longitude: -112.15,
 	},
 	{
 		site: "s0000360",
@@ -2853,7 +2853,7 @@ export default [
 		nameFr: "Cypress Hills (Parc provincial)",
 		prov: "SK",
 		latitude: 49.63,
-		longitude: -109.75
+		longitude: -109.75,
 	},
 	{
 		site: "s0000361",
@@ -2861,7 +2861,7 @@ export default [
 		nameFr: "Deux-Montagnes",
 		prov: "QC",
 		latitude: 45.53,
-		longitude: -73.88
+		longitude: -73.88,
 	},
 	{
 		site: "s0000362",
@@ -2869,7 +2869,7 @@ export default [
 		nameFr: "Vaudreuil-Dorion",
 		prov: "QC",
 		latitude: 45.4,
-		longitude: -74.03
+		longitude: -74.03,
 	},
 	{
 		site: "s0000363",
@@ -2877,7 +2877,7 @@ export default [
 		nameFr: "Pincourt",
 		prov: "QC",
 		latitude: 45.38,
-		longitude: -73.98
+		longitude: -73.98,
 	},
 	{
 		site: "s0000364",
@@ -2885,7 +2885,7 @@ export default [
 		nameFr: "Digby",
 		prov: "NS",
 		latitude: 44.62,
-		longitude: -65.76
+		longitude: -65.76,
 	},
 	{
 		site: "s0000365",
@@ -2893,7 +2893,7 @@ export default [
 		nameFr: "Brier Island",
 		prov: "NS",
 		latitude: 44.27,
-		longitude: -66.37
+		longitude: -66.37,
 	},
 	{
 		site: "s0000366",
@@ -2901,7 +2901,7 @@ export default [
 		nameFr: "Yellowknife",
 		prov: "NT",
 		latitude: 62.46,
-		longitude: -114.35
+		longitude: -114.35,
 	},
 	{
 		site: "s0000367",
@@ -2909,7 +2909,7 @@ export default [
 		nameFr: "Oakville",
 		prov: "ON",
 		latitude: 43.46,
-		longitude: -79.71
+		longitude: -79.71,
 	},
 	{
 		site: "s0000368",
@@ -2917,7 +2917,7 @@ export default [
 		nameFr: "Burlington",
 		prov: "ON",
 		latitude: 43.37,
-		longitude: -79.81
+		longitude: -79.81,
 	},
 	{
 		site: "s0000369",
@@ -2925,7 +2925,7 @@ export default [
 		nameFr: "Collins Bay",
 		prov: "SK",
 		latitude: 58.28,
-		longitude: -103.63
+		longitude: -103.63,
 	},
 	{
 		site: "s0000370",
@@ -2933,7 +2933,7 @@ export default [
 		nameFr: "Western Head",
 		prov: "NS",
 		latitude: 43.99,
-		longitude: -64.67
+		longitude: -64.67,
 	},
 	{
 		site: "s0000371",
@@ -2941,7 +2941,7 @@ export default [
 		nameFr: "Liverpool",
 		prov: "NS",
 		latitude: 44.04,
-		longitude: -64.72
+		longitude: -64.72,
 	},
 	{
 		site: "s0000372",
@@ -2949,7 +2949,7 @@ export default [
 		nameFr: "Weyburn",
 		prov: "SK",
 		latitude: 49.66,
-		longitude: -103.85
+		longitude: -103.85,
 	},
 	{
 		site: "s0000373",
@@ -2957,7 +2957,7 @@ export default [
 		nameFr: "White Rock",
 		prov: "BC",
 		latitude: 49.02,
-		longitude: -122.8
+		longitude: -122.8,
 	},
 	{
 		site: "s0000374",
@@ -2965,7 +2965,7 @@ export default [
 		nameFr: "Peawanuck",
 		prov: "ON",
 		latitude: 55.02,
-		longitude: -85.42
+		longitude: -85.42,
 	},
 	{
 		site: "s0000375",
@@ -2973,7 +2973,7 @@ export default [
 		nameFr: "Wasagaming",
 		prov: "MB",
 		latitude: 50.66,
-		longitude: -99.97
+		longitude: -99.97,
 	},
 	{
 		site: "s0000376",
@@ -2981,7 +2981,7 @@ export default [
 		nameFr: "Muncho Lake",
 		prov: "BC",
 		latitude: 58.93,
-		longitude: -125.77
+		longitude: -125.77,
 	},
 	{
 		site: "s0000377",
@@ -2989,7 +2989,7 @@ export default [
 		nameFr: "Liard River",
 		prov: "BC",
 		latitude: 59.42,
-		longitude: -126.08
+		longitude: -126.08,
 	},
 	{
 		site: "s0000378",
@@ -2997,7 +2997,7 @@ export default [
 		nameFr: "Poplar River",
 		prov: "MB",
 		latitude: 52.99,
-		longitude: -97.28
+		longitude: -97.28,
 	},
 	{
 		site: "s0000379",
@@ -3005,7 +3005,7 @@ export default [
 		nameFr: "Bow Valley (Parc provincial)",
 		prov: "AB",
 		latitude: 51.08,
-		longitude: -115.07
+		longitude: -115.07,
 	},
 	{
 		site: "s0000380",
@@ -3013,7 +3013,7 @@ export default [
 		nameFr: "Roblin",
 		prov: "MB",
 		latitude: 51.23,
-		longitude: -101.36
+		longitude: -101.36,
 	},
 	{
 		site: "s0000381",
@@ -3021,7 +3021,7 @@ export default [
 		nameFr: "Last Mountain Lake (Sanctuaire)",
 		prov: "SK",
 		latitude: 51.37,
-		longitude: -105.23
+		longitude: -105.23,
 	},
 	{
 		site: "s0000382",
@@ -3029,7 +3029,7 @@ export default [
 		nameFr: "Bow Island",
 		prov: "AB",
 		latitude: 49.87,
-		longitude: -111.38
+		longitude: -111.38,
 	},
 	{
 		site: "s0000383",
@@ -3037,7 +3037,7 @@ export default [
 		nameFr: "High River",
 		prov: "AB",
 		latitude: 50.58,
-		longitude: -113.87
+		longitude: -113.87,
 	},
 	{
 		site: "s0000384",
@@ -3045,7 +3045,7 @@ export default [
 		nameFr: "Stavely",
 		prov: "AB",
 		latitude: 50.16,
-		longitude: -113.64
+		longitude: -113.64,
 	},
 	{
 		site: "s0000385",
@@ -3053,7 +3053,7 @@ export default [
 		nameFr: "Tracadie-Sheila",
 		prov: "NB",
 		latitude: 47.51,
-		longitude: -64.92
+		longitude: -64.92,
 	},
 	{
 		site: "s0000386",
@@ -3061,7 +3061,7 @@ export default [
 		nameFr: "Bas-Caraquet",
 		prov: "NB",
 		latitude: 47.8,
-		longitude: -64.83
+		longitude: -64.83,
 	},
 	{
 		site: "s0000387",
@@ -3069,7 +3069,7 @@ export default [
 		nameFr: "Outlook",
 		prov: "SK",
 		latitude: 51.49,
-		longitude: -107.05
+		longitude: -107.05,
 	},
 	{
 		site: "s0000388",
@@ -3077,7 +3077,7 @@ export default [
 		nameFr: "Gameti",
 		prov: "NT",
 		latitude: 64.12,
-		longitude: -117.35
+		longitude: -117.35,
 	},
 	{
 		site: "s0000389",
@@ -3085,7 +3085,7 @@ export default [
 		nameFr: "Indin River",
 		prov: "NT",
 		latitude: 64.28,
-		longitude: -115.07
+		longitude: -115.07,
 	},
 	{
 		site: "s0000390",
@@ -3093,7 +3093,7 @@ export default [
 		nameFr: "Victoria (Université de)",
 		prov: "BC",
 		latitude: 48.46,
-		longitude: -123.3
+		longitude: -123.3,
 	},
 	{
 		site: "s0000391",
@@ -3101,7 +3101,7 @@ export default [
 		nameFr: "Kootenay (Parc national)",
 		prov: "BC",
 		latitude: 50.95,
-		longitude: -116.03
+		longitude: -116.03,
 	},
 	{
 		site: "s0000392",
@@ -3109,7 +3109,7 @@ export default [
 		nameFr: "Yoho (Parc national)",
 		prov: "BC",
 		latitude: 51.5,
-		longitude: -116.5
+		longitude: -116.5,
 	},
 	{
 		site: "s0000393",
@@ -3117,7 +3117,7 @@ export default [
 		nameFr: "Rimouski",
 		prov: "QC",
 		latitude: 48.45,
-		longitude: -68.53
+		longitude: -68.53,
 	},
 	{
 		site: "s0000394",
@@ -3125,7 +3125,7 @@ export default [
 		nameFr: "Iqaluit",
 		prov: "NU",
 		latitude: 63.75,
-		longitude: -68.52
+		longitude: -68.52,
 	},
 	{
 		site: "s0000395",
@@ -3133,7 +3133,7 @@ export default [
 		nameFr: "Gull Bay",
 		prov: "ON",
 		latitude: 49.8,
-		longitude: -89.11
+		longitude: -89.11,
 	},
 	{
 		site: "s0000396",
@@ -3141,7 +3141,7 @@ export default [
 		nameFr: "Rock Creek",
 		prov: "BC",
 		latitude: 49.05,
-		longitude: -119
+		longitude: -119,
 	},
 	{
 		site: "s0000397",
@@ -3149,7 +3149,7 @@ export default [
 		nameFr: "Osoyoos",
 		prov: "BC",
 		latitude: 49.03,
-		longitude: -119.45
+		longitude: -119.45,
 	},
 	{
 		site: "s0000398",
@@ -3157,7 +3157,7 @@ export default [
 		nameFr: "Chilliwack",
 		prov: "BC",
 		latitude: 49.18,
-		longitude: -121.94
+		longitude: -121.94,
 	},
 	{
 		site: "s0000399",
@@ -3165,7 +3165,7 @@ export default [
 		nameFr: "Agassiz",
 		prov: "BC",
 		latitude: 49.23,
-		longitude: -121.77
+		longitude: -121.77,
 	},
 	{
 		site: "s0000400",
@@ -3173,7 +3173,7 @@ export default [
 		nameFr: "Channel-Port aux Basques",
 		prov: "NL",
 		latitude: 47.58,
-		longitude: -59.14
+		longitude: -59.14,
 	},
 	{
 		site: "s0000401",
@@ -3181,7 +3181,7 @@ export default [
 		nameFr: "Carberry",
 		prov: "MB",
 		latitude: 49.87,
-		longitude: -99.36
+		longitude: -99.36,
 	},
 	{
 		site: "s0000402",
@@ -3189,7 +3189,7 @@ export default [
 		nameFr: "Shilo",
 		prov: "MB",
 		latitude: 49.81,
-		longitude: -99.64
+		longitude: -99.64,
 	},
 	{
 		site: "s0000403",
@@ -3197,7 +3197,7 @@ export default [
 		nameFr: "Canmore",
 		prov: "AB",
 		latitude: 51.08,
-		longitude: -115.37
+		longitude: -115.37,
 	},
 	{
 		site: "s0000404",
@@ -3205,7 +3205,7 @@ export default [
 		nameFr: "Banff",
 		prov: "AB",
 		latitude: 51.18,
-		longitude: -115.57
+		longitude: -115.57,
 	},
 	{
 		site: "s0000405",
@@ -3213,7 +3213,7 @@ export default [
 		nameFr: "Grand Étang",
 		prov: "NS",
 		latitude: 46.55,
-		longitude: -61.05
+		longitude: -61.05,
 	},
 	{
 		site: "s0000406",
@@ -3221,7 +3221,7 @@ export default [
 		nameFr: "Amqui",
 		prov: "QC",
 		latitude: 48.47,
-		longitude: -67.43
+		longitude: -67.43,
 	},
 	{
 		site: "s0000407",
@@ -3229,7 +3229,7 @@ export default [
 		nameFr: "Matapédia",
 		prov: "QC",
 		latitude: 47.97,
-		longitude: -66.95
+		longitude: -66.95,
 	},
 	{
 		site: "s0000408",
@@ -3237,7 +3237,7 @@ export default [
 		nameFr: "Vallée de la Matapédia",
 		prov: "QC",
 		latitude: 48.17,
-		longitude: -67.14
+		longitude: -67.14,
 	},
 	{
 		site: "s0000409",
@@ -3245,7 +3245,7 @@ export default [
 		nameFr: "Atlin",
 		prov: "BC",
 		latitude: 59.57,
-		longitude: -133.7
+		longitude: -133.7,
 	},
 	{
 		site: "s0000410",
@@ -3253,7 +3253,7 @@ export default [
 		nameFr: "Teslin",
 		prov: "YT",
 		latitude: 60.17,
-		longitude: -132.72
+		longitude: -132.72,
 	},
 	{
 		site: "s0000411",
@@ -3261,7 +3261,7 @@ export default [
 		nameFr: "Thunder Bay",
 		prov: "ON",
 		latitude: 48.4,
-		longitude: -89.27
+		longitude: -89.27,
 	},
 	{
 		site: "s0000412",
@@ -3269,7 +3269,7 @@ export default [
 		nameFr: "Arctic Bay",
 		prov: "NU",
 		latitude: 73.03,
-		longitude: -85.17
+		longitude: -85.17,
 	},
 	{
 		site: "s0000413",
@@ -3277,7 +3277,7 @@ export default [
 		nameFr: "Barrhead",
 		prov: "AB",
 		latitude: 54.12,
-		longitude: -114.4
+		longitude: -114.4,
 	},
 	{
 		site: "s0000414",
@@ -3285,7 +3285,7 @@ export default [
 		nameFr: "Orillia",
 		prov: "ON",
 		latitude: 44.6,
-		longitude: -79.42
+		longitude: -79.42,
 	},
 	{
 		site: "s0000415",
@@ -3293,7 +3293,7 @@ export default [
 		nameFr: "Barrie",
 		prov: "ON",
 		latitude: 44.37,
-		longitude: -79.68
+		longitude: -79.68,
 	},
 	{
 		site: "s0000416",
@@ -3301,7 +3301,7 @@ export default [
 		nameFr: "Lévis",
 		prov: "QC",
 		latitude: 46.8,
-		longitude: -71.18
+		longitude: -71.18,
 	},
 	{
 		site: "s0000417",
@@ -3309,7 +3309,7 @@ export default [
 		nameFr: "Tadoule Lake",
 		prov: "MB",
 		latitude: 58.71,
-		longitude: -98.48
+		longitude: -98.48,
 	},
 	{
 		site: "s0000418",
@@ -3317,7 +3317,7 @@ export default [
 		nameFr: "Greenstone (Beardmore)",
 		prov: "ON",
 		latitude: 49.6,
-		longitude: -87.96
+		longitude: -87.96,
 	},
 	{
 		site: "s0000419",
@@ -3325,7 +3325,7 @@ export default [
 		nameFr: "Nipigon",
 		prov: "ON",
 		latitude: 48.98,
-		longitude: -88.33
+		longitude: -88.33,
 	},
 	{
 		site: "s0000420",
@@ -3333,7 +3333,7 @@ export default [
 		nameFr: "Chéticamp",
 		prov: "NS",
 		latitude: 46.63,
-		longitude: -61.01
+		longitude: -61.01,
 	},
 	{
 		site: "s0000421",
@@ -3341,7 +3341,7 @@ export default [
 		nameFr: "Carmacks",
 		prov: "YT",
 		latitude: 62.09,
-		longitude: -136.3
+		longitude: -136.3,
 	},
 	{
 		site: "s0000422",
@@ -3349,7 +3349,7 @@ export default [
 		nameFr: "Tobermory",
 		prov: "ON",
 		latitude: 45.25,
-		longitude: -81.66
+		longitude: -81.66,
 	},
 	{
 		site: "s0000423",
@@ -3357,7 +3357,7 @@ export default [
 		nameFr: "Deline",
 		prov: "NT",
 		latitude: 65.19,
-		longitude: -123.42
+		longitude: -123.42,
 	},
 	{
 		site: "s0000424",
@@ -3365,7 +3365,7 @@ export default [
 		nameFr: "Simcoe",
 		prov: "ON",
 		latitude: 42.84,
-		longitude: -80.31
+		longitude: -80.31,
 	},
 	{
 		site: "s0000425",
@@ -3373,7 +3373,7 @@ export default [
 		nameFr: "Tillsonburg",
 		prov: "ON",
 		latitude: 42.87,
-		longitude: -80.73
+		longitude: -80.73,
 	},
 	{
 		site: "s0000426",
@@ -3381,7 +3381,7 @@ export default [
 		nameFr: "Norfolk",
 		prov: "ON",
 		latitude: 42.8,
-		longitude: -80.41
+		longitude: -80.41,
 	},
 	{
 		site: "s0000427",
@@ -3389,7 +3389,7 @@ export default [
 		nameFr: "Westlock",
 		prov: "AB",
 		latitude: 54.16,
-		longitude: -113.86
+		longitude: -113.86,
 	},
 	{
 		site: "s0000428",
@@ -3397,7 +3397,7 @@ export default [
 		nameFr: "Ear Falls",
 		prov: "ON",
 		latitude: 50.64,
-		longitude: -93.24
+		longitude: -93.24,
 	},
 	{
 		site: "s0000429",
@@ -3405,7 +3405,7 @@ export default [
 		nameFr: "New Tecumseth",
 		prov: "ON",
 		latitude: 44.08,
-		longitude: -79.77
+		longitude: -79.77,
 	},
 	{
 		site: "s0000430",
@@ -3413,7 +3413,7 @@ export default [
 		nameFr: "Ottawa (Kanata - Orléans)",
 		prov: "ON",
 		latitude: 45.33,
-		longitude: -75.58
+		longitude: -75.58,
 	},
 	{
 		site: "s0000431",
@@ -3421,7 +3421,7 @@ export default [
 		nameFr: "Leamington",
 		prov: "ON",
 		latitude: 42.1,
-		longitude: -82.56
+		longitude: -82.56,
 	},
 	{
 		site: "s0000432",
@@ -3429,7 +3429,7 @@ export default [
 		nameFr: "Ulukhaktok",
 		prov: "NT",
 		latitude: 70.73,
-		longitude: -117.75
+		longitude: -117.75,
 	},
 	{
 		site: "s0000433",
@@ -3437,7 +3437,7 @@ export default [
 		nameFr: "Ingonish",
 		prov: "NS",
 		latitude: 46.69,
-		longitude: -60.37
+		longitude: -60.37,
 	},
 	{
 		site: "s0000434",
@@ -3445,7 +3445,7 @@ export default [
 		nameFr: "Smiths Falls",
 		prov: "ON",
 		latitude: 44.9,
-		longitude: -76.02
+		longitude: -76.02,
 	},
 	{
 		site: "s0000435",
@@ -3453,7 +3453,7 @@ export default [
 		nameFr: "Sharbot Lake",
 		prov: "ON",
 		latitude: 44.77,
-		longitude: -76.69
+		longitude: -76.69,
 	},
 	{
 		site: "s0000436",
@@ -3461,7 +3461,7 @@ export default [
 		nameFr: "Kemptville",
 		prov: "ON",
 		latitude: 45.02,
-		longitude: -75.64
+		longitude: -75.64,
 	},
 	{
 		site: "s0000437",
@@ -3469,7 +3469,7 @@ export default [
 		nameFr: "Kirkland Lake",
 		prov: "ON",
 		latitude: 48.15,
-		longitude: -80.03
+		longitude: -80.03,
 	},
 	{
 		site: "s0000438",
@@ -3477,7 +3477,7 @@ export default [
 		nameFr: "Windsor",
 		prov: "NS",
 		latitude: 44.99,
-		longitude: -64.14
+		longitude: -64.14,
 	},
 	{
 		site: "s0000439",
@@ -3485,7 +3485,7 @@ export default [
 		nameFr: "Kentville",
 		prov: "NS",
 		latitude: 45.08,
-		longitude: -64.5
+		longitude: -64.5,
 	},
 	{
 		site: "s0000440",
@@ -3493,7 +3493,7 @@ export default [
 		nameFr: "Lunenburg",
 		prov: "NS",
 		latitude: 44.38,
-		longitude: -64.31
+		longitude: -64.31,
 	},
 	{
 		site: "s0000441",
@@ -3501,7 +3501,7 @@ export default [
 		nameFr: "Bridgewater",
 		prov: "NS",
 		latitude: 44.38,
-		longitude: -64.52
+		longitude: -64.52,
 	},
 	{
 		site: "s0000442",
@@ -3509,7 +3509,7 @@ export default [
 		nameFr: "Wekweeti",
 		prov: "NT",
 		latitude: 64.19,
-		longitude: -114.18
+		longitude: -114.18,
 	},
 	{
 		site: "s0000443",
@@ -3517,7 +3517,7 @@ export default [
 		nameFr: "Lutselke",
 		prov: "NT",
 		latitude: 62.41,
-		longitude: -110.74
+		longitude: -110.74,
 	},
 	{
 		site: "s0000444",
@@ -3525,7 +3525,7 @@ export default [
 		nameFr: "Morden",
 		prov: "MB",
 		latitude: 49.19,
-		longitude: -98.1
+		longitude: -98.1,
 	},
 	{
 		site: "s0000445",
@@ -3533,7 +3533,7 @@ export default [
 		nameFr: "Winkler",
 		prov: "MB",
 		latitude: 49.18,
-		longitude: -97.94
+		longitude: -97.94,
 	},
 	{
 		site: "s0000446",
@@ -3541,7 +3541,7 @@ export default [
 		nameFr: "Sheet Harbour",
 		prov: "NS",
 		latitude: 44.92,
-		longitude: -62.54
+		longitude: -62.54,
 	},
 	{
 		site: "s0000447",
@@ -3549,7 +3549,7 @@ export default [
 		nameFr: "Malay Falls",
 		prov: "NS",
 		latitude: 44.99,
-		longitude: -62.48
+		longitude: -62.48,
 	},
 	{
 		site: "s0000448",
@@ -3557,7 +3557,7 @@ export default [
 		nameFr: "Nordegg",
 		prov: "AB",
 		latitude: 52.47,
-		longitude: -116.08
+		longitude: -116.08,
 	},
 	{
 		site: "s0000449",
@@ -3565,7 +3565,7 @@ export default [
 		nameFr: "Sackville",
 		prov: "NB",
 		latitude: 45.92,
-		longitude: -64.39
+		longitude: -64.39,
 	},
 	{
 		site: "s0000450",
@@ -3573,7 +3573,7 @@ export default [
 		nameFr: "Amherst",
 		prov: "NS",
 		latitude: 45.83,
-		longitude: -64.21
+		longitude: -64.21,
 	},
 	{
 		site: "s0000451",
@@ -3581,7 +3581,7 @@ export default [
 		nameFr: "Parry Sound",
 		prov: "ON",
 		latitude: 45.35,
-		longitude: -80.04
+		longitude: -80.04,
 	},
 	{
 		site: "s0000452",
@@ -3589,7 +3589,7 @@ export default [
 		nameFr: "Dunchurch",
 		prov: "ON",
 		latitude: 45.65,
-		longitude: -79.85
+		longitude: -79.85,
 	},
 	{
 		site: "s0000453",
@@ -3597,7 +3597,7 @@ export default [
 		nameFr: "Stony Plain",
 		prov: "AB",
 		latitude: 53.53,
-		longitude: -114.01
+		longitude: -114.01,
 	},
 	{
 		site: "s0000454",
@@ -3605,7 +3605,7 @@ export default [
 		nameFr: "Chatham-Kent",
 		prov: "ON",
 		latitude: 42.43,
-		longitude: -82.13
+		longitude: -82.13,
 	},
 	{
 		site: "s0000455",
@@ -3613,7 +3613,7 @@ export default [
 		nameFr: "Rodney",
 		prov: "ON",
 		latitude: 42.57,
-		longitude: -81.68
+		longitude: -81.68,
 	},
 	{
 		site: "s0000456",
@@ -3621,7 +3621,7 @@ export default [
 		nameFr: "Rocky Harbour",
 		prov: "NL",
 		latitude: 49.59,
-		longitude: -57.92
+		longitude: -57.92,
 	},
 	{
 		site: "s0000457",
@@ -3629,7 +3629,7 @@ export default [
 		nameFr: "Gros Morne",
 		prov: "NL",
 		latitude: 49.69,
-		longitude: -57.74
+		longitude: -57.74,
 	},
 	{
 		site: "s0000458",
@@ -3637,7 +3637,7 @@ export default [
 		nameFr: "Toronto",
 		prov: "ON",
 		latitude: 43.74,
-		longitude: -79.37
+		longitude: -79.37,
 	},
 	{
 		site: "s0000459",
@@ -3645,7 +3645,7 @@ export default [
 		nameFr: "Lanaudière",
 		prov: "QC",
 		latitude: 46.3,
-		longitude: -73.2
+		longitude: -73.2,
 	},
 	{
 		site: "s0000460",
@@ -3653,7 +3653,7 @@ export default [
 		nameFr: "Port Hawkesbury",
 		prov: "NS",
 		latitude: 45.62,
-		longitude: -61.36
+		longitude: -61.36,
 	},
 	{
 		site: "s0000461",
@@ -3661,7 +3661,7 @@ export default [
 		nameFr: "Tracadie",
 		prov: "NS",
 		latitude: 45.62,
-		longitude: -61.67
+		longitude: -61.67,
 	},
 	{
 		site: "s0000462",
@@ -3669,7 +3669,7 @@ export default [
 		nameFr: "Antigonish",
 		prov: "NS",
 		latitude: 45.62,
-		longitude: -61.99
+		longitude: -61.99,
 	},
 	{
 		site: "s0000463",
@@ -3677,7 +3677,7 @@ export default [
 		nameFr: "Cape George",
 		prov: "NS",
 		latitude: 45.85,
-		longitude: -61.93
+		longitude: -61.93,
 	},
 	{
 		site: "s0000464",
@@ -3685,7 +3685,7 @@ export default [
 		nameFr: "Guysborough",
 		prov: "NS",
 		latitude: 45.39,
-		longitude: -61.5
+		longitude: -61.5,
 	},
 	{
 		site: "s0000465",
@@ -3693,7 +3693,7 @@ export default [
 		nameFr: "Tatlayoko Lake",
 		prov: "BC",
 		latitude: 51.72,
-		longitude: -124.43
+		longitude: -124.43,
 	},
 	{
 		site: "s0000466",
@@ -3701,7 +3701,7 @@ export default [
 		nameFr: "Clarenville",
 		prov: "NL",
 		latitude: 48.16,
-		longitude: -53.98
+		longitude: -53.98,
 	},
 	{
 		site: "s0000467",
@@ -3709,7 +3709,7 @@ export default [
 		nameFr: "Terra Nova (Parc national)",
 		prov: "NL",
 		latitude: 48.53,
-		longitude: -53.93
+		longitude: -53.93,
 	},
 	{
 		site: "s0000468",
@@ -3717,7 +3717,7 @@ export default [
 		nameFr: "Drayton Valley",
 		prov: "AB",
 		latitude: 53.22,
-		longitude: -114.98
+		longitude: -114.98,
 	},
 	{
 		site: "s0000469",
@@ -3725,7 +3725,7 @@ export default [
 		nameFr: "Vineland",
 		prov: "ON",
 		latitude: 43.15,
-		longitude: -79.39
+		longitude: -79.39,
 	},
 	{
 		site: "s0000470",
@@ -3733,7 +3733,7 @@ export default [
 		nameFr: "Lincoln",
 		prov: "ON",
 		latitude: 43.15,
-		longitude: -79.42
+		longitude: -79.42,
 	},
 	{
 		site: "s0000471",
@@ -3741,7 +3741,7 @@ export default [
 		nameFr: "Trail",
 		prov: "BC",
 		latitude: 49.1,
-		longitude: -117.7
+		longitude: -117.7,
 	},
 	{
 		site: "s0000472",
@@ -3749,7 +3749,7 @@ export default [
 		nameFr: "Winnipeg (La Fourche)",
 		prov: "MB",
 		latitude: 49.89,
-		longitude: -97.13
+		longitude: -97.13,
 	},
 	{
 		site: "s0000473",
@@ -3757,7 +3757,7 @@ export default [
 		nameFr: "Winterland",
 		prov: "NL",
 		latitude: 47.16,
-		longitude: -55.31
+		longitude: -55.31,
 	},
 	{
 		site: "s0000474",
@@ -3765,7 +3765,7 @@ export default [
 		nameFr: "Marystown",
 		prov: "NL",
 		latitude: 47.17,
-		longitude: -55.17
+		longitude: -55.17,
 	},
 	{
 		site: "s0000475",
@@ -3773,7 +3773,7 @@ export default [
 		nameFr: "Grand Bank",
 		prov: "NL",
 		latitude: 47.1,
-		longitude: -55.77
+		longitude: -55.77,
 	},
 	{
 		site: "s0000476",
@@ -3781,7 +3781,7 @@ export default [
 		nameFr: "Nahanni Butte",
 		prov: "NT",
 		latitude: 61.03,
-		longitude: -123.39
+		longitude: -123.39,
 	},
 	{
 		site: "s0000477",
@@ -3789,7 +3789,7 @@ export default [
 		nameFr: "Whitecourt",
 		prov: "AB",
 		latitude: 54.14,
-		longitude: -115.68
+		longitude: -115.68,
 	},
 	{
 		site: "s0000478",
@@ -3797,7 +3797,7 @@ export default [
 		nameFr: "La Grande-Quatre",
 		prov: "QC",
 		latitude: 53.83,
-		longitude: -73.53
+		longitude: -73.53,
 	},
 	{
 		site: "s0000479",
@@ -3805,7 +3805,7 @@ export default [
 		nameFr: "Sault Ste. Marie",
 		prov: "ON",
 		latitude: 46.56,
-		longitude: -84.35
+		longitude: -84.35,
 	},
 	{
 		site: "s0000480",
@@ -3813,7 +3813,7 @@ export default [
 		nameFr: "Kangirsuk",
 		prov: "QC",
 		latitude: 60.02,
-		longitude: -70.03
+		longitude: -70.03,
 	},
 	{
 		site: "s0000481",
@@ -3821,7 +3821,7 @@ export default [
 		nameFr: "Tofino",
 		prov: "BC",
 		latitude: 49.12,
-		longitude: -125.88
+		longitude: -125.88,
 	},
 	{
 		site: "s0000482",
@@ -3829,7 +3829,7 @@ export default [
 		nameFr: "Ucluelet",
 		prov: "BC",
 		latitude: 48.94,
-		longitude: -125.55
+		longitude: -125.55,
 	},
 	{
 		site: "s0000483",
@@ -3837,7 +3837,7 @@ export default [
 		nameFr: "Baie-Comeau",
 		prov: "QC",
 		latitude: 49.22,
-		longitude: -68.15
+		longitude: -68.15,
 	},
 	{
 		site: "s0000484",
@@ -3845,7 +3845,7 @@ export default [
 		nameFr: "Forestville",
 		prov: "QC",
 		latitude: 48.73,
-		longitude: -69.08
+		longitude: -69.08,
 	},
 	{
 		site: "s0000485",
@@ -3853,7 +3853,7 @@ export default [
 		nameFr: "Bella Coola",
 		prov: "BC",
 		latitude: 52.38,
-		longitude: -126.75
+		longitude: -126.75,
 	},
 	{
 		site: "s0000486",
@@ -3861,7 +3861,7 @@ export default [
 		nameFr: "Bagotville",
 		prov: "QC",
 		latitude: 48.35,
-		longitude: -70.88
+		longitude: -70.88,
 	},
 	{
 		site: "s0000487",
@@ -3869,7 +3869,7 @@ export default [
 		nameFr: "Baker Lake",
 		prov: "NU",
 		latitude: 64.32,
-		longitude: -96.02
+		longitude: -96.02,
 	},
 	{
 		site: "s0000488",
@@ -3877,7 +3877,7 @@ export default [
 		nameFr: "Campbell River",
 		prov: "BC",
 		latitude: 50.02,
-		longitude: -125.24
+		longitude: -125.24,
 	},
 	{
 		site: "s0000489",
@@ -3885,7 +3885,7 @@ export default [
 		nameFr: "Alliston",
 		prov: "ON",
 		latitude: 44.15,
-		longitude: -79.86
+		longitude: -79.86,
 	},
 	{
 		site: "s0000490",
@@ -3893,7 +3893,7 @@ export default [
 		nameFr: "Minnedosa",
 		prov: "MB",
 		latitude: 50.25,
-		longitude: -99.84
+		longitude: -99.84,
 	},
 	{
 		site: "s0000491",
@@ -3901,7 +3901,7 @@ export default [
 		nameFr: "Souris",
 		prov: "MB",
 		latitude: 49.62,
-		longitude: -100.26
+		longitude: -100.26,
 	},
 	{
 		site: "s0000492",
@@ -3909,7 +3909,7 @@ export default [
 		nameFr: "Brandon",
 		prov: "MB",
 		latitude: 49.85,
-		longitude: -99.95
+		longitude: -99.95,
 	},
 	{
 		site: "s0000493",
@@ -3917,7 +3917,7 @@ export default [
 		nameFr: "Cochrane",
 		prov: "AB",
 		latitude: 51.21,
-		longitude: -114.47
+		longitude: -114.47,
 	},
 	{
 		site: "s0000494",
@@ -3925,7 +3925,7 @@ export default [
 		nameFr: "Blanc-Sablon",
 		prov: "QC",
 		latitude: 51.42,
-		longitude: -57.13
+		longitude: -57.13,
 	},
 	{
 		site: "s0000495",
@@ -3933,7 +3933,7 @@ export default [
 		nameFr: "Cambridge Bay",
 		prov: "NU",
 		latitude: 69.11,
-		longitude: -105.05
+		longitude: -105.05,
 	},
 	{
 		site: "s0000496",
@@ -3941,7 +3941,7 @@ export default [
 		nameFr: "Nanaimo",
 		prov: "BC",
 		latitude: 49.17,
-		longitude: -123.93
+		longitude: -123.93,
 	},
 	{
 		site: "s0000497",
@@ -3949,7 +3949,7 @@ export default [
 		nameFr: "Castlegar",
 		prov: "BC",
 		latitude: 49.3,
-		longitude: -117.67
+		longitude: -117.67,
 	},
 	{
 		site: "s0000498",
@@ -3957,7 +3957,7 @@ export default [
 		nameFr: "Kugluktuk",
 		prov: "NU",
 		latitude: 67.83,
-		longitude: -115.09
+		longitude: -115.09,
 	},
 	{
 		site: "s0000499",
@@ -3965,7 +3965,7 @@ export default [
 		nameFr: "Blue River",
 		prov: "BC",
 		latitude: 52.1,
-		longitude: -119.3
+		longitude: -119.3,
 	},
 	{
 		site: "s0000500",
@@ -3973,7 +3973,7 @@ export default [
 		nameFr: "Chetwynd",
 		prov: "BC",
 		latitude: 55.7,
-		longitude: -121.63
+		longitude: -121.63,
 	},
 	{
 		site: "s0000501",
@@ -3981,7 +3981,7 @@ export default [
 		nameFr: "Chesterfield",
 		prov: "NU",
 		latitude: 63.34,
-		longitude: -90.7
+		longitude: -90.7,
 	},
 	{
 		site: "s0000502",
@@ -3989,7 +3989,7 @@ export default [
 		nameFr: "Chipman",
 		prov: "NB",
 		latitude: 46.17,
-		longitude: -65.89
+		longitude: -65.89,
 	},
 	{
 		site: "s0000503",
@@ -3997,7 +3997,7 @@ export default [
 		nameFr: "Doaktown",
 		prov: "NB",
 		latitude: 46.56,
-		longitude: -66.12
+		longitude: -66.12,
 	},
 	{
 		site: "s0000504",
@@ -4005,7 +4005,7 @@ export default [
 		nameFr: "Clyde River",
 		prov: "NU",
 		latitude: 70.47,
-		longitude: -68.59
+		longitude: -68.59,
 	},
 	{
 		site: "s0000505",
@@ -4013,7 +4013,7 @@ export default [
 		nameFr: "Lac Kluane",
 		prov: "YT",
 		latitude: 61.26,
-		longitude: -138.77
+		longitude: -138.77,
 	},
 	{
 		site: "s0000506",
@@ -4021,7 +4021,7 @@ export default [
 		nameFr: "Burwash Landing",
 		prov: "YT",
 		latitude: 61.36,
-		longitude: -138.99
+		longitude: -138.99,
 	},
 	{
 		site: "s0000507",
@@ -4029,7 +4029,7 @@ export default [
 		nameFr: "Deer Lake",
 		prov: "NL",
 		latitude: 49.18,
-		longitude: -57.43
+		longitude: -57.43,
 	},
 	{
 		site: "s0000508",
@@ -4037,7 +4037,7 @@ export default [
 		nameFr: "Dauphin",
 		prov: "MB",
 		latitude: 51.15,
-		longitude: -100.05
+		longitude: -100.05,
 	},
 	{
 		site: "s0000509",
@@ -4045,7 +4045,7 @@ export default [
 		nameFr: "Dawson Creek",
 		prov: "BC",
 		latitude: 55.77,
-		longitude: -120.23
+		longitude: -120.23,
 	},
 	{
 		site: "s0000510",
@@ -4053,7 +4053,7 @@ export default [
 		nameFr: "Edmonton (Aprt int.)",
 		prov: "AB",
 		latitude: 53.34,
-		longitude: -113.54
+		longitude: -113.54,
 	},
 	{
 		site: "s0000511",
@@ -4061,7 +4061,7 @@ export default [
 		nameFr: "Arviat",
 		prov: "NU",
 		latitude: 61.11,
-		longitude: -94.06
+		longitude: -94.06,
 	},
 	{
 		site: "s0000512",
@@ -4069,7 +4069,7 @@ export default [
 		nameFr: "Elliot Lake",
 		prov: "ON",
 		latitude: 46.38,
-		longitude: -82.66
+		longitude: -82.66,
 	},
 	{
 		site: "s0000513",
@@ -4077,7 +4077,7 @@ export default [
 		nameFr: "Blind River",
 		prov: "ON",
 		latitude: 46.19,
-		longitude: -82.96
+		longitude: -82.96,
 	},
 	{
 		site: "s0000514",
@@ -4085,7 +4085,7 @@ export default [
 		nameFr: "Oxbow",
 		prov: "SK",
 		latitude: 49.23,
-		longitude: -102.17
+		longitude: -102.17,
 	},
 	{
 		site: "s0000515",
@@ -4093,7 +4093,7 @@ export default [
 		nameFr: "Carlyle",
 		prov: "SK",
 		latitude: 49.64,
-		longitude: -102.27
+		longitude: -102.27,
 	},
 	{
 		site: "s0000516",
@@ -4101,7 +4101,7 @@ export default [
 		nameFr: "Estevan",
 		prov: "SK",
 		latitude: 49.14,
-		longitude: -102.99
+		longitude: -102.99,
 	},
 	{
 		site: "s0000517",
@@ -4109,7 +4109,7 @@ export default [
 		nameFr: "Fort Severn",
 		prov: "ON",
 		latitude: 56,
-		longitude: -87.62
+		longitude: -87.62,
 	},
 	{
 		site: "s0000518",
@@ -4117,7 +4117,7 @@ export default [
 		nameFr: "Edson",
 		prov: "AB",
 		latitude: 53.58,
-		longitude: -116.43
+		longitude: -116.43,
 	},
 	{
 		site: "s0000519",
@@ -4125,7 +4125,7 @@ export default [
 		nameFr: "Inuvik",
 		prov: "NT",
 		latitude: 68.36,
-		longitude: -133.72
+		longitude: -133.72,
 	},
 	{
 		site: "s0000520",
@@ -4133,7 +4133,7 @@ export default [
 		nameFr: "Armstrong",
 		prov: "ON",
 		latitude: 50.3,
-		longitude: -89.04
+		longitude: -89.04,
 	},
 	{
 		site: "s0000521",
@@ -4141,7 +4141,7 @@ export default [
 		nameFr: "Oromocto",
 		prov: "NB",
 		latitude: 45.84,
-		longitude: -66.48
+		longitude: -66.48,
 	},
 	{
 		site: "s0000522",
@@ -4149,7 +4149,7 @@ export default [
 		nameFr: "Woodstock",
 		prov: "NB",
 		latitude: 46.15,
-		longitude: -67.6
+		longitude: -67.6,
 	},
 	{
 		site: "s0000523",
@@ -4157,7 +4157,7 @@ export default [
 		nameFr: "Mildred Lake",
 		prov: "AB",
 		latitude: 57.03,
-		longitude: -111.6
+		longitude: -111.6,
 	},
 	{
 		site: "s0000524",
@@ -4165,7 +4165,7 @@ export default [
 		nameFr: "Fort Resolution",
 		prov: "NT",
 		latitude: 61.17,
-		longitude: -113.67
+		longitude: -113.67,
 	},
 	{
 		site: "s0000525",
@@ -4173,7 +4173,7 @@ export default [
 		nameFr: "Fort Simpson",
 		prov: "NT",
 		latitude: 61.86,
-		longitude: -121.35
+		longitude: -121.35,
 	},
 	{
 		site: "s0000526",
@@ -4181,7 +4181,7 @@ export default [
 		nameFr: "Makkovik",
 		prov: "NL",
 		latitude: 55.09,
-		longitude: -59.18
+		longitude: -59.18,
 	},
 	{
 		site: "s0000527",
@@ -4189,7 +4189,7 @@ export default [
 		nameFr: "Golden",
 		prov: "BC",
 		latitude: 51.3,
-		longitude: -116.97
+		longitude: -116.97,
 	},
 	{
 		site: "s0000528",
@@ -4197,7 +4197,7 @@ export default [
 		nameFr: "Greater Napanee",
 		prov: "ON",
 		latitude: 44.24,
-		longitude: -76.97
+		longitude: -76.97,
 	},
 	{
 		site: "s0000529",
@@ -4205,7 +4205,7 @@ export default [
 		nameFr: "Sydenham",
 		prov: "ON",
 		latitude: 44.41,
-		longitude: -76.6
+		longitude: -76.6,
 	},
 	{
 		site: "s0000530",
@@ -4213,7 +4213,7 @@ export default [
 		nameFr: "Westport",
 		prov: "ON",
 		latitude: 44.68,
-		longitude: -76.4
+		longitude: -76.4,
 	},
 	{
 		site: "s0000531",
@@ -4221,7 +4221,7 @@ export default [
 		nameFr: "Kingston",
 		prov: "ON",
 		latitude: 44.31,
-		longitude: -76.42
+		longitude: -76.42,
 	},
 	{
 		site: "s0000532",
@@ -4229,7 +4229,7 @@ export default [
 		nameFr: "La Grande Rivière",
 		prov: "QC",
 		latitude: 53.63,
-		longitude: -77.7
+		longitude: -77.7,
 	},
 	{
 		site: "s0000533",
@@ -4237,7 +4237,7 @@ export default [
 		nameFr: "Arnes",
 		prov: "MB",
 		latitude: 50.8,
-		longitude: -96.99
+		longitude: -96.99,
 	},
 	{
 		site: "s0000534",
@@ -4245,7 +4245,7 @@ export default [
 		nameFr: "Gimli",
 		prov: "MB",
 		latitude: 50.63,
-		longitude: -96.99
+		longitude: -96.99,
 	},
 	{
 		site: "s0000535",
@@ -4253,7 +4253,7 @@ export default [
 		nameFr: "Gaspé",
 		prov: "QC",
 		latitude: 48.83,
-		longitude: -64.48
+		longitude: -64.48,
 	},
 	{
 		site: "s0000536",
@@ -4261,7 +4261,7 @@ export default [
 		nameFr: "Forillon",
 		prov: "QC",
 		latitude: 48.84,
-		longitude: -64.34
+		longitude: -64.34,
 	},
 	{
 		site: "s0000537",
@@ -4269,7 +4269,7 @@ export default [
 		nameFr: "Forillon ( Parc national)",
 		prov: "QC",
 		latitude: 48.9,
-		longitude: -64.35
+		longitude: -64.35,
 	},
 	{
 		site: "s0000538",
@@ -4277,7 +4277,7 @@ export default [
 		nameFr: "Greenstone (Geraldton)",
 		prov: "ON",
 		latitude: 49.72,
-		longitude: -86.95
+		longitude: -86.95,
 	},
 	{
 		site: "s0000539",
@@ -4285,7 +4285,7 @@ export default [
 		nameFr: "Greenstone (Nakina)",
 		prov: "ON",
 		latitude: 50.18,
-		longitude: -86.71
+		longitude: -86.71,
 	},
 	{
 		site: "s0000540",
@@ -4293,7 +4293,7 @@ export default [
 		nameFr: "Igloolik",
 		prov: "NU",
 		latitude: 69.38,
-		longitude: -81.8
+		longitude: -81.8,
 	},
 	{
 		site: "s0000541",
@@ -4301,7 +4301,7 @@ export default [
 		nameFr: "Havre St-Pierre",
 		prov: "QC",
 		latitude: 50.23,
-		longitude: -63.6
+		longitude: -63.6,
 	},
 	{
 		site: "s0000542",
@@ -4309,7 +4309,7 @@ export default [
 		nameFr: "Kuujjuarapik",
 		prov: "QC",
 		latitude: 55.28,
-		longitude: -77.75
+		longitude: -77.75,
 	},
 	{
 		site: "s0000543",
@@ -4317,7 +4317,7 @@ export default [
 		nameFr: "Gillam",
 		prov: "MB",
 		latitude: 56.35,
-		longitude: -94.71
+		longitude: -94.71,
 	},
 	{
 		site: "s0000544",
@@ -4325,7 +4325,7 @@ export default [
 		nameFr: "Quaqtaq",
 		prov: "QC",
 		latitude: 61.05,
-		longitude: -69.63
+		longitude: -69.63,
 	},
 	{
 		site: "s0000545",
@@ -4333,7 +4333,7 @@ export default [
 		nameFr: "Hudson Bay",
 		prov: "SK",
 		latitude: 52.84,
-		longitude: -102.38
+		longitude: -102.38,
 	},
 	{
 		site: "s0000546",
@@ -4341,7 +4341,7 @@ export default [
 		nameFr: "Dryden",
 		prov: "ON",
 		latitude: 49.78,
-		longitude: -92.77
+		longitude: -92.77,
 	},
 	{
 		site: "s0000547",
@@ -4349,7 +4349,7 @@ export default [
 		nameFr: "Hope",
 		prov: "BC",
 		latitude: 49.38,
-		longitude: -121.44
+		longitude: -121.44,
 	},
 	{
 		site: "s0000548",
@@ -4357,7 +4357,7 @@ export default [
 		nameFr: "Haldimand County",
 		prov: "ON",
 		latitude: 42.99,
-		longitude: -79.85
+		longitude: -79.85,
 	},
 	{
 		site: "s0000549",
@@ -4365,7 +4365,7 @@ export default [
 		nameFr: "Hamilton",
 		prov: "ON",
 		latitude: 43.24,
-		longitude: -79.99
+		longitude: -79.99,
 	},
 	{
 		site: "s0000550",
@@ -4373,7 +4373,7 @@ export default [
 		nameFr: "Brantford",
 		prov: "ON",
 		latitude: 43.16,
-		longitude: -80.26
+		longitude: -80.26,
 	},
 	{
 		site: "s0000551",
@@ -4381,7 +4381,7 @@ export default [
 		nameFr: "Longueuil",
 		prov: "QC",
 		latitude: 45.53,
-		longitude: -73.52
+		longitude: -73.52,
 	},
 	{
 		site: "s0000552",
@@ -4389,7 +4389,7 @@ export default [
 		nameFr: "Richelieu",
 		prov: "QC",
 		latitude: 45.45,
-		longitude: -73.25
+		longitude: -73.25,
 	},
 	{
 		site: "s0000553",
@@ -4397,7 +4397,7 @@ export default [
 		nameFr: "Carignan",
 		prov: "QC",
 		latitude: 45.45,
-		longitude: -73.3
+		longitude: -73.3,
 	},
 	{
 		site: "s0000554",
@@ -4405,7 +4405,7 @@ export default [
 		nameFr: "Chambly",
 		prov: "QC",
 		latitude: 45.45,
-		longitude: -73.28
+		longitude: -73.28,
 	},
 	{
 		site: "s0000555",
@@ -4413,7 +4413,7 @@ export default [
 		nameFr: "Mont Saint-Hilaire",
 		prov: "QC",
 		latitude: 45.57,
-		longitude: -73.2
+		longitude: -73.2,
 	},
 	{
 		site: "s0000556",
@@ -4421,7 +4421,7 @@ export default [
 		nameFr: "Otterburn Park",
 		prov: "QC",
 		latitude: 45.53,
-		longitude: -73.22
+		longitude: -73.22,
 	},
 	{
 		site: "s0000557",
@@ -4429,7 +4429,7 @@ export default [
 		nameFr: "Saint-Amable",
 		prov: "QC",
 		latitude: 45.65,
-		longitude: -73.3
+		longitude: -73.3,
 	},
 	{
 		site: "s0000558",
@@ -4437,7 +4437,7 @@ export default [
 		nameFr: "Saint-Basile Le Grand",
 		prov: "QC",
 		latitude: 45.53,
-		longitude: -73.28
+		longitude: -73.28,
 	},
 	{
 		site: "s0000559",
@@ -4445,7 +4445,7 @@ export default [
 		nameFr: "Sainte-Julie",
 		prov: "QC",
 		latitude: 45.58,
-		longitude: -73.33
+		longitude: -73.33,
 	},
 	{
 		site: "s0000560",
@@ -4453,7 +4453,7 @@ export default [
 		nameFr: "Enterprise",
 		prov: "NT",
 		latitude: 60.55,
-		longitude: -116.13
+		longitude: -116.13,
 	},
 	{
 		site: "s0000561",
@@ -4461,7 +4461,7 @@ export default [
 		nameFr: "Hay River",
 		prov: "NT",
 		latitude: 60.82,
-		longitude: -115.8
+		longitude: -115.8,
 	},
 	{
 		site: "s0000562",
@@ -4469,7 +4469,7 @@ export default [
 		nameFr: "Summerside",
 		prov: "PE",
 		latitude: 46.4,
-		longitude: -63.79
+		longitude: -63.79,
 	},
 	{
 		site: "s0000563",
@@ -4477,7 +4477,7 @@ export default [
 		nameFr: "Ivujivik",
 		prov: "QC",
 		latitude: 62.42,
-		longitude: -77.92
+		longitude: -77.92,
 	},
 	{
 		site: "s0000564",
@@ -4485,7 +4485,7 @@ export default [
 		nameFr: "Pond Inlet",
 		prov: "NU",
 		latitude: 72.7,
-		longitude: -77.96
+		longitude: -77.96,
 	},
 	{
 		site: "s0000565",
@@ -4493,7 +4493,7 @@ export default [
 		nameFr: "Island Lake",
 		prov: "MB",
 		latitude: 53.86,
-		longitude: -94.67
+		longitude: -94.67,
 	},
 	{
 		site: "s0000566",
@@ -4501,7 +4501,7 @@ export default [
 		nameFr: "Gods Lake",
 		prov: "MB",
 		latitude: 54.67,
-		longitude: -94.25
+		longitude: -94.25,
 	},
 	{
 		site: "s0000567",
@@ -4509,7 +4509,7 @@ export default [
 		nameFr: "Stephenville",
 		prov: "NL",
 		latitude: 48.55,
-		longitude: -58.58
+		longitude: -58.58,
 	},
 	{
 		site: "s0000568",
@@ -4517,7 +4517,7 @@ export default [
 		nameFr: "Kamloops",
 		prov: "BC",
 		latitude: 50.67,
-		longitude: -120.33
+		longitude: -120.33,
 	},
 	{
 		site: "s0000569",
@@ -4525,7 +4525,7 @@ export default [
 		nameFr: "Cache Creek",
 		prov: "BC",
 		latitude: 50.81,
-		longitude: -121.32
+		longitude: -121.32,
 	},
 	{
 		site: "s0000570",
@@ -4533,7 +4533,7 @@ export default [
 		nameFr: "Aklavik",
 		prov: "NT",
 		latitude: 68.22,
-		longitude: -135.01
+		longitude: -135.01,
 	},
 	{
 		site: "s0000571",
@@ -4541,7 +4541,7 @@ export default [
 		nameFr: "Guelph",
 		prov: "ON",
 		latitude: 43.54,
-		longitude: -80.23
+		longitude: -80.23,
 	},
 	{
 		site: "s0000572",
@@ -4549,7 +4549,7 @@ export default [
 		nameFr: "Cambridge",
 		prov: "ON",
 		latitude: 43.4,
-		longitude: -80.31
+		longitude: -80.31,
 	},
 	{
 		site: "s0000573",
@@ -4557,7 +4557,7 @@ export default [
 		nameFr: "Kitchener-Waterloo",
 		prov: "ON",
 		latitude: 43.42,
-		longitude: -80.47
+		longitude: -80.47,
 	},
 	{
 		site: "s0000574",
@@ -4565,7 +4565,7 @@ export default [
 		nameFr: "Kangiqsujuaq",
 		prov: "QC",
 		latitude: 61.6,
-		longitude: -71.96
+		longitude: -71.96,
 	},
 	{
 		site: "s0000575",
@@ -4573,7 +4573,7 @@ export default [
 		nameFr: "Lac Raglan",
 		prov: "QC",
 		latitude: 61.66,
-		longitude: -73.26
+		longitude: -73.26,
 	},
 	{
 		site: "s0000576",
@@ -4581,7 +4581,7 @@ export default [
 		nameFr: "Key Lake",
 		prov: "SK",
 		latitude: 57.22,
-		longitude: -105.63
+		longitude: -105.63,
 	},
 	{
 		site: "s0000577",
@@ -4589,7 +4589,7 @@ export default [
 		nameFr: "Schefferville",
 		prov: "QC",
 		latitude: 54.8,
-		longitude: -66.83
+		longitude: -66.83,
 	},
 	{
 		site: "s0000578",
@@ -4597,7 +4597,7 @@ export default [
 		nameFr: "Akulivik",
 		prov: "QC",
 		latitude: 60.8,
-		longitude: -78.2
+		longitude: -78.2,
 	},
 	{
 		site: "s0000579",
@@ -4605,7 +4605,7 @@ export default [
 		nameFr: "Waskaganish",
 		prov: "QC",
 		latitude: 51.2,
-		longitude: -78.77
+		longitude: -78.77,
 	},
 	{
 		site: "s0000580",
@@ -4613,7 +4613,7 @@ export default [
 		nameFr: "Baie-James",
 		prov: "QC",
 		latitude: 52,
-		longitude: -76
+		longitude: -76,
 	},
 	{
 		site: "s0000581",
@@ -4621,7 +4621,7 @@ export default [
 		nameFr: "Kindersley",
 		prov: "SK",
 		latitude: 51.47,
-		longitude: -109.16
+		longitude: -109.16,
 	},
 	{
 		site: "s0000582",
@@ -4629,7 +4629,7 @@ export default [
 		nameFr: "Newmarket",
 		prov: "ON",
 		latitude: 44.06,
-		longitude: -79.46
+		longitude: -79.46,
 	},
 	{
 		site: "s0000583",
@@ -4637,7 +4637,7 @@ export default [
 		nameFr: "Charlottetown",
 		prov: "PE",
 		latitude: 46.24,
-		longitude: -63.13
+		longitude: -63.13,
 	},
 	{
 		site: "s0000584",
@@ -4645,7 +4645,7 @@ export default [
 		nameFr: "Vaughan",
 		prov: "ON",
 		latitude: 43.85,
-		longitude: -79.54
+		longitude: -79.54,
 	},
 	{
 		site: "s0000585",
@@ -4653,7 +4653,7 @@ export default [
 		nameFr: "Markham",
 		prov: "ON",
 		latitude: 43.88,
-		longitude: -79.26
+		longitude: -79.26,
 	},
 	{
 		site: "s0000586",
@@ -4661,7 +4661,7 @@ export default [
 		nameFr: "Aupaluk",
 		prov: "QC",
 		latitude: 59.3,
-		longitude: -69.6
+		longitude: -69.6,
 	},
 	{
 		site: "s0000587",
@@ -4669,7 +4669,7 @@ export default [
 		nameFr: "Kimmirut",
 		prov: "NU",
 		latitude: 62.85,
-		longitude: -69.87
+		longitude: -69.87,
 	},
 	{
 		site: "s0000588",
@@ -4677,7 +4677,7 @@ export default [
 		nameFr: "Chapleau",
 		prov: "ON",
 		latitude: 47.84,
-		longitude: -83.4
+		longitude: -83.4,
 	},
 	{
 		site: "s0000589",
@@ -4685,7 +4685,7 @@ export default [
 		nameFr: "Meadow Lake",
 		prov: "SK",
 		latitude: 54.12,
-		longitude: -108.44
+		longitude: -108.44,
 	},
 	{
 		site: "s0000590",
@@ -4693,7 +4693,7 @@ export default [
 		nameFr: "Lloydminster",
 		prov: "AB",
 		latitude: 53.28,
-		longitude: -110
+		longitude: -110,
 	},
 	{
 		site: "s0000591",
@@ -4701,7 +4701,7 @@ export default [
 		nameFr: "Kangiqsualujjuaq",
 		prov: "QC",
 		latitude: 58.69,
-		longitude: -65.95
+		longitude: -65.95,
 	},
 	{
 		site: "s0000592",
@@ -4709,7 +4709,7 @@ export default [
 		nameFr: "Kelowna",
 		prov: "BC",
 		latitude: 49.88,
-		longitude: -119.48
+		longitude: -119.48,
 	},
 	{
 		site: "s0000593",
@@ -4717,7 +4717,7 @@ export default [
 		nameFr: "Mayo",
 		prov: "YT",
 		latitude: 63.59,
-		longitude: -135.9
+		longitude: -135.9,
 	},
 	{
 		site: "s0000594",
@@ -4725,7 +4725,7 @@ export default [
 		nameFr: "Mary's Harbour",
 		prov: "NL",
 		latitude: 52.32,
-		longitude: -55.83
+		longitude: -55.83,
 	},
 	{
 		site: "s0000595",
@@ -4733,7 +4733,7 @@ export default [
 		nameFr: "Fort McMurray",
 		prov: "AB",
 		latitude: 56.73,
-		longitude: -111.38
+		longitude: -111.38,
 	},
 	{
 		site: "s0000596",
@@ -4741,7 +4741,7 @@ export default [
 		nameFr: "Moosonee",
 		prov: "ON",
 		latitude: 51.33,
-		longitude: -80.72
+		longitude: -80.72,
 	},
 	{
 		site: "s0000597",
@@ -4749,7 +4749,7 @@ export default [
 		nameFr: "Fort Albany",
 		prov: "ON",
 		latitude: 52.21,
-		longitude: -81.68
+		longitude: -81.68,
 	},
 	{
 		site: "s0000598",
@@ -4757,7 +4757,7 @@ export default [
 		nameFr: "Chibougamau",
 		prov: "QC",
 		latitude: 49.92,
-		longitude: -74.37
+		longitude: -74.37,
 	},
 	{
 		site: "s0000599",
@@ -4765,7 +4765,7 @@ export default [
 		nameFr: "Umiujaq",
 		prov: "QC",
 		latitude: 56.56,
-		longitude: -76.55
+		longitude: -76.55,
 	},
 	{
 		site: "s0000600",
@@ -4773,7 +4773,7 @@ export default [
 		nameFr: "Mirabel",
 		prov: "QC",
 		latitude: 45.65,
-		longitude: -74.08
+		longitude: -74.08,
 	},
 	{
 		site: "s0000601",
@@ -4781,7 +4781,7 @@ export default [
 		nameFr: "Saint-Jérôme",
 		prov: "QC",
 		latitude: 45.78,
-		longitude: -74
+		longitude: -74,
 	},
 	{
 		site: "s0000602",
@@ -4789,7 +4789,7 @@ export default [
 		nameFr: "Lachute",
 		prov: "QC",
 		latitude: 45.65,
-		longitude: -74.33
+		longitude: -74.33,
 	},
 	{
 		site: "s0000603",
@@ -4797,7 +4797,7 @@ export default [
 		nameFr: "Blainville",
 		prov: "QC",
 		latitude: 45.67,
-		longitude: -73.88
+		longitude: -73.88,
 	},
 	{
 		site: "s0000604",
@@ -4805,7 +4805,7 @@ export default [
 		nameFr: "Boisbriand",
 		prov: "QC",
 		latitude: 45.62,
-		longitude: -73.83
+		longitude: -73.83,
 	},
 	{
 		site: "s0000605",
@@ -4813,7 +4813,7 @@ export default [
 		nameFr: "Lorraine",
 		prov: "QC",
 		latitude: 45.68,
-		longitude: -73.78
+		longitude: -73.78,
 	},
 	{
 		site: "s0000606",
@@ -4821,7 +4821,7 @@ export default [
 		nameFr: "Rosemère",
 		prov: "QC",
 		latitude: 45.63,
-		longitude: -73.8
+		longitude: -73.8,
 	},
 	{
 		site: "s0000607",
@@ -4829,7 +4829,7 @@ export default [
 		nameFr: "Sainte-Anne-Des-Plaines",
 		prov: "QC",
 		latitude: 45.77,
-		longitude: -73.82
+		longitude: -73.82,
 	},
 	{
 		site: "s0000608",
@@ -4837,7 +4837,7 @@ export default [
 		nameFr: "Sainte-Thérèse",
 		prov: "QC",
 		latitude: 45.63,
-		longitude: -73.85
+		longitude: -73.85,
 	},
 	{
 		site: "s0000609",
@@ -4845,7 +4845,7 @@ export default [
 		nameFr: "Saint-Eustache",
 		prov: "QC",
 		latitude: 45.57,
-		longitude: -73.9
+		longitude: -73.9,
 	},
 	{
 		site: "s0000610",
@@ -4853,7 +4853,7 @@ export default [
 		nameFr: "Natashquan",
 		prov: "QC",
 		latitude: 50.19,
-		longitude: -61.82
+		longitude: -61.82,
 	},
 	{
 		site: "s0000611",
@@ -4861,7 +4861,7 @@ export default [
 		nameFr: "Gatineau",
 		prov: "QC",
 		latitude: 45.48,
-		longitude: -75.65
+		longitude: -75.65,
 	},
 	{
 		site: "s0000612",
@@ -4869,7 +4869,7 @@ export default [
 		nameFr: "Papineau",
 		prov: "QC",
 		latitude: 45.88,
-		longitude: -75.05
+		longitude: -75.05,
 	},
 	{
 		site: "s0000613",
@@ -4877,7 +4877,7 @@ export default [
 		nameFr: "Pontiac",
 		prov: "QC",
 		latitude: 46.05,
-		longitude: -76.92
+		longitude: -76.92,
 	},
 	{
 		site: "s0000614",
@@ -4885,7 +4885,7 @@ export default [
 		nameFr: "Val-des-Monts",
 		prov: "QC",
 		latitude: 45.65,
-		longitude: -75.67
+		longitude: -75.67,
 	},
 	{
 		site: "s0000615",
@@ -4893,7 +4893,7 @@ export default [
 		nameFr: "Chelsea",
 		prov: "QC",
 		latitude: 45.5,
-		longitude: -75.78
+		longitude: -75.78,
 	},
 	{
 		site: "s0000616",
@@ -4901,7 +4901,7 @@ export default [
 		nameFr: "Norway House",
 		prov: "MB",
 		latitude: 53.99,
-		longitude: -97.82
+		longitude: -97.82,
 	},
 	{
 		site: "s0000617",
@@ -4909,7 +4909,7 @@ export default [
 		nameFr: "Matagami",
 		prov: "QC",
 		latitude: 49.75,
-		longitude: -77.63
+		longitude: -77.63,
 	},
 	{
 		site: "s0000618",
@@ -4917,7 +4917,7 @@ export default [
 		nameFr: "Ekati (Lac de Gras)",
 		prov: "NT",
 		latitude: 64.5,
-		longitude: -110.5
+		longitude: -110.5,
 	},
 	{
 		site: "s0000619",
@@ -4925,7 +4925,7 @@ export default [
 		nameFr: "Cold Lake",
 		prov: "AB",
 		latitude: 54.45,
-		longitude: -110.17
+		longitude: -110.17,
 	},
 	{
 		site: "s0000620",
@@ -4933,7 +4933,7 @@ export default [
 		nameFr: "Québec",
 		prov: "QC",
 		latitude: 46.82,
-		longitude: -71.22
+		longitude: -71.22,
 	},
 	{
 		site: "s0000621",
@@ -4941,7 +4941,7 @@ export default [
 		nameFr: "High Level",
 		prov: "AB",
 		latitude: 58.52,
-		longitude: -117.13
+		longitude: -117.13,
 	},
 	{
 		site: "s0000622",
@@ -4949,7 +4949,7 @@ export default [
 		nameFr: "Grand Manan",
 		prov: "NB",
 		latitude: 44.7,
-		longitude: -66.82
+		longitude: -66.82,
 	},
 	{
 		site: "s0000623",
@@ -4957,7 +4957,7 @@ export default [
 		nameFr: "Ottawa (Richmond - Metcalfe)",
 		prov: "ON",
 		latitude: 45.24,
-		longitude: -75.47
+		longitude: -75.47,
 	},
 	{
 		site: "s0000624",
@@ -4965,7 +4965,7 @@ export default [
 		nameFr: "Prince Albert",
 		prov: "SK",
 		latitude: 53.22,
-		longitude: -105.71
+		longitude: -105.71,
 	},
 	{
 		site: "s0000625",
@@ -4973,7 +4973,7 @@ export default [
 		nameFr: "Peace River",
 		prov: "AB",
 		latitude: 56.24,
-		longitude: -117.3
+		longitude: -117.3,
 	},
 	{
 		site: "s0000626",
@@ -4981,7 +4981,7 @@ export default [
 		nameFr: "Portage la Prairie",
 		prov: "MB",
 		latitude: 49.97,
-		longitude: -98.29
+		longitude: -98.29,
 	},
 	{
 		site: "s0000627",
@@ -4989,7 +4989,7 @@ export default [
 		nameFr: "Inukjuak",
 		prov: "QC",
 		latitude: 58.45,
-		longitude: -78.1
+		longitude: -78.1,
 	},
 	{
 		site: "s0000628",
@@ -4997,7 +4997,7 @@ export default [
 		nameFr: "Pickle Lake",
 		prov: "ON",
 		latitude: 51.47,
-		longitude: -90.2
+		longitude: -90.2,
 	},
 	{
 		site: "s0000629",
@@ -5005,7 +5005,7 @@ export default [
 		nameFr: "Peterborough",
 		prov: "ON",
 		latitude: 44.3,
-		longitude: -78.33
+		longitude: -78.33,
 	},
 	{
 		site: "s0000630",
@@ -5013,7 +5013,7 @@ export default [
 		nameFr: "Port Perry",
 		prov: "ON",
 		latitude: 44.1,
-		longitude: -78.95
+		longitude: -78.95,
 	},
 	{
 		site: "s0000631",
@@ -5021,7 +5021,7 @@ export default [
 		nameFr: "Kawartha Lakes (Lindsay)",
 		prov: "ON",
 		latitude: 44.36,
-		longitude: -78.74
+		longitude: -78.74,
 	},
 	{
 		site: "s0000632",
@@ -5029,7 +5029,7 @@ export default [
 		nameFr: "Kawartha Lakes (Fenelon Falls)",
 		prov: "ON",
 		latitude: 44.54,
-		longitude: -78.74
+		longitude: -78.74,
 	},
 	{
 		site: "s0000633",
@@ -5037,7 +5037,7 @@ export default [
 		nameFr: "Prince Rupert",
 		prov: "BC",
 		latitude: 54.32,
-		longitude: -130.32
+		longitude: -130.32,
 	},
 	{
 		site: "s0000634",
@@ -5045,7 +5045,7 @@ export default [
 		nameFr: "Powell River",
 		prov: "BC",
 		latitude: 49.85,
-		longitude: -124.53
+		longitude: -124.53,
 	},
 	{
 		site: "s0000635",
@@ -5053,7 +5053,7 @@ export default [
 		nameFr: "Montréal",
 		prov: "QC",
 		latitude: 45.52,
-		longitude: -73.65
+		longitude: -73.65,
 	},
 	{
 		site: "s0000636",
@@ -5061,7 +5061,7 @@ export default [
 		nameFr: "Fort Chipewyan",
 		prov: "AB",
 		latitude: 58.71,
-		longitude: -111.16
+		longitude: -111.16,
 	},
 	{
 		site: "s0000637",
@@ -5069,7 +5069,7 @@ export default [
 		nameFr: "Burk's Falls",
 		prov: "ON",
 		latitude: 45.63,
-		longitude: -79.4
+		longitude: -79.4,
 	},
 	{
 		site: "s0000638",
@@ -5077,7 +5077,7 @@ export default [
 		nameFr: "Gravenhurst",
 		prov: "ON",
 		latitude: 44.87,
-		longitude: -79.34
+		longitude: -79.34,
 	},
 	{
 		site: "s0000639",
@@ -5085,7 +5085,7 @@ export default [
 		nameFr: "Port Carling",
 		prov: "ON",
 		latitude: 45.12,
-		longitude: -79.58
+		longitude: -79.58,
 	},
 	{
 		site: "s0000640",
@@ -5093,7 +5093,7 @@ export default [
 		nameFr: "Huntsville",
 		prov: "ON",
 		latitude: 45.31,
-		longitude: -79.28
+		longitude: -79.28,
 	},
 	{
 		site: "s0000641",
@@ -5101,7 +5101,7 @@ export default [
 		nameFr: "Bracebridge",
 		prov: "ON",
 		latitude: 45.03,
-		longitude: -79.19
+		longitude: -79.19,
 	},
 	{
 		site: "s0000642",
@@ -5109,7 +5109,7 @@ export default [
 		nameFr: "Muskoka",
 		prov: "ON",
 		latitude: 44.91,
-		longitude: -79.37
+		longitude: -79.37,
 	},
 	{
 		site: "s0000643",
@@ -5117,7 +5117,7 @@ export default [
 		nameFr: "Rainbow Lake",
 		prov: "AB",
 		latitude: 58.5,
-		longitude: -119.4
+		longitude: -119.4,
 	},
 	{
 		site: "s0000644",
@@ -5125,7 +5125,7 @@ export default [
 		nameFr: "The Pas",
 		prov: "MB",
 		latitude: 53.83,
-		longitude: -101.25
+		longitude: -101.25,
 	},
 	{
 		site: "s0000645",
@@ -5133,7 +5133,7 @@ export default [
 		nameFr: "Red Deer",
 		prov: "AB",
 		latitude: 52.27,
-		longitude: -113.81
+		longitude: -113.81,
 	},
 	{
 		site: "s0000646",
@@ -5141,7 +5141,7 @@ export default [
 		nameFr: "Windsor",
 		prov: "ON",
 		latitude: 42.3,
-		longitude: -82.99
+		longitude: -82.99,
 	},
 	{
 		site: "s0000647",
@@ -5149,7 +5149,7 @@ export default [
 		nameFr: "Good Hope Lake",
 		prov: "BC",
 		latitude: 59.28,
-		longitude: -129.3
+		longitude: -129.3,
 	},
 	{
 		site: "s0000648",
@@ -5157,7 +5157,7 @@ export default [
 		nameFr: "Watson Lake",
 		prov: "YT",
 		latitude: 60.06,
-		longitude: -128.7
+		longitude: -128.7,
 	},
 	{
 		site: "s0000649",
@@ -5165,7 +5165,7 @@ export default [
 		nameFr: "Yarmouth",
 		prov: "NS",
 		latitude: 43.84,
-		longitude: -66.12
+		longitude: -66.12,
 	},
 	{
 		site: "s0000650",
@@ -5173,7 +5173,7 @@ export default [
 		nameFr: "Sioux Narrows",
 		prov: "ON",
 		latitude: 49.41,
-		longitude: -94.1
+		longitude: -94.1,
 	},
 	{
 		site: "s0000651",
@@ -5181,7 +5181,7 @@ export default [
 		nameFr: "Kenora",
 		prov: "ON",
 		latitude: 49.82,
-		longitude: -94.44
+		longitude: -94.44,
 	},
 	{
 		site: "s0000652",
@@ -5189,7 +5189,7 @@ export default [
 		nameFr: "Lethbridge",
 		prov: "AB",
 		latitude: 49.69,
-		longitude: -112.84
+		longitude: -112.84,
 	},
 	{
 		site: "s0000653",
@@ -5197,7 +5197,7 @@ export default [
 		nameFr: "Shédiac",
 		prov: "NB",
 		latitude: 46.22,
-		longitude: -64.53
+		longitude: -64.53,
 	},
 	{
 		site: "s0000654",
@@ -5205,7 +5205,7 @@ export default [
 		nameFr: "Moncton",
 		prov: "NB",
 		latitude: 46.12,
-		longitude: -64.8
+		longitude: -64.8,
 	},
 	{
 		site: "s0000655",
@@ -5213,7 +5213,7 @@ export default [
 		nameFr: "Hopewell",
 		prov: "NB",
 		latitude: 45.83,
-		longitude: -64.72
+		longitude: -64.72,
 	},
 	{
 		site: "s0000656",
@@ -5221,7 +5221,7 @@ export default [
 		nameFr: "Comox",
 		prov: "BC",
 		latitude: 49.68,
-		longitude: -124.93
+		longitude: -124.93,
 	},
 	{
 		site: "s0000657",
@@ -5229,7 +5229,7 @@ export default [
 		nameFr: "Courtenay",
 		prov: "BC",
 		latitude: 49.68,
-		longitude: -124.98
+		longitude: -124.98,
 	},
 	{
 		site: "s0000658",
@@ -5237,7 +5237,7 @@ export default [
 		nameFr: "Brampton",
 		prov: "ON",
 		latitude: 43.69,
-		longitude: -79.76
+		longitude: -79.76,
 	},
 	{
 		site: "s0000659",
@@ -5245,7 +5245,7 @@ export default [
 		nameFr: "Kakabeka Falls",
 		prov: "ON",
 		latitude: 48.41,
-		longitude: -89.62
+		longitude: -89.62,
 	},
 	{
 		site: "s0000660",
@@ -5253,7 +5253,7 @@ export default [
 		nameFr: "Dorion",
 		prov: "ON",
 		latitude: 48.79,
-		longitude: -88.65
+		longitude: -88.65,
 	},
 	{
 		site: "s0000661",
@@ -5261,7 +5261,7 @@ export default [
 		nameFr: "Grande Prairie",
 		prov: "AB",
 		latitude: 55.17,
-		longitude: -118.8
+		longitude: -118.8,
 	},
 	{
 		site: "s0000662",
@@ -5269,7 +5269,7 @@ export default [
 		nameFr: "Canora",
 		prov: "SK",
 		latitude: 51.64,
-		longitude: -102.43
+		longitude: -102.43,
 	},
 	{
 		site: "s0000663",
@@ -5277,7 +5277,7 @@ export default [
 		nameFr: "Yorkton",
 		prov: "SK",
 		latitude: 51.21,
-		longitude: -102.46
+		longitude: -102.46,
 	},
 	{
 		site: "s0000664",
@@ -5285,7 +5285,7 @@ export default [
 		nameFr: "Kamsack",
 		prov: "SK",
 		latitude: 51.56,
-		longitude: -101.9
+		longitude: -101.9,
 	},
 	{
 		site: "s0000665",
@@ -5293,7 +5293,7 @@ export default [
 		nameFr: "Melville",
 		prov: "SK",
 		latitude: 50.93,
-		longitude: -102.81
+		longitude: -102.81,
 	},
 	{
 		site: "s0000666",
@@ -5301,7 +5301,7 @@ export default [
 		nameFr: "North Battleford",
 		prov: "SK",
 		latitude: 52.76,
-		longitude: -108.29
+		longitude: -108.29,
 	},
 	{
 		site: "s0000667",
@@ -5309,7 +5309,7 @@ export default [
 		nameFr: "Gander",
 		prov: "NL",
 		latitude: 48.95,
-		longitude: -54.61
+		longitude: -54.61,
 	},
 	{
 		site: "s0000668",
@@ -5317,7 +5317,7 @@ export default [
 		nameFr: "Campbellton",
 		prov: "NL",
 		latitude: 49.29,
-		longitude: -54.94
+		longitude: -54.94,
 	},
 	{
 		site: "s0000669",
@@ -5325,7 +5325,7 @@ export default [
 		nameFr: "Lewisporte",
 		prov: "NL",
 		latitude: 49.25,
-		longitude: -55.06
+		longitude: -55.06,
 	},
 	{
 		site: "s0000670",
@@ -5333,7 +5333,7 @@ export default [
 		nameFr: "Sydney",
 		prov: "NS",
 		latitude: 46.14,
-		longitude: -60.2
+		longitude: -60.2,
 	},
 	{
 		site: "s0000671",
@@ -5341,7 +5341,7 @@ export default [
 		nameFr: "Quesnel",
 		prov: "BC",
 		latitude: 53,
-		longitude: -122.5
+		longitude: -122.5,
 	},
 	{
 		site: "s0000672",
@@ -5349,7 +5349,7 @@ export default [
 		nameFr: "Resolute",
 		prov: "NU",
 		latitude: 74.7,
-		longitude: -94.83
+		longitude: -94.83,
 	},
 	{
 		site: "s0000673",
@@ -5357,7 +5357,7 @@ export default [
 		nameFr: "Roberval",
 		prov: "QC",
 		latitude: 48.52,
-		longitude: -72.27
+		longitude: -72.27,
 	},
 	{
 		site: "s0000674",
@@ -5365,7 +5365,7 @@ export default [
 		nameFr: "Lac-Saint-Jean",
 		prov: "QC",
 		latitude: 48.57,
-		longitude: -72.23
+		longitude: -72.23,
 	},
 	{
 		site: "s0000675",
@@ -5373,7 +5373,7 @@ export default [
 		nameFr: "Saint-Félicien",
 		prov: "QC",
 		latitude: 48.65,
-		longitude: -72.45
+		longitude: -72.45,
 	},
 	{
 		site: "s0000676",
@@ -5381,7 +5381,7 @@ export default [
 		nameFr: "Red Lake",
 		prov: "ON",
 		latitude: 51.1,
-		longitude: -93.72
+		longitude: -93.72,
 	},
 	{
 		site: "s0000677",
@@ -5389,7 +5389,7 @@ export default [
 		nameFr: "Pikangikum",
 		prov: "ON",
 		latitude: 51.81,
-		longitude: -93.99
+		longitude: -93.99,
 	},
 	{
 		site: "s0000678",
@@ -5397,7 +5397,7 @@ export default [
 		nameFr: "Rankin Inlet",
 		prov: "NU",
 		latitude: 62.82,
-		longitude: -92.08
+		longitude: -92.08,
 	},
 	{
 		site: "s0000679",
@@ -5405,7 +5405,7 @@ export default [
 		nameFr: "Revelstoke",
 		prov: "BC",
 		latitude: 50.98,
-		longitude: -118.2
+		longitude: -118.2,
 	},
 	{
 		site: "s0000680",
@@ -5413,7 +5413,7 @@ export default [
 		nameFr: "Grand Sudbury",
 		prov: "ON",
 		latitude: 46.58,
-		longitude: -81.07
+		longitude: -81.07,
 	},
 	{
 		site: "s0000681",
@@ -5421,7 +5421,7 @@ export default [
 		nameFr: "Sherbrooke",
 		prov: "QC",
 		latitude: 45.4,
-		longitude: -71.9
+		longitude: -71.9,
 	},
 	{
 		site: "s0000682",
@@ -5429,7 +5429,7 @@ export default [
 		nameFr: "Asbestos",
 		prov: "QC",
 		latitude: 45.77,
-		longitude: -71.93
+		longitude: -71.93,
 	},
 	{
 		site: "s0000683",
@@ -5437,7 +5437,7 @@ export default [
 		nameFr: "Suffield",
 		prov: "AB",
 		latitude: 50.22,
-		longitude: -111.16
+		longitude: -111.16,
 	},
 	{
 		site: "s0000684",
@@ -5445,7 +5445,7 @@ export default [
 		nameFr: "Stony Rapids",
 		prov: "SK",
 		latitude: 59.25,
-		longitude: -105.84
+		longitude: -105.84,
 	},
 	{
 		site: "s0000685",
@@ -5453,7 +5453,7 @@ export default [
 		nameFr: "Quispamsis",
 		prov: "NB",
 		latitude: 45.44,
-		longitude: -65.94
+		longitude: -65.94,
 	},
 	{
 		site: "s0000686",
@@ -5461,7 +5461,7 @@ export default [
 		nameFr: "Sussex",
 		prov: "NB",
 		latitude: 45.72,
-		longitude: -65.51
+		longitude: -65.51,
 	},
 	{
 		site: "s0000687",
@@ -5469,7 +5469,7 @@ export default [
 		nameFr: "Saint John",
 		prov: "NB",
 		latitude: 45.26,
-		longitude: -66.04
+		longitude: -66.04,
 	},
 	{
 		site: "s0000688",
@@ -5477,7 +5477,7 @@ export default [
 		nameFr: "Fundy (Parc national)",
 		prov: "NB",
 		latitude: 45.62,
-		longitude: -65.03
+		longitude: -65.03,
 	},
 	{
 		site: "s0000689",
@@ -5485,7 +5485,7 @@ export default [
 		nameFr: "Sanikiluaq",
 		prov: "NU",
 		latitude: 56.53,
-		longitude: -79.23
+		longitude: -79.23,
 	},
 	{
 		site: "s0000690",
@@ -5493,7 +5493,7 @@ export default [
 		nameFr: "Fort Smith",
 		prov: "NT",
 		latitude: 60,
-		longitude: -111.88
+		longitude: -111.88,
 	},
 	{
 		site: "s0000691",
@@ -5501,7 +5501,7 @@ export default [
 		nameFr: "St. Catharines",
 		prov: "ON",
 		latitude: 43.17,
-		longitude: -79.25
+		longitude: -79.25,
 	},
 	{
 		site: "s0000692",
@@ -5509,7 +5509,7 @@ export default [
 		nameFr: "Niagara Falls",
 		prov: "ON",
 		latitude: 43.06,
-		longitude: -79.11
+		longitude: -79.11,
 	},
 	{
 		site: "s0000693",
@@ -5517,7 +5517,7 @@ export default [
 		nameFr: "Nanisivik",
 		prov: "NU",
 		latitude: 73.03,
-		longitude: -84.55
+		longitude: -84.55,
 	},
 	{
 		site: "s0000694",
@@ -5525,7 +5525,7 @@ export default [
 		nameFr: "Cape Dorset",
 		prov: "NU",
 		latitude: 64.23,
-		longitude: -76.54
+		longitude: -76.54,
 	},
 	{
 		site: "s0000695",
@@ -5533,7 +5533,7 @@ export default [
 		nameFr: "Thompson",
 		prov: "MB",
 		latitude: 55.74,
-		longitude: -97.86
+		longitude: -97.86,
 	},
 	{
 		site: "s0000696",
@@ -5541,7 +5541,7 @@ export default [
 		nameFr: "Sachigo Lake",
 		prov: "ON",
 		latitude: 53.87,
-		longitude: -92.17
+		longitude: -92.17,
 	},
 	{
 		site: "s0000697",
@@ -5549,7 +5549,7 @@ export default [
 		nameFr: "Big Trout Lake",
 		prov: "ON",
 		latitude: 53.75,
-		longitude: -90
+		longitude: -90,
 	},
 	{
 		site: "s0000698",
@@ -5557,7 +5557,7 @@ export default [
 		nameFr: "Wunnummin Lake",
 		prov: "ON",
 		latitude: 52.94,
-		longitude: -89.3
+		longitude: -89.3,
 	},
 	{
 		site: "s0000699",
@@ -5565,7 +5565,7 @@ export default [
 		nameFr: "Tasiujaq",
 		prov: "QC",
 		latitude: 58.7,
-		longitude: -69.93
+		longitude: -69.93,
 	},
 	{
 		site: "s0000700",
@@ -5573,7 +5573,7 @@ export default [
 		nameFr: "Stirling",
 		prov: "ON",
 		latitude: 44.3,
-		longitude: -77.55
+		longitude: -77.55,
 	},
 	{
 		site: "s0000701",
@@ -5581,7 +5581,7 @@ export default [
 		nameFr: "Trenton",
 		prov: "ON",
 		latitude: 44.11,
-		longitude: -77.58
+		longitude: -77.58,
 	},
 	{
 		site: "s0000702",
@@ -5589,7 +5589,7 @@ export default [
 		nameFr: "Prince Edward (Picton)",
 		prov: "ON",
 		latitude: 44.02,
-		longitude: -77.26
+		longitude: -77.26,
 	},
 	{
 		site: "s0000703",
@@ -5597,7 +5597,7 @@ export default [
 		nameFr: "Belleville",
 		prov: "ON",
 		latitude: 44.26,
-		longitude: -77.37
+		longitude: -77.37,
 	},
 	{
 		site: "s0000704",
@@ -5605,7 +5605,7 @@ export default [
 		nameFr: "Quinte Ouest",
 		prov: "ON",
 		latitude: 44.2,
-		longitude: -77.58
+		longitude: -77.58,
 	},
 	{
 		site: "s0000705",
@@ -5613,7 +5613,7 @@ export default [
 		nameFr: "Timmins",
 		prov: "ON",
 		latitude: 48.47,
-		longitude: -81.33
+		longitude: -81.33,
 	},
 	{
 		site: "s0000706",
@@ -5621,7 +5621,7 @@ export default [
 		nameFr: "Cochrane",
 		prov: "ON",
 		latitude: 49.17,
-		longitude: -81.06
+		longitude: -81.06,
 	},
 	{
 		site: "s0000707",
@@ -5629,7 +5629,7 @@ export default [
 		nameFr: "Oshawa",
 		prov: "ON",
 		latitude: 43.9,
-		longitude: -78.86
+		longitude: -78.86,
 	},
 	{
 		site: "s0000708",
@@ -5637,7 +5637,7 @@ export default [
 		nameFr: "Whitby",
 		prov: "ON",
 		latitude: 43.93,
-		longitude: -78.95
+		longitude: -78.95,
 	},
 	{
 		site: "s0000709",
@@ -5645,7 +5645,7 @@ export default [
 		nameFr: "Shawinigan",
 		prov: "QC",
 		latitude: 46.57,
-		longitude: -72.75
+		longitude: -72.75,
 	},
 	{
 		site: "s0000710",
@@ -5653,7 +5653,7 @@ export default [
 		nameFr: "Pickering",
 		prov: "ON",
 		latitude: 43.91,
-		longitude: -79.13
+		longitude: -79.13,
 	},
 	{
 		site: "s0000711",
@@ -5661,7 +5661,7 @@ export default [
 		nameFr: "Puvirnituq",
 		prov: "QC",
 		latitude: 60.03,
-		longitude: -77.28
+		longitude: -77.28,
 	},
 	{
 		site: "s0000712",
@@ -5669,7 +5669,7 @@ export default [
 		nameFr: "Laval",
 		prov: "QC",
 		latitude: 45.58,
-		longitude: -73.75
+		longitude: -73.75,
 	},
 	{
 		site: "s0000713",
@@ -5677,7 +5677,7 @@ export default [
 		nameFr: "Naujaat",
 		prov: "NU",
 		latitude: 66.53,
-		longitude: -86.25
+		longitude: -86.25,
 	},
 	{
 		site: "s0000714",
@@ -5685,7 +5685,7 @@ export default [
 		nameFr: "Hall Beach",
 		prov: "NU",
 		latitude: 68.79,
-		longitude: -81.24
+		longitude: -81.24,
 	},
 	{
 		site: "s0000715",
@@ -5693,7 +5693,7 @@ export default [
 		nameFr: "La Ronge",
 		prov: "SK",
 		latitude: 55.12,
-		longitude: -105.29
+		longitude: -105.29,
 	},
 	{
 		site: "s0000716",
@@ -5701,7 +5701,7 @@ export default [
 		nameFr: "Qikiqtarjuaqq",
 		prov: "NU",
 		latitude: 67.55,
-		longitude: -64.03
+		longitude: -64.03,
 	},
 	{
 		site: "s0000717",
@@ -5709,7 +5709,7 @@ export default [
 		nameFr: "Val-d'Or",
 		prov: "QC",
 		latitude: 48.1,
-		longitude: -77.78
+		longitude: -77.78,
 	},
 	{
 		site: "s0000718",
@@ -5717,7 +5717,7 @@ export default [
 		nameFr: "Amos",
 		prov: "QC",
 		latitude: 48.57,
-		longitude: -78.12
+		longitude: -78.12,
 	},
 	{
 		site: "s0000719",
@@ -5725,7 +5725,7 @@ export default [
 		nameFr: "Kuujjuaq",
 		prov: "QC",
 		latitude: 58.1,
-		longitude: -68.4
+		longitude: -68.4,
 	},
 	{
 		site: "s0000720",
@@ -5733,7 +5733,7 @@ export default [
 		nameFr: "Norman Wells",
 		prov: "NT",
 		latitude: 65.28,
-		longitude: -126.83
+		longitude: -126.83,
 	},
 	{
 		site: "s0000721",
@@ -5741,7 +5741,7 @@ export default [
 		nameFr: "Joliette",
 		prov: "QC",
 		latitude: 46.02,
-		longitude: -73.45
+		longitude: -73.45,
 	},
 	{
 		site: "s0000722",
@@ -5749,7 +5749,7 @@ export default [
 		nameFr: "La Loche",
 		prov: "SK",
 		latitude: 56.49,
-		longitude: -109.4
+		longitude: -109.4,
 	},
 	{
 		site: "s0000723",
@@ -5757,7 +5757,7 @@ export default [
 		nameFr: "Buffalo Narrows",
 		prov: "SK",
 		latitude: 55.88,
-		longitude: -108.52
+		longitude: -108.52,
 	},
 	{
 		site: "s0000724",
@@ -5765,7 +5765,7 @@ export default [
 		nameFr: "Wiarton",
 		prov: "ON",
 		latitude: 44.74,
-		longitude: -81.14
+		longitude: -81.14,
 	},
 	{
 		site: "s0000725",
@@ -5773,7 +5773,7 @@ export default [
 		nameFr: "Port Elgin",
 		prov: "ON",
 		latitude: 44.44,
-		longitude: -81.39
+		longitude: -81.39,
 	},
 	{
 		site: "s0000726",
@@ -5781,7 +5781,7 @@ export default [
 		nameFr: "Saugeen Shores",
 		prov: "ON",
 		latitude: 44.41,
-		longitude: -81.37
+		longitude: -81.37,
 	},
 	{
 		site: "s0000727",
@@ -5789,7 +5789,7 @@ export default [
 		nameFr: "South Bruce Peninsula",
 		prov: "ON",
 		latitude: 44.71,
-		longitude: -81.22
+		longitude: -81.22,
 	},
 	{
 		site: "s0000728",
@@ -5797,7 +5797,7 @@ export default [
 		nameFr: "Owen Sound",
 		prov: "ON",
 		latitude: 44.57,
-		longitude: -80.93
+		longitude: -80.93,
 	},
 	{
 		site: "s0000729",
@@ -5805,7 +5805,7 @@ export default [
 		nameFr: "Petawawa",
 		prov: "ON",
 		latitude: 45.91,
-		longitude: -77.27
+		longitude: -77.27,
 	},
 	{
 		site: "s0000730",
@@ -5813,7 +5813,7 @@ export default [
 		nameFr: "Pembroke",
 		prov: "ON",
 		latitude: 45.82,
-		longitude: -77.11
+		longitude: -77.11,
 	},
 	{
 		site: "s0000731",
@@ -5821,7 +5821,7 @@ export default [
 		nameFr: "Renfrew",
 		prov: "ON",
 		latitude: 45.47,
-		longitude: -76.68
+		longitude: -76.68,
 	},
 	{
 		site: "s0000732",
@@ -5829,7 +5829,7 @@ export default [
 		nameFr: "Deep River",
 		prov: "ON",
 		latitude: 46.05,
-		longitude: -77.42
+		longitude: -77.42,
 	},
 	{
 		site: "s0000733",
@@ -5837,7 +5837,7 @@ export default [
 		nameFr: "Moosomin",
 		prov: "SK",
 		latitude: 50.14,
-		longitude: -101.67
+		longitude: -101.67,
 	},
 	{
 		site: "s0000734",
@@ -5845,7 +5845,7 @@ export default [
 		nameFr: "Richer",
 		prov: "MB",
 		latitude: 49.66,
-		longitude: -96.46
+		longitude: -96.46,
 	},
 	{
 		site: "s0000735",
@@ -5853,7 +5853,7 @@ export default [
 		nameFr: "Victoria Harbour",
 		prov: "BC",
 		latitude: 48.42,
-		longitude: -123.39
+		longitude: -123.39,
 	},
 	{
 		site: "s0000736",
@@ -5861,7 +5861,7 @@ export default [
 		nameFr: "Wabush Lake",
 		prov: "NL",
 		latitude: 53.08,
-		longitude: -66.87
+		longitude: -66.87,
 	},
 	{
 		site: "s0000737",
@@ -5869,7 +5869,7 @@ export default [
 		nameFr: "Labrador City",
 		prov: "NL",
 		latitude: 52.94,
-		longitude: -66.92
+		longitude: -66.92,
 	},
 	{
 		site: "s0000738",
@@ -5877,7 +5877,7 @@ export default [
 		nameFr: "Fermont",
 		prov: "QC",
 		latitude: 52.78,
-		longitude: -67.08
+		longitude: -67.08,
 	},
 	{
 		site: "s0000739",
@@ -5885,7 +5885,7 @@ export default [
 		nameFr: "Williams Lake",
 		prov: "BC",
 		latitude: 52.14,
-		longitude: -122.14
+		longitude: -122.14,
 	},
 	{
 		site: "s0000740",
@@ -5893,7 +5893,7 @@ export default [
 		nameFr: "Wrigley",
 		prov: "NT",
 		latitude: 63.27,
-		longitude: -123.61
+		longitude: -123.61,
 	},
 	{
 		site: "s0000741",
@@ -5901,7 +5901,7 @@ export default [
 		nameFr: "Cranbrook",
 		prov: "BC",
 		latitude: 49.5,
-		longitude: -115.77
+		longitude: -115.77,
 	},
 	{
 		site: "s0000742",
@@ -5909,7 +5909,7 @@ export default [
 		nameFr: "Saint-Timothée",
 		prov: "QC",
 		latitude: 45.29,
-		longitude: -74.04
+		longitude: -74.04,
 	},
 	{
 		site: "s0000743",
@@ -5917,7 +5917,7 @@ export default [
 		nameFr: "Rosthern",
 		prov: "SK",
 		latitude: 52.66,
-		longitude: -106.33
+		longitude: -106.33,
 	},
 	{
 		site: "s0000744",
@@ -5925,7 +5925,7 @@ export default [
 		nameFr: "Lambton Shores",
 		prov: "ON",
 		latitude: 43.18,
-		longitude: -81.9
+		longitude: -81.9,
 	},
 	{
 		site: "s0000745",
@@ -5933,7 +5933,7 @@ export default [
 		nameFr: "Medicine Hat",
 		prov: "AB",
 		latitude: 50.04,
-		longitude: -110.68
+		longitude: -110.68,
 	},
 	{
 		site: "s0000746",
@@ -5941,7 +5941,7 @@ export default [
 		nameFr: "Fort St. John",
 		prov: "BC",
 		latitude: 56.25,
-		longitude: -120.85
+		longitude: -120.85,
 	},
 	{
 		site: "s0000747",
@@ -5949,7 +5949,7 @@ export default [
 		nameFr: "Savant Lake",
 		prov: "ON",
 		latitude: 50.24,
-		longitude: -90.71
+		longitude: -90.71,
 	},
 	{
 		site: "s0000748",
@@ -5957,7 +5957,7 @@ export default [
 		nameFr: "Sioux Lookout",
 		prov: "ON",
 		latitude: 50.09,
-		longitude: -92
+		longitude: -92,
 	},
 	{
 		site: "s0000749",
@@ -5965,7 +5965,7 @@ export default [
 		nameFr: "Whale Cove",
 		prov: "NU",
 		latitude: 62.16,
-		longitude: -92.57
+		longitude: -92.57,
 	},
 	{
 		site: "s0000750",
@@ -5973,7 +5973,7 @@ export default [
 		nameFr: "Pangnirtung",
 		prov: "NU",
 		latitude: 66.14,
-		longitude: -65.72
+		longitude: -65.72,
 	},
 	{
 		site: "s0000751",
@@ -5981,7 +5981,7 @@ export default [
 		nameFr: "Beaver Creek",
 		prov: "YT",
 		latitude: 62.38,
-		longitude: -140.88
+		longitude: -140.88,
 	},
 	{
 		site: "s0000752",
@@ -5989,7 +5989,7 @@ export default [
 		nameFr: "Earlton",
 		prov: "ON",
 		latitude: 47.71,
-		longitude: -79.82
+		longitude: -79.82,
 	},
 	{
 		site: "s0000753",
@@ -5997,7 +5997,7 @@ export default [
 		nameFr: "Temiskaming Shores",
 		prov: "ON",
 		latitude: 47.49,
-		longitude: -79.72
+		longitude: -79.72,
 	},
 	{
 		site: "s0000754",
@@ -6005,7 +6005,7 @@ export default [
 		nameFr: "Vanderhoof",
 		prov: "BC",
 		latitude: 54.02,
-		longitude: -124.02
+		longitude: -124.02,
 	},
 	{
 		site: "s0000755",
@@ -6013,7 +6013,7 @@ export default [
 		nameFr: "Repentigny",
 		prov: "QC",
 		latitude: 45.73,
-		longitude: -73.47
+		longitude: -73.47,
 	},
 	{
 		site: "s0000756",
@@ -6021,7 +6021,7 @@ export default [
 		nameFr: "Kitimat",
 		prov: "BC",
 		latitude: 54.05,
-		longitude: -128.65
+		longitude: -128.65,
 	},
 	{
 		site: "s0000757",
@@ -6029,7 +6029,7 @@ export default [
 		nameFr: "Terrace",
 		prov: "BC",
 		latitude: 54.52,
-		longitude: -128.6
+		longitude: -128.6,
 	},
 	{
 		site: "s0000758",
@@ -6037,7 +6037,7 @@ export default [
 		nameFr: "Abbotsford",
 		prov: "BC",
 		latitude: 49.06,
-		longitude: -122.25
+		longitude: -122.25,
 	},
 	{
 		site: "s0000759",
@@ -6045,7 +6045,7 @@ export default [
 		nameFr: "Paulatuk",
 		prov: "NT",
 		latitude: 69.35,
-		longitude: -124.07
+		longitude: -124.07,
 	},
 	{
 		site: "s0000760",
@@ -6053,7 +6053,7 @@ export default [
 		nameFr: "Carcross",
 		prov: "YT",
 		latitude: 60.17,
-		longitude: -134.71
+		longitude: -134.71,
 	},
 	{
 		site: "s0000761",
@@ -6061,7 +6061,7 @@ export default [
 		nameFr: "Wawa",
 		prov: "ON",
 		latitude: 47.99,
-		longitude: -84.77
+		longitude: -84.77,
 	},
 	{
 		site: "s0000762",
@@ -6069,7 +6069,7 @@ export default [
 		nameFr: "Montreal River Harbour",
 		prov: "ON",
 		latitude: 47.24,
-		longitude: -84.65
+		longitude: -84.65,
 	},
 	{
 		site: "s0000763",
@@ -6077,7 +6077,7 @@ export default [
 		nameFr: "Lac Supérieur (Parc provincial)",
 		prov: "ON",
 		latitude: 47.6,
-		longitude: -84.74
+		longitude: -84.74,
 	},
 	{
 		site: "s0000764",
@@ -6085,7 +6085,7 @@ export default [
 		nameFr: "White River",
 		prov: "ON",
 		latitude: 48.58,
-		longitude: -85.26
+		longitude: -85.26,
 	},
 	{
 		site: "s0000765",
@@ -6093,7 +6093,7 @@ export default [
 		nameFr: "North Bay",
 		prov: "ON",
 		latitude: 46.31,
-		longitude: -79.46
+		longitude: -79.46,
 	},
 	{
 		site: "s0000766",
@@ -6101,7 +6101,7 @@ export default [
 		nameFr: "Nipissing Ouest",
 		prov: "ON",
 		latitude: 46.45,
-		longitude: -80.04
+		longitude: -80.04,
 	},
 	{
 		site: "s0000767",
@@ -6109,7 +6109,7 @@ export default [
 		nameFr: "Okotoks",
 		prov: "AB",
 		latitude: 50.73,
-		longitude: -113.98
+		longitude: -113.98,
 	},
 	{
 		site: "s0000768",
@@ -6117,7 +6117,7 @@ export default [
 		nameFr: "Airdrie",
 		prov: "AB",
 		latitude: 51.29,
-		longitude: -114.01
+		longitude: -114.01,
 	},
 	{
 		site: "s0000769",
@@ -6125,7 +6125,7 @@ export default [
 		nameFr: "Delson",
 		prov: "QC",
 		latitude: 45.37,
-		longitude: -73.55
+		longitude: -73.55,
 	},
 	{
 		site: "s0000770",
@@ -6133,7 +6133,7 @@ export default [
 		nameFr: "Smithers",
 		prov: "BC",
 		latitude: 54.78,
-		longitude: -127.17
+		longitude: -127.17,
 	},
 	{
 		site: "s0000771",
@@ -6141,7 +6141,7 @@ export default [
 		nameFr: "Fort Nelson",
 		prov: "BC",
 		latitude: 58.81,
-		longitude: -122.7
+		longitude: -122.7,
 	},
 	{
 		site: "s0000772",
@@ -6149,7 +6149,7 @@ export default [
 		nameFr: "Penticton",
 		prov: "BC",
 		latitude: 49.5,
-		longitude: -119.58
+		longitude: -119.58,
 	},
 	{
 		site: "s0000773",
@@ -6157,7 +6157,7 @@ export default [
 		nameFr: "Richmond Hill",
 		prov: "ON",
 		latitude: 43.87,
-		longitude: -79.44
+		longitude: -79.44,
 	},
 	{
 		site: "s0000774",
@@ -6165,7 +6165,7 @@ export default [
 		nameFr: "Taloyoak",
 		prov: "NU",
 		latitude: 69.54,
-		longitude: -93.52
+		longitude: -93.52,
 	},
 	{
 		site: "s0000775",
@@ -6173,7 +6173,7 @@ export default [
 		nameFr: "Victoria",
 		prov: "BC",
 		latitude: 48.43,
-		longitude: -123.37
+		longitude: -123.37,
 	},
 	{
 		site: "s0000776",
@@ -6181,7 +6181,7 @@ export default [
 		nameFr: "Leaf Rapids",
 		prov: "MB",
 		latitude: 56.47,
-		longitude: -99.75
+		longitude: -99.75,
 	},
 	{
 		site: "s0000777",
@@ -6189,7 +6189,7 @@ export default [
 		nameFr: "Lynn Lake",
 		prov: "MB",
 		latitude: 56.83,
-		longitude: -101.08
+		longitude: -101.08,
 	},
 	{
 		site: "s0000778",
@@ -6197,7 +6197,7 @@ export default [
 		nameFr: "Brochet",
 		prov: "MB",
 		latitude: 57.88,
-		longitude: -101.67
+		longitude: -101.67,
 	},
 	{
 		site: "s0000779",
@@ -6205,7 +6205,7 @@ export default [
 		nameFr: "Churchill",
 		prov: "MB",
 		latitude: 58.73,
-		longitude: -94.12
+		longitude: -94.12,
 	},
 	{
 		site: "s0000780",
@@ -6213,7 +6213,7 @@ export default [
 		nameFr: "Happy Valley-Goose Bay",
 		prov: "NL",
 		latitude: 53.3,
-		longitude: -60.31
+		longitude: -60.31,
 	},
 	{
 		site: "s0000781",
@@ -6221,7 +6221,7 @@ export default [
 		nameFr: "Grande Cache",
 		prov: "AB",
 		latitude: 53.89,
-		longitude: -119.12
+		longitude: -119.12,
 	},
 	{
 		site: "s0000782",
@@ -6229,7 +6229,7 @@ export default [
 		nameFr: "Kapuskasing",
 		prov: "ON",
 		latitude: 49.42,
-		longitude: -82.42
+		longitude: -82.42,
 	},
 	{
 		site: "s0000783",
@@ -6237,7 +6237,7 @@ export default [
 		nameFr: "Mont-Joli",
 		prov: "QC",
 		latitude: 48.58,
-		longitude: -68.18
+		longitude: -68.18,
 	},
 	{
 		site: "s0000784",
@@ -6245,7 +6245,7 @@ export default [
 		nameFr: "Matane",
 		prov: "QC",
 		latitude: 48.85,
-		longitude: -67.53
+		longitude: -67.53,
 	},
 	{
 		site: "s0000785",
@@ -6253,7 +6253,7 @@ export default [
 		nameFr: "Toronto Island",
 		prov: "ON",
 		latitude: 43.63,
-		longitude: -79.37
+		longitude: -79.37,
 	},
 	{
 		site: "s0000786",
@@ -6261,7 +6261,7 @@ export default [
 		nameFr: "Mississauga",
 		prov: "ON",
 		latitude: 43.59,
-		longitude: -79.66
+		longitude: -79.66,
 	},
 	{
 		site: "s0000787",
@@ -6269,7 +6269,7 @@ export default [
 		nameFr: "Caledon",
 		prov: "ON",
 		latitude: 43.87,
-		longitude: -79.86
+		longitude: -79.86,
 	},
 	{
 		site: "s0000788",
@@ -6277,7 +6277,7 @@ export default [
 		nameFr: "Regina",
 		prov: "SK",
 		latitude: 50.45,
-		longitude: -104.61
+		longitude: -104.61,
 	},
 	{
 		site: "s0000789",
@@ -6285,7 +6285,7 @@ export default [
 		nameFr: "Halton Hills",
 		prov: "ON",
 		latitude: 43.63,
-		longitude: -79.95
+		longitude: -79.95,
 	},
 	{
 		site: "s0000790",
@@ -6293,7 +6293,7 @@ export default [
 		nameFr: "Gore Bay",
 		prov: "ON",
 		latitude: 45.92,
-		longitude: -82.46
+		longitude: -82.46,
 	},
 	{
 		site: "s0000791",
@@ -6301,7 +6301,7 @@ export default [
 		nameFr: "Detah",
 		prov: "NT",
 		latitude: 62.41,
-		longitude: -114.31
+		longitude: -114.31,
 	},
 	{
 		site: "s0000792",
@@ -6309,7 +6309,7 @@ export default [
 		nameFr: "Victoria (Hartland)",
 		prov: "BC",
 		latitude: 48.52,
-		longitude: -123.43
+		longitude: -123.43,
 	},
 	{
 		site: "s0000793",
@@ -6317,7 +6317,7 @@ export default [
 		nameFr: "Salluit",
 		prov: "QC",
 		latitude: 62.2,
-		longitude: -75.63
+		longitude: -75.63,
 	},
 	{
 		site: "s0000794",
@@ -6325,7 +6325,7 @@ export default [
 		nameFr: "Slave Lake",
 		prov: "AB",
 		latitude: 55.28,
-		longitude: -114.77
+		longitude: -114.77,
 	},
 	{
 		site: "s0000795",
@@ -6333,7 +6333,7 @@ export default [
 		nameFr: "Sandspit",
 		prov: "BC",
 		latitude: 53.25,
-		longitude: -131.82
+		longitude: -131.82,
 	},
 	{
 		site: "s0000796",
@@ -6341,7 +6341,7 @@ export default [
 		nameFr: "Sarnia",
 		prov: "ON",
 		latitude: 42.98,
-		longitude: -82.32
+		longitude: -82.32,
 	},
 	{
 		site: "s0000797",
@@ -6349,7 +6349,7 @@ export default [
 		nameFr: "Saskatoon",
 		prov: "SK",
 		latitude: 52.14,
-		longitude: -106.69
+		longitude: -106.69,
 	},
 	{
 		site: "s0000798",
@@ -6357,7 +6357,7 @@ export default [
 		nameFr: "Coral Harbour",
 		prov: "NU",
 		latitude: 64.13,
-		longitude: -83.17
+		longitude: -83.17,
 	},
 	{
 		site: "s0000799",
@@ -6365,7 +6365,7 @@ export default [
 		nameFr: "Port Hardy",
 		prov: "BC",
 		latitude: 50.7,
-		longitude: -127.42
+		longitude: -127.42,
 	},
 	{
 		site: "s0000800",
@@ -6373,7 +6373,7 @@ export default [
 		nameFr: "Sept-Îles",
 		prov: "QC",
 		latitude: 50.2,
-		longitude: -66.38
+		longitude: -66.38,
 	},
 	{
 		site: "s0000801",
@@ -6381,7 +6381,7 @@ export default [
 		nameFr: "Port-Cartier",
 		prov: "QC",
 		latitude: 50.03,
-		longitude: -66.87
+		longitude: -66.87,
 	},
 	{
 		site: "s0000802",
@@ -6389,7 +6389,7 @@ export default [
 		nameFr: "Annapolis Royal",
 		prov: "NS",
 		latitude: 44.74,
-		longitude: -65.52
+		longitude: -65.52,
 	},
 	{
 		site: "s0000803",
@@ -6397,7 +6397,7 @@ export default [
 		nameFr: "Greenwood",
 		prov: "NS",
 		latitude: 44.97,
-		longitude: -64.93
+		longitude: -64.93,
 	},
 	{
 		site: "s0000804",
@@ -6405,7 +6405,7 @@ export default [
 		nameFr: "Bridgetown",
 		prov: "NS",
 		latitude: 44.84,
-		longitude: -65.29
+		longitude: -65.29,
 	},
 	{
 		site: "s0000805",
@@ -6413,7 +6413,7 @@ export default [
 		nameFr: "Mackenzie",
 		prov: "BC",
 		latitude: 55.3,
-		longitude: -123.17
+		longitude: -123.17,
 	},
 	{
 		site: "s0000806",
@@ -6421,7 +6421,7 @@ export default [
 		nameFr: "Bathurst",
 		prov: "NB",
 		latitude: 47.63,
-		longitude: -65.63
+		longitude: -65.63,
 	},
 	{
 		site: "s0000807",
@@ -6429,7 +6429,7 @@ export default [
 		nameFr: "Campbellton",
 		prov: "NB",
 		latitude: 47.99,
-		longitude: -66.68
+		longitude: -66.68,
 	},
 	{
 		site: "s0000808",
@@ -6437,7 +6437,7 @@ export default [
 		nameFr: "Dalhousie",
 		prov: "NB",
 		latitude: 48.05,
-		longitude: -66.39
+		longitude: -66.39,
 	},
 	{
 		site: "s0000809",
@@ -6445,7 +6445,7 @@ export default [
 		nameFr: "Charlo",
 		prov: "NB",
 		latitude: 47.99,
-		longitude: -66.31
+		longitude: -66.31,
 	},
 	{
 		site: "s0000810",
@@ -6453,7 +6453,7 @@ export default [
 		nameFr: "Pointe-à-la-Croix",
 		prov: "QC",
 		latitude: 48.02,
-		longitude: -66.68
+		longitude: -66.68,
 	},
 	{
 		site: "s0000811",
@@ -6461,7 +6461,7 @@ export default [
 		nameFr: "Carleton-sur-Mer",
 		prov: "QC",
 		latitude: 48.1,
-		longitude: -66.13
+		longitude: -66.13,
 	},
 	{
 		site: "s0000812",
@@ -6469,7 +6469,7 @@ export default [
 		nameFr: "Tatamagouche",
 		prov: "NS",
 		latitude: 45.71,
-		longitude: -63.29
+		longitude: -63.29,
 	},
 	{
 		site: "s0000813",
@@ -6477,7 +6477,7 @@ export default [
 		nameFr: "Truro",
 		prov: "NS",
 		latitude: 45.37,
-		longitude: -63.28
+		longitude: -63.28,
 	},
 	{
 		site: "s0000814",
@@ -6485,7 +6485,7 @@ export default [
 		nameFr: "Economy",
 		prov: "NS",
 		latitude: 45.38,
-		longitude: -63.91
+		longitude: -63.91,
 	},
 	{
 		site: "s0000815",
@@ -6493,7 +6493,7 @@ export default [
 		nameFr: "Orangeville",
 		prov: "ON",
 		latitude: 43.92,
-		longitude: -80.11
+		longitude: -80.11,
 	},
 	{
 		site: "s0000816",
@@ -6501,7 +6501,7 @@ export default [
 		nameFr: "Fort McPherson",
 		prov: "NT",
 		latitude: 67.44,
-		longitude: -134.88
+		longitude: -134.88,
 	},
 	{
 		site: "s0000817",
@@ -6509,7 +6509,7 @@ export default [
 		nameFr: "Tulita",
 		prov: "NT",
 		latitude: 64.9,
-		longitude: -125.57
+		longitude: -125.57,
 	},
 	{
 		site: "s0000818",
@@ -6517,7 +6517,7 @@ export default [
 		nameFr: "Fort Good Hope",
 		prov: "NT",
 		latitude: 66.26,
-		longitude: -128.64
+		longitude: -128.64,
 	},
 	{
 		site: "s0000819",
@@ -6525,7 +6525,7 @@ export default [
 		nameFr: "Ignace",
 		prov: "ON",
 		latitude: 49.41,
-		longitude: -91.68
+		longitude: -91.68,
 	},
 	{
 		site: "s0000820",
@@ -6533,7 +6533,7 @@ export default [
 		nameFr: "Gjoa Haven",
 		prov: "NU",
 		latitude: 68.63,
-		longitude: -95.88
+		longitude: -95.88,
 	},
 	{
 		site: "s0000821",
@@ -6541,7 +6541,7 @@ export default [
 		nameFr: "Alert",
 		prov: "NU",
 		latitude: 82.5,
-		longitude: -62.37
+		longitude: -62.37,
 	},
 	{
 		site: "s0000822",
@@ -6549,7 +6549,7 @@ export default [
 		nameFr: "Moose Jaw",
 		prov: "SK",
 		latitude: 50.39,
-		longitude: -105.55
+		longitude: -105.55,
 	},
 	{
 		site: "s0000823",
@@ -6557,7 +6557,7 @@ export default [
 		nameFr: "Old Crow",
 		prov: "YT",
 		latitude: 67.57,
-		longitude: -139.84
+		longitude: -139.84,
 	},
 	{
 		site: "s0000824",
@@ -6565,7 +6565,7 @@ export default [
 		nameFr: "Pincher Creek",
 		prov: "AB",
 		latitude: 49.49,
-		longitude: -113.95
+		longitude: -113.95,
 	},
 	{
 		site: "s0000825",
@@ -6573,7 +6573,7 @@ export default [
 		nameFr: "Whitehorse",
 		prov: "YT",
 		latitude: 60.7,
-		longitude: -135.08
+		longitude: -135.08,
 	},
 	{
 		site: "s0000826",
@@ -6581,7 +6581,7 @@ export default [
 		nameFr: "Sandy Lake",
 		prov: "ON",
 		latitude: 53.06,
-		longitude: -93.32
+		longitude: -93.32,
 	},
 	{
 		site: "s0000827",
@@ -6589,7 +6589,7 @@ export default [
 		nameFr: "St. Peters Bay",
 		prov: "PE",
 		latitude: 46.42,
-		longitude: -62.58
+		longitude: -62.58,
 	},
 	{
 		site: "s0000828",
@@ -6597,7 +6597,7 @@ export default [
 		nameFr: "Stewart",
 		prov: "BC",
 		latitude: 55.93,
-		longitude: -129.98
+		longitude: -129.98,
 	},
 	{
 		site: "s0000829",
@@ -6605,7 +6605,7 @@ export default [
 		nameFr: "Stettler",
 		prov: "AB",
 		latitude: 52.32,
-		longitude: -112.7
+		longitude: -112.7,
 	},
 	{
 		site: "s0000830",
@@ -6613,7 +6613,7 @@ export default [
 		nameFr: "Tuktoyaktuk",
 		prov: "NT",
 		latitude: 69.45,
-		longitude: -133.03
+		longitude: -133.03,
 	},
 	{
 		site: "s0000831",
@@ -6621,7 +6621,7 @@ export default [
 		nameFr: "Delta",
 		prov: "MB",
 		latitude: 50.19,
-		longitude: -98.32
+		longitude: -98.32,
 	},
 	{
 		site: "s0000832",
@@ -6629,7 +6629,7 @@ export default [
 		nameFr: "Churchill Falls",
 		prov: "NL",
 		latitude: 53.55,
-		longitude: -64.02
+		longitude: -64.02,
 	},
 	{
 		site: "s0000833",
@@ -6637,7 +6637,7 @@ export default [
 		nameFr: "Wainwright",
 		prov: "AB",
 		latitude: 52.83,
-		longitude: -110.86
+		longitude: -110.86,
 	},
 	{
 		site: "s0000834",
@@ -6645,7 +6645,7 @@ export default [
 		nameFr: "Bella Bella",
 		prov: "BC",
 		latitude: 52.16,
-		longitude: -128.14
+		longitude: -128.14,
 	},
 	{
 		site: "s0000835",
@@ -6653,7 +6653,7 @@ export default [
 		nameFr: "Lloydminster",
 		prov: "SK",
 		latitude: 53.28,
-		longitude: -109.98
+		longitude: -109.98,
 	},
 	{
 		site: "s0000843",
@@ -6661,7 +6661,7 @@ export default [
 		nameFr: "Sudbury (Grand)",
 		prov: "ON",
 		latitude: 46.58,
-		longitude: -81.07
+		longitude: -81.07,
 	},
 	{
 		site: "s0000845",
@@ -6669,7 +6669,7 @@ export default [
 		nameFr: "Cummins Lakes (Parc provincial)",
 		prov: "BC",
 		latitude: 52.1,
-		longitude: -118.06
+		longitude: -118.06,
 	},
 	{
 		site: "s0000846",
@@ -6677,7 +6677,7 @@ export default [
 		nameFr: "route de Coquihalla - de Hope à Merritt",
 		prov: "HEF",
 		latitude: 0,
-		longitude: 0
+		longitude: 0,
 	},
 	{
 		site: "s0000847",
@@ -6685,7 +6685,7 @@ export default [
 		nameFr: "route de Coquihalla - de Merritt à Kamloops",
 		prov: "HEF",
 		latitude: 0,
-		longitude: 0
+		longitude: 0,
 	},
 	{
 		site: "s0000849",
@@ -6693,7 +6693,7 @@ export default [
 		nameFr: "route 3 - de Hope à Princeton via le col Allison",
 		prov: "HEF",
 		latitude: 0,
-		longitude: 0
+		longitude: 0,
 	},
 	{
 		site: "s0000850",
@@ -6701,7 +6701,7 @@ export default [
 		nameFr: "route 3 - du sommet Paulson au col Kootenay",
 		prov: "HEF",
 		latitude: 0,
-		longitude: 0
+		longitude: 0,
 	},
 	{
 		site: "s0000851",
@@ -6709,7 +6709,7 @@ export default [
 		nameFr: "route 97 - de Clinton à 100 Mile House via le sommet Begbie",
 		prov: "HEF",
 		latitude: 0,
-		longitude: 0
+		longitude: 0,
 	},
 	{
 		site: "s0000852",
@@ -6717,7 +6717,7 @@ export default [
 		nameFr: "route 97 - col Pine",
 		prov: "HEF",
 		latitude: 0,
-		longitude: 0
+		longitude: 0,
 	},
 	{
 		site: "s0000853",
@@ -6725,7 +6725,7 @@ export default [
 		nameFr: "route de liaison Okanagan - de Merritt à Kelowna",
 		prov: "HEF",
 		latitude: 0,
-		longitude: 0
+		longitude: 0,
 	},
 	{
 		site: "s0000854",
@@ -6733,7 +6733,7 @@ export default [
 		nameFr: "Sea to Sky - de Squamish à Whistler",
 		prov: "HEF",
 		latitude: 0,
-		longitude: 0
+		longitude: 0,
 	},
 	{
 		site: "s0000856",
@@ -6741,7 +6741,7 @@ export default [
 		nameFr: "route Transcanadienne - du col Eagle au col Rogers",
 		prov: "HEF",
 		latitude: 0,
-		longitude: 0
+		longitude: 0,
 	},
 	{
 		site: "s0000857",
@@ -6749,7 +6749,7 @@ export default [
 		nameFr: "L'Anse-au-Loup",
 		prov: "NL",
 		latitude: 51.52,
-		longitude: -56.84
+		longitude: -56.84,
 	},
 	{
 		site: "s0000858",
@@ -6757,7 +6757,7 @@ export default [
 		nameFr: "Rigolet",
 		prov: "NL",
 		latitude: 54.1792,
-		longitude: -58.43
+		longitude: -58.43,
 	},
 	{
 		site: "s0000859",
@@ -6765,7 +6765,7 @@ export default [
 		nameFr: "Cartwright Junction (Rte Trans-Labrador)",
 		prov: "NL",
 		latitude: 53.07,
-		longitude: -57.51
+		longitude: -57.51,
 	},
 	{
 		site: "s0000860",
@@ -6773,7 +6773,7 @@ export default [
 		nameFr: "Gull Island Rapids (Rte Trans-Labrador)",
 		prov: "NL",
 		latitude: 52.98,
-		longitude: -61.47
+		longitude: -61.47,
 	},
 	{
 		site: "s0000861",
@@ -6781,7 +6781,7 @@ export default [
 		nameFr: "Eskasoni",
 		prov: "NS",
 		latitude: 45.94,
-		longitude: -60.62
+		longitude: -60.62,
 	},
 	{
 		site: "s0000862",
@@ -6789,7 +6789,7 @@ export default [
 		nameFr: "Richmond",
 		prov: "BC",
 		latitude: 49.16,
-		longitude: -123.16
+		longitude: -123.16,
 	},
 	{
 		site: "s0000863",
@@ -6797,7 +6797,7 @@ export default [
 		nameFr: "Duncan",
 		prov: "BC",
 		latitude: 48.78,
-		longitude: -123.71
+		longitude: -123.71,
 	},
 	{
 		site: "s0000864",
@@ -6805,7 +6805,7 @@ export default [
 		nameFr: "Qualicum Beach",
 		prov: "BC",
 		latitude: 49.35,
-		longitude: -124.44
+		longitude: -124.44,
 	},
 	{
 		site: "s0000865",
@@ -6813,7 +6813,7 @@ export default [
 		nameFr: "West Vancouver",
 		prov: "BC",
 		latitude: 49.33,
-		longitude: -123.16
+		longitude: -123.16,
 	},
 	{
 		site: "s0000866",
@@ -6821,7 +6821,7 @@ export default [
 		nameFr: "Langley",
 		prov: "BC",
 		latitude: 49.1,
-		longitude: -122.66
+		longitude: -122.66,
 	},
 	{
 		site: "s0000867",
@@ -6829,7 +6829,7 @@ export default [
 		nameFr: "Route Yellowhead - de Tête Jaune Cache à la frontière de l'Alberta",
 		prov: "HEF",
 		latitude: 0,
-		longitude: 0
+		longitude: 0,
 	},
 	{
 		site: "s0000868",
@@ -6837,6 +6837,6 @@ export default [
 		nameFr: "Route Malahat - de Goldstream à Mill Bay",
 		prov: "HEF",
 		latitude: 0,
-		longitude: 0
-	}
+		longitude: 0,
+	},
 ];
