@@ -7,7 +7,8 @@
     "web": "expo start --web",
     "eject": "expo eject",
     "test": "jest --watchAll",
-    "images": "make -f images.mk"
+    "images": "make -f images.mk",
+    "sitelist": "node updateSiteLocations.js"
   },
   "jest": {
     "preset": "jest-expo"
@@ -52,8 +53,10 @@
   "devDependencies": {
     "@babel/core": "^7.19.3",
     "@expo/cli": "^0.4.8",
+    "axios": "^1.2.0",
     "babel-preset-expo": "~9.2.1",
-    "jest-expo": "^47.0.0"
+    "jest-expo": "^47.0.0",
+    "json5": "^2.2.1"
   },
   "private": true
 }
