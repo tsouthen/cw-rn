@@ -15,10 +15,13 @@ export default function WarningScreen(props) {
   const [currUrl, setCurrUrl] = React.useState(url);
 
   const onNavigationStateChange = (newNavState) => {
-    const newUrl = newNavState.url.replace("#wb-cont", "");
+    const newUrl = newNavState.url.replace("#wb-cont", "").replace("=", "");
     if (!newUrl.endsWith(suffix) && !newUrl.endsWith("lang.php")) {
       webview.current?.stopLoading();
       console.log(`Blocked url: ${newNavState.url}`);
+      // console.log(`url: ${url}`);
+      // console.log(`newUrl: ${newUrl}`);
+      // console.log(`suffix: ${suffix}`);
     } else {
       setCurrUrl(newNavState.url);
     }
@@ -33,7 +36,7 @@ export default function WarningScreen(props) {
           navigation.goBack();
         }} />
       </HeaderBar>
-      <WebView ref={webview} source={{ url: url + "#wb-cont" }} pullToRefreshEnabled={true} onNavigationStateChange={onNavigationStateChange} />
+      <WebView ref={webview} source={{ url: url + "#wb-cont" }} pullToRefreshEnabled={true} onNavigationStateChange={onNavigationStateChange} decelerationRate='normal' />
     </View>
   );
 }
