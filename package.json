@@ -9,7 +9,8 @@
     "eject": "expo eject",
     "test": "jest --watchAll",
     "images": "make -f images.mk",
-    "sitelist": "node updateSiteLocations.js"
+    "sitelist": "node updateSiteLocations.js",
+    "update": "eas update --branch main --message 'Expo SDK 51'"
   },
   "jest": {
     "preset": "jest-expo"
