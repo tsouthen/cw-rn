@@ -50,6 +50,7 @@
     },
     "plugins": [
       "expo-font"
-    ]
+    ],
+    "owner": "tsouthen"
   }
 }
