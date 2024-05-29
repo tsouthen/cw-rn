@@ -10,7 +10,7 @@
     "test": "jest --watchAll",
     "images": "make -f images.mk",
     "sitelist": "node updateSiteLocations.js",
-    "update": "eas update --branch main --message 'Expo SDK 51'"
+    "update": "eas update --branch main --message "
   },
   "jest": {
     "preset": "jest-expo"
