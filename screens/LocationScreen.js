@@ -55,9 +55,9 @@ export default class CurrentLocation extends React.Component {
   possiblyRefreshData() {
     const forecasts = this.state.dataSource.forecasts;
     const lastFetch = this.state.lastFetch;
-    // determine if a new xml file will be available: 
+    // determine if a new xml file will be available:
     //   now - lastFetch > 5 mins &&
-    //   now - lastForecastDateTime > 65 mins 
+    //   now - lastForecastDateTime > 65 mins
     if (!this.state.isLoading && lastFetch && forecasts && forecasts.length > 0 && forecasts[0].dateTime) {
       const now = moment();
       let lastFetchMins = now.diff(lastFetch, 'minutes');
@@ -117,29 +117,9 @@ export default class CurrentLocation extends React.Component {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   };
 
-  fetchXML = (url) => {
-    return new Promise((resolve, reject) => {
-      const request = new XMLHttpRequest();
-
-      request.onload = () => {
-        if (request.status === 200) {
-          resolve(iconv.decode(Buffer.from(request.response), 'iso-8859-1'));
-        } else {
-          reject(new Error(request.statusText));
-        }
-      };
-      let errorFunc = () => reject(new Error(request.statusText));
-      request.onerror = errorFunc;
-      request.onabort = errorFunc;
-      request.ontimeout = errorFunc;
-
-      request.responseType = 'arraybuffer';
-
-      request.open('GET', url);
-      request.setRequestHeader('Content-type', 'text/xml; charset=ISO-8859-1');
-      request.send();
-    });
-  };
+  fetchXML = async (url) => {
+    return await (await fetch(url)).text();
+  }
 
   jsonFromXml = (xml) => {
     return new Promise((resolve, reject) => {
