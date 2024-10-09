@@ -1,7 +1,5 @@
-import { Buffer } from 'buffer';
 import Constants from 'expo-constants';
 import * as Location from 'expo-location';
-import iconv from 'iconv-lite';
 import React from 'react';
 import { ActivityIndicator, FlatList, Image, LayoutAnimation, Linking, Platform, StyleSheet, Text, TouchableHighlight, View, AppState } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -14,7 +12,6 @@ import Colors from '../constants/Colors';
 import Layout from '../constants/Layout';
 import sitelocations from '../constants/sitelocations';
 import CityListScreen from './CityListScreen';
-const moment = require('moment');
 import HeaderBar, { HeaderBarAction, HeaderBarShareAction } from '../components/HeaderBar';
 import { Icon } from '../components/Icon';
 import { getAsOfLabel, loadWeatherOffice } from "../extractor";
@@ -34,6 +31,13 @@ import { getAsOfLabel, loadWeatherOffice } from "../extractor";
 //     padding: 5
 //   },
 // });
+
+function diffInMinutes(date1, date2) {
+  const date1Time = new Date(date1).getTime();
+  const date2Time = new Date(date2).getTime();
+  const diffInMilliseconds = date2Time - date1Time;
+  return Math.floor(diffInMilliseconds / (1000 * 60));
+}
 
 export default class CurrentLocation extends React.Component {
   constructor(props) {
@@ -60,9 +64,9 @@ export default class CurrentLocation extends React.Component {
     //   now - lastFetch > 5 mins &&
     //   now - lastForecastDateTime > 65 mins
     if (!this.state.isLoading && lastFetch && forecasts && forecasts.length > 0 && forecasts[0].dateTime) {
-      const now = moment();
-      let lastFetchMins = now.diff(lastFetch, 'minutes');
-      let lastForecastMins = now.diff(forecasts[0].dateTime, 'minutes');
+      const now = Date.now();
+      let lastFetchMins = diffInMinutes(now, lastFetch);
+      let lastForecastMins = diffInMinutes(now, forecasts[0].dateTime);
 
       if (lastFetchMins >= 5 && lastForecastMins >= 65) {
         console.log("refreshing old data");
@@ -187,7 +191,7 @@ export default class CurrentLocation extends React.Component {
       });
 
       this.setState({
-        lastFetch: moment(),
+        lastFetch: Date.now(),
         isLoading: false,
         dataSource: {
           forecasts: entries,
@@ -362,6 +366,7 @@ function MySwiper({ startPage, pages }) {
   </Swiper>
 
 }
+
 function IndicatorBackgroundView() {
   return null;
   const { settings } = React.useContext(SettingsContext);
@@ -463,15 +468,8 @@ function iconCodeToImage(iconCode, isDark) {
   return null;
 }
 
-function getDateTimeString(dateTime) {
-  let format = 'h:mm a';
-  if (moment().dayOfYear() !== moment(dateTime).dayOfYear())
-    format = 'MMM D, ' + format;
-  return moment(dateTime).format(format);
-}
-
 function ForecastItem(props) {
-  const { title, temperature, summary, icon, isNight, isOther, warning, warningUrl, index, heading, expanded, dateTime, value } = props;
+  const { title, temperature, summary, icon, isNight, isOther, warning, warningUrl, index, heading, expanded, dateTime, value, precip } = props;
   const { settings } = React.useContext(SettingsContext);
   const [allowNight, setAllowNight] = React.useState(settings.night);
   const [rounded, setRounded] = React.useState(settings.round);
@@ -504,6 +502,10 @@ function ForecastItem(props) {
   let summmaryView = null;
   if (summary && isExpanded)
     summmaryView = (<Text style={{ fontSize: 13, flex: 1, color: settings.dark ? 'white' : 'black' }}>{summary}</Text>);
+
+  let precipView = null;
+  if (precip && isExpanded)
+    precipView = (<Text style={{ fontSize: 13, flex: 1, color: settings.dark ? 'white' : 'black' }}>{precip}%</Text>);
 
   let fontColor = isNight ? '#777777' : (settings.dark ? 'white' : 'black');
   let fontWeight = props.fontWeight || isNight ? 'normal' : 'bold';
@@ -566,6 +568,7 @@ function ForecastItem(props) {
               <Text style={{ fontSize: 18, fontWeight: fontWeight, color: fontColor }}>{displayTemp ? displayTemp + '°' : value ?? ''}</Text>
             </View>
             {summmaryView}
+            {precipView}
             {warningView}
           </View>
         </View>
@@ -574,17 +577,6 @@ function ForecastItem(props) {
       </View>
     </TouchableHighlight>);
 };
-
-function Divider() {
-  const { settings } = React.useContext(SettingsContext);
-  return <View
-    style={{
-      height: StyleSheet.hairlineWidth,
-      backgroundColor: settings.dark ? "white" : "rgba(0, 0, 0, 0.12)"
-    }}
-  />;
-  // "rgba(255, 255, 255, 0.12)"
-}
 
 function FavoriteIcon(props) {
   const { site } = props;
@@ -637,10 +629,6 @@ function NightForecastsIcon(props) {
       LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
       updateSetting("night", !settings.night);
     }} />;
-}
-
-function SettingsIcon({ navigation }) {
-  return <HeaderBarAction type="feather" name="settings" onPress={() => navigation?.navigate("Settings")} />;
 }
 
 function MenuIcon({ navigation }) {
