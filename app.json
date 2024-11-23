@@ -49,8 +49,10 @@
       "policy": "sdkVersion"
     },
     "plugins": [
-      "expo-font"
+      "expo-font",
+      "expo-asset"
     ],
-    "owner": "tsouthen"
+    "owner": "tsouthen",
+    "newArchEnabled": true
   }
 }

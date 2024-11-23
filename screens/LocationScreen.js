@@ -15,6 +15,9 @@ import CityListScreen from './CityListScreen';
 import HeaderBar, { HeaderBarAction, HeaderBarShareAction } from '../components/HeaderBar';
 import { Icon } from '../components/Icon';
 import { getAsOfLabel, loadWeatherOffice } from "../extractor";
+import Animated, { Easing, LinearTransition } from 'react-native-reanimated';
+
+const AnimatedTouchableHighlight = Animated.createAnimatedComponent(TouchableHighlight);
 
 // const styles = StyleSheet.create({
 //   container: {
@@ -354,11 +357,11 @@ function MySwiper({ startPage, pages }) {
       width: 70, height: 27, borderRadius: 50,
     }}
     onTouchStart={() => {
-      LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+      // LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
       setTouching(true);
     }}
     onTouchEnd={() => {
-      LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+      // LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
       setTouching(false);
     }}
   >
@@ -495,7 +498,9 @@ function ForecastItem(props) {
   let warningView = null;
   if (warning && warningUrl)
     warningView = (
-      <TouchableHighlight style={{ alignSelf: 'flex-start' }} underlayColor='#ffffff' onPress={() => props.navigation.push("Warning", { url: warningUrl })}>
+      // disable built-in webview for now as it doesn't seem to load the page properly
+      // <TouchableHighlight style={{ alignSelf: 'flex-start' }} underlayColor='#ffffff' onPress={() => props.navigation.push("Warning", { url: warningUrl })}>
+      <TouchableHighlight style={{ alignSelf: 'flex-start' }} underlayColor='#ffffff' onPress={() => Linking.openURL(warningUrl)}>
         <Text style={{ textDecorationLine: 'underline', fontSize: 13, color: Colors.primaryDark }}>{warning && isExpanded ? warning : ''}</Text>
       </TouchableHighlight>);
 
@@ -542,17 +547,19 @@ function ForecastItem(props) {
     titleText = <Text style={titleTextStyle}>{title}</Text>
 
   const toggleExpanded = () => {
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    // LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     setExpanded(!isExpanded);
   }
   return (
-    <TouchableHighlight underlayColor={Colors.primaryLight} onPress={toggleExpanded}
+    <AnimatedTouchableHighlight underlayColor={Colors.primaryLight} onPress={toggleExpanded}
       style={{
         marginLeft: 5, marginRight: 5,
         marginTop: headingText ? (index ? 7 : 5) : 5,
         // marginBottom: isNight && !isOther ? 2 : 0,
-        borderRadius: 8, overflow: 'hidden'
+        borderRadius: 8, overflow: 'hidden',
       }}
+      // layout={LinearTransition.duration(1000).easing(Easing.inOut(Easing.ease))}
+      layout={LinearTransition}
     >
       <View style={{
         flex: 100, flexDirection: "column",
@@ -575,7 +582,7 @@ function ForecastItem(props) {
         {/* <Divider /> */}
         {/* <View style={{ height: 1, backgroundColor: settings.dark ? '#777777' : '#eeeeee' }} /> */}
       </View>
-    </TouchableHighlight>);
+    </AnimatedTouchableHighlight>);
 };
 
 function FavoriteIcon(props) {
@@ -626,7 +633,7 @@ function NightForecastsIcon(props) {
   const { settings, updateSetting } = React.useContext(SettingsContext);
   return <HeaderBarAction type="ionicon" name={settings.night ? "moon" : "moon-outline"}
     onPress={() => {
-      LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+      // LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
       updateSetting("night", !settings.night);
     }} />;
 }
