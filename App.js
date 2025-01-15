@@ -229,12 +229,6 @@ export default function App(props) {
       try {
         SplashScreen.preventAutoHideAsync();
 
-        if (Platform.OS === 'android') {
-          if (UIManager.setLayoutAnimationEnabledExperimental) {
-            UIManager.setLayoutAnimationEnabledExperimental(true);
-          }
-        }
-
         // Load our initial navigation state
         setInitialNavigationState(await getInitialState());
 

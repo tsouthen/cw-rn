@@ -266,7 +266,8 @@ export default class CurrentLocation extends React.Component {
       <HeaderBar navigation={navigation} title={route?.params?.location ?? 'Location'} showBackButton={!isCurrLocation} /* subtitle={subtitle} */ >
         {site && <FavoriteIcon site={site} />}
         {site && <NightForecastsIcon />}
-        {isCurrLocation && <MenuIcon navigation={navigation} />}
+        {isCurrLocation && <SettingsIcon navigation={navigation} />}
+        {/* {isCurrLocation && <MenuIcon navigation={navigation} />} */}
         {/* {site && <SettingsIcon navigation={navigation} />} */}
         {/* {hasLocation && <HeaderBarShareAction />} */}
       </HeaderBar>);
@@ -636,6 +637,10 @@ function NightForecastsIcon(props) {
       // LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
       updateSetting("night", !settings.night);
     }} />;
+}
+
+function SettingsIcon({ navigation }) {
+  return <HeaderBarAction type="material-community" name="cog" onPress={() => navigation.navigate("Settings")} />;
 }
 
 function MenuIcon({ navigation }) {
