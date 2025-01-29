@@ -38,7 +38,7 @@ const AnimatedTouchableHighlight = Animated.createAnimatedComponent(TouchableHig
 function diffInMinutes(date1, date2) {
   const date1Time = new Date(date1).getTime();
   const date2Time = new Date(date2).getTime();
-  const diffInMilliseconds = date2Time - date1Time;
+  const diffInMilliseconds = date1Time - date2Time;
   return Math.floor(diffInMilliseconds / (1000 * 60));
 }
 
