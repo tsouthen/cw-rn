@@ -1,10 +1,10 @@
 import React from 'react';
-import { View, Text, Appearance } from 'react-native';
+import { Platform, View, Text, Appearance, TouchableOpacity } from 'react-native';
 import Colors from '../constants/Colors';
 import { SettingsContext } from '../components/SettingsContext';
 import HeaderBar from '../components/HeaderBar';
 import { Icon } from '../components/Icon';
-import { Button, Switch, useTheme } from 'react-native-paper';
+import { Button, RadioButton, Switch, useTheme } from 'react-native-paper';
 
 export default function SettingsScreen({ navigation }) {
   const { settings } = React.useContext(SettingsContext);
@@ -12,9 +12,8 @@ export default function SettingsScreen({ navigation }) {
     <View style={{ flex: 1, backgroundColor: settings.dark ? Colors.darkBackground : Colors.lightBackground }}>
       <HeaderBar title="Settings" navigation={navigation} showBackButton={true} />
       <View style={{ flexDirection: 'column' }} >
-        <SettingRow title='Appearance' name='yin-yang' type='material-community'>
-          <AppearanceButtons />
-        </SettingRow>
+        <SettingRow title='Appearance' name='yin-yang' type='material-community' />
+        <AppearanceButtons />
         <SettingSwitchRow
           title='Night Forecasts'
           subtitle='Show overnight city forecasts.'
@@ -54,11 +53,11 @@ function AppearanceButtons(props) {
     });
   }
 
-  return <View style={{ flexDirection: 'row', borderWidth: 1, borderColor: 'lightgray', borderRadius: 7, padding: 2 }}>
-    <Button compact={true} onPress={() => onPress("light")} mode={mode === "light" ? "contained" : "text"}>Light</Button>
-    <Button compact={true} onPress={() => onPress("auto")} mode={mode === "auto" ? "contained" : "text"}>Auto</Button>
-    <Button compact={true} onPress={() => onPress("dark")} mode={mode === "dark" ? "contained" : "text"}>Dark</Button>
-  </View>;
+  return <RadioButton.Group onValueChange={onPress} value={mode}>
+    <SettingRadio title="Automatic" value="auto" onPress={onPress} />
+    <SettingRadio title="Light" value="light" onPress={onPress} />
+    <SettingRadio title="Dark" value="dark" onPress={onPress} />
+  </RadioButton.Group>;
 }
 
 function useSetting(propName) {
@@ -74,7 +73,7 @@ function useSetting(propName) {
 }
 
 function SettingRow(props) {
-  const { name, type, title, ...theRest } = props;
+  const { name, type, title } = props;
   const viewStyle = { flexDirection: 'row', margin: 5, marginLeft: 10, alignItems: 'center' };
   const theme = useTheme();
   const color = theme.dark ? 'white' : 'black';
@@ -82,10 +81,25 @@ function SettingRow(props) {
 
   return (
     <View style={viewStyle}>
-      <Icon style={{ marginRight: 10 }} {...{ name, type }} color={color} />
+      {name && <Icon style={{ marginRight: 10 }} {...{ name, type }} color={color} />}
       <Text style={textStyle}>{title}</Text>
       {props.children}
     </View>);
+}
+
+function SettingRadio(props) {
+  const viewStyle = { flexDirection: 'row', margin: 5, marginLeft: 45, alignItems: 'center' };
+  const theme = useTheme();
+  const color = theme.dark ? 'white' : 'black';
+  const textStyle = { flex: 1, fontSize: 16, fontFamily: 'montserrat', color: color, marginLeft: 0 };
+
+  return (
+      <TouchableOpacity style={viewStyle} onPress={() => props.onPress(props.value)}>
+        {Platform.OS === 'android' && <RadioButton value={props.value} color={Colors.primary} />}
+        <Text style={textStyle}>{props.title}</Text>
+        {Platform.OS !== 'android' && <RadioButton value={props.value} color={Colors.primary} />}
+      </TouchableOpacity>
+  );
 }
 
 function SettingSwitchRow(props) {
