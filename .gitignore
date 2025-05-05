@@ -11,6 +11,3 @@ web-build/
 web-report/
 .DS_Store
 dist
-
-# expecting extractor.js to be a link to the output from cw-server-ts, one day it will be an npm module
-extractor.js*

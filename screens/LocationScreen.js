@@ -4,7 +4,6 @@ import React from 'react';
 import { ActivityIndicator, FlatList, Image, LayoutAnimation, Linking, Platform, StyleSheet, Text, TouchableHighlight, View, AppState } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Menu, Portal, Snackbar, useTheme } from 'react-native-paper';
-import { parseString } from 'react-native-xml2js';
 import Swiper from 'react-native-swiper';
 import { FavoritesContext } from '../components/FavoritesContext';
 import { SettingsContext } from '../components/SettingsContext';
@@ -14,7 +13,6 @@ import sitelocations from '../constants/sitelocations';
 import CityListScreen from './CityListScreen';
 import HeaderBar, { HeaderBarAction, HeaderBarShareAction } from '../components/HeaderBar';
 import { Icon } from '../components/Icon';
-import { getAsOfLabel, loadWeatherOffice } from "../extractor";
 import Animated, { Easing, LinearTransition } from 'react-native-reanimated';
 
 const AnimatedTouchableHighlight = Animated.createAnimatedComponent(TouchableHighlight);
@@ -129,17 +127,6 @@ export default class CurrentLocation extends React.Component {
     return await (await fetch(url)).text();
   }
 
-  jsonFromXml = (xml) => {
-    return new Promise((resolve, reject) => {
-      parseString(xml, { explicitArray: false, mergeAttrs: true, explicitRoot: false }, (err, result) => {
-        if (err)
-          reject(err);
-        else
-          resolve(result);
-      });
-    });
-  };
-
   orderByDistance = function (point, coords) {
     return coords.sort((a, b) => this.getDistanceSquared(point, a) - this.getDistanceSquared(point, b));
   };
@@ -180,16 +167,25 @@ export default class CurrentLocation extends React.Component {
         prov = nearest.prov;
       }
 
-      let targetUrl = 'https://dd.weather.gc.ca/citypage_weather/xml/' + prov + '/' + site + '_e.xml';
-      // console.debug('targetUrl: ' + targetUrl);
-      const xml = await this.fetchXML(targetUrl);
-      const responseJson = await this.jsonFromXml(xml);
-      // console.debug(JSON.stringify(responseJson));
-      const result = loadWeatherOffice(responseJson);
+      const targeturl = `https://cw-server-ts.vercel.app/api/weather?name=${site}`;
+      const response = await fetch(targeturl, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }
+      });
+      const result = await response.json();
+      // convert all dateTime strings to Date objects
+      result.forecast.forEach((entry) => {
+        if (entry.dateTime) {
+          entry.dateTime = new Date(entry.dateTime);
+        }
+      });
       const { forecast: entries, hourly: hourlyData, yesterday, almanac, sun: sunRiseSet } = result;
 
       navigation.setParams({
-        location: responseJson.location.name._,
+        location: result.location.name._,
         currentSite: nearest,
       });
 
@@ -670,6 +666,32 @@ function MenuIcon({ navigation }) {
   </Menu>;
 
   return;
+}
+
+function getAsOfLabel(dateTime) {
+  if (!dateTime) return "Now";
+  if (typeof dateTime === "string") {
+    dateTime = new Date(dateTime);
+  }
+  let titleText = "";
+  const diff = Date.now() - dateTime.valueOf();
+  let minutes = Math.round(diff / 60000);
+  if (minutes > 60) {
+    minutes = Math.round(minutes / 15) * 15;
+    const hours = Math.round((minutes / 60) * 100) / 100;
+    if (hours === 1) {
+      titleText = `An hour ago`;
+    } else {
+      titleText = `${hours} hours ago`;
+    }
+  } else if (minutes === 60) {
+    titleText = "An hour ago";
+  } else if (minutes === 30) {
+    titleText = "Half an hour ago";
+  } else {
+    titleText = `${minutes} minutes ago`;
+  }
+  return titleText;
 }
 
 function AutoUpdateText(props) {
