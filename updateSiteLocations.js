@@ -1,6 +1,5 @@
 const fs = require('fs');
-const axios = require('axios');
-const JSON5 = require('json5')
+const JSON5 = require('json5');
 
 function toLatOrLon(input) {
     if (input.endsWith("W"))
@@ -39,16 +38,21 @@ function updateSite(line, sites) {
 
 async function go() {
     const sites = [];
-    const resEn = await axios.get('https://dd.weather.gc.ca/citypage_weather/docs/site_list_en.csv', { responseType: 'text' });
-    resEn.data.split("\n").forEach((line) => addSite(line, sites));
-    const resFr = await axios.get('https://dd.weather.gc.ca/citypage_weather/docs/site_list_fr.csv', { responseType: 'text' });
-    resFr.data.split("\n").forEach((line) => updateSite(line, sites));
-    const resXml = await axios.get('https://dd.weather.gc.ca/citypage_weather/xml/siteList.xml', { responseType: 'text' });
+    const resEn = await fetch('https://dd.weather.gc.ca/citypage_weather/docs/site_list_en.csv');
+    const enText = await resEn.text();
+    enText.split("\n").forEach((line) => addSite(line, sites));
+
+    const resFr = await fetch('https://dd.weather.gc.ca/citypage_weather/docs/site_list_fr.csv');
+    const frText = await resFr.text();
+    frText.split("\n").forEach((line) => updateSite(line, sites));
+
+    const resXml = await fetch('https://dd.weather.gc.ca/citypage_weather/xml/siteList.xml');
+    const xmlText = await resXml.text();
 
     var siteLocations = "";
 
     var numChecked = 0;
-    resXml.data.split("\n").forEach((line) => {
+    xmlText.split("\n").forEach((line) => {
         const idx = line.indexOf('code="s0');
         if (idx > 0) {
             const siteCode = line.slice(idx + 6, -2);

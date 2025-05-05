@@ -52,7 +52,6 @@
   },
   "devDependencies": {
     "@babel/core": "^7.24.0",
-    "axios": "^1.2.0",
     "babel-preset-expo": "~13.0.0",
     "hermes-parser": "^0.25.1",
     "jest-expo": "~53.0.4",
